@@ -1,4 +1,4 @@
-package be.kdg.swiftby.domain.report;
+package be.kdg.swiftby.domain.testEnv;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,10 +7,11 @@ import jakarta.persistence.Id;
 import lombok.Data;
 @Entity
 @Data
-public class WheelData {
+public class Facility {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private double speed;
-    private double power;
+    private String name;
+    private String address;
+    private String email;
 }

@@ -7,10 +7,12 @@ import jakarta.persistence.Id;
 import lombok.Data;
 @Entity
 @Data
-public class WheelData {
+public class TestBenchData {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private double speed;
-    private double power;
+    private double rollerTorque;
+    private double loadCell;
+    private int loadPower;
+    private boolean statusPlug;
 }
