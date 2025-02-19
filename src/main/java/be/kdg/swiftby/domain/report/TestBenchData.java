@@ -1,9 +1,7 @@
 package be.kdg.swiftby.domain.report;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import be.kdg.swiftby.domain.testEnv.TestBench;
+import jakarta.persistence.*;
 import lombok.Data;
 @Entity
 @Data
@@ -15,4 +13,7 @@ public class TestBenchData {
     private double loadCell;
     private int loadPower;
     private boolean statusPlug;
+    @ManyToOne
+    @JoinColumn(name = "test_bench_id")
+    private TestBench testBench;
 }
