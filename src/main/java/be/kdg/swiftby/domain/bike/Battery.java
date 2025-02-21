@@ -9,8 +9,7 @@ import lombok.Data;
 @Data
 public class Battery {
     @Id
-    // sequence strategy appears to be the best for Postgresql database
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int capacity;
 

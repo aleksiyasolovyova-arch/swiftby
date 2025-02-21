@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class Motor {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String engineType;
     private String gearType;

@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class WheelData {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double speed;
     private double power;

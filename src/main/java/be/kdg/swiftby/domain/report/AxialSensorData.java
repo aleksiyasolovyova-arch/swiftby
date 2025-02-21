@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class AxialSensorData {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double horizontalInclination;
     private double verticalInclination;

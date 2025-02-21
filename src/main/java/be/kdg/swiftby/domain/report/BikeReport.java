@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Data
 public class BikeReport {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate dateTime;
     private int mileage;

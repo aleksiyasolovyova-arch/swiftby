@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 public class TestBench {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "facility_id")

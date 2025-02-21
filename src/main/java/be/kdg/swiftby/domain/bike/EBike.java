@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 public class EBike {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String brand;
     private String type;

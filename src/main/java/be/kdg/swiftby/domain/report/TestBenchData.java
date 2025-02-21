@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class TestBenchData {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double rollerTorque;
     private double loadCell;
