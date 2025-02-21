@@ -11,6 +11,7 @@ public class TestBenchData {
     private Long id;
     private double rollerTorque;
     private double loadCell;
+    private double rol;
     private int loadPower;
     private boolean statusPlug;
     @ManyToOne

@@ -1,10 +1,10 @@
 package be.kdg.swiftby.domain.testEnv;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.Set;
+
 @Entity
 @Data
 public class Facility {
@@ -14,4 +14,6 @@ public class Facility {
     private String name;
     private String address;
     private String email;
+    @OneToMany(mappedBy = "facility")
+    private Set<Employee> employees;
 }

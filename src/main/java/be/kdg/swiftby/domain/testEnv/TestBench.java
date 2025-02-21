@@ -12,6 +12,7 @@ public class TestBench {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private boolean isActive;
     @ManyToOne
     @JoinColumn(name = "facility_id")
     private Facility facility;

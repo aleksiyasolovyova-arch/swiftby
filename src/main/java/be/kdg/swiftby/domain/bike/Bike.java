@@ -8,14 +8,14 @@ import java.util.Set;
 
 @Entity
 @Data
-public class EBike {
+public class Bike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String brand;
     private String type;
     private String chassisNumber;
-    private String powertrainBrand;
+    private POWERTRAIN powertrain;
     private BIKE_SIZE bikeSize;
     private int maxSupport;
     @OneToOne
@@ -29,7 +29,7 @@ public class EBike {
     //    private int actualTorque;
     //    private double actualPower;
 
-    @OneToMany(mappedBy = "eBike")
+    @OneToMany(mappedBy = "bike")
     private Set<BikeReport> reports;
 
 }

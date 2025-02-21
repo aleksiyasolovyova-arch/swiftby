@@ -1,6 +1,6 @@
 package be.kdg.swiftby.domain.report;
 
-import be.kdg.swiftby.domain.bike.EBike;
+import be.kdg.swiftby.domain.bike.Bike;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -34,6 +34,6 @@ public class BikeReport {
     @JoinColumn(name = "test_bench_data")
     private TestBenchData testBenchData;
     @ManyToOne
-    @JoinColumn(name = "ebike_id")
-    private EBike eBike;
+    @JoinColumn(name = "bike_id")
+    private Bike bike;
 }
