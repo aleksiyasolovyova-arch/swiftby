@@ -53,26 +53,25 @@ public class FileStorageService {
             log.info("File found: {}", fileName);
             return file;
         }
-
-        public List<String[]> readFile (String fileName){
-            File file = new File(UPLOAD_DIR + "/" + fileName);
-            if (!file.exists()) {
-                throw new RuntimeException("File not found: " + fileName);
-            }
-
-            List<String[]> data = new ArrayList<>();
-            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    String[] values = line.split(",");
-                    data.add(values);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException("Error reading file: " + e.getMessage());
-            }
-            return data;
-        }
+        return file;
     }
 
+    public List<String[]> readFile(String fileName) {
+        File file = new File(UPLOAD_DIR + "/" + fileName);
+        if (!file.exists()) {
+            throw new RuntimeException("File not found: " + fileName);
+        }
 
+        List<String[]> data = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                data.add(values);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error reading file: " + e.getMessage());
+        }
+        return data;
+    }
 }
