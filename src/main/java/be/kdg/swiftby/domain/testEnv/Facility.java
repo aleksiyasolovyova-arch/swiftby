@@ -22,6 +22,12 @@ public class Facility {
     @NonNull private String street;
     @NonNull private String streetNumber;
     @NonNull private String addressExtra;
+//    @OneToMany(mappedBy = "facility")
+//    private Set<Employee> employees;
     @OneToMany(mappedBy = "facility")
-    private Set<Employee> employees;
+    private Set<Administrator> admins;
+
+    @OneToMany(mappedBy = "facility")
+    private Set<Technician> technicians;
+
 }

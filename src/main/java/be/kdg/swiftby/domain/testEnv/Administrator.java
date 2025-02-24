@@ -27,4 +27,8 @@ import java.util.Set;
     @ManyToOne
     @NonNull
     private SuperAdmin superAdmin;
+
+    @ManyToOne
+    @JoinColumn(name = "facility_id")
+    private Facility facility;
 }
