@@ -1,9 +1,11 @@
 package be.kdg.swiftby.domain.testEnv;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+
 @MappedSuperclass
-@Data
+@Getter
+@Setter
 public abstract class SBUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

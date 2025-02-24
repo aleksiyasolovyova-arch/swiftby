@@ -2,12 +2,15 @@ package be.kdg.swiftby.domain.testEnv;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Technician extends Employee{
     @ManyToOne
-    private Administrator administrator;
+    @NonNull private Administrator administrator;
 }
