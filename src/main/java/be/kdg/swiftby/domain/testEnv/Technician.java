@@ -1,6 +1,7 @@
 package be.kdg.swiftby.domain.testEnv;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 
@@ -13,4 +14,7 @@ import lombok.*;
 public class Technician extends Employee{
     @ManyToOne
     @NonNull private Administrator administrator;
+    @ManyToOne
+    @JoinColumn(name = "facility_id")
+    private Facility facility;
 }
