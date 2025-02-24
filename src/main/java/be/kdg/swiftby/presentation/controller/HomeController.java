@@ -19,4 +19,9 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("csv")
+    public String csv() {
+        return "csv-upload";
+    }
+
 }
