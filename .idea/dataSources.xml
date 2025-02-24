@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="swift_by_db@localhost" uuid="413520e5-a453-4530-8522-37be4ab7b53a">
+    <data-source source="LOCAL" name="swift_by_db@localhost" uuid="500e9813-7a91-4325-8c67-ad2d2ddd9b8f">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
