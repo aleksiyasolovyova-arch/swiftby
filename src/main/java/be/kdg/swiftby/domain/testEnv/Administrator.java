@@ -1,13 +1,16 @@
 package be.kdg.swiftby.domain.testEnv;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+
 import java.util.Set;
 
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Administrator extends Employee{
     @OneToMany(mappedBy = "administrator")
     private Set<Technician> technicians;
@@ -20,5 +23,5 @@ public class Administrator extends Employee{
     )
     private Set<BikeOwner> bikeOwners;
     @ManyToOne
-    private SuperAdmin superAdmin;
+    @NonNull private SuperAdmin superAdmin;
 }
