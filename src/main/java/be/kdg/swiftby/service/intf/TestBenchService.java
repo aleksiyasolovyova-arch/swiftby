@@ -14,5 +14,7 @@ public interface TestBenchService {
 
     List<TestBench> getAllByFacilityId(Long id);
 
+    TestBench getByFacilityIdAndTestBenchId(Long facilityId, Long testBenchId);
+
     void removeAllByFacilityId(Long id);
 }

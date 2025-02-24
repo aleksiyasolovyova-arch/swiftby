@@ -1,10 +1,16 @@
 package be.kdg.swiftby.presentation.webapi;
 
-import be.kdg.swiftby.domain.testEnv.TestBench;
-import be.kdg.swiftby.presentation.webapi.dto.TestBenchMapper;
-import be.kdg.swiftby.presentation.webapi.dto.request.TestBenchDto;
+import be.kdg.swiftby.domain.exception.NotFoundException;
+import be.kdg.swiftby.presentation.webapi.dto.FacilityApiMapper;
+import be.kdg.swiftby.presentation.webapi.dto.TestBenchApiMapper;
+import be.kdg.swiftby.presentation.webapi.dto.request.FacilityApiRequestDto;
+import be.kdg.swiftby.presentation.webapi.dto.request.TestBenchApiRequestDto;
 import be.kdg.swiftby.service.intf.FacilityService;
 import be.kdg.swiftby.service.intf.TestBenchService;
+import org.apache.coyote.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,22 +20,78 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/facilities/{id}")
+@RequestMapping("api/facilities")
 public class FacilityApiController {
     FacilityService facilityService;
     TestBenchService testBenchService;
-    TestBenchMapper testBenchMapper;
+    TestBenchApiMapper testBenchApiMapper;
+    FacilityApiMapper facilityApiMapper;
 
-    public FacilityApiController(FacilityService facilityService, TestBenchService testBenchService, TestBenchMapper testBenchMapper) {
+    Logger log = LoggerFactory.getLogger(FacilityApiController.class);
+
+    public FacilityApiController(FacilityService facilityService, TestBenchService testBenchService,
+                                 TestBenchApiMapper testBenchApiMapper, FacilityApiMapper facilityApiMapper) {
         this.facilityService = facilityService;
         this.testBenchService = testBenchService;
-        this.testBenchMapper = testBenchMapper;
+        this.testBenchApiMapper = testBenchApiMapper;
+        this.facilityApiMapper = facilityApiMapper;
     }
 
-    @GetMapping("/testbenches")
-    public ResponseEntity<List<TestBenchDto>> getTestBenches(@PathVariable Long id) {
-        List<TestBenchDto> testBenches = testBenchMapper.toTestBenchDtoList(
-                testBenchService.getAllByFacilityId(id));
-        return ResponseEntity.ok(testBenches);
+    //facilities
+    @GetMapping("")
+    public ResponseEntity<List<FacilityApiRequestDto>> getAllFacilities() {
+        try {
+            List<FacilityApiRequestDto> facilities = facilityApiMapper.toFacilityApiRequestDtoList(
+                    facilityService.getAll());
+            return ResponseEntity.ok(facilities);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
     }
+
+    @GetMapping("{facilityId}")
+    public ResponseEntity<FacilityApiRequestDto> getFacilityById(@PathVariable Long facilityId) {
+        try {
+            FacilityApiRequestDto facility = facilityApiMapper.toFacilityApiRequestDto(
+                    facilityService.getById(facilityId));
+            return ResponseEntity.ok(facility);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+    }
+
+
+    //testbenches
+
+    @GetMapping("{facilityId}/testbenches")
+    public ResponseEntity<List<TestBenchApiRequestDto>> getAllTestBenchesByFacilityId(@PathVariable Long facilityId) {
+        try {
+            List<TestBenchApiRequestDto> testBenches = testBenchApiMapper.toTestBenchDtoList(
+                    testBenchService.getAllByFacilityId(facilityId));
+            return ResponseEntity.ok(testBenches);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("{facilityId}/testbenches/{testBenchId}")
+    public ResponseEntity<TestBenchApiRequestDto> getTestBench(@PathVariable Long facilityId, @PathVariable Long testBenchId) {
+        //todo check if logged in user has permission
+        try {
+            log.debug(String.format("Converting facilityId %s and testBenchId %s to testBenchDTO", facilityId, testBenchId));
+            TestBenchApiRequestDto testBench = testBenchApiMapper.toTestBenchDto(
+                    testBenchService.getByFacilityIdAndTestBenchId(facilityId, testBenchId));
+            return ResponseEntity.ok(testBench);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 }

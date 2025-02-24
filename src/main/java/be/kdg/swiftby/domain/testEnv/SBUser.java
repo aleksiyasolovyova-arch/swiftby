@@ -10,10 +10,10 @@ public abstract class SBUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
+    @NonNull private String email;
     //encrypted
-    private String password;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
+    @NonNull private String password;
+    @NonNull private String firstName;
+    @NonNull private String lastName;
+    @NonNull private String phoneNumber;
 }

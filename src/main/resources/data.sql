@@ -1,3 +1,7 @@
+INSERT INTO super_admin (email, first_name, last_name, password, phone_number) VALUES
+                                                                                   ('daniil.mumladze@student.kdg.be', 'Daniil', 'Mumladze', 'password', '0495123456'),
+                                                                                   ('mohammed-jan.jalloh@student.kdg.be', 'MJ', 'Jalloh', 'iLoveCookies123', '0492123456');
+
 INSERT INTO axial_sensor_data (horizontal_inclination, vertical_inclination) VALUES
                                                                                  (15.5, 30.2),
                                                                                  (10.3, 25.7),
@@ -13,7 +17,8 @@ INSERT INTO bike_owner (email, first_name, last_name, password, phone_number) VA
                                                                                   ('bob@example.com', 'Bob', 'Smith', 'securepass', '555-5678');
 
 INSERT INTO facility (address_extra, city, country, email, name, street, street_number, zip_code) VALUES
-    ('Unit 5', 'Springfield', 'USA', 'facility@example.com', 'Test Facility', 'Main St', '123', '98765');
+    ('Unit 5', 'Springfield', 'USA', 'facility@example.com', 'Test Facility', 'Main St', '123', '98765'),
+    ('Enter through garage', 'Stroempeltown', 'Belgica', 'storm.vanloon@student.kdg.be', 'StroempelRepairs', 'Stroempelstreet', '86', '2005');
 
 INSERT INTO motor (max_power, nominal_power, torque, engine_type, gear_type) VALUES
                                                                                  (500, 250, 100, 'Brushless', 'Automatic'),
@@ -33,7 +38,11 @@ INSERT INTO pedal_data (cadence, torque_crank) VALUES
 
 INSERT INTO test_bench (is_active, facility_id) VALUES
                                                     (TRUE, 1),
-                                                    (FALSE, 1);
+                                                    (FALSE, 1),
+                                                    (TRUE, 2),
+                                                    (FALSE, 2),
+                                                    (FALSE, 2)
+;
 INSERT INTO test_bench_data (load_cell, load_power, rol, roller_torque, status_plug, test_bench_id) VALUES
                                                                                                         (10.5, 150, 0.3, 20.4, TRUE, 1),
                                                                                                         (12.0, 200, 0.4, 25.7, FALSE, 2);

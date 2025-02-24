@@ -47,14 +47,29 @@ public class TestBenchServiceImpl implements TestBenchService {
 
     @Override
     public List<TestBench> getAllByFacilityId(Long id) {
-        List<TestBench> testbenches = testBenchRepository.findAllByFacilityId(id);
-        log.debug("Testbenches: " + testbenches);
-        return testbenches;
+        Facility facility = facilityRepository.findById(id)
+                .orElseThrow(() -> NotFoundException.forFacility(id));
+        List<TestBench> testBenches = testBenchRepository.findAllByFacility(facility);
+        log.debug(String.format("Got all testbenches for facility with id: %s - %s", id, testBenches));
+        return testBenches;
+    }
+
+    @Override
+    public TestBench getByFacilityIdAndTestBenchId(Long facilityId, Long testBenchId) {
+        Facility facility = facilityRepository.findById(facilityId)
+                .orElseThrow(() -> NotFoundException.forFacility(facilityId));
+        TestBench testBench = testBenchRepository.findByFacilityAndId(facility, testBenchId)
+                .orElseThrow(() -> NotFoundException.forTestBench(testBenchId));
+        log.debug(String.format("Got testbench for facility with id: %s -  %s", testBenchId, testBench));
+        return testBench;
     }
 
     @Override
     public void removeAllByFacilityId(Long id) {
-        testBenchRepository.removeAllByFacilityId(id);
+        Facility facility = facilityRepository.findById(id)
+                .orElseThrow(() -> NotFoundException.forFacility(id));
+        testBenchRepository.removeAllByFacility(facility);
+        log.debug(String.format("Removed all testbenches for facility with id: %s", id));
     }
 
 

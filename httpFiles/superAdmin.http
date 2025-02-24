@@ -1,0 +1,11 @@
+### get all superAdmins - 200
+GET http://localhost/api/superadmins
+Accept: application/json
+
+### get one existing superAdmin - 200
+GET http://localhost/api/superadmins/1
+Accept: application/json
+
+
+### get one non-existent superAdmin - 404
+GET http://localhost/api/superadmins/0

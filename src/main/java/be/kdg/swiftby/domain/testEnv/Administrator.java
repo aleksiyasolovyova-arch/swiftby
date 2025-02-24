@@ -10,7 +10,8 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor public class Administrator extends Employee {
+@RequiredArgsConstructor
+public class Administrator extends Employee {
 
     @OneToMany(mappedBy = "administrator")
     private Set<Technician> technicians;

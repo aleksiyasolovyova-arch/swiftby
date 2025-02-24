@@ -1,5 +1,40 @@
-### get all testbenches
+### get all facilities - 200
+GET http://localhost/api/facilities
+Accept: application/json
+
+### get one existing facility - 200
+GET http://localhost/api/facilities/1
+Accept: application/json
+
+### get one non-existing facility - 404
+GET http://localhost/api/facilities/0
+Accept: application/json
+
+
+### get all testbenches from existing facility - 200
 GET http://localhost/api/facilities/1/testbenches
 Accept: application/json
 
-###
+### get all testbenches from non-existing facility - 404
+GET http://localhost/api/facilities/0/testbenches
+Accept: application/json
+
+### get one existing testbench from existing facility - 200
+GET http://localhost/api/facilities/2/testbenches/3
+Accept: application/json
+
+### get one none-existing testbench from existing facility - 404
+GET http://localhost/api/facilities/1/testbenches/0
+Accept: application/json
+
+### get one existing testbench from non-existing facility - 404
+GET http://localhost/api/facilities/0/testbenches/3
+Accept: application/json
+
+
+### get one existing testbench from an existing facility that is not related - 404
+GET http://localhost/api/facilities/1/testbenches/3
+Accept: application/json
+
+
+

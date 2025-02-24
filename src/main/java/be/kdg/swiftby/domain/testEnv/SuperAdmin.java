@@ -9,9 +9,13 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-//@RequiredArgsConstructor
 @NoArgsConstructor
 public class SuperAdmin extends SBUser {
     @OneToMany(mappedBy= "superAdmin")
     private Set<Administrator> administrators;
+
+
+    public SuperAdmin(String email, String password, String firstName, String lastName, String phoneNumber) {
+        super();
+    }
 }

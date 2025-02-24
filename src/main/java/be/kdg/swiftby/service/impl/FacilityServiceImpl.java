@@ -2,6 +2,7 @@ package be.kdg.swiftby.service.impl;
 
 import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.testEnv.Facility;
+import be.kdg.swiftby.presentation.webapi.dto.response.FacilityApiResponseDto;
 import be.kdg.swiftby.repository.testEnvironment.FacilityRepository;
 import be.kdg.swiftby.service.dto.FacilityDto;
 import be.kdg.swiftby.service.dto.mapper.FacilityMapper;
@@ -31,8 +32,8 @@ public class FacilityServiceImpl implements FacilityService {
     }
 
     @Override
-    public Facility save(FacilityDto facilityDto) {
-        return facilityRepository.save(facilityMapper.toFacility(facilityDto));
+    public Facility save(FacilityApiResponseDto facilityApiResponseDto) {
+        return facilityRepository.save(facilityMapper.toFacility(facilityApiResponseDto));
     }
 
     @Override
