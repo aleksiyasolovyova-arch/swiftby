@@ -18,7 +18,7 @@ public class Administrator extends Employee{
             joinColumns = @JoinColumn(name = "admin_id"),
             inverseJoinColumns = @JoinColumn(name = "customer_id")
     )
-    private Set<Customer> customers;
+    private Set<BikeOwner> bikeOwners;
     @ManyToOne
-    private SystemAdmin systemAdmin;
+    private SuperAdmin superAdmin;
 }

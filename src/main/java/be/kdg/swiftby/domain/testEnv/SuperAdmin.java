@@ -8,7 +8,7 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SystemAdmin extends SBUser {
+public class SuperAdmin extends SBUser {
     @OneToMany(mappedBy= "systemAdmin")
     private Set<Administrator> administrators;
 }
