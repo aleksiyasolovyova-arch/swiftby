@@ -38,10 +38,14 @@ public class FileStorageService {
             throw new RuntimeException("Failed to store file: " + e.getMessage());
         }
     }
+    public boolean isFileValid(String fileName) {
+        File file = new File(UPLOAD_DIR + "/" + fileName);
+        return file.exists() && file.length() > 0;
+    }
 
     public File getFile(String fileName) {
         File file = new File(UPLOAD_DIR + "/" + fileName);
-        if(!file.exists()) {
+        if (!file.exists()) {
             throw new RuntimeException("File not found: " + fileName);
         }
         return file;
