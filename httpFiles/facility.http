@@ -1,0 +1,5 @@
+### get all testbenches
+GET http://localhost/api/facilities/1/testbenches
+Accept: application/json
+
+###

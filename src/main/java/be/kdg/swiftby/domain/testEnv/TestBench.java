@@ -11,6 +11,7 @@ import java.util.Set;
 @Setter
 @RequiredArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"testBenchData"})
 public class TestBench {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -11,4 +11,8 @@ public interface TestBenchService {
     TestBench save(Boolean isActive, Facility facility);
 
     void remove(Long id);
+
+    List<TestBench> getAllByFacilityId(Long id);
+
+    void removeAllByFacilityId(Long id);
 }
