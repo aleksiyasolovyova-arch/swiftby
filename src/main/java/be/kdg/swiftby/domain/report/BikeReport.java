@@ -11,7 +11,7 @@ public class BikeReport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate dateTime;
+    private LocalDate reportTime;
     private int mileage;
     private int assistanceLevel;
     private String technicianComment;

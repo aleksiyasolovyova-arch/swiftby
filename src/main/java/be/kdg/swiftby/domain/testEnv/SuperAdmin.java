@@ -9,9 +9,9 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @NoArgsConstructor
 public class SuperAdmin extends SBUser {
-    @OneToMany(mappedBy= "systemAdmin")
+    @OneToMany(mappedBy= "superAdmin")
     private Set<Administrator> administrators;
 }
