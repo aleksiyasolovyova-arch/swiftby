@@ -13,8 +13,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class Administrator extends Employee {
 
-    @OneToMany(mappedBy = "administrator")
-    private Set<Technician> technicians;
 
     // TODO: CREATE AN INTERMEDIATE CLASS FOR THIS AND NOT USE MANY_TO_MANY ANNOTATION
     @ManyToMany

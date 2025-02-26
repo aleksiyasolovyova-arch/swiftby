@@ -9,12 +9,13 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-@RequiredArgsConstructor
 @NoArgsConstructor
 public class Technician extends Employee{
     @ManyToOne
-    @NonNull private Administrator administrator;
-    @ManyToOne
     @JoinColumn(name = "facility_id")
     private Facility facility;
+
+    public Technician(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber) {
+        super();
+    }
 }

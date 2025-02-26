@@ -1,11 +1,17 @@
 package be.kdg.swiftby.presentation.webapi;
 
 import be.kdg.swiftby.domain.exception.NotFoundException;
+import be.kdg.swiftby.domain.testEnv.Technician;
+import be.kdg.swiftby.presentation.webapi.dto.AdministratorApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.FacilityApiMapper;
+import be.kdg.swiftby.presentation.webapi.dto.TechnicianApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.TestBenchApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.request.FacilityApiRequestDto;
+import be.kdg.swiftby.presentation.webapi.dto.request.TechnicianApiRequestDto;
 import be.kdg.swiftby.presentation.webapi.dto.request.TestBenchApiRequestDto;
+import be.kdg.swiftby.service.intf.AdministratorService;
 import be.kdg.swiftby.service.intf.FacilityService;
+import be.kdg.swiftby.service.intf.TechnicianService;
 import be.kdg.swiftby.service.intf.TestBenchService;
 import org.apache.coyote.Response;
 import org.slf4j.Logger;
@@ -24,17 +30,26 @@ import java.util.List;
 public class FacilityApiController {
     FacilityService facilityService;
     TestBenchService testBenchService;
+    TechnicianService technicianService;
+    AdministratorService administratorService;
+
     TestBenchApiMapper testBenchApiMapper;
     FacilityApiMapper facilityApiMapper;
 
+    TechnicianApiMapper technicianApiMapper;
+    AdministratorApiMapper administratorApiMapper;
+
     Logger log = LoggerFactory.getLogger(FacilityApiController.class);
 
-    public FacilityApiController(FacilityService facilityService, TestBenchService testBenchService,
-                                 TestBenchApiMapper testBenchApiMapper, FacilityApiMapper facilityApiMapper) {
+    public FacilityApiController(FacilityService facilityService, TestBenchService testBenchService, TechnicianService technicianService, AdministratorService administratorService, TestBenchApiMapper testBenchApiMapper, FacilityApiMapper facilityApiMapper, TechnicianApiMapper technicianApiMapper, AdministratorApiMapper administratorApiMapper) {
         this.facilityService = facilityService;
         this.testBenchService = testBenchService;
+        this.technicianService = technicianService;
+        this.administratorService = administratorService;
         this.testBenchApiMapper = testBenchApiMapper;
         this.facilityApiMapper = facilityApiMapper;
+        this.technicianApiMapper = technicianApiMapper;
+        this.administratorApiMapper = administratorApiMapper;
     }
 
     //facilities
@@ -66,7 +81,6 @@ public class FacilityApiController {
 
 
     //testbenches
-
     @GetMapping("{facilityId}/testbenches")
     public ResponseEntity<List<TestBenchApiRequestDto>> getAllTestBenchesByFacilityId(@PathVariable Long facilityId) {
         try {
@@ -87,6 +101,35 @@ public class FacilityApiController {
             TestBenchApiRequestDto testBench = testBenchApiMapper.toTestBenchDto(
                     testBenchService.getByFacilityIdAndTestBenchId(facilityId, testBenchId));
             return ResponseEntity.ok(testBench);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    //technicians
+    @GetMapping("{facilityId}/technicians")
+    public ResponseEntity<List<TechnicianApiRequestDto>> getAllTechnicians(@PathVariable Long facilityId) {
+        try {
+            List<TechnicianApiRequestDto> technicians = technicianApiMapper.toTechnicianApiRequestDtoList(
+                    technicianService.getAllByFacilityId(facilityId)
+            );
+            return ResponseEntity.ok(technicians);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("{facilityId}/technicians/{technicianId}")
+    public ResponseEntity<TechnicianApiRequestDto> getTechnician(@PathVariable Long facilityId, @PathVariable Long technicianId) {
+        try {
+            TechnicianApiRequestDto technician = technicianApiMapper.toTechnicianApiRequestDto(
+                    //todo fix lazy relation with administrator
+                    technicianService.getByFacilityIdAndTechnicianId(facilityId, technicianId)
+            );
+            return ResponseEntity.ok(technician);
         } catch (NotFoundException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

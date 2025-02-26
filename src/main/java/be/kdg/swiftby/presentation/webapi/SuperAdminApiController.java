@@ -33,7 +33,7 @@ public class SuperAdminApiController {
     @GetMapping("")
     public ResponseEntity<List<SuperAdminApiRequestDto>> getAllSuperAdmins() {
         List<SuperAdminApiRequestDto> superAdmins = superAdminApiMapper.toSuperAdminApiRequestDtoList(superAdminService.getAll());
-        log.debug(String.format("SuperAdmins: %s", superAdmins));
+        log.debug("SuperAdmins: {}", superAdmins);
         return ResponseEntity.ok(superAdmins);
     }
 

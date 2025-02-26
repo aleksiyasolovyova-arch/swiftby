@@ -10,7 +10,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SuperAdmin extends SBUser {
+public class SuperAdmin extends User {
     @OneToMany(mappedBy= "superAdmin")
     private Set<Administrator> administrators;
 

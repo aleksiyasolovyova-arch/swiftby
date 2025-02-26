@@ -6,7 +6,7 @@ import lombok.*;
 @MappedSuperclass
 @Getter
 @Setter
-public abstract class SBUser {
+public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
