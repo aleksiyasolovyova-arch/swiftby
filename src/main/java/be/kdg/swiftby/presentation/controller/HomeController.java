@@ -19,9 +19,13 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("csv")
+    @GetMapping("csv/upload")
     public String csv() {
         return "csv-upload";
+    }
+    @GetMapping("csv/read")
+    public String csvRead() {
+        return "csv-read";
     }
 
 }
