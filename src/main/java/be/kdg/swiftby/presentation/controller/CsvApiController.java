@@ -1,6 +1,7 @@
 package be.kdg.swiftby.presentation.controller;
 
 import be.kdg.swiftby.csv.FileStorageService;
+import be.kdg.swiftby.service.intf.BikeReportService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,8 +18,9 @@ public class CsvApiController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("csv") MultipartFile file) {
-        String message = fileStorageService.storeFile(file);
+    public ResponseEntity<String> uploadFile(@RequestParam("csv") MultipartFile csv) {
+
+        String message = fileStorageService.storeFile(csv);
         return ResponseEntity.ok(message);
     }
 
