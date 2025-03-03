@@ -1,0 +1,222 @@
+Index: src/main/resources/templates/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Welcome</title>\n</head>\n<body>\n\n<h1>\n  Hi\n</h1>\n</body>\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/templates/index.html b/src/main/resources/templates/index.html
+--- a/src/main/resources/templates/index.html	(revision 47437bfd78c6e5ac0cc1359bec395c720e26ee16)
++++ b/src/main/resources/templates/index.html	(date 1740759254037)
+@@ -1,13 +1,18 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+-  <meta charset="UTF-8">
+-  <title>Welcome</title>
++    <meta charset="UTF-8">
++    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
++    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
++    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
++    <title>Welcome</title>
+ </head>
+ <body>
+ 
+-<h1>
+-  Hi
+-</h1>
++<header th:insert="~{fragments/header::header}"></header>
++
++<nav th:insert="~{fragments/sidebar::sidebar}"></nav>
++
++<header th:insert="~{fragments/footer::footer}"></header>
+ </body>
+ </html>
+\ No newline at end of file
+Index: src/main/resources/templates/fragments/header.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/templates/fragments/header.html b/src/main/resources/templates/fragments/header.html
+new file mode 100644
+--- /dev/null	(date 1740759254055)
++++ b/src/main/resources/templates/fragments/header.html	(date 1740759254055)
+@@ -0,0 +1,45 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
++    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
++    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
++    <title>Header</title>
++</head>
++<body>
++
++<header th:fragment="header">
++    <nav class="navbar navbar-expand-lg bg-light">
++        <div class="container-fluid">
++            <div class="d-flex ">
++                <a class="nav-link mx-1 " href="#">Link 1</a>
++                <a class="nav-link mx-1" href="#">Link 2 </a>
++                <div class="nav-item dropdown">
++                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
++                       aria-expanded="false">
++                        More Links
++                    </a>
++                    <ul class="dropdown-menu">
++                        <li><a class="dropdown-item" href="#">Resource 1</a></li>
++                        <li><a class="dropdown-item" href="#">Resource 2</a></li>
++                    </ul>
++                </div>
++            </div>
++
++            <div class="mx-auto">
++                <a class="navbar-brand fw-bold" href="#">Company Logo</a>
++            </div>
++
++            <div class="d-flex mx-1">
++                <a class=" btn btn-outline-dark  mx-1" href="#">Docs</a>
++                <button class="btn btn-outline-dark">Get Started</button>
++            </div>
++
++        </div>
++    </nav>
++</header>
++
++
++</body>
++</html>
+\ No newline at end of file
+Index: src/main/resources/templates/fragments/footer.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/templates/fragments/footer.html b/src/main/resources/templates/fragments/footer.html
+new file mode 100644
+--- /dev/null	(date 1740759254066)
++++ b/src/main/resources/templates/fragments/footer.html	(date 1740759254066)
+@@ -0,0 +1,75 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
++    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
++    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
++    <title>Footer</title>
++</head>
++<body>
++
++<footer th:fragment="footer">
++    <footer class="bg-light text-dark pt-5 pb-4">
++        <div class="container text-center text-md-start">
++
++            <div class="text-center mb-4">
++                <h3>Newsletter Sign Up</h3>
++                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
++                <div class="d-flex justify-content-center">
++                    <input type="email" class="form-control w-25 me-2" placeholder="Enter your email">
++                    <button class="btn btn-outline-dark">Subscribe</button>
++                </div>
++            </div>
++
++            <hr>
++
++            <div class="row">
++
++                <div class="col-md-3 mb-3">
++                    <h5 class="fw-bold">Company Logo</h5>
++                </div>
++
++                <div class="col-md-3 mb-3">
++                    <h6 class="fw-bold">COMPANY</h6>
++                    <ul class="list-unstyled">
++                        <li><a href="#" class="text-decoration-none text-dark">How It Works</a></li>
++                        <li><a href="#" class="text-decoration-none text-dark">Pricing</a></li>
++                    </ul>
++                </div>
++
++                <div class="col-md-3 mb-3">
++                    <h6 class="fw-bold">RESOURCES</h6>
++                    <ul class="list-unstyled">
++                        <li><a href="#" class="text-decoration-none text-dark">Blog Post Name List Goes Here</a></li>
++                        <li><a href="#" class="text-decoration-none text-dark fw-bold">See All Resources ></a></li>
++                    </ul>
++                </div>
++
++                <div class="col-md-3 mb-3">
++                    <h6 class="fw-bold">ABOUT</h6>
++                    <ul class="list-unstyled">
++                        <li><a href="#" class="text-decoration-none text-dark">Terms & Conditions</a></li>
++                        <li><a href="#" class="text-decoration-none text-dark">Privacy Policy</a></li>
++                    </ul>
++
++                    <div>
++                        <a href="#" class="me-2 text-dark"><i class="bi bi-twitter"></i></a>
++                        <a href="#" class="me-2 text-dark"><i class="bi bi-linkedin"></i></a>
++                        <a href="#" class="text-dark"><i class="bi bi-facebook"></i></a>
++                    </div>
++                </div>
++
++            </div>
++
++            <hr>
++
++            <div class="text-center">
++                <p class="mb-0">Copyright © 2025 KdG</p>
++            </div>
++
++        </div>
++    </footer>
++
++</body>
++</html>
+\ No newline at end of file
+Index: src/main/resources/templates/fragments/sidebar.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/templates/fragments/sidebar.html b/src/main/resources/templates/fragments/sidebar.html
+new file mode 100644
+--- /dev/null	(date 1740759254076)
++++ b/src/main/resources/templates/fragments/sidebar.html	(date 1740759254076)
+@@ -0,0 +1,34 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <title>Title</title>
++    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
++    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
++    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
++</head>
++<body>
++
++<div th:fragment="sidebar">
++    <button class="btn btn-primary floating-button" type="button" data-bs-toggle="offcanvas"
++            data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
++        <i class="bi bi-1-circle"></i>
++    </button>
++
++
++    <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
++         id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" th:fragment="sidebar">
++        <div class="offcanvas-header">
++            <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Colored with scrolling</h5>
++            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
++        </div>
++        <div class="offcanvas-body">
++            <p>Try scrolling the rest of the page to see this option in action.</p>
++        </div>
++    </div>
++
++</div>
++
++
++</body>
++</html>
+\ No newline at end of file
