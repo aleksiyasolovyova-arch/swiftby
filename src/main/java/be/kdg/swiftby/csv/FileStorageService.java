@@ -1,9 +1,6 @@
 package be.kdg.swiftby.csv;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,10 +35,6 @@ public class FileStorageService {
         }
     }
 
-    public boolean isFileValid(String fileName) {
-        File file = new File(UPLOAD_DIR + "/" + fileName);
-        return file.exists() && file.length() > 0;
-    }
 
     public File getFile(String fileName) {
         File file = new File(UPLOAD_DIR + "/" + fileName);

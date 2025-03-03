@@ -27,6 +27,10 @@ public class HomeController {
     public String csvRead() {
         return "csv-read";
     }
+    @GetMapping("csv/results")
+    public String csvResults() {
+        return "csv-results-temporary";
+    }
 
 
 }

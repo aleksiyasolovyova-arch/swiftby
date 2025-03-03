@@ -1,6 +1,7 @@
 package be.kdg.swiftby.presentation.controller;
 
 import be.kdg.swiftby.csv.FileStorageService;
+import be.kdg.swiftby.domain.report.BikeReport;
 import be.kdg.swiftby.service.intf.BikeReportService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,12 +10,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/files")
+@RequestMapping("/api/csv")
 public class CsvApiController {
     private final FileStorageService fileStorageService;
+    private final BikeReportService bikeReportService;
 
-    public CsvApiController(FileStorageService fileStorageService) {
+    public CsvApiController(FileStorageService fileStorageService, BikeReportService bikeReportService) {
         this.fileStorageService = fileStorageService;
+        this.bikeReportService = bikeReportService;
     }
 
     @PostMapping("/upload")
@@ -29,4 +32,12 @@ public class CsvApiController {
         List<String[]> data = fileStorageService.readFile(fileName);
         return ResponseEntity.ok(data);
     }
+
+    @GetMapping("/results")
+    public List<BikeReport> getBikeResults(){
+        return bikeReportService.getAll();
+    }
+
+
+
 }

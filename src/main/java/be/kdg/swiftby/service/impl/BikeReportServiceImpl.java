@@ -15,21 +15,10 @@ import java.util.List;
 public class BikeReportServiceImpl implements BikeReportService {
 
     private final BikeReportRepository bikeReportRepository;
-    private final AxialSensorDataRepository axialSensorDataRepository;
-    private final BatteryDataRepository batteryDataRepository;
-    private final MotorDataRepository motorDataRepository;
-    private final PedalDataRepository pedalDataRepository;
-    private final TestBenchDataRepository testBenchDataRepository;
 
-    public BikeReportServiceImpl(BikeReportRepository bikeReportRepository, AxialSensorDataRepository axialSensorDataRepository, BatteryDataRepository batteryDataRepository, MotorDataRepository motorDataRepository, PedalDataRepository pedalDataRepository, TestBenchDataRepository testBenchDataRepository) {
+    public BikeReportServiceImpl(BikeReportRepository bikeReportRepository) {
         this.bikeReportRepository = bikeReportRepository;
-        this.axialSensorDataRepository = axialSensorDataRepository;
-        this.batteryDataRepository = batteryDataRepository;
-        this.motorDataRepository = motorDataRepository;
-        this.pedalDataRepository = pedalDataRepository;
-        this.testBenchDataRepository = testBenchDataRepository;
     }
-
 
     @Override
     public List<BikeReport> getAll() {
