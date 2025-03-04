@@ -3,7 +3,7 @@ GET http://localhost/api/superadmins
 Accept: application/json
 
 ### get one existing superAdmin - 200
-GET http://localhost/api/superadmins/1
+GET http://localhost:8080/api/superadmins/1
 Accept: application/json
 
 
