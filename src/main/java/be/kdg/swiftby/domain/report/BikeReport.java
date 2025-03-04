@@ -5,35 +5,53 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+
 @Entity
 @Data
 public class BikeReport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate dateTime;
+    private LocalDate reportTime;
     private int mileage;
     private int assistanceLevel;
     private String technicianComment;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "motor_data_id")
     private MotorData motorData;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "wheel_data_id")
     private WheelData wheelData;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "battery_data_id")
     private BatteryData batteryData;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "pedal_data_id")
     private PedalData pedalData;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "axial_sensor_data_id")
     private AxialSensorData axialSensorData;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "test_bench_data")
     private TestBenchData testBenchData;
     @ManyToOne
     @JoinColumn(name = "bike_id")
     private Bike bike;
+
+    public BikeReport() {
+    }
+
+
+    public BikeReport(LocalDate reportTime, int mileage, int assistanceLevel, String technicianComment, AxialSensorData axialSensorData, BatteryData batteryData, MotorData motorData, PedalData pedalData, TestBenchData testBenchData, WheelData wheelData) {
+        this.reportTime = reportTime;
+        this.mileage = mileage;
+        this.assistanceLevel = assistanceLevel;
+        this.technicianComment = technicianComment;
+        this.axialSensorData = axialSensorData;
+        this.batteryData = batteryData;
+        this.motorData = motorData;
+        this.pedalData = pedalData;
+        this.testBenchData = testBenchData;
+        this.wheelData = wheelData;
+    }
 }
