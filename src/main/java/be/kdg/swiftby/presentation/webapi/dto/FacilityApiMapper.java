@@ -1,10 +1,8 @@
 package be.kdg.swiftby.presentation.webapi.dto;
 
 import be.kdg.swiftby.domain.testEnv.Facility;
-import be.kdg.swiftby.presentation.webapi.dto.request.FacilityApiRequestDto;
-import be.kdg.swiftby.service.dto.FacilityDto;
+import be.kdg.swiftby.presentation.webapi.dto.response.FacilityApiRequestDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 

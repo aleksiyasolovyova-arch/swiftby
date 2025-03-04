@@ -8,8 +8,10 @@ import java.util.List;
 
 public interface BikeReportService {
     List<BikeReport> getAll();
+    List<BikeReport> getAllWithBikes();
     BikeReport getById(Long id);
     BikeReport save(
+            Long bikeId,
             LocalDate reportTime,
             int mileage,
             int assistanceLevel,

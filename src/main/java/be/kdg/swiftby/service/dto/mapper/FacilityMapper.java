@@ -1,10 +1,8 @@
 package be.kdg.swiftby.service.dto.mapper;
 
 import be.kdg.swiftby.domain.testEnv.Facility;
-import be.kdg.swiftby.presentation.webapi.dto.response.FacilityApiResponseDto;
-import be.kdg.swiftby.service.dto.FacilityDto;
+import be.kdg.swiftby.presentation.webapi.dto.request.FacilityApiResponseDto;
 import org.mapstruct.Mapper;
-import org.springframework.boot.SpringApplication;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 

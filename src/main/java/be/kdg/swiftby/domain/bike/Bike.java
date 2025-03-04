@@ -11,6 +11,7 @@ import java.util.Set;
 @Setter
 @RequiredArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "reports")
 public class Bike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
