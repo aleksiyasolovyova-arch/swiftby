@@ -35,7 +35,6 @@ public class BikeReportServiceImpl implements BikeReportService {
     TestBenchDataMapper testBenchDataMapper;
     WheelDataMapper wheelDataMapper;
 
-
     @Override
     public List<BikeReport> getAll() {
         return bikeReportRepository.findAll();
