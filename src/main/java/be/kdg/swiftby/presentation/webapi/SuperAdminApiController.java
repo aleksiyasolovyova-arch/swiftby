@@ -1,10 +1,8 @@
 package be.kdg.swiftby.presentation.webapi;
 
 import be.kdg.swiftby.domain.exception.NotFoundException;
-import be.kdg.swiftby.domain.testEnv.SuperAdmin;
 import be.kdg.swiftby.presentation.webapi.dto.SuperAdminApiMapper;
-import be.kdg.swiftby.presentation.webapi.dto.request.SuperAdminApiRequestDto;
-import be.kdg.swiftby.repository.testEnvironment.SuperAdminRepository;
+import be.kdg.swiftby.presentation.webapi.dto.response.SuperAdminApiRequestDto;
 import be.kdg.swiftby.service.intf.SuperAdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

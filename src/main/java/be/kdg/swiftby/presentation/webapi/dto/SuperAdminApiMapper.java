@@ -1,7 +1,7 @@
 package be.kdg.swiftby.presentation.webapi.dto;
 
 import be.kdg.swiftby.domain.testEnv.SuperAdmin;
-import be.kdg.swiftby.presentation.webapi.dto.request.SuperAdminApiRequestDto;
+import be.kdg.swiftby.presentation.webapi.dto.response.SuperAdminApiRequestDto;
 import org.mapstruct.Mapper;
 
 import java.util.List;

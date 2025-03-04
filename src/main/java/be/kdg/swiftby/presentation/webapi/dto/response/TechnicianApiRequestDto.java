@@ -1,6 +1,4 @@
-package be.kdg.swiftby.presentation.webapi.dto.request;
-
-import be.kdg.swiftby.domain.testEnv.Facility;
+package be.kdg.swiftby.presentation.webapi.dto.response;
 
 public record TechnicianApiRequestDto(Long facilityId, Long id, String email, String password, String firstName, String lastName, String phoneNumber) {
 }

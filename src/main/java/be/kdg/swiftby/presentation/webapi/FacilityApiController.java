@@ -1,19 +1,17 @@
 package be.kdg.swiftby.presentation.webapi;
 
 import be.kdg.swiftby.domain.exception.NotFoundException;
-import be.kdg.swiftby.domain.testEnv.Technician;
 import be.kdg.swiftby.presentation.webapi.dto.AdministratorApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.FacilityApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.TechnicianApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.TestBenchApiMapper;
-import be.kdg.swiftby.presentation.webapi.dto.request.FacilityApiRequestDto;
-import be.kdg.swiftby.presentation.webapi.dto.request.TechnicianApiRequestDto;
-import be.kdg.swiftby.presentation.webapi.dto.request.TestBenchApiRequestDto;
+import be.kdg.swiftby.presentation.webapi.dto.response.FacilityApiRequestDto;
+import be.kdg.swiftby.presentation.webapi.dto.response.TechnicianApiRequestDto;
+import be.kdg.swiftby.presentation.webapi.dto.response.TestBenchApiRequestDto;
 import be.kdg.swiftby.service.intf.AdministratorService;
 import be.kdg.swiftby.service.intf.FacilityService;
 import be.kdg.swiftby.service.intf.TechnicianService;
 import be.kdg.swiftby.service.intf.TestBenchService;
-import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
 package be.kdg.swiftby.presentation.webapi.dto;
 
 import be.kdg.swiftby.domain.testEnv.Technician;
-import be.kdg.swiftby.presentation.webapi.dto.request.TechnicianApiRequestDto;
+import be.kdg.swiftby.presentation.webapi.dto.response.TechnicianApiRequestDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

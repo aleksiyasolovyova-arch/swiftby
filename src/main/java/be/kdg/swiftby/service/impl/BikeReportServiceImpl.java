@@ -1,24 +1,40 @@
 package be.kdg.swiftby.service.impl;
 
+import be.kdg.swiftby.domain.bike.Bike;
+import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.report.*;
+import be.kdg.swiftby.repository.bike.BikeRepository;
 import be.kdg.swiftby.repository.report.*;
 import be.kdg.swiftby.service.dto.*;
+import be.kdg.swiftby.service.dto.mapper.*;
 import be.kdg.swiftby.service.intf.BikeReportService;
-import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
-@Transactional
+@AllArgsConstructor
 public class BikeReportServiceImpl implements BikeReportService {
 
-    private final BikeReportRepository bikeReportRepository;
+    BikeReportRepository bikeReportRepository;
+    BikeRepository bikeRepository;
 
-    public BikeReportServiceImpl(BikeReportRepository bikeReportRepository) {
-        this.bikeReportRepository = bikeReportRepository;
-    }
+    AxialSensorDataRepository axialSensorDataRepository;
+    BatteryDataRepository batteryDataRepository;
+    MotorDataRepository motorDataRepository;
+    PedalDataRepository pedalDataRepository;
+    TestBenchDataRepository testBenchDataRepository;
+    WheelDataRepository wheelDataRepository;
+
+    AxialSensorDataMapper axialSensorDataMapper;
+    BatteryDataMapper batteryDataMapper;
+    MotorDataMapper motorDataMapper;
+    PedalDataMapper pedalDataMapper;
+    TestBenchDataMapper testBenchDataMapper;
+    WheelDataMapper wheelDataMapper;
+
 
     @Override
     public List<BikeReport> getAll() {
@@ -26,34 +42,61 @@ public class BikeReportServiceImpl implements BikeReportService {
     }
 
     @Override
-    public BikeReport getById(Long id) {
-        return bikeReportRepository.findById(id).orElseThrow(() -> new RuntimeException("Bike report not found"));
+    public List<BikeReport> getAllWithBikes() {
+        return bikeReportRepository.getAllWithBikes();
     }
 
     @Override
-    public BikeReport save(LocalDate reportTime, int mileage, int assistanceLevel,
-                           String technicianComment, AxialSensorDataDto axialSensorDataDto,
-                           BatteryDataDto batteryDataDto, MotorDataDto motorDataDto,
-                           PedalDataDto pedalDataDto, TestBenchDataDto testBenchDataDto,
-                           WheelDataDto wheelDataDto) {
+    public BikeReport getById(Long id) {
+        return bikeReportRepository.findById(id)
+                .orElseThrow(()->NotFoundException.forBikeReport(id));
+    }
 
-        AxialSensorData axialSensorData = new AxialSensorData(axialSensorDataDto);
-        BatteryData batteryData = new BatteryData(batteryDataDto);
-        MotorData motorData = new MotorData(motorDataDto);
-        PedalData pedalData = new PedalData(pedalDataDto);
-        TestBenchData testBenchData = new TestBenchData(testBenchDataDto);
-        WheelData wheelData = new WheelData(wheelDataDto);
+    @Override
+    public BikeReport save(
+            Long bikeId,
+            LocalDate reportTime,
+            int mileage,
+            int assistanceLevel,
+            String technicianComment,
+            AxialSensorDataDto axialSensorDataDto,
+            BatteryDataDto batteryDataDto,
+            MotorDataDto motorDataDto,
+            PedalDataDto pedalDataDto,
+            TestBenchDataDto testBenchDataDto,
+            WheelDataDto wheelDataDto
+    ) {
+        Bike bike = bikeRepository.findById(bikeId)
+                .orElseThrow(()->NotFoundException.forBike(bikeId));
+        AxialSensorData axialSensorData = axialSensorDataRepository.save(axialSensorDataMapper.toAxialSensorData(axialSensorDataDto));
+        BatteryData batteryData = batteryDataRepository.save(batteryDataMapper.toBatteryData(batteryDataDto));
+        MotorData motorData = motorDataRepository.save(motorDataMapper.toMotorData(motorDataDto));
+        PedalData pedalData = pedalDataRepository.save(pedalDataMapper.toPedalData(pedalDataDto));
+        TestBenchData testBenchData = testBenchDataRepository.save(testBenchDataMapper.toTestBench(testBenchDataDto));
+        WheelData wheelData = wheelDataRepository.save(wheelDataMapper.toWheelData(wheelDataDto));
 
-        BikeReport bikeReport = new BikeReport(
-                null, 0, 0,
-                technicianComment, axialSensorData, batteryData,
-                motorData, pedalData, testBenchData, wheelData
-        );
+        BikeReport bikeReport = new BikeReport();
+        bikeReport.setReportTime(reportTime);
+        bikeReport.setMileage(mileage);
+        bikeReport.setAssistanceLevel(assistanceLevel);
+        bikeReport.setTechnicianComment(technicianComment);
+        bikeReport.setAxialSensorData(axialSensorData);
+        bikeReport.setBatteryData(batteryData);
+        bikeReport.setMotorData(motorData);
+        bikeReport.setPedalData(pedalData);
+        bikeReport.setTestBenchData(testBenchData);
+        bikeReport.setWheelData(wheelData);
+        bikeReport.setBike(bike);
         return bikeReportRepository.save(bikeReport);
     }
 
     @Override
     public void remove(Long id) {
-        bikeReportRepository.removeBikeReportById(id);
+        if (!bikeReportRepository.existsById(id)) {
+            throw NotFoundException.forBikeReport(id);
+        }
+        bikeReportRepository.deleteById(id);
     }
+
+
 }
