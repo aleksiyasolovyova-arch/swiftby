@@ -8,6 +8,7 @@ import be.kdg.swiftby.repository.report.*;
 import be.kdg.swiftby.service.dto.*;
 import be.kdg.swiftby.service.dto.mapper.*;
 import be.kdg.swiftby.service.intf.BikeReportService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@Transactional
 @AllArgsConstructor
 public class BikeReportServiceImpl implements BikeReportService {
 
