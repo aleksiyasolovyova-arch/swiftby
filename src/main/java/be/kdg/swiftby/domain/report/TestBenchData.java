@@ -22,11 +22,4 @@ public class TestBenchData {
     public TestBenchData() {
     }
 
-    public TestBenchData(TestBenchDataDto dto) {
-        this.rollerTorque = dto.rollerTorque();
-        this.loadCell = dto.loadCell();
-        this.rol = dto.rol();
-        this.loadPower = dto.loadPower();
-        this.statusPlug = dto.statusPlug();
-    }
 }

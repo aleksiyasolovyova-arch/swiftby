@@ -3,8 +3,10 @@ package be.kdg.swiftby.service.impl;
 import be.kdg.swiftby.domain.bike.Bike;
 import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.report.*;
+import be.kdg.swiftby.domain.testEnv.TestBench;
 import be.kdg.swiftby.repository.bike.BikeRepository;
 import be.kdg.swiftby.repository.report.*;
+import be.kdg.swiftby.repository.testEnvironment.TestBenchRepository;
 import be.kdg.swiftby.service.dto.*;
 import be.kdg.swiftby.service.dto.mapper.*;
 import be.kdg.swiftby.service.intf.BikeReportService;
@@ -22,6 +24,7 @@ public class BikeReportServiceImpl implements BikeReportService {
 
     BikeReportRepository bikeReportRepository;
     BikeRepository bikeRepository;
+    TestBenchRepository testBenchRepository;
 
     AxialSensorDataRepository axialSensorDataRepository;
     BatteryDataRepository batteryDataRepository;
@@ -29,6 +32,7 @@ public class BikeReportServiceImpl implements BikeReportService {
     PedalDataRepository pedalDataRepository;
     TestBenchDataRepository testBenchDataRepository;
     WheelDataRepository wheelDataRepository;
+
 
     AxialSensorDataMapper axialSensorDataMapper;
     BatteryDataMapper batteryDataMapper;
@@ -69,11 +73,16 @@ public class BikeReportServiceImpl implements BikeReportService {
     ) {
         Bike bike = bikeRepository.findById(bikeId)
                 .orElseThrow(()->NotFoundException.forBike(bikeId));
+        TestBench testBench = testBenchRepository.findById(testBenchDataDto.testBenchDataId())
+                .orElseThrow(() -> NotFoundException.forTestBench(testBenchDataDto.testBenchDataId()));
+
+        TestBenchData testBenchData = testBenchDataMapper.toTestBench(testBenchDataDto);
+        testBenchData.setTestBench(testBench);
+        testBenchData = testBenchDataRepository.save(testBenchData);
         AxialSensorData axialSensorData = axialSensorDataRepository.save(axialSensorDataMapper.toAxialSensorData(axialSensorDataDto));
         BatteryData batteryData = batteryDataRepository.save(batteryDataMapper.toBatteryData(batteryDataDto));
         MotorData motorData = motorDataRepository.save(motorDataMapper.toMotorData(motorDataDto));
         PedalData pedalData = pedalDataRepository.save(pedalDataMapper.toPedalData(pedalDataDto));
-        TestBenchData testBenchData = testBenchDataRepository.save(testBenchDataMapper.toTestBench(testBenchDataDto));
         WheelData wheelData = wheelDataRepository.save(wheelDataMapper.toWheelData(wheelDataDto));
 
         BikeReport bikeReport = new BikeReport();

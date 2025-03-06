@@ -52,7 +52,10 @@ public class CsvService {
                         Double.parseDouble(record.get("Loadcell (N)")),
                         Double.parseDouble(record.get("Rol (Hz)")),
                         Integer.parseInt(record.get("Load Power (%)")),
-                        Integer.parseInt(record.get("Charge Status")) == 1
+                        Integer.parseInt(record.get("Charge Status")) == 1,
+                        // now the default test bench is 1
+                        // TODO: Change later when we can determine which test report corresponds to which test bench
+                        1L
                 );
 
                 WheelDataDto wheelDataDto = new WheelDataDto(
