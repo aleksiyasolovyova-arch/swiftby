@@ -70,11 +70,6 @@ public class CsvParserService {
                         Double.parseDouble(record.get("Wheel Power (W)"))
                 );
 
-                bikeReportService.save(
-                        reportTime, mileage, assistanceLevel, technicianComment,
-                        axialSensorDataDto, batteryDataDto, motorDataDto,
-                        pedalDataDto, testBenchDataDto, wheelDataDto
-                );
 
                 for (String header : headers) {
                     System.out.println(header + ": " + record.get(header));
