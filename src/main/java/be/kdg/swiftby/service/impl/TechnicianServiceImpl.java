@@ -45,10 +45,21 @@ public class TechnicianServiceImpl implements TechnicianService {
                 .orElseThrow(() -> NotFoundException.forTechnician(id));
     }
 
+
     @Override
-    public Technician saveTechnician(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber) {
-        return technicianRepository.save(new Technician(facility, email, password, firstName, lastName, phoneNumber));
+    public Technician saveTechnician(Facility facility,
+                                     String email,
+                                     String password,
+                                     String firstName,
+                                     String lastName,
+                                     String phoneNumber
+    ) {
+        return technicianRepository.findByEmail(email)
+                .orElseGet(() -> technicianRepository.save(
+                        new Technician(facility, email, password, firstName, lastName, phoneNumber)
+                ));
     }
+
 
     @Override
     public void removeTechnician(Long id) {

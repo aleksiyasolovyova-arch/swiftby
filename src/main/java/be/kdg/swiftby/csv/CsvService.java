@@ -5,14 +5,16 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.io.input.BOMInputStream;
 import org.springframework.stereotype.Service;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -79,4 +81,51 @@ public class CsvService {
         }
         return records;
     }
+
+    public List<BikeInfoCsvRecord> parseBikeInfoCsv(String filePath) throws IOException {
+        List<BikeInfoCsvRecord> records = new ArrayList<>();
+        try (BOMInputStream bomInputStream = new BOMInputStream(new FileInputStream(filePath));
+             Reader reader = new InputStreamReader(bomInputStream, StandardCharsets.UTF_8);
+             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
+                     .withDelimiter(';')
+                     .withFirstRecordAsHeader()
+                     .withIgnoreHeaderCase()
+                     .withTrim())) {
+
+            Map<String, String> headerMap = new HashMap<>();
+            csvParser.getHeaderMap().forEach((header, index) -> headerMap.put(header.trim(), header));
+
+            for (CSVRecord record : csvParser) {
+                BikeInfoCsvRecord bikeInfo = new BikeInfoCsvRecord(
+                        record.get(headerMap.get("Name Workshop")),
+                        record.get(headerMap.get("Location Workshop City")),
+                        record.get(headerMap.get("Location Workshop Country")),
+                        1L,
+                        record.get(headerMap.get("Review Date")),
+                        record.get(headerMap.get("First Name Mechanic")),
+                        record.get(headerMap.get("Last Name Mechanic")),
+                        record.get(headerMap.get("First Name Bike Owner")),
+                        record.get(headerMap.get("Last Name Bike Owner")),
+                        record.get(headerMap.get("Brand")),
+                        record.get(headerMap.get("Type")),
+                        record.get(headerMap.get("Chassisnumber")),
+                        record.get(headerMap.get("Production Date")),
+                        record.get(headerMap.get("Bike Size")),
+                        Integer.parseInt(record.get(headerMap.get("Mileage (km)"))),
+                        record.get(headerMap.get("Gear Type")),
+                        record.get(headerMap.get("Engine Type")),
+                        record.get(headerMap.get("Powertrain")),
+                        Integer.parseInt(record.get(headerMap.get("Accu Capacity (Wh)"))),
+                        Integer.parseInt(record.get(headerMap.get("Max Support (%)"))),
+                        Integer.parseInt(record.get(headerMap.get("Engine power - max (W)"))),
+                        Integer.parseInt(record.get(headerMap.get("Engine power - nominal (W)"))),
+                        Integer.parseInt(record.get(headerMap.get("Engine torque (Nm)")))
+                );
+
+                records.add(bikeInfo);
+            }
+        }
+        return records;
+    }
+
 }
