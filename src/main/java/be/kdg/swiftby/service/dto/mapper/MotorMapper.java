@@ -9,4 +9,5 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 @Mapper(componentModel = SPRING)
 public interface MotorMapper {
     Motor toMotor(MotorDto motorDto);
+    MotorDto toMotorDto(Motor motor);
 }

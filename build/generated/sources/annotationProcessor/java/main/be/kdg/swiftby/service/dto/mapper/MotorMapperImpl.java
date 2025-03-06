@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-02-28T21:18:33+0100",
+    date = "2025-03-06T14:29:48+0100",
     comments = "version: 1.6.3, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.12.1.jar, environment: Java 21.0.6 (Amazon.com Inc.)"
 )
 @Component
@@ -28,5 +28,34 @@ public class MotorMapperImpl implements MotorMapper {
         motor.setTorque( motorDto.torque() );
 
         return motor;
+    }
+
+    @Override
+    public MotorDto toMotorDto(Motor motor) {
+        if ( motor == null ) {
+            return null;
+        }
+
+        String engineType = null;
+        String gearType = null;
+        int maxPower = 0;
+        int nominalPower = 0;
+        int torque = 0;
+
+        engineType = motor.getEngineType();
+        gearType = motor.getGearType();
+        if ( motor.getMaxPower() != null ) {
+            maxPower = motor.getMaxPower();
+        }
+        if ( motor.getNominalPower() != null ) {
+            nominalPower = motor.getNominalPower();
+        }
+        if ( motor.getTorque() != null ) {
+            torque = motor.getTorque();
+        }
+
+        MotorDto motorDto = new MotorDto( engineType, gearType, maxPower, nominalPower, torque );
+
+        return motorDto;
     }
 }
