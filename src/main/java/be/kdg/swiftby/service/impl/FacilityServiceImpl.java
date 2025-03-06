@@ -4,6 +4,7 @@ import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.testEnv.Facility;
 import be.kdg.swiftby.presentation.webapi.dto.request.FacilityApiResponseDto;
 import be.kdg.swiftby.repository.testEnvironment.FacilityRepository;
+import be.kdg.swiftby.service.dto.FacilityDto;
 import be.kdg.swiftby.service.dto.mapper.FacilityMapper;
 import be.kdg.swiftby.service.intf.FacilityService;
 import org.springframework.stereotype.Service;
@@ -31,9 +32,14 @@ public class FacilityServiceImpl implements FacilityService {
     }
 
     @Override
-    public Facility save(FacilityApiResponseDto facilityApiResponseDto) {
-        return facilityRepository.save(facilityMapper.toFacility(facilityApiResponseDto));
+    public Facility save(FacilityDto facilityDto) {
+        return facilityRepository.findByNameAndCityAndCountry(
+                facilityDto.name(),
+                facilityDto.city(),
+                facilityDto.country()
+        ).orElseGet(() -> facilityRepository.save(facilityMapper.toFacility(facilityDto)));
     }
+
 
     @Override
     public void remove(Long id) {

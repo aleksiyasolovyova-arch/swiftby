@@ -55,7 +55,8 @@ public class BikeReportApiController {
                         requestDto.testBenchData().loadCell(),
                         requestDto.testBenchData().rol(),
                         requestDto.testBenchData().loadPower(),
-                        requestDto.testBenchData().statusPlug()),
+                        requestDto.testBenchData().statusPlug(),
+                        requestDto.testBenchData().testBenchId()),
                 new WheelDataDto(requestDto.wheelData().speed(),
                         requestDto.wheelData().power())
         );

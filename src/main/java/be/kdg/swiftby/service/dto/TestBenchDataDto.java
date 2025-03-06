@@ -5,6 +5,7 @@ public record TestBenchDataDto(
         double loadCell,
         double rol,
         int loadPower,
-        boolean statusPlug
+        boolean statusPlug,
+        Long testBenchDataId
 ) {
 }

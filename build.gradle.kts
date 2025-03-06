@@ -41,10 +41,10 @@ dependencies {
     implementation("org.webjars:bootstrap:5.3.3")
     implementation("org.webjars.npm:bootstrap-icons:1.11.3")
 
-    implementation("org.apache.commons:commons-csv:1.13.0")
     implementation("commons-io:commons-io:2.18.0")
     implementation("org.mapstruct:mapstruct:1.6.3")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
+
 }
 
 tasks.withType<Test> {
