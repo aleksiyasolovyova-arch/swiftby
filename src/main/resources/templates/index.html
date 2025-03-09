@@ -60,7 +60,7 @@
   </style>
 </head>
 <body>
-<header th:replace="fragments/header :: header"></header>
+<header th:replace="~{fragments/header :: header(${currentPage})}"></header>
 
 <section class="hero-section">
   <div class="container">

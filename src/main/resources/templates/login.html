@@ -3,7 +3,7 @@
 <head>
 </head>
 <body>
-<header th:replace="fragments/header :: header"></header>
+<header th:replace="~{fragments/header :: header(${currentPage})}"></header>
 <main class="container">
     <h1>Login</h1>
 
@@ -25,6 +25,9 @@
         <button type="submit" class="btn btn-primary">Log in</button>
     </form>
 </main>
+<div th:if="${param.error}" class="alert alert-danger">
+    Invalid username or password. Please try again.
+</div>
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>

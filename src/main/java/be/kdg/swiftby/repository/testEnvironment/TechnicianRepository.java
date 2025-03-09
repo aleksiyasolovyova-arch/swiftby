@@ -18,5 +18,6 @@ public interface TechnicianRepository extends JpaRepository<Technician, Long> {
     and f = :facility
 """)
     Optional<Technician> findByFacilityAndId(Facility facility, Long id);
+    Optional<Technician> findByEmail(String email);
     void deleteAllByFacilityId(Long id);
 }
