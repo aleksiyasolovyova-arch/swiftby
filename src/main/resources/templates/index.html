@@ -60,13 +60,13 @@
   </style>
 </head>
 <body>
-<header th:replace="~{fragments/header :: header(${currentPage})}"></header>
+<header th:insert="~{fragments/header :: header(${currentPage})}"></header>
 
 <section class="hero-section">
   <div class="container">
     <h1>BikeTrust</h1>
     <p>Revolutionizing E-Bike Testing, One Ride at a Time</p>
-    <p>BikeTrust brings precision testing to electric bicycles with <strong>eVALeBike</strong> — a cutting-edge test bench designed to simulate real-world riding conditions, ensuring the quality and performance of new, used, and remanufactured e-bikes.</p>
+    <p>BikeTrust brings precision testing to electric bicycles with <strong>eVALeBike</strong> — a cutting-edge test bench designed to simulate real-world riding conditions, ensuring the quality and performance of new, used, and re-manufactured e-bikes.</p>
     <a href="#" class="btn btn-primary">Get Started</a>
   </div>
 </section>
@@ -134,8 +134,6 @@
     </form>
   </div>
 </section>
-
-<footer th:replace="fragments/footer :: footer"></footer>
-
+<footer th:insert="~{fragments/footer :: footer}"></footer>
 </body>
 </html>

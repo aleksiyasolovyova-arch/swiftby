@@ -5,82 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}"/>
+    <link rel="stylesheet" th:href="@{../static/css/headerStyle.css}">
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
-    <title>footer</title>
-    <style>
-        :root {
-            --primary-color: #344a57;
-            --secondary-color: #5c7285;
-            --accent-color: #aed2e3;
-            --light-bg-color: #f5f7ff;
-            --cta-color: #fada7a;
-        }
-        footer {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 40px 0;
-        }
-
-        footer a {
-            color: white;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            color: var(--cta-color);
-        }
-
-        footer h4 {
-            color: var(--cta-color);
-        }
-
-        .footer-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .footer-logo a {
-            font-size: 1.5rem;
-            color: white;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            width: 60%;
-        }
-
-        .footer-links div {
-            width: 30%;
-        }
-
-        .footer-links ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .social-media a {
-            color: white;
-            font-size: 1.5rem;
-            margin: 0 10px;
-        }
-
-        .social-media a:hover {
-            color: var(--cta-color);
-        }
-
-        .copyright {
-            width: 100%;
-            text-align: center;
-            margin-top: 20px;
-            color: var(--accent-color);
-        }
-    </style>
+    <title>Footer</title>
 </head>
 <body>
+
 <footer th:fragment="footer">
     <div class="footer-container">
         <div class="footer-logo">
@@ -106,13 +36,13 @@
         </div>
 
         <div class="social-media">
-            <a href="/"><i class="fab fa-facebook"></i></a>
-            <a href="/"><i class="fab fa-twitter"></i></a>
-            <a href="/"><i class="fab fa-linkedin"></i></a>
+            <a href="/"><i class="bi bi-facebook"></i></a>
+            <a href="/"><i class="bi bi-twitter"></i></a>
+            <a href="/"><i class="bi bi-linkedin"></i></a>
         </div>
 
         <div class="copyright">
-            <p>&copy; 2025 SwiftBy</p>
+            <p>&copy; 2025 SwiftBy. All Rights Reserved.</p>
         </div>
     </div>
 </footer>

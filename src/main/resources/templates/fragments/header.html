@@ -1,3 +1,4 @@
+<!--TODO:Fix up the whole header file lmao-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
@@ -5,43 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}"/>
+    <link rel="stylesheet" th:href="@{../static/css/headerStyle.css}">
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
     <title>header</title>
-
-    <style>
-        :root {
-            --primary-color: #344a57;
-            --secondary-color: #5c7285;
-            --accent-color: #aed2e3;
-            --light-bg-color: #f5f7ff;
-            --cta-color: #fada7a;
-        }
-        .navbar {
-            background-color: var(--primary-color);
-        }
-
-        .navbar a {
-            color: #ffffff;
-        }
-
-        .navbar a:hover {
-            color: var(--cta-color);
-        }
-
-        .btn {
-            background-color: var(--cta-color);
-            color: #344a57;
-            border: none;
-        }
-
-        .btn:hover {
-            background-color: var(--secondary-color);
-        }
-
-        .nav-link.active {
-            color: var(--cta-color);
-        }
-    </style>
 </head>
 <body>
 <header th:fragment="header(currentPage)">
