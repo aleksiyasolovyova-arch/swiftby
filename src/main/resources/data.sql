@@ -25,7 +25,6 @@ INSERT INTO technician (facility_id, email, first_name, last_name, password, pho
                                                                                    (2, 'skaara.poncin@student.kdg.be', 'Skaara', 'Poncin', 'sk44ra', '+320497334455'),
                                                                                    (2, 'yoran.delcroix@student.kdg.be', 'Yoran', 'Delcroix', 'Breadbreaker', '+320498000000');
 
-
 INSERT INTO motor (max_power, nominal_power, torque, engine_type, gear_type) VALUES
                                                                                  (500, 250, 100, 'Brushless', 'Automatic'),
                                                                                  (600, 300, 120, 'Brushed', 'Manual');

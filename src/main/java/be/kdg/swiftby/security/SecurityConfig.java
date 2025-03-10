@@ -29,7 +29,8 @@ public class SecurityConfig {
     private UserDetailsService userDetailsService;
 
     @Bean
-    SecurityFilterChain securityFilterChain(final HttpSecurity httpSecurity, GlobalAuthenticationConfigurerAdapter enableGlobalAuthenticationAutowiredConfigurer) throws Exception {
+    SecurityFilterChain securityFilterChain(final HttpSecurity httpSecurity,
+                                            GlobalAuthenticationConfigurerAdapter enableGlobalAuthenticationAutowiredConfigurer) throws Exception {
         return httpSecurity
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/", "/login").permitAll()
@@ -73,5 +74,6 @@ public class SecurityConfig {
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
+
 
 }

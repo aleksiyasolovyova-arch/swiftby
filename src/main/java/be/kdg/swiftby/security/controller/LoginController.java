@@ -1,4 +1,4 @@
-package be.kdg.swiftby.security;
+package be.kdg.swiftby.security.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
