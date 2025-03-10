@@ -7,6 +7,7 @@ import com.postmarkapp.postmark.client.data.model.message.MessageResponse;
 import com.postmarkapp.postmark.client.data.model.messages.Attachment;
 import com.postmarkapp.postmark.client.exception.PostmarkException;
 import io.github.cdimascio.dotenv.Dotenv;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -20,6 +21,9 @@ public class EmailService {
 
     private final ApiClient apiClient;
 
+    @Value("${email}")
+    private String email;
+
     public EmailService() {
         Dotenv dotenv = Dotenv.load();
         String emailApi = dotenv.get("EMAIL_API");
@@ -29,7 +33,9 @@ public class EmailService {
     public void sendEmail(String to, String subject, String body, String attachmentPath) throws IOException, PostmarkException {
         Message message = new Message();
 
-        message.setFrom("mohamed-jan.jalloh@student.kdg.be");
+
+
+        message.setFrom(email);
         message.setTo(to);
         message.setSubject(subject);
         message.setTextBody(body);
