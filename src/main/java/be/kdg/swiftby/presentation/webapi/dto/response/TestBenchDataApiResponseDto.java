@@ -1,6 +1,6 @@
 package be.kdg.swiftby.presentation.webapi.dto.response;
 
-public record TestBenchDataDto(
+public record TestBenchDataApiResponseDto(
     double rollerTorque,
     double loadCell,
     double rol,

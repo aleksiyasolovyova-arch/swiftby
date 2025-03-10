@@ -1,6 +1,6 @@
 package be.kdg.swiftby.presentation.webapi.dto.response;
 
-public record BatteryDataDto(
+public record BatteryDataApiResponseDto(
     boolean chargeStatus,
     double current,
     double voltage,

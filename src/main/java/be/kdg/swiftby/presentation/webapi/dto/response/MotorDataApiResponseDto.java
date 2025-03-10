@@ -1,6 +1,6 @@
 package be.kdg.swiftby.presentation.webapi.dto.response;
 
-public record MotorDataDto(
+public record MotorDataApiResponseDto(
     int engine,
     double enginePower
 ) {}

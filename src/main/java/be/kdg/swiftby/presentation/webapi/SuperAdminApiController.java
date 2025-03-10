@@ -2,7 +2,7 @@ package be.kdg.swiftby.presentation.webapi;
 
 import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.presentation.webapi.dto.SuperAdminApiMapper;
-import be.kdg.swiftby.presentation.webapi.dto.response.SuperAdminApiRequestDto;
+import be.kdg.swiftby.presentation.webapi.dto.response.SuperAdminApiResponseDto;
 import be.kdg.swiftby.service.intf.SuperAdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +29,16 @@ public class SuperAdminApiController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<SuperAdminApiRequestDto>> getAllSuperAdmins() {
-        List<SuperAdminApiRequestDto> superAdmins = superAdminApiMapper.toSuperAdminApiRequestDtoList(superAdminService.getAll());
+    public ResponseEntity<List<SuperAdminApiResponseDto>> getAllSuperAdmins() {
+        List<SuperAdminApiResponseDto> superAdmins = superAdminApiMapper.toSuperAdminApiRequestDtoList(superAdminService.getAll());
         log.debug("SuperAdmins: {}", superAdmins);
         return ResponseEntity.ok(superAdmins);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<SuperAdminApiRequestDto> getSuperAdmin(@PathVariable Long id) {
+    public ResponseEntity<SuperAdminApiResponseDto> getSuperAdmin(@PathVariable Long id) {
         try {
-            SuperAdminApiRequestDto superAdmin = superAdminApiMapper.toSuperAdminApiRequestDto(superAdminService.getById(id));
+            SuperAdminApiResponseDto superAdmin = superAdminApiMapper.toSuperAdminApiRequestDto(superAdminService.getById(id));
             return ResponseEntity.ok(superAdmin);
         } catch (NotFoundException e) {
             log.error(e.getMessage());
