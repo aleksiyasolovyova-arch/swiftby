@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface SuperAdminRepository extends JpaRepository<SuperAdmin, Long> {
+    boolean existsByEmail(String email);
+
 }

@@ -1,10 +1,12 @@
 package be.kdg.swiftby.presentation.webapi;
 
 import be.kdg.swiftby.domain.exception.NotFoundException;
+import be.kdg.swiftby.domain.testEnv.Administrator;
 import be.kdg.swiftby.presentation.webapi.dto.AdministratorApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.FacilityApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.TechnicianApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.TestBenchApiMapper;
+import be.kdg.swiftby.presentation.webapi.dto.response.AdministratorApiResponseDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.FacilityApiResponseDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.TechnicianApiResponseDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.TestBenchApiResponseDto;
@@ -108,7 +110,7 @@ public class FacilityApiController {
 
     //technicians
     @GetMapping("{facilityId}/technicians")
-    public ResponseEntity<List<TechnicianApiResponseDto>> getAllTechnicians(@PathVariable Long facilityId) {
+    public ResponseEntity<List<TechnicianApiResponseDto>> getAllTechniciansByFacilityId(@PathVariable Long facilityId) {
         try {
             List<TechnicianApiResponseDto> technicians = technicianApiMapper.toTechnicianApiRequestDtoList(
                     technicianService.getAllByFacilityId(facilityId)
@@ -128,6 +130,35 @@ public class FacilityApiController {
                     technicianService.getByFacilityIdAndTechnicianId(facilityId, technicianId)
             );
             return ResponseEntity.ok(technician);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    //administrators
+    @GetMapping("/{facilityId}/administrators")
+    public ResponseEntity<List<AdministratorApiResponseDto>> getAllAdministratorsByFacilityId(@PathVariable Long facilityId) {
+        try {
+            List<AdministratorApiResponseDto> admins = administratorApiMapper.toAdminDtoList(
+                    administratorService.getAllByFacilityId(facilityId));
+            log.debug("Found all administrators for facility with id {}", facilityId);
+            return ResponseEntity.ok(admins);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{facilityId}/administrators/{administratorId}")
+    public ResponseEntity<AdministratorApiResponseDto> getAdministrator(@PathVariable Long facilityId,
+                                                                        @PathVariable Long administratorId) {
+        try {
+            AdministratorApiResponseDto admin = administratorApiMapper.toAdminDto(
+                    administratorService.getByFacilityIdAndAdministratorId(facilityId, administratorId));
+            log.debug("Found administrator with id {} in facility with id {}: {}",
+                    administratorId, facilityId, admin);
+            return ResponseEntity.ok(admin);
         } catch (NotFoundException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
