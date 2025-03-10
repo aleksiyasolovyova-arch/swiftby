@@ -1,3 +1,4 @@
+
 plugins {
     java
     id("org.springframework.boot") version "3.4.2"
@@ -12,6 +13,8 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
+
+
 
 configurations {
     compileOnly {
@@ -48,9 +51,12 @@ dependencies {
     implementation ("io.github.cdimascio:dotenv-java:3.0.0")
     implementation("com.postmarkapp:postmark:1.11.1")
 
-
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+
+
+

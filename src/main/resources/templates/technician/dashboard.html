@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script defer src="/js/dashboard.js"> </script>
+    <meta charset="UTF-8">
+    <title>Technician's Dashboard</title>
+</head>
+<body>
+
+
+ <div id="chart"></div>
+ <div id="chart2"></div>
+
+<script>
+    var options = {
+        series: [44, 55, 13, 43, 22],
+        chart: {
+            width: 380,
+            type: 'pie',
+        },
+        labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+</script>
+
+</body>
+</html>

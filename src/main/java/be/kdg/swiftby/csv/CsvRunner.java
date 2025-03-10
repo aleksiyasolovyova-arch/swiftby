@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+//@Component
 public class CsvRunner implements CommandLineRunner {
     private final CsvService csvService;
     private final BikeReportService bikeReportService;
