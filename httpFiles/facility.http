@@ -1,0 +1,81 @@
+// FACILITIES
+### get all facilities - 200
+GET http://localhost:8080/api/facilities
+Accept: application/json
+
+### get one existing facility - 200
+GET http://localhost:8080/api/facilities/1
+Accept: application/json
+
+### get one non-existing facility - 404
+GET http://localhost:8080/api/facilities/0
+Accept: application/json
+
+
+
+// TESTBENCHES
+### get all testbenches from existing facility - 200
+GET http://localhost:8080/api/facilities/1/testbenches
+Accept: application/json
+
+### get all testbenches from non-existing facility - 404
+GET http://localhost:8080/api/facilities/0/testbenches
+Accept: application/json
+
+### get one existing testbench from existing facility - 200
+GET http://localhost:8080/api/facilities/2/testbenches/3
+Accept: application/json
+
+### get one none-existing testbench from existing facility - 404
+GET http://localhost:8080/api/facilities/1/testbenches/0
+Accept: application/json
+
+### get one existing testbench from non-existing facility - 404
+GET http://localhost:8080/api/facilities/0/testbenches/3
+Accept: application/json
+
+### get one existing testbench from an existing facility that is not related - 404
+GET http://localhost:8080/api/facilities/1/testbenches/3
+Accept: application/json
+
+
+
+// TECHNICIANS
+### get all technicians from existing facility - 200
+GET http://localhost:8080/api/facilities/2/technicians
+Accept: application/json
+
+### get all technicians from non-existing facility - 404
+GET http://localhost:8080/api/facilities/0/technicians
+Accept: application/json
+
+### get one technician from existing facility - 200
+GET http://localhost:8080/api/facilities/1/technicians/1
+Accept: application/json
+
+### get none-existing technician from existing facility - 404
+GET http://localhost:8080/api/facilities/1/technicians/0
+Accept: application/json
+
+
+//ADMINISTRATORS
+### get all administrators from existing facility - 200
+GET http://localhost:8080/api/facilities/2/administrators
+Accept: application/json
+
+### get all administrators from non-existing facility - 404
+GET http://localhost:8080/api/facilities/0/administrators
+Accept: application/json
+
+### get one administrator from existing facility - 200
+GET http://localhost:8080/api/facilities/2/administrators/3
+Accept: application/json
+
+### get one administrator from non-related facility - 404
+GET http://localhost:8080/api/facilities/1/administrators/3
+Accept: application/json
+
+### get none-existing administrator from existing facility - 404
+GET http://localhost:8080/api/facilities/1/administrators/0
+Accept: application/json
+
