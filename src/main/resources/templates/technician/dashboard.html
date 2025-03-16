@@ -1,44 +1,128 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script defer src="/js/dashboard.js"> </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script defer src="/js/dashboard.js"></script>
+
     <meta charset="UTF-8">
     <title>Technician's Dashboard</title>
+
 </head>
+
 <body>
+<style>
+    .form-check-label {
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    .col-md-6 {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .row {
+        margin-bottom: 30px;
+    }
+
+    .btn {
+        margin-bottom: 15px;
+    }
+
+    #image {
+        height: 400px;
+        background-color: #f8f9fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 8px;
+    }
+
+    #image img {
+        max-height: 100%;
+        max-width: 100%;
+        border-radius: 8px;
+    }
+
+    .form-check {
+        margin-bottom: 15px;
+    }
+
+    .container-fluid {
+        margin-top: 30px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row mb-4 text-center">
+        <div class="col-md-3">
+            <button type="button" class="btn btn-outline-dark w-100">Start New Test</button>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-outline-dark w-100">Insert RAW Data</button>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-outline-dark w-100">4/6 Tests Active</button>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-success w-100">Bench Status: Optimal</button>
+        </div>
+    </div>
+
+    <div id="image">
+        <img src="/images/Bike.JPG" alt="Bike">
+    </div>
 
 
- <div id="chart"></div>
- <div id="chart2"></div>
+    <!-- Progress and Checklist Section -->
+    <div class="row mb-4">
+        <!-- Progress Circle -->
+        <div class="col-md-6 mx-auto center border rounded p-4 shadow-sm" id="chartContainer">
+            <!-- Chart or progress circle goes here -->
+        </div>
 
-<script>
-    var options = {
-        series: [44, 55, 13, 43, 22],
-        chart: {
-            width: 380,
-            type: 'pie',
-        },
-        labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
-        responsive: [{
-            breakpoint: 480,
-            options: {
-                chart: {
-                    width: 200
-                },
-                legend: {
-                    position: 'bottom'
-                }
-            }
-        }]
-    };
-
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
-    chart.render();
-</script>
-
+        <div class="col-md-6 mx-auto text-center border rounded p-4 shadow-sm">
+            <h3 class="mb-4 text-primary">Pre-Test Checklist</h3>
+            <ul class="list-unstyled">
+                <li class="d-flex align-items-center mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheck1">
+                        <label class="form-check-label" for="flexSwitchCheck1">Roller Torque Sufficient</label>
+                    </div>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheck2">
+                        <label class="form-check-label" for="flexSwitchCheck2">Belt Connection</label>
+                    </div>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheck3">
+                        <label class="form-check-label" for="flexSwitchCheck3">Network Connected</label>
+                    </div>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheck4">
+                        <label class="form-check-label" for="flexSwitchCheck4">Wheels Secured</label>
+                    </div>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheck5">
+                        <label class="form-check-label" for="flexSwitchCheck5">Tire Pressure Optimal</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 </body>
 </html>
