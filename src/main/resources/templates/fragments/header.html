@@ -36,8 +36,7 @@
                 <form class="d-inline" th:action="@{/logout}" th:method="POST" sec:authorize="isAuthenticated()">
                     <button type="submit" class="btn btn-warning">Logout</button>
                 </form>
-                <a class="btn btn-light ms-2" th:href="@{/login}" sec:authorize="!isAuthenticated()"
-                   th:if="${currentPage != '/login'}">Login</a>
+                <a class="btn btn-light ms-2" th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
             </div>
         </div>
     </div>
