@@ -3,9 +3,10 @@ package be.kdg.swiftby.csv;
 import be.kdg.swiftby.service.dto.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record BikeReportCsvRecord(
-        LocalDate reportTime,
+        LocalDateTime reportTime,
         int mileage,
         int assistanceLevel,
         String technicianComment,

@@ -1,5 +1,6 @@
 package be.kdg.swiftby.presentation.webapi;
 
+import be.kdg.swiftby.domain.bike.BIKE_SIZE;
 import be.kdg.swiftby.domain.bike.Bike;
 import be.kdg.swiftby.service.dto.BikeDto;
 import be.kdg.swiftby.service.dto.mapper.BikeMapper;
@@ -7,6 +8,7 @@ import be.kdg.swiftby.service.intf.BikeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -53,6 +55,12 @@ public class BikeApiController {
     public ResponseEntity<Void> deleteBike(@PathVariable Long id) {
         bikeService.remove(id);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/sizes")
+    public List<String> getBikeSizes() {
+        return Arrays.stream(BIKE_SIZE.values())
+                .map(Enum::name)
+                .toList();
     }
 }
 

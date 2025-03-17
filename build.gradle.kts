@@ -45,6 +45,12 @@ dependencies {
     implementation("org.mapstruct:mapstruct:1.6.3")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
 
+    // used for dotenv
+    implementation("io.github.cdimascio:dotenv-java:2.2.0")
+
+    // websocket
+    implementation("org.springframework.boot:spring-boot-starter-websocket")
+
 }
 
 tasks.withType<Test> {

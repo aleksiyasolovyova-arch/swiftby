@@ -19,24 +19,24 @@ public class CsvApiController {
     private final BikeReportService bikeReportService;
     private final CsvService csvService;
 
-
-    @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("csv") MultipartFile csv) {
-        String message = fileStorageService.storeFile(csv);
-        return ResponseEntity.ok(message);
-    }
-
-    @GetMapping("/read/{fileName}")
-    public ResponseEntity<List<String[]>> readFile(@PathVariable String fileName) {
-        List<String[]> data = fileStorageService.readFile(fileName);
-        return ResponseEntity.ok(data);
-    }
-
-    @GetMapping("/results")
-    public List<BikeReport> getBikeResults(){
-        return bikeReportService.getAll();
-    }
-
-
+//
+//    @PostMapping("/upload")
+//    public ResponseEntity<String> uploadFile(@RequestParam("csv") MultipartFile csv) {
+//        String message = fileStorageService.storeFile(csv);
+//        return ResponseEntity.ok(message);
+//    }
+//
+//    @GetMapping("/read/{fileName}")
+//    public ResponseEntity<List<String[]>> readFile(@PathVariable String fileName) {
+//        List<String[]> data = fileStorageService.readFile(fileName);
+//        return ResponseEntity.ok(data);
+//    }
+//
+//    @GetMapping("/results")
+//    public List<BikeReport> getBikeResults(){
+//        return bikeReportService.getAll();
+//    }
+//
+//
 
 }

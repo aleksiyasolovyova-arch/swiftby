@@ -1,10 +1,11 @@
 package be.kdg.swiftby.presentation.webapi.dto.response;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record BikeReportApiResponseDto(
         Long id,
-        LocalDate reportTime,
+        LocalDateTime reportTime,
         int mileage,
         int assistanceLevel,
         String technicianComment,
