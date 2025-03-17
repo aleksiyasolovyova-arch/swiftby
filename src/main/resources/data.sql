@@ -21,9 +21,17 @@ INSERT INTO facility (address_extra, city, country, email, name, street, street_
     ('Enter through garage', 'Stroempeltown', 'Belgica', 'storm.vanloon@student.kdg.be', 'StroempelRepairs', 'Stroempelstreet', '86', '2005');
 
 INSERT INTO technician (facility_id, email, first_name, last_name, password, phone_number) VALUES
-                                                                                   (1, 'alina.dimova@student.kdg.be', 'Alina', 'Dimova', 'Belgium<3', '01492123456'),
+                                                                                   (1, 'farah.bekkal@student.kdg.be', 'Farah', 'Bekkal', 'p4ssword', '01492123456'),
                                                                                    (2, 'skaara.poncin@student.kdg.be', 'Skaara', 'Poncin', 'sk44ra', '+320497334455'),
                                                                                    (2, 'yoran.delcroix@student.kdg.be', 'Yoran', 'Delcroix', 'Breadbreaker', '+320498000000');
+
+INSERT INTO administrator (facility_id, email, first_name, last_name, password, phone_number) VALUES
+    (1, 'alina.dimova@student.kdg.be', 'Alina', 'Dimova', 'Belgium<3', '784-556-778'),
+    (1, 'aleksiya.solovyova@student.kdg.be', 'Aleksiya', 'Solovyova', 'lenov0wner', '+359 246 44 88'),
+    (2, 'storm.vanloon@student.kdg.be', 'Storm', 'van Loon', 'C0mputerL0v3r', '0492454545'),
+    (2, 'bob.thehelper@stroempeltown.be', 'Bob', 'The Helper', 'HelpingBob', '0476010203');
+
+
 
 
 INSERT INTO motor (max_power, nominal_power, torque, engine_type, gear_type) VALUES

@@ -16,4 +16,8 @@ public class BikeOwner extends User {
     // TODO: CREATE AN INTERMEDIATE CLASS FOR THIS AND NOT USE MANY_TO_MANY ANNOTATION
     @ManyToMany(mappedBy = "bikeOwners")
     private Set<Administrator> administrators;
+
+    public BikeOwner(String email, String password, String firstName, String lastName, String phoneNumber) {
+        super();
+    }
 }
