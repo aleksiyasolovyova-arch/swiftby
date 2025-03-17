@@ -1,8 +1,8 @@
 package be.kdg.swiftby.security.controller;
 
+import be.kdg.swiftby.domain.exception.AlreadyExistsException;
 import be.kdg.swiftby.domain.testEnv.User;
 import be.kdg.swiftby.security.ProfileDto;
-import be.kdg.swiftby.domain.exception.UserAlreadyExistsException;
 import be.kdg.swiftby.security.service.ProfileServiceInt;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -51,7 +51,7 @@ public class RegistrationController {
 
         try {
             User registered = profileService.registerNewUserAccount(userDto);
-        } catch (UserAlreadyExistsException uaEX) {
+        } catch (AlreadyExistsException uaEX) {
             mav.addObject("message", "An account for that username/email already exists.");
             return mav;
         }

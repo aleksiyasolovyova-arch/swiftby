@@ -1,5 +1,6 @@
 package be.kdg.swiftby.security.service;
 
+import be.kdg.swiftby.domain.exception.AlreadyExistsException;
 import be.kdg.swiftby.repository.testEnvironment.TechnicianRepository;
 import be.kdg.swiftby.security.CustomUserDetails;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -21,7 +22,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
 
      @Override
-    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException{
+    public UserDetails loadUserByUsername(final String username) throws AlreadyExistsException {
          return technicianRepository
                  .findByEmail(username)
                  .map(technician -> new CustomUserDetails(
@@ -33,6 +34,6 @@ public class CustomUserDetailService implements UserDetailsService {
                          true,
                          AuthorityUtils.createAuthorityList("ROLE_" + technician.getClass().getSimpleName().toUpperCase())
                  ))
-                 .orElseThrow(() -> new UsernameNotFoundException(username));
+                 .orElseThrow(() -> AlreadyExistsException.forUserWithEmail(username));
      }
 }

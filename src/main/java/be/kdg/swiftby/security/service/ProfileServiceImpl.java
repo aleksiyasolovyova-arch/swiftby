@@ -1,10 +1,10 @@
 package be.kdg.swiftby.security.service;
 
+import be.kdg.swiftby.domain.exception.AlreadyExistsException;
 import be.kdg.swiftby.domain.testEnv.Technician;
 import be.kdg.swiftby.domain.testEnv.User;
 import be.kdg.swiftby.security.ProfileDto;
 import be.kdg.swiftby.repository.testEnvironment.TechnicianRepository;
-import be.kdg.swiftby.domain.exception.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,9 +21,9 @@ public class ProfileServiceImpl implements ProfileServiceInt {
     }
 
     @Override
-    public User registerNewUserAccount(ProfileDto technician) throws UserAlreadyExistsException {
+    public User registerNewUserAccount(ProfileDto technician) throws AlreadyExistsException {
         if (technicianRepository.findByEmail(technician.getUsername()).isPresent()) {
-            throw new UserAlreadyExistsException("There is an account with that email: " + technician.getUsername());
+            throw AlreadyExistsException.forUserWithEmail("There is an account with that email: " + technician.getUsername());
         }
 
         Technician user = new Technician();

@@ -13,9 +13,11 @@
       background-color: #f5f7ff;
       color: #344a57;
       font-family: 'Roboto', sans-serif;
+
     }
     .hero-section {
-      background-color: #5c7285;
+      background-size: cover;
+      background: linear-gradient(rgba(92, 114, 133, 0.7), rgba(92, 114, 133, 0.7)), url('/images/test-bench-side.JPG') center;
       color: #f5f7ff;
       padding: 100px 0;
       text-align: center;
@@ -34,8 +36,9 @@
     }
     .carousel-item img {
       max-width: 75%;
-      height: auto;
+      height: 500px;
       margin: auto;
+      object-fit: cover;
     }
     .newsletter-section {
       background-color: #5c7285;
@@ -67,7 +70,7 @@
     <h1>BikeTrust</h1>
     <p>Revolutionizing E-Bike Testing, One Ride at a Time</p>
     <p>BikeTrust brings precision testing to electric bicycles with <strong>eVALeBike</strong> — a cutting-edge test bench designed to simulate real-world riding conditions, ensuring the quality and performance of new, used, and re-manufactured e-bikes.</p>
-    <a href="#" class="btn btn-primary">Get Started</a>
+    <a th:href="@{/registration}" class="btn btn-primary">Get Started</a>
   </div>
 </section>
 
@@ -108,6 +111,18 @@
         </div>
         <div class="carousel-item">
           <img src="/images/test-bench-back.JPG" class="d-block" alt="Test Bench 3">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/hardware.JPG" class="d-block" alt="Test Bench 3">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/test_bench_application.JPG" class="d-block" alt="Test Bench 3">
+        </div>
+        <div class="carousel-item">
+        <img src="/images/test_facility.JPG" class="d-block" alt="Test Bench 3">
+      </div>
+        <div class="carousel-item">
+          <img src="/images/setup.JPG" class="d-block" alt="Test Bench 3">
         </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#testBenchCarousel" data-bs-slide="prev">
