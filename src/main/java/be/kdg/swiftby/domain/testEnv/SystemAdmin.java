@@ -1,13 +1,14 @@
 package be.kdg.swiftby.domain.testEnv;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import jakarta.persistence.*;
+import java.util.Set;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class Technician extends Employee{
-    @ManyToOne
-    private Administrator administrator;
+public class SystemAdmin extends SBUser {
+    @OneToMany(mappedBy= "systemAdmin")
+    private Set<Administrator> administrators;
 }

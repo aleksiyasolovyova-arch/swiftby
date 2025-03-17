@@ -2,18 +2,16 @@ package be.kdg.swiftby.domain.testEnv;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.Set;
-
-@Entity
+@MappedSuperclass
 @Data
-public class Facility {
+public abstract class SBUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String address;
     private String email;
-    @OneToMany(mappedBy = "facility")
-    private Set<Employee> employees;
+    //encrypted
+    private String password;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
 }

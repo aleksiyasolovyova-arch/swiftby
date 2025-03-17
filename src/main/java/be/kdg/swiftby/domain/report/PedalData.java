@@ -1,6 +1,5 @@
 package be.kdg.swiftby.domain.report;
 
-import be.kdg.swiftby.service.dto.PedalDataDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,14 +12,5 @@ public class PedalData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double torqueCrank;
-    private double cadence;
-
-    public PedalData() {
-    }
-
-    public PedalData(PedalDataDto dto) {
-        this.cadence = dto.cadence();
-        this.torqueCrank = dto.torqueCrank();
-
-    }
+    private int cadence;
 }

@@ -1,37 +1,24 @@
 package be.kdg.swiftby.domain.testEnv;
 
 import jakarta.persistence.*;
-import lombok.*;
-
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import java.util.Set;
 
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Getter
-@Setter
-@NoArgsConstructor
-@RequiredArgsConstructor
-public class Administrator extends Employee {
-
-
+@Data
+public class Administrator extends Employee{
+    @OneToMany(mappedBy = "administrator")
+    private Set<Technician> technicians;
     // TODO: CREATE AN INTERMEDIATE CLASS FOR THIS AND NOT USE MANY_TO_MANY ANNOTATION
     @ManyToMany
     @JoinTable(
-            name = "admin_bike_owner",
-            joinColumns = @JoinColumn(name = "administrator_id"),
-            inverseJoinColumns = @JoinColumn(name = "bike_owner_id")
+            name = "admin_customer",
+            joinColumns = @JoinColumn(name = "admin_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id")
     )
-    private Set<BikeOwner> bikeOwners;
-
+    private Set<Customer> customers;
     @ManyToOne
-    @NonNull
-    private SuperAdmin superAdmin;
-
-    @ManyToOne
-    @JoinColumn(name = "facility_id")
-    private Facility facility;
-
-    public Administrator(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber) {
-        super();
-    }
+    private SystemAdmin systemAdmin;
 }

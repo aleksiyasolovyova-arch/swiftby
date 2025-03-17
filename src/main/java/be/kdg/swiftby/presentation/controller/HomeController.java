@@ -19,18 +19,4 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("csv/upload")
-    public String csv() {
-        return "csv-upload";
-    }
-    @GetMapping("csv/read")
-    public String csvRead() {
-        return "csv-read";
-    }
-    @GetMapping("csv/results")
-    public String csvResults() {
-        return "csv-results-temporary";
-    }
-
-
 }
