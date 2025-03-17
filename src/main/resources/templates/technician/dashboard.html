@@ -7,6 +7,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script defer src="/js/dashboard.js"></script>
+    <link rel="stylesheet" href="/css/technician-dashboard.css">
 
     <meta charset="UTF-8">
     <title>Technician's Dashboard</title>
@@ -14,50 +15,6 @@
 </head>
 
 <body>
-<style>
-    .form-check-label {
-        font-size: 1.1rem;
-        font-weight: 500;
-    }
-
-    .col-md-6 {
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        padding: 20px;
-        border-radius: 8px;
-    }
-
-    .row {
-        margin-bottom: 30px;
-    }
-
-    .btn {
-        margin-bottom: 15px;
-    }
-
-    #image {
-        height: 400px;
-        background-color: #f8f9fa;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 8px;
-    }
-
-    #image img {
-        max-height: 100%;
-        max-width: 100%;
-        border-radius: 8px;
-    }
-
-    .form-check {
-        margin-bottom: 15px;
-    }
-
-    .container-fluid {
-        margin-top: 30px;
-    }
-</style>
 
 <div class="container-fluid">
     <div class="row mb-4 text-center">
@@ -75,16 +32,39 @@
         </div>
     </div>
 
-    <div id="image">
-        <img src="/images/Bike.JPG" alt="Bike">
+    <div class="row mb-4">
+        <div class="col-md-9" id="image" style="position: relative;">
+            <img src="/images/Bike.JPG" alt="Bike" style="width: 100%; height: auto; border-radius: 8px;">
+            <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"
+                 xmlns="http://www.w3.org/2000/svg">
+                <circle cx="65%" cy="30%" r="10" fill="red"/>
+                <circle cx="40%" cy="60%" r="10" fill="yellow"/>
+                <circle cx="30%" cy="80%" r="10" fill="red"/>
+            </svg>
+        </div>
+
+        <div class="col-md-3">
+            <div class="row justify-content-center">
+                <div class="col-md-3 progress-container">
+                    <canvas id="progressCanvas" width="200" height="200">
+
+                    </canvas>
+
+                    <div class="progress-text">
+                        <i class="bi bi-bicycle progress-icon"></i><br>
+                        <span id="testsDone">4 / 11</span>
+                    </div>
+
+                    <div class="progress-details">
+                        <span id="progressPercentage">45% Progress</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-
-    <!-- Progress and Checklist Section -->
     <div class="row mb-4">
-        <!-- Progress Circle -->
         <div class="col-md-6 mx-auto center border rounded p-4 shadow-sm" id="chartContainer">
-            <!-- Chart or progress circle goes here -->
         </div>
 
         <div class="col-md-6 mx-auto text-center border rounded p-4 shadow-sm">

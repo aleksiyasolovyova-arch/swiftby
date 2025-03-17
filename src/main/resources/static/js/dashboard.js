@@ -48,6 +48,7 @@ window.onload = function () {
 
     charts.push(new CanvasJS.Chart("chartContainer", batteryChartOptions));
 
+    //TODO fix this so this fetches the other API
     fetch("/api/csv/Dummy_data_e_bike_testbench_Data.csv")
         .then(response => {
             if (!response.ok) {
@@ -72,3 +73,45 @@ window.onload = function () {
         .catch(error => console.error('Error fetching CSV:', error));
 
 };
+
+
+const canvas = document.getElementById('progressCanvas');
+const ctx = canvas.getContext('2d');
+
+const centerX = canvas.width / 2;
+const centerY = canvas.height / 2;
+const radius = 80;
+const startAngle = -Math.PI / 2;
+const endAngle = Math.PI * 2;
+const lineWidth = 15;
+
+const progressPercentage = 45;
+
+function drawProgress() {
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+    ctx.strokeStyle = '#e0e0e0';
+    ctx.lineWidth = lineWidth;
+    ctx.stroke();
+
+    const progressEndAngle = startAngle + (endAngle * (progressPercentage / 100));
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, startAngle, progressEndAngle);
+    ctx.strokeStyle = '#007bff';
+    ctx.lineWidth = lineWidth;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius + lineWidth / 2, startAngle, endAngle);
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+}
+
+function updateProgressDetails() {
+    document.getElementById('testsDone').textContent = '4 / 11';
+    document.getElementById('progressPercentage').textContent = `${progressPercentage}% Progress`;
+}
+
+drawProgress();
+updateProgressDetails();
