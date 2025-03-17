@@ -1,9 +1,11 @@
 package be.kdg.swiftby.service.intf;
 
 import be.kdg.swiftby.domain.report.BikeReport;
+import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.service.dto.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface BikeReportService {
@@ -12,7 +14,7 @@ public interface BikeReportService {
     BikeReport getById(Long id);
     BikeReport save(
             Long bikeId,
-            LocalDate reportTime,
+            LocalDateTime reportTime,
             int mileage,
             int assistanceLevel,
             String technicianComment,
@@ -24,4 +26,7 @@ public interface BikeReportService {
             WheelDataDto wheelDataDto
     );
     void remove(Long id);
+    BikeReport aggregatedReport(Long reportId);
+    BikeReportSummary saveReportSummary(Long bikeId, LocalDate reportDate);
+    BikeReportSummary saveReportSummaryFromSavedReports(List<Long> savedReportIds);
 }

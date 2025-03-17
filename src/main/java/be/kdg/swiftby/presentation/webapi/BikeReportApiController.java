@@ -31,9 +31,9 @@ public class BikeReportApiController {
                 .toList();
         return ResponseEntity.ok(bikeReportDtos);
     }
+
     @PostMapping
     public ResponseEntity<BikeReportApiResponseDto> createReport(@RequestBody BikeReportRequestDto requestDto) {
-
         var savedReport = bikeReportService.save(
                 requestDto.bikeId(),
                 requestDto.reportTime(),

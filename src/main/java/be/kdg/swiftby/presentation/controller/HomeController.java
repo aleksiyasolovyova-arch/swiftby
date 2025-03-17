@@ -14,6 +14,10 @@ public class HomeController {
     }
 
 
+    @GetMapping("test")
+    public String testApiCalls(){
+        return "test";
+    }
     @GetMapping("")
     public String home() {
         return "index";
