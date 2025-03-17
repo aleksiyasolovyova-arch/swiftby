@@ -1,4 +1,4 @@
-package be.kdg.swiftby.security;
+package be.kdg.swiftby.domain.exception;
 
 public class UserAlreadyExistsException extends RuntimeException {
     private String email;
