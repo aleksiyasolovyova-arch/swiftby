@@ -30,4 +30,8 @@ public class Administrator extends Employee {
     @ManyToOne
     @JoinColumn(name = "facility_id")
     private Facility facility;
+
+    public Administrator(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber) {
+        super();
+    }
 }
