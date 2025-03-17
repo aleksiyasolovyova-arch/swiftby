@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
+    <link rel="stylesheet" href="/css/technician-reports.css">
+    <meta charset="UTF-8">
+    <title>reports</title>
+</head>
+<body>
+<div class="bg-light">
+    <div class="container py-5">
+        <div class="search-container">
+            <div class="search-wrapper">
+                <div class="search-header">
+                    <div class="search-input-group">
+                        <input type="text" class="search-input form-control" placeholder="Search Reports on Vendor, Type, Number...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                </div>
+                <div class="category-filters">
+                    <div class="filter-chip active">
+                        <i class="fas fa-globe"></i> All
+                    </div>
+                    <div class="filter-chip">
+                        <i class="bi bi-alarm"></i> Vendors
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

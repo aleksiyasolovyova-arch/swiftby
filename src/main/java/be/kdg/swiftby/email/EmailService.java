@@ -33,8 +33,6 @@ public class EmailService {
     public void sendEmail(String to, String subject, String body, String attachmentPath) throws IOException, PostmarkException {
         Message message = new Message();
 
-
-
         message.setFrom(email);
         message.setTo(to);
         message.setSubject(subject);
