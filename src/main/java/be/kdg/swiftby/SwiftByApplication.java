@@ -13,7 +13,7 @@ public class SwiftByApplication {
     public static void main(String[] args) {
         new SpringApplicationBuilder(SwiftByApplication.class)
                 .initializers(new DotenvInitializer())
-                .run(args);;
+                .run(args);
     }
 
 }
