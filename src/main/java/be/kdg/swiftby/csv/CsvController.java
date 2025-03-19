@@ -27,9 +27,7 @@ public class CsvController {
     private final BikeService bikeService;
     private final TestWebSocketHandler testWebSocketHandler;
 
-    /**
-     * 🔹 Process CSV file and store reports.
-     */
+
     @PostMapping("/process-latest")
     public ResponseEntity<String> processLatestCsv() {
         try {
@@ -57,56 +55,10 @@ public class CsvController {
                     .toList();
 
             BikeReportSummary summary = bikeReportService.saveReportSummaryFromSavedReports(savedReportIds);
-            return ResponseEntity.ok("✅ CSV successfully processed and summary saved: " + summary);
+            return ResponseEntity.ok(" CSV successfully processed and summary saved: " + summary);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("🚨 Error processing CSV: " + e.getMessage());
+            return ResponseEntity.badRequest().body(" Error processing CSV: " + e.getMessage());
         }
     }
 
-//    @PostMapping("/start-test")
-//    public ResponseEntity<?> startTestFromCsv(@RequestBody StartTestRequestDto testRequest) {
-//        try {
-//            // 1️⃣ **Save Bike Owner**
-//            BikeOwner ownerId = bikeOwnerService.save(
-//                    testRequest.getOwnerEmail(),
-//                    "FAKE PASSWORD",
-//                    testRequest.getOwnerFirstName(),
-//                    testRequest.getOwnerLastName(),
-//                    testRequest.getOwnerPhoneNumber()
-//            );
-//
-//            // 2️⃣ **Create & Save Motor**
-//            MotorDto motorDto = new MotorDto(
-//                    testRequest.getEngineType(),
-//                    testRequest.getGearType(),
-//                    testRequest.getMaxPower(),
-//                    testRequest.getNominalPower(),
-//                    testRequest.getTorque()
-//            );
-//
-//            // 3️⃣ **Create & Save Bike**
-//            BikeDto bikeDto = new BikeDto(
-//                    null, // Auto-generated ID
-//                    testRequest.getBrand(),
-//                    testRequest.getType(),
-//                    testRequest.getChassisNumber(),
-//                    testRequest.getPowertrain(),
-//                    testRequest.getBikeSize(),
-//                    testRequest.getMaxSupport(),
-//                    motorDto,
-//                    testRequest.getBatteryCapacity()
-//            );
-//
-//            Bike bike = bikeService.save(bikeDto);
-//
-//
-//            UUID testId = UUID.randomUUID(); // Generate a test ID
-//            testWebSocketHandler.trackTest(testId, bike.getId());
-//
-//            return ResponseEntity.ok("✅ Test started successfully! Test ID: " + testId);
-//
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().body("🚨 Error starting test: " + e.getMessage());
-//        }
-//    }
 }

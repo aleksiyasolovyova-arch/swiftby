@@ -67,9 +67,9 @@ public class CsvService {
         // Delete file after successful processing
         if (!records.isEmpty()) {
             Files.delete(latestFile.toPath());
-            System.out.println("🗑️ CSV file deleted: " + latestFile.getName());
+            System.out.println(" CSV file deleted: " + latestFile.getName());
         } else {
-            System.out.println("⚠️ No valid records found. CSV file retained.");
+            System.out.println(" No valid records found. CSV file retained.");
         }
 
         return records;
@@ -159,7 +159,6 @@ public class CsvService {
 //
 //            reader.reset(); // Reset reader to re-read the file
 //
-//            System.out.println("✅ CSV Headers: " + csvParser.getHeaderNames()); // Check headers
 //
 //            for (CSVRecord record : csvParser) {
 //                System.out.println("🔹 Processing record: " + record.toString());
@@ -219,7 +218,6 @@ public class CsvService {
 //            }
 //        }
 //
-//        System.out.println("✅ Parsed Records Count: " + records.size());
 //        return records;
 //    }
 

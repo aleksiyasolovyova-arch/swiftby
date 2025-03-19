@@ -3,86 +3,192 @@
 <head>
     <title>Start Test</title>
     <script src="/js/test.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="/css/start-test.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f7ff;
+            color: #344a57;
+            font-family: 'Roboto', sans-serif;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .card {
+            background-color: #aed2e3;
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #5c7285;
+            color: #f5f7ff;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        .btn-primary {
+            background-color: #344a57;
+            border-color: #344a57;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .btn-primary:hover {
+            background-color: #5c7285;
+            border-color: #5c7285;
+        }
+        .status-box {
+            background-color: #fada7a;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        h1 {
+            color: #5c7285;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-<h1>Start a New Test</h1>
 
-<form id="testForm">
-    <h2>Bike Information</h2>
-    <label for="brand">Brand:</label>
-    <input type="text" id="brand" required value="Gazelle"><br>
+<div class="container mt-4">
+    <h1 class="mb-4">Start a New Test</h1>
 
-    <label for="type">Type:</label>
-    <input type="text" id="type" required value="Ultimate C380"><br>
+    <form id="testForm">
+        <div class="card mb-3">
+            <div class="card-header">Bike Information</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="brand" class="form-label">Brand:</label>
+                    <input type="text" id="brand" class="form-control" required value="Gazelle">
+                </div>
+                <div class="mb-3">
+                    <label for="gearType" class="form-label">Gear Type:</label>
+                    <input type="text" id="gearType" class="form-control" required value="Gazelle">
+                </div>
+                <div class="mb-3">
+                    <label for="engineType" class="form-label">Engine Type:</label>
+                    <input type="text" id="engineType" class="form-control" required value="engine">
+                </div>
+                <div class="mb-3">
+                    <label for="type" class="form-label">Type:</label>
+                    <input type="text" id="type" class="form-control" required value="Ultimate C380">
+                </div>
+                <div class="mb-3">
+                    <label for="chassisNumber" class="form-label">Chassis Number:</label>
+                    <input type="text" id="chassisNumber" class="form-control" required value="VG2304K5111">
+                </div>
+                <div class="mb-3">
+                    <label for="bikeSize" class="form-label">Bike Size:</label>
+                    <select id="bikeSize" class="form-select" required>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M" selected>M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="powertrain" class="form-label">Powertrain:</label>
+                    <select id="powertrain" class="form-select" required>
+                        <option value="CHAIN">Chain</option>
+                        <option value="BELT" selected>Belt</option>
+                    </select>
+                </div>
 
-    <label for="chassisNumber">Chassis Number:</label>
-    <input type="text" id="chassisNumber" required value="VG2304K5111"><br>
+            </div>
+        </div>
 
-    <label for="bikeSize">Bike Size:</label>
-    <select id="bikeSize" required>
-        <option value="XS">XS</option>
-        <option value="S">S</option>
-        <option value="M" selected>M</option>
-        <option value="L">L</option>
-        <option value="XL">XL</option>
-        <option value="XXL">XXL</option>
-    </select><br>
+        <div class="card mb-3">
+            <div class="card-header">Performance Details</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="batteryCapacity" class="form-label">Battery Capacity (Wh):</label>
+                    <input type="number" id="batteryCapacity" class="form-control" required value="500">
+                </div>
+                <div class="mb-3">
+                    <label for="maxSupport" class="form-label">Max Support (%):</label>
+                    <input type="number" id="maxSupport" class="form-control" required value="340">
+                </div>
+                <div class="mb-3">
+                    <label for="mileage" class="form-label">Mileage:</label>
+                    <input type="number" id="mileage" class="form-control" required value="340">
+                </div>
+                <div class="mb-3">
+                    <label for="enginePowerMax" class="form-label">Max Engine Power (W):</label>
+                    <input type="number" id="enginePowerMax" class="form-control" required value="600">
+                </div>
+                <div class="mb-3">
+                    <label for="enginePowerNominal" class="form-label">Nominal Engine Power (W):</label>
+                    <input type="number" id="enginePowerNominal" class="form-control" required value="250">
+                </div>
+                <div class="mb-3">
+                    <label for="engineTorque" class="form-label">Engine Torque (Nm):</label>
+                    <input type="number" id="engineTorque" class="form-control" required value="85">
+                </div>
+            </div>
+        </div>
 
-    <label for="powertrain">Powertrain:</label>
-    <input type="text" id="powertrain" required value="Belt"><br>
+        <!-- Test Setup -->
+        <div class="card mb-3">
+            <div class="card-header">Test Setup</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="testType" class="form-label">Test Type:</label>
+                    <select id="testType" class="form-select">
+                        <option value="STRESS" selected>Stress</option>
+                        <option value="PERFORMANCE">Performance</option>
+                        <option value="FAST">Fast</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="testBenchNumber" class="form-label">Test Bench Number:</label>
+                    <input type="number" id="testBenchNumber" class="form-control" required value="1">
+                </div>
+            </div>
+        </div>
 
-    <label for="batteryCapacity">Battery Capacity (Wh):</label>
-    <input type="number" id="batteryCapacity" required value="500"><br>
-    <label for="gearType">Gear Type:</label>
-    <input type="text" id="gearType" required><br>
-    <label for="engineType">Engine Type:</label>
-    <input type="text" id="engineType" required><br>
+        <div class="card mb-3">
+            <div class="card-header">Bike Owner Details</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="ownerEmail" class="form-label">Email:</label>
+                    <input type="email" id="ownerEmail" class="form-control" required value="owner@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="ownerFirstName" class="form-label">First Name:</label>
+                    <input type="text" id="ownerFirstName" class="form-control" required value="John">
+                </div>
+                <div class="mb-3">
+                    <label for="ownerLastName" class="form-label">Last Name:</label>
+                    <input type="text" id="ownerLastName" class="form-control" required value="Doe">
+                </div>
+                <div class="mb-3">
+                    <label for="ownerPhoneNumber" class="form-label">Phone Number:</label>
+                    <input type="text" id="ownerPhoneNumber" class="form-control" required value="+1234567890">
+                </div>
+            </div>
+        </div>
 
-    <label for="maxSupport">Max Support (%):</label>
-    <input type="number" id="maxSupport" required value="340"><br>
+        <div class="text-center">
+            <button type="button" id="startTestButton" class="btn btn-primary btn-lg px-4">Start Test</button>
+        </div>
 
-    <label for="mileage">Mileage:</label>
-    <input type="number" id="mileage" required value="340"><br>
+    </form>
 
-    <label for="enginePowerMax">Max Engine Power (W):</label>
-    <input type="number" id="enginePowerMax" required value="600"><br>
-
-    <label for="enginePowerNominal">Nominal Engine Power (W):</label>
-    <input type="number" id="enginePowerNominal" required value="250"><br>
-
-    <label for="engineTorque">Engine Torque (Nm):</label>
-    <input type="number" id="engineTorque" required value="85"><br>
-
-    <h2>Test Setup</h2>
-    <label for="testType">Test Type:</label>
-    <select id="testType">
-        <option value="STRESS" selected>Stress</option>
-        <option value="PERFORMANCE">Performance</option>
-        <option value="FAST">Fast</option>
-    </select><br>
-
-    <label for="testBenchNumber">Test Bench Number:</label>
-    <input type="number" id="testBenchNumber" required value="1"><br>
-
-    <h2>Bike Owner Details</h2>
-    <label for="ownerEmail">Email:</label>
-    <input type="email" id="ownerEmail" required value="owner@example.com"><br>
-
-    <label for="ownerFirstName">First Name:</label>
-    <input type="text" id="ownerFirstName" required value="John"><br>
-
-    <label for="ownerLastName">Last Name:</label>
-    <input type="text" id="ownerLastName" required value="Doe"><br>
-
-    <label for="ownerPhoneNumber">Phone Number:</label>
-    <input type="text" id="ownerPhoneNumber" required value="+1234567890"><br>
-
-    <button type="button" id="startTestButton">Start Test</button>
-
-</form>
-
-<h2>Test Status</h2>
-<p id="testStatus">Waiting for test to start...</p>
+    <div class="card mt-4">
+        <div class="card-header">Test Status</div>
+        <div class="card-body">
+            <p id="testStatus" class="status-box">Waiting for test to start...</p>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
