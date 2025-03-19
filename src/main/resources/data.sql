@@ -21,9 +21,18 @@ INSERT INTO facility (address_extra, city, country, email, name, street, street_
     ('Enter through garage', 'Stroempeltown', 'Belgica', 'storm.vanloon@student.kdg.be', 'StroempelRepairs', 'Stroempelstreet', '86', '2005');
 
 INSERT INTO technician (facility_id, email, first_name, last_name, password, phone_number) VALUES
-                                                                                   (1, 'alina.dimova@student.kdg.be', 'Alina', 'Dimova', 'Belgium<3', '01492123456'),
+                                                                                   (1, 'farah.bekkal@student.kdg.be', 'Farah', 'Bekkal', 'p4ssword', '01492123456'),
                                                                                    (2, 'skaara.poncin@student.kdg.be', 'Skaara', 'Poncin', 'sk44ra', '+320497334455'),
                                                                                    (2, 'yoran.delcroix@student.kdg.be', 'Yoran', 'Delcroix', 'Breadbreaker', '+320498000000');
+
+INSERT INTO administrator (facility_id, email, first_name, last_name, password, phone_number) VALUES
+    (1, 'alina.dimova@student.kdg.be', 'Alina', 'Dimova', 'Belgium<3', '784-556-778'),
+    (1, 'aleksiya.solovyova@student.kdg.be', 'Aleksiya', 'Solovyova', 'lenov0wner', '+359 246 44 88'),
+    (2, 'storm.vanloon@student.kdg.be', 'Storm', 'van Loon', 'C0mputerL0v3r', '0492454545'),
+    (2, 'bob.thehelper@stroempeltown.be', 'Bob', 'The Helper', 'HelpingBob', '0476010203');
+
+
+
 
 INSERT INTO motor (max_power, nominal_power, torque, engine_type, gear_type) VALUES
                                                                                  (500, 250, 100, 'Brushless', 'Automatic'),
@@ -59,3 +68,36 @@ INSERT INTO wheel_data (power, speed) VALUES
 INSERT INTO bike_report (assistance_level, mileage, report_time, axial_sensor_data_id, battery_data_id, bike_id, motor_data_id, pedal_data_id, test_bench_data, wheel_data_id, technician_comment) VALUES
                                                                                                                                                                                                        (3, 1200, '2025-02-01', 1, 1, 1, 1, 1, 1, 1, 'Battery performing well'),
                                                                                                                                                                                                        (2, 800, '2025-02-15', 2, 2, 2, 2, 2, 2, 2, 'Motor efficiency could be improved');
+
+INSERT INTO bike_report_summary (
+    bike_id,
+    report_time,
+    avg_mileage,
+    avg_assistance_level,
+    horizontal_inclination,
+    vertical_inclination,
+    charge_status,
+    current,
+    voltage,
+    capacity,
+    temperature,
+    engine_type,
+    gear_type,
+    max_power,
+    nominal_power,
+    torque,
+    torque_crank,
+    cadence,
+    roller_torque,
+    load_cell,
+    rol,
+    load_power,
+    status_plug,
+    speed,
+    power,
+    technician_comment
+) VALUES
+      (1, '2025-02-01', 1100, 2.5, 14.0, 29.0, TRUE, 12.3, 48.5, 5200, 26.5, 'Brushless', 'Automatic', 500, 250, 90, 33.2, 88, 18.5, 9.8, 0.32, 155, TRUE, 29.5, 198.0, 'Battery efficiency is good'),
+      (2, '2025-02-15', 900, 2.8, 10.5, 24.0, FALSE, 11.0, 50.2, 6000, 28.0, 'Brushed', 'Manual', 600, 300, 120, 31.5, 82, 22.1, 11.2, 0.28, 165, FALSE, 27.8, 180.5, 'Motor is overheating, check cooling'),
+      (1, '2025-02-10', 950, 3.0, 12.0, 26.5, TRUE, 12.0, 49.0, 5500, 27.0, 'Brushless', 'Automatic', 500, 250, 100, 34.0, 90, 20.5, 10.5, 0.30, 160, TRUE, 30.2, 200.5, 'Overall performance is stable'),
+      (2, '2025-02-18', 1050, 3.2, 13.5, 27.5, TRUE, 13.0, 48.8, 5300, 26.8, 'Brushed', 'Manual', 600, 320, 110, 35.0, 85, 19.7, 9.5, 0.35, 170, FALSE, 28.5, 195.3, 'Power output fluctuates under load');

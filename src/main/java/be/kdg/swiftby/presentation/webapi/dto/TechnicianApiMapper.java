@@ -1,7 +1,7 @@
 package be.kdg.swiftby.presentation.webapi.dto;
 
 import be.kdg.swiftby.domain.testEnv.Technician;
-import be.kdg.swiftby.presentation.webapi.dto.response.TechnicianApiRequestDto;
+import be.kdg.swiftby.presentation.webapi.dto.response.TechnicianApiResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -16,8 +16,8 @@ public interface TechnicianApiMapper {
     context: technician <--*---1--   facility   --1---*--> administrator
      */
     @Mapping(source = "facility.id", target = "facilityId")
-    List<TechnicianApiRequestDto> toTechnicianApiRequestDtoList(List<Technician> technicians);
+    List<TechnicianApiResponseDto> toTechnicianApiRequestDtoList(List<Technician> technicians);
 
     @Mapping(source = "facility.id", target = "facilityId")
-    TechnicianApiRequestDto toTechnicianApiRequestDto(Technician technician);
+    TechnicianApiResponseDto toTechnicianApiRequestDto(Technician technician);
 }

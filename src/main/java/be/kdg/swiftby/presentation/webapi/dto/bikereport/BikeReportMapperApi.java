@@ -1,9 +1,8 @@
 package be.kdg.swiftby.presentation.webapi.dto.bikereport;
 
 import be.kdg.swiftby.domain.report.BikeReport;
-import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportDto;
+import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportApiResponseDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 // uses tells mapstruct what mappers it should use
@@ -19,5 +18,5 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
                 BikeMapperApi.class
         })
 public interface BikeReportMapperApi {
-    BikeReportDto toBikeReportDto(BikeReport bikeReport);
+    BikeReportApiResponseDto toBikeReportDto(BikeReport bikeReport);
 }

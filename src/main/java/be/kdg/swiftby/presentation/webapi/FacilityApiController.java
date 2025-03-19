@@ -1,13 +1,15 @@
 package be.kdg.swiftby.presentation.webapi;
 
 import be.kdg.swiftby.domain.exception.NotFoundException;
+import be.kdg.swiftby.domain.testEnv.Administrator;
 import be.kdg.swiftby.presentation.webapi.dto.AdministratorApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.FacilityApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.TechnicianApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.TestBenchApiMapper;
-import be.kdg.swiftby.presentation.webapi.dto.response.FacilityApiRequestDto;
-import be.kdg.swiftby.presentation.webapi.dto.response.TechnicianApiRequestDto;
-import be.kdg.swiftby.presentation.webapi.dto.response.TestBenchApiRequestDto;
+import be.kdg.swiftby.presentation.webapi.dto.response.AdministratorApiResponseDto;
+import be.kdg.swiftby.presentation.webapi.dto.response.FacilityApiResponseDto;
+import be.kdg.swiftby.presentation.webapi.dto.response.TechnicianApiResponseDto;
+import be.kdg.swiftby.presentation.webapi.dto.response.TestBenchApiResponseDto;
 import be.kdg.swiftby.service.intf.AdministratorService;
 import be.kdg.swiftby.service.intf.FacilityService;
 import be.kdg.swiftby.service.intf.TechnicianService;
@@ -52,9 +54,9 @@ public class FacilityApiController {
 
     //facilities
     @GetMapping("")
-    public ResponseEntity<List<FacilityApiRequestDto>> getAllFacilities() {
+    public ResponseEntity<List<FacilityApiResponseDto>> getAllFacilities() {
         try {
-            List<FacilityApiRequestDto> facilities = facilityApiMapper.toFacilityApiRequestDtoList(
+            List<FacilityApiResponseDto> facilities = facilityApiMapper.toFacilityApiRequestDtoList(
                     facilityService.getAll());
             return ResponseEntity.ok(facilities);
         } catch (NotFoundException e) {
@@ -65,9 +67,9 @@ public class FacilityApiController {
     }
 
     @GetMapping("{facilityId}")
-    public ResponseEntity<FacilityApiRequestDto> getFacilityById(@PathVariable Long facilityId) {
+    public ResponseEntity<FacilityApiResponseDto> getFacilityById(@PathVariable Long facilityId) {
         try {
-            FacilityApiRequestDto facility = facilityApiMapper.toFacilityApiRequestDto(
+            FacilityApiResponseDto facility = facilityApiMapper.toFacilityApiRequestDto(
                     facilityService.getById(facilityId));
             return ResponseEntity.ok(facility);
         } catch (NotFoundException e) {
@@ -80,9 +82,9 @@ public class FacilityApiController {
 
     //testbenches
     @GetMapping("{facilityId}/testbenches")
-    public ResponseEntity<List<TestBenchApiRequestDto>> getAllTestBenchesByFacilityId(@PathVariable Long facilityId) {
+    public ResponseEntity<List<TestBenchApiResponseDto>> getAllTestBenchesByFacilityId(@PathVariable Long facilityId) {
         try {
-            List<TestBenchApiRequestDto> testBenches = testBenchApiMapper.toTestBenchDtoList(
+            List<TestBenchApiResponseDto> testBenches = testBenchApiMapper.toTestBenchDtoList(
                     testBenchService.getAllByFacilityId(facilityId));
             return ResponseEntity.ok(testBenches);
         } catch (NotFoundException e) {
@@ -92,11 +94,11 @@ public class FacilityApiController {
     }
 
     @GetMapping("{facilityId}/testbenches/{testBenchId}")
-    public ResponseEntity<TestBenchApiRequestDto> getTestBench(@PathVariable Long facilityId, @PathVariable Long testBenchId) {
+    public ResponseEntity<TestBenchApiResponseDto> getTestBench(@PathVariable Long facilityId, @PathVariable Long testBenchId) {
         //todo check if logged in user has permission
         try {
             log.debug(String.format("Converting facilityId %s and testBenchId %s to testBenchDTO", facilityId, testBenchId));
-            TestBenchApiRequestDto testBench = testBenchApiMapper.toTestBenchDto(
+            TestBenchApiResponseDto testBench = testBenchApiMapper.toTestBenchDto(
                     testBenchService.getByFacilityIdAndTestBenchId(facilityId, testBenchId));
             return ResponseEntity.ok(testBench);
         } catch (NotFoundException e) {
@@ -108,9 +110,9 @@ public class FacilityApiController {
 
     //technicians
     @GetMapping("{facilityId}/technicians")
-    public ResponseEntity<List<TechnicianApiRequestDto>> getAllTechnicians(@PathVariable Long facilityId) {
+    public ResponseEntity<List<TechnicianApiResponseDto>> getAllTechniciansByFacilityId(@PathVariable Long facilityId) {
         try {
-            List<TechnicianApiRequestDto> technicians = technicianApiMapper.toTechnicianApiRequestDtoList(
+            List<TechnicianApiResponseDto> technicians = technicianApiMapper.toTechnicianApiRequestDtoList(
                     technicianService.getAllByFacilityId(facilityId)
             );
             return ResponseEntity.ok(technicians);
@@ -121,13 +123,42 @@ public class FacilityApiController {
     }
 
     @GetMapping("{facilityId}/technicians/{technicianId}")
-    public ResponseEntity<TechnicianApiRequestDto> getTechnician(@PathVariable Long facilityId, @PathVariable Long technicianId) {
+    public ResponseEntity<TechnicianApiResponseDto> getTechnician(@PathVariable Long facilityId, @PathVariable Long technicianId) {
         try {
-            TechnicianApiRequestDto technician = technicianApiMapper.toTechnicianApiRequestDto(
+            TechnicianApiResponseDto technician = technicianApiMapper.toTechnicianApiRequestDto(
                     //todo fix lazy relation with administrator
                     technicianService.getByFacilityIdAndTechnicianId(facilityId, technicianId)
             );
             return ResponseEntity.ok(technician);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    //administrators
+    @GetMapping("/{facilityId}/administrators")
+    public ResponseEntity<List<AdministratorApiResponseDto>> getAllAdministratorsByFacilityId(@PathVariable Long facilityId) {
+        try {
+            List<AdministratorApiResponseDto> admins = administratorApiMapper.toAdminDtoList(
+                    administratorService.getAllByFacilityId(facilityId));
+            log.debug("Found all administrators for facility with id {}", facilityId);
+            return ResponseEntity.ok(admins);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{facilityId}/administrators/{administratorId}")
+    public ResponseEntity<AdministratorApiResponseDto> getAdministrator(@PathVariable Long facilityId,
+                                                                        @PathVariable Long administratorId) {
+        try {
+            AdministratorApiResponseDto admin = administratorApiMapper.toAdminDto(
+                    administratorService.getByFacilityIdAndAdministratorId(facilityId, administratorId));
+            log.debug("Found administrator with id {} in facility with id {}: {}",
+                    administratorId, facilityId, admin);
+            return ResponseEntity.ok(admin);
         } catch (NotFoundException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -67,4 +67,12 @@ public class NotFoundException extends RuntimeException {
         return new NotFoundException(String.format("TestBench not found for id %s", id));
     }
 
+    public static NotFoundException forAdmin(Long id) {
+        return new NotFoundException(String.format("Admin not found for id %s", id));
+    }
+
+    public static NotFoundException forAdminEmail(String email) {
+        return new NotFoundException(String.format("Admin not found with email %s", email));
+    }
+
 }

@@ -3,17 +3,20 @@ package be.kdg.swiftby.presentation.webapi.dto.request;
 import be.kdg.swiftby.presentation.webapi.dto.response.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record BikeReportRequestDto(
         Long bikeId,
-        LocalDate reportTime,
+        LocalDateTime reportTime,
         int mileage,
         int assistanceLevel,
         String technicianComment,
-        MotorDataDto motorData,
-        WheelDataDto wheelData,
-        BatteryDataDto batteryData,
-        PedalDataDto pedalData,
-        AxialSensorDataDto axialSensorData,
-        TestBenchDataDto testBenchData
-) {}
+        MotorDataApiResponseDto motorData,
+        WheelDataApiResponseDto wheelData,
+        BatteryDataApiResponseDto batteryData,
+        PedalDataApiResponseDto pedalData,
+        AxialSensorDataApiResponseDto axialSensorData,
+        TestBenchDataApiResponseDto testBenchData
+) {
+
+}

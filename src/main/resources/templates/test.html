@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Start Test</title>
+    <script src="/js/test.js" defer></script>
+</head>
+<body>
+<h1>Start a New Test</h1>
+
+<form id="testForm">
+    <h2>Bike Information</h2>
+    <label for="brand">Brand:</label>
+    <input type="text" id="brand" required value="Gazelle"><br>
+
+    <label for="type">Type:</label>
+    <input type="text" id="type" required value="Ultimate C380"><br>
+
+    <label for="chassisNumber">Chassis Number:</label>
+    <input type="text" id="chassisNumber" required value="VG2304K5111"><br>
+
+    <label for="bikeSize">Bike Size:</label>
+    <select id="bikeSize" required>
+        <option value="XS">XS</option>
+        <option value="S">S</option>
+        <option value="M" selected>M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+        <option value="XXL">XXL</option>
+    </select><br>
+
+    <label for="powertrain">Powertrain:</label>
+    <input type="text" id="powertrain" required value="Belt"><br>
+
+    <label for="batteryCapacity">Battery Capacity (Wh):</label>
+    <input type="number" id="batteryCapacity" required value="500"><br>
+    <label for="gearType">Gear Type:</label>
+    <input type="text" id="gearType" required><br>
+    <label for="engineType">Engine Type:</label>
+    <input type="text" id="engineType" required><br>
+
+    <label for="maxSupport">Max Support (%):</label>
+    <input type="number" id="maxSupport" required value="340"><br>
+
+    <label for="mileage">Mileage:</label>
+    <input type="number" id="mileage" required value="340"><br>
+
+    <label for="enginePowerMax">Max Engine Power (W):</label>
+    <input type="number" id="enginePowerMax" required value="600"><br>
+
+    <label for="enginePowerNominal">Nominal Engine Power (W):</label>
+    <input type="number" id="enginePowerNominal" required value="250"><br>
+
+    <label for="engineTorque">Engine Torque (Nm):</label>
+    <input type="number" id="engineTorque" required value="85"><br>
+
+    <h2>Test Setup</h2>
+    <label for="testType">Test Type:</label>
+    <select id="testType">
+        <option value="STRESS" selected>Stress</option>
+        <option value="PERFORMANCE">Performance</option>
+        <option value="FAST">Fast</option>
+    </select><br>
+
+    <label for="testBenchNumber">Test Bench Number:</label>
+    <input type="number" id="testBenchNumber" required value="1"><br>
+
+    <h2>Bike Owner Details</h2>
+    <label for="ownerEmail">Email:</label>
+    <input type="email" id="ownerEmail" required value="owner@example.com"><br>
+
+    <label for="ownerFirstName">First Name:</label>
+    <input type="text" id="ownerFirstName" required value="John"><br>
+
+    <label for="ownerLastName">Last Name:</label>
+    <input type="text" id="ownerLastName" required value="Doe"><br>
+
+    <label for="ownerPhoneNumber">Phone Number:</label>
+    <input type="text" id="ownerPhoneNumber" required value="+1234567890"><br>
+
+    <button type="button" id="startTestButton">Start Test</button>
+
+</form>
+
+<h2>Test Status</h2>
+<p id="testStatus">Waiting for test to start...</p>
+
+</body>
+</html>

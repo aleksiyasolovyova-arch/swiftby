@@ -1,6 +1,7 @@
 package be.kdg.swiftby.domain.bike;
 
 import be.kdg.swiftby.domain.report.BikeReport;
+import be.kdg.swiftby.domain.report.BikeReportSummary;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 @Setter
 @RequiredArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "reports")
+@ToString(exclude = {"reports","summaries"})
 public class Bike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,5 +34,6 @@ public class Bike {
 
     @OneToMany(mappedBy = "bike")
     private Set<BikeReport> reports;
-
+    @OneToMany(mappedBy = "bike")
+    private Set<BikeReportSummary> summaries;
 }

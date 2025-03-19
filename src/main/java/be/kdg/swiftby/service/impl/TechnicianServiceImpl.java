@@ -1,5 +1,6 @@
 package be.kdg.swiftby.service.impl;
 
+import be.kdg.swiftby.domain.exception.AlreadyExistsException;
 import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.testEnv.Facility;
 import be.kdg.swiftby.domain.testEnv.Technician;
@@ -22,15 +23,22 @@ public class TechnicianServiceImpl implements TechnicianService {
     TechnicianRepository technicianRepository;
     AdministratorRepository administratorRepository;
     FacilityRepository facilityRepository;
+    UserUtilities userUtilities;
 
     FacilityMapper facilityMapper;
 
     Logger log = LoggerFactory.getLogger(TechnicianService.class);
 
-    public TechnicianServiceImpl(TechnicianRepository technicianRepository, AdministratorRepository administratorRepository, FacilityRepository facilityRepository, FacilityMapper facilityMapper) {
+    public TechnicianServiceImpl(TechnicianRepository technicianRepository,
+                                 AdministratorRepository administratorRepository,
+                                 FacilityRepository facilityRepository,
+                                 UserUtilities userUtilities,
+                                 FacilityMapper facilityMapper) {
+
         this.technicianRepository = technicianRepository;
         this.administratorRepository = administratorRepository;
         this.facilityRepository = facilityRepository;
+        this.userUtilities = userUtilities;
         this.facilityMapper = facilityMapper;
     }
 
@@ -45,10 +53,24 @@ public class TechnicianServiceImpl implements TechnicianService {
                 .orElseThrow(() -> NotFoundException.forTechnician(id));
     }
 
+
     @Override
-    public Technician saveTechnician(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber) {
-        return technicianRepository.save(new Technician(facility, email, password, firstName, lastName, phoneNumber));
+    public Technician saveTechnician(Facility facility,
+                                     String email,
+                                     String password,
+                                     String firstName,
+                                     String lastName,
+                                     String phoneNumber) {
+        //If there already exists a user with that email, throw an exception
+        if (userUtilities.isExistingUser(email)) {
+            throw AlreadyExistsException.forUserWithEmail(email);
+        }
+
+        return technicianRepository.save(
+                        new Technician(facility, email, password, firstName, lastName, phoneNumber)
+                );
     }
+
 
     @Override
     public void removeTechnician(Long id) {
@@ -74,6 +96,10 @@ public class TechnicianServiceImpl implements TechnicianService {
 
     @Override
     public void removeAllByFacilityId(Long id) {
-        technicianRepository.deleteAllByFacilityId(id);
+        if (!facilityRepository.existsById(id)) {
+            throw NotFoundException.forFacility(id);
+        }
+        administratorRepository.deleteAllByFacilityId(id);
+        log.debug("Removed all technicians in facility with id {}", id);
     }
 }

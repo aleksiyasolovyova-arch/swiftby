@@ -2,7 +2,7 @@ package be.kdg.swiftby.presentation.webapi;
 
 import be.kdg.swiftby.presentation.webapi.dto.bikereport.BikeReportMapperApi;
 import be.kdg.swiftby.presentation.webapi.dto.request.BikeReportRequestDto;
-import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportDto;
+import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportApiResponseDto;
 import be.kdg.swiftby.service.dto.*;
 import be.kdg.swiftby.service.intf.BikeReportService;
 import lombok.RequiredArgsConstructor;
@@ -22,18 +22,18 @@ public class BikeReportApiController {
     Logger log = LoggerFactory.getLogger(BikeReportApiController.class);
 
     @GetMapping
-    public ResponseEntity<List<BikeReportDto>> getAll(){
+    public ResponseEntity<List<BikeReportApiResponseDto>> getAll(){
         System.out.println("meow");
         System.out.println(bikeReportService.getAllWithBikes());
         System.out.println("purr");
-        List<BikeReportDto> bikeReportDtos=bikeReportService.getAllWithBikes().stream()
+        List<BikeReportApiResponseDto> bikeReportDtos=bikeReportService.getAllWithBikes().stream()
                 .map(bikeReportMapper::toBikeReportDto)
                 .toList();
         return ResponseEntity.ok(bikeReportDtos);
     }
-    @PostMapping
-    public ResponseEntity<BikeReportDto> createReport(@RequestBody BikeReportRequestDto requestDto) {
 
+    @PostMapping
+    public ResponseEntity<BikeReportApiResponseDto> createReport(@RequestBody BikeReportRequestDto requestDto) {
         var savedReport = bikeReportService.save(
                 requestDto.bikeId(),
                 requestDto.reportTime(),
@@ -55,7 +55,8 @@ public class BikeReportApiController {
                         requestDto.testBenchData().loadCell(),
                         requestDto.testBenchData().rol(),
                         requestDto.testBenchData().loadPower(),
-                        requestDto.testBenchData().statusPlug()),
+                        requestDto.testBenchData().statusPlug(),
+                        requestDto.testBenchData().testBenchId()),
                 new WheelDataDto(requestDto.wheelData().speed(),
                         requestDto.wheelData().power())
         );
