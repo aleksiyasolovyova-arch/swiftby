@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bike Report Summary</title>
+    <script src="/js/bikeReportSummary.js" defer></script>
+</head>
+<body>
+<h1>Bike Report Summary</h1>
+
+<div id="summaryContainer" th:data-summary-id="${summaryId}"></div>
+
+<p><strong>Report ID:</strong> <span id="summaryId"></span></p>
+<p><strong>Bike ID:</strong> <span id="bikeId"></span></p>
+<p><strong>Report Date:</strong> <span id="reportTime"></span></p>
+<p><strong>Average Mileage:</strong> <span id="avgMileage"></span></p>
+<p><strong>Average Assistance Level:</strong> <span id="avgAssistanceLevel"></span></p>
+<p><strong>Speed:</strong> <span id="speed"></span></p>
+<p><strong>Power:</strong> <span id="power"></span></p>
+<p><strong>Technician Comment:</strong> <span id="technicianComment"></span></p>
+
+<p><strong>Reports:</strong></p>
+<ul id="reportList"></ul>
+</body>
+</html>
