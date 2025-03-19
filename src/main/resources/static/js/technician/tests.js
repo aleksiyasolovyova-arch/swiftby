@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let progressColor = getProgressColor(progress);
 
             let cardHtml = `
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4 mb-3   ">
                     <div class="card" style="max-width: 400px">
                         <img src="/images/testbench.JPG" class="card-img-top" alt="Testbench Image">
                         <div class="card-body">
