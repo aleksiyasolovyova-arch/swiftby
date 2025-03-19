@@ -125,7 +125,7 @@ public class BikeReportServiceImpl implements BikeReportService {
     @Override
     public BikeReportSummary saveReportSummaryFromSavedReports(List<Long> savedReportIds) {
         if (savedReportIds.isEmpty()) {
-            throw new IllegalArgumentException("🚨 No reports were saved from the latest CSV file.");
+            throw new IllegalArgumentException(" No reports were saved from the latest CSV file.");
         }
 
         List<BikeReport> reports = bikeReportRepository.findAllById(savedReportIds);

@@ -70,7 +70,7 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
             System.out.println("Test " + testId + " is in state: " + testState);
             sendUpdate(testId, testState,null);
             if (testState == TestState.COMPLETED) {
-                System.out.println("✅ Test " + testId + " completed. Fetching report & processing CSV...");
+                System.out.println("Test " + testId + " completed. Fetching report & processing CSV...");
                 testService.getReport(testId);
                 BikeReportSummary summary = processCsvAfterTestCompletion(ongoingTests.get(testId));
                 Long summaryId = (summary != null) ? summary.getId() : null;
@@ -106,16 +106,6 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
         }
     }
 
-//    private void sendUpdate(UUID testId, TestState status) {
-//        String message = "{\"testId\": \"" + testId + "\", \"status\": \"" + status + "\"}";
-//        for (WebSocketSession session : sessions) {
-//            try {
-//                session.sendMessage(new TextMessage(message));
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
 private void sendUpdate(UUID testId, TestState status, Long summaryId) {
     String message = "{\"testId\": \"" + testId + "\", \"status\": \"" + status + "\", \"summaryId\": " + (summaryId != null ? summaryId : "null") + "}";
 

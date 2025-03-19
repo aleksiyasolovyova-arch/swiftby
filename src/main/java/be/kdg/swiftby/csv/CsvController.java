@@ -34,7 +34,7 @@ public class CsvController {
             List<BikeReportCsvRecord> bikeReportRecords = csvService.processLatestCsvFile();
 
             if (bikeReportRecords.isEmpty()) {
-                return ResponseEntity.badRequest().body("⚠️ No records found in CSV file.");
+                return ResponseEntity.badRequest().body("No records found in CSV file.");
             }
 
             // Track saved report IDs
@@ -55,7 +55,7 @@ public class CsvController {
                     .toList();
 
             BikeReportSummary summary = bikeReportService.saveReportSummaryFromSavedReports(savedReportIds);
-            return ResponseEntity.ok(" CSV successfully processed and summary saved: " + summary);
+            return ResponseEntity.ok("CSV successfully processed and summary saved: " + summary);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(" Error processing CSV: " + e.getMessage());
         }

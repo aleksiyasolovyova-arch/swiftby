@@ -13,7 +13,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class RestTemplateConfig {
 
-    @Value("${testbenchapi.key}") // Inject API Key from properties
+    @Value("${testbenchapi.key}")
     private String apiKey;
 
     @Bean
