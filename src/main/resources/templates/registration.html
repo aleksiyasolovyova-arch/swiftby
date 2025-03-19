@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - BikeTrust</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            background-color: #f5f7ff;
+            color: #344a57;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #fada7a;
+            border: none;
+            color: #344a57;
+            padding: 10px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #5c7285;
+            color: white;
+        }
+
+        .alert-danger {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<main>
+    <div class="register-container">
+        <h2>Register</h2>
+
+        <form th:action="@{/registration}" th:object="${user}" method="post">
+            <div class="mb-3">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" id="firstName" name="firstName" class="form-control" required th:field="*{firstName}">
+                <span id="firstNameError" class="text-danger" th:errors="*{firstName}"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" id="lastName" name="lastName" class="form-control" required th:field="*{lastName}">
+                <span id="lastNameError" class="text-danger" th:errors="*{lastName}"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-control" required th:field="*{username}">
+                <span id="emailError" class="text-danger" th:errors="*{username}"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-control" required th:field="*{password}">
+                <span id="passwordError" class="text-danger" th:errors="*{password}"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="matchingPassword" class="form-label">Confirm Password</label>
+                <input type="password" id="matchingPassword" name="matchingPassword" class="form-control" required th:field="*{matchingPassword}">
+                <span id="matchingPasswordError" class="text-danger" th:errors="*{matchingPassword}"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="phoneNumber" class="form-label">Phone Number</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" required th:field="*{phoneNumber}">
+                <span id="phoneNumberError" class="text-danger" th:errors="*{phoneNumber}"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="facilityId" class="form-label">Facility ID (Optional)</label>
+                <input type="text" id="facilityId" name="facilityId" class="form-control" th:field="*{facilityId}">
+                <span id="facilityIdError" class="text-danger" th:errors="*{facilityId}"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+
+
+        <div id="globalError" class="alert alert-danger mt-3" style="display:none;"></div>
+    </div>
+</main>
+
+<script>
+    $(document).ready(function() {
+        $("#registerForm").submit(function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            let formData = $(this).serialize();
+
+            $.post("/user/registration", formData, function(response) {
+                if (response.message === "success") {
+                    window.location.href = "/successRegister.html";
+                }
+            }).fail(function(xhr) {
+                $("#globalError").hide().html(""); // Clear previous errors
+
+                let errorData = xhr.responseJSON;
+                if (errorData.error === "UserAlreadyExist") {
+                    $("#emailError").html(errorData.message).show();
+                } else {
+                    $("#globalError").show().html(errorData.message);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

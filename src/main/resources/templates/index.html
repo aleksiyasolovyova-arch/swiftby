@@ -1,17 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-  <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
-  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
-  <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
   <meta charset="UTF-8">
-  <title>Welcome</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BikeTrust - eVALeBike</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}"/>
+  <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f7ff;
+      color: #344a57;
+      font-family: 'Roboto', sans-serif;
+
+    }
+    .hero-section {
+      background-size: cover;
+      background: linear-gradient(rgba(92, 114, 133, 0.7), rgba(92, 114, 133, 0.7)), url('/images/test-bench-side.JPG') center;
+      color: #f5f7ff;
+      padding: 100px 0;
+      text-align: center;
+    }
+    .btn-primary {
+      background-color: #fada7a;
+      border: none;
+      color: #344a57;
+    }
+    .features-section {
+      background-color: #aed2e3;
+      padding: 80px 0;
+    }
+    .carousel-section {
+      padding: 80px 0;
+    }
+    .carousel-item img {
+      max-width: 75%;
+      height: 500px;
+      margin: auto;
+      object-fit: cover;
+    }
+    .newsletter-section {
+      background-color: #5c7285;
+      color: #f5f7ff;
+      padding: 60px 0;
+      text-align: center;
+    }
+    .newsletter-section input[type="email"] {
+      padding: 10px;
+      width: 300px;
+      border: none;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    .newsletter-section .btn-subscribe {
+      padding: 10px 20px;
+      background-color: #fada7a;
+      color: #344a57;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
+<header th:insert="~{fragments/header :: header(${currentPage})}"></header>
 
-<h1>
-  Hi
-</h1>
+<section class="hero-section">
+  <div class="container">
+    <h1>BikeTrust</h1>
+    <p>Revolutionizing E-Bike Testing, One Ride at a Time</p>
+    <p>BikeTrust brings precision testing to electric bicycles with <strong>eVALeBike</strong> — a cutting-edge test bench designed to simulate real-world riding conditions, ensuring the quality and performance of new, used, and re-manufactured e-bikes.</p>
+    <a th:href="@{/registration}" class="btn btn-primary">Get Started</a>
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="container">
+    <h2 class="text-center mb-5">Features</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Realistic Load Simulation</h4>
+        <p>Tests e-bikes at selected speeds with controlled resistance, mimicking actual road conditions.</p>
+      </div>
+      <div class="col-md-6">
+        <h4>Comprehensive Data Analysis</h4>
+        <p>Connected to the e-bike’s data network, collecting live performance metrics and generating detailed test reports.</p>
+      </div>
+      <div class="col-md-6">
+        <h4>Multi-Location Deployment</h4>
+        <p>Ideal for bike shops, shared bike repair centers, and second-hand e-bike workshops.</p>
+      </div>
+      <div class="col-md-6">
+        <h4>Cloud-Based Management</h4>
+        <p>All test data is securely stored and accessible through a responsive web app, available on PC and mobile.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="carousel-section">
+  <div class="container text-center">
+    <h2 class="mb-5">Pictures of the Test Bench</h2>
+    <div id="testBenchCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="/images/mj-test-bench.JPG" class="d-block" alt="Test Bench 1">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/test-bench-side.JPG" class="d-block" alt="Test Bench 2">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/test-bench-back.JPG" class="d-block" alt="Test Bench 3">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/hardware.JPG" class="d-block" alt="Test Bench 3">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/test_bench_application.JPG" class="d-block" alt="Test Bench 3">
+        </div>
+        <div class="carousel-item">
+        <img src="/images/test_facility.JPG" class="d-block" alt="Test Bench 3">
+      </div>
+        <div class="carousel-item">
+          <img src="/images/setup.JPG" class="d-block" alt="Test Bench 3">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#testBenchCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#testBenchCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter-section">
+  <div class="container">
+    <h2>Newsletter Sign Up</h2>
+    <p>Stay informed about the latest in e-bike testing technology.</p>
+    <form action="/" method="POST">
+      <label>
+        <input type="email" name="email" placeholder="Enter your email" required>
+      </label>
+      <button type="submit" class="btn-subscribe">Subscribe</button>
+    </form>
+  </div>
+</section>
+<footer th:insert="~{fragments/footer :: footer}"></footer>
 </body>
 </html>
