@@ -31,7 +31,7 @@
             </ul>
             <div class="d-flex">
                 <span class="navbar-text text-light me-3" sec:authorize="isAuthenticated()">
-                    Welcome, <span sec:authentication="name"></span>!
+                    Welcome, <span sec:authentication="${user.firstName}"></span>!
                 </span>
                 <form class="d-inline" th:action="@{/logout}" th:method="POST" sec:authorize="isAuthenticated()">
                     <button type="submit" class="btn btn-warning">Logout</button>
