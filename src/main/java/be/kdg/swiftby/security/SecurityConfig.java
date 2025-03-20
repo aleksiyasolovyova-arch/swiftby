@@ -36,11 +36,18 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/", "/login", "/registration").permitAll()  // <-- Allow registration page
                         .requestMatchers(HttpMethod.POST, "/registration").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                        .requestMatchers(antMatcher("/api/**")).permitAll()
                         .requestMatchers(
+                                antMatcher("/**"),
                                 antMatcher("/js/**"),
                                 antMatcher("/webjars/**"),
                                 antMatcher("/css/**"),
-                                antMatcher("/images/**")).permitAll()
+                                antMatcher("/images/**"),
+                                // REMOVE AFTER FINISHING TESTING
+                                antMatcher("/test"),
+                                antMatcher("/new-test"),
+                                antMatcher("/report-summary/**")
+                                ).permitAll()
                                 .anyRequest().authenticated())
                 .exceptionHandling(
                         exceptionHandling -> exceptionHandling.authenticationEntryPoint((request, response, authException) -> {

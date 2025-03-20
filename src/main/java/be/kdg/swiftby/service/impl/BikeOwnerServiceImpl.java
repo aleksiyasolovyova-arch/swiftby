@@ -5,6 +5,7 @@ import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.testEnv.BikeOwner;
 import be.kdg.swiftby.repository.testEnvironment.BikeOwnerRepository;
 import be.kdg.swiftby.service.intf.BikeOwnerService;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,13 @@ public class BikeOwnerServiceImpl implements BikeOwnerService {
     }
 
     @Override
+    public BikeOwner save(String email, String firstName, String lastName, String phoneNumber) {
+        if (userUtilities.isExistingUser(email)) {
+        throw AlreadyExistsException.forUserWithEmail(email);
+    }
+        return bikeOwnerRepository.save(new BikeOwner(email, firstName, lastName, phoneNumber));
+    }
+    @Override
     public void remove(Long id) {
         if (!bikeOwnerRepository.existsById(id)) {
             throw NotFoundException.forBikeOwner(id);
@@ -57,5 +65,9 @@ public class BikeOwnerServiceImpl implements BikeOwnerService {
 
         bikeOwnerRepository.deleteById(id);
         log.debug("Removed BikeOwner with id {}", id);
+    }
+    @Transactional
+    public List<BikeOwner> searchOwnersByEmail(String email) {
+        return bikeOwnerRepository.findByEmailContainingIgnoreCase(email);
     }
 }

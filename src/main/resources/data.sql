@@ -14,7 +14,8 @@ INSERT INTO battery_data (capacity, charge_status, current, temperature, voltage
 
 INSERT INTO bike_owner (email, first_name, last_name, password, phone_number) VALUES
                                                                                   ('alice@example.com', 'Alice', 'Doe', 'password123', '555-1234'),
-                                                                                  ('bob@example.com', 'Bob', 'Smith', 'securepass', '555-5678');
+                                                                                  ('bob@example.com', 'Bob', 'Smith', 'securepass', '555-5678'),
+                                                                                  ('meow', 'Bob', 'Smith', 'securepass', '555-5678');
 
 INSERT INTO facility (address_extra, city, country, email, name, street, street_number, zip_code) VALUES
     ('Unit 5', 'Springfield', 'USA', 'facility@example.com', 'Test Facility', 'Main St', '123', '98765'),
@@ -38,9 +39,11 @@ INSERT INTO motor (max_power, nominal_power, torque, engine_type, gear_type) VAL
                                                                                  (500, 250, 100, 'Brushless', 'Automatic'),
                                                                                  (600, 300, 120, 'Brushed', 'Manual');
 
-INSERT INTO bike (battery_capacity, bike_size, max_support, powertrain, motor_id, brand, chassis_number, type) VALUES
-                                                                                                                   (5000, 2, 250, 1, 1, 'Trek', 'CHSN12345', 'Mountain'),
-                                                                                                                   (6000, 3, 300, 0, 2, 'Giant', 'CHSN67890', 'Road');
+INSERT INTO bike (battery_capacity, bike_size, max_support, powertrain, motor_id, brand, chassis_number, type, bike_owner_id)
+VALUES
+    (5000, 2, 250, 1, 1, 'Trek', 'CHSN12345', 'Mountain', 1),  -- Owned by Alice
+    (6000, 3, 300, 0, 2, 'Giant', 'CHSN67890', 'Road', 2);     -- Owned by Bob
+
 
 INSERT INTO motor_data (engine, engine_power) VALUES
                                                   (1, 250.5),
