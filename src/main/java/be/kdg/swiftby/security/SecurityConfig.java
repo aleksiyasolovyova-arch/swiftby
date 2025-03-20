@@ -33,7 +33,12 @@ public class SecurityConfig {
                                             GlobalAuthenticationConfigurerAdapter enableGlobalAuthenticationAutowiredConfigurer) throws Exception {
         return httpSecurity
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/", "/login", "/registration").permitAll()  // <-- Allow registration page
+                        .requestMatchers(HttpMethod.GET,
+                                "/",
+                                "/login",
+                                "/registration",
+                                "/workInProgress"
+                        ).permitAll()  // <-- Allow registration page
                         .requestMatchers(HttpMethod.POST, "/registration").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(antMatcher("/api/**")).permitAll()

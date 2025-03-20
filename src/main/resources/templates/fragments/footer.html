@@ -8,13 +8,14 @@
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
     <title>Footer</title>
 </head>
-<body>
 
-<footer th:fragment="footer" class="py-5" style="background-color: #5c7285; color: #f5f7ff;">
+
+<div th:fragment="footer" class="footer mt-auto py-3 text-white"
+     style="background-color: #5c7285; color: #f5f7ff;">
     <div class="container">
         <div class="row">
             <div class="col-md-3 mb-3">
-                <a class="navbar-brand text-light fw-bold" href="/">BikeTrust</a>
+                <a class="navbar-brand text-light fw-bold" href="/">eVALeBike</a>
             </div>
             <div class="col-md-3">
                 <h5>Company</h5>
@@ -39,10 +40,10 @@
                 </ul>
             </div>
         </div>
-        <div class="text-center mt-4">
-            <p>&copy; 2025 BikeTrust. All Rights Reserved.</p>
+        <div class="text-center mt-3">
+            <p class="mb-0">&copy; 2025 eVALeBike. All Rights Reserved.</p>
         </div>
     </div>
-</footer>
-</body>
-</html>
+</div>
+
+
