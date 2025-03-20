@@ -32,38 +32,4 @@ public class BikeReportApiController {
         return ResponseEntity.ok(bikeReportDtos);
     }
 
-    @PostMapping
-    public ResponseEntity<BikeReportApiResponseDto> createReport(@RequestBody BikeReportRequestDto requestDto) {
-        var savedReport = bikeReportService.save(
-                requestDto.bikeId(),
-                requestDto.reportTime(),
-                requestDto.mileage(),
-                requestDto.assistanceLevel(),
-                requestDto.technicianComment(),
-                new AxialSensorDataDto(requestDto.axialSensorData().horizontalInclination(),
-                        requestDto.axialSensorData().horizontalInclination()),
-                new BatteryDataDto(requestDto.batteryData().chargeStatus(),
-                        requestDto.batteryData().current(),
-                        requestDto.batteryData().voltage(),
-                        requestDto.batteryData().capacity(),
-                        requestDto.batteryData().temperature()),
-                new MotorDataDto(requestDto.motorData().engine(),
-                        requestDto.motorData().enginePower()),
-                new PedalDataDto(requestDto.pedalData().torqueCrank(),
-                        requestDto.pedalData().cadence()),
-                new TestBenchDataDto(requestDto.testBenchData().rollerTorque(),
-                        requestDto.testBenchData().loadCell(),
-                        requestDto.testBenchData().rol(),
-                        requestDto.testBenchData().loadPower(),
-                        requestDto.testBenchData().statusPlug(),
-                        requestDto.testBenchData().testBenchId()),
-                new WheelDataDto(requestDto.wheelData().speed(),
-                        requestDto.wheelData().power())
-        );
-
-        var responseDto = bikeReportMapper.toBikeReportDto(savedReport);
-        return ResponseEntity.ok(responseDto);
-    }
-
-
 }

@@ -1,10 +1,9 @@
 package be.kdg.swiftby.domain.bike;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 
 @Entity
 @Getter
@@ -20,6 +19,7 @@ public class Motor {
     @NonNull private Integer maxPower;
     @NonNull private Integer nominalPower;
     @NonNull private Integer torque;
-
+    @OneToMany(mappedBy = "motor")
+    private Set<Bike> bikes;
 
 }

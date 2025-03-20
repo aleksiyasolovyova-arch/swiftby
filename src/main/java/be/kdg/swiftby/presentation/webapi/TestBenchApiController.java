@@ -3,11 +3,8 @@ package be.kdg.swiftby.presentation.webapi;
 import be.kdg.swiftby.domain.bike.Bike;
 import be.kdg.swiftby.domain.testEnv.BikeOwner;
 import be.kdg.swiftby.presentation.webapi.dto.request.StartTestRequestDto;
-import be.kdg.swiftby.presentation.webapi.dto.request.TestRequestDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.TestResponseDto;
 import be.kdg.swiftby.service.TestType;
-import be.kdg.swiftby.service.dto.BikeDto;
-import be.kdg.swiftby.service.dto.MotorDto;
 import be.kdg.swiftby.service.dto.api.dto.TestDto;
 import be.kdg.swiftby.service.intf.BikeOwnerService;
 import be.kdg.swiftby.service.intf.BikeService;
@@ -31,37 +28,11 @@ public class TestBenchApiController {
     @PostMapping("/start")
     public ResponseEntity<TestResponseDto> startTest(@RequestBody StartTestRequestDto request) {
         // save the bike owner
-        BikeOwner bikeOwner = bikeOwnerService.save(
-                request.getOwnerEmail(),
-                // the technician can't input the password for the owner
-                // TODO: add a new method without a password
-                "DUMMY DUM PASSWORD",
-                request.getOwnerFirstName(),
-                request.getOwnerLastName(),
-                request.getOwnerPhoneNumber()
-        );
-        // save the bike info
-        Bike bike = bikeService.save(
-                new BikeDto(
-                        request.getBrand(),
-                        request.getBrand(),
-                        request.getChassisNumber(),
-                        request.getPowertrain(),
-                        request.getBikeSize(),
-                        request.getMaxSupport(),
-                        new MotorDto(
-                                request.getEngineType(),
-                                request.getGearType(),
-                                request.getMaxPower(),
-                                request.getNominalPower(),
-                                request.getTorque()
-                        ),
-                        request.getBatteryCapacity()
-                )
-        );
+        Bike bike = bikeService.getByIdWithOwner(request.getBikeId());
+        BikeOwner bikeOwner = bike.getBikeOwner();
 
         TestDto testDto = testService.startTest(
-                TestType.valueOf(request.getTestType().toUpperCase()),
+                TestType.valueOf(request.getTestType().name()),
                 request.getBatteryCapacity(),
                 request.getMaxSupport(),
                 request.getMaxPower(),
@@ -69,9 +40,7 @@ public class TestBenchApiController {
                 request.getTorque(),
                 bike.getId()
         );
-
-        testWebSocketHandler.trackTest(testDto.id(),bike.getId());
-
+        testWebSocketHandler.trackTest(testDto.id(), bike.getId());
         return ResponseEntity.ok(mapToResponseDto(testDto));
     }
 

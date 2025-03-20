@@ -6,6 +6,7 @@ import lombok.*;
 @MappedSuperclass
 @Getter
 @Setter
+@NoArgsConstructor
 public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,4 +17,11 @@ public abstract class User {
     @NonNull private String firstName;
     @NonNull private String lastName;
     @NonNull private String phoneNumber;
+
+    public User( String email, String firstName,  String lastName,  String phoneNumber) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+    }
 }
