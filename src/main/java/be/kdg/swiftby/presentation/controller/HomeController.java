@@ -23,6 +23,11 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/workInProgress")
+    public String wip() {
+        return "work-in-progress";
+    }
+
 
 
 

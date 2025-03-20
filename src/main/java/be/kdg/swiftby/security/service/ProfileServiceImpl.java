@@ -22,10 +22,9 @@ public class ProfileServiceImpl implements ProfileServiceInt {
 
     @Override
     public User registerNewUserAccount(ProfileDto technician) throws AlreadyExistsException {
-        if (technicianRepository.findByEmail(technician.getUsername()).isPresent()) {
+        if (technicianRepository.existsByEmail(technician.getUsername())) {
             throw AlreadyExistsException.forUserWithEmail("There is an account with that email: " + technician.getUsername());
         }
-
         Technician user = new Technician();
         user.setFirstName(technician.getFirstName());
         user.setLastName(technician.getLastName());

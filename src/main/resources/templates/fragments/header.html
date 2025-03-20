@@ -1,3 +1,4 @@
+
 <!--TODO:Fix up the whole header file lmao-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -12,21 +13,30 @@
 <body>
 <header th:fragment="header(currentPage)" class="navbar navbar-expand-lg py-3" style="background-color: #344a57;">
     <div class="container d-flex justify-content-between align-items-center">
-        <a class="navbar-brand text-light fw-bold" href="/">BikeTrust</a>
+        <a class="navbar-brand text-light fw-bold" th:href="@{/}">
+            <i class="bi bi-house"></i>
+            <span>eVALeBike</span>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="/">Feature</a>
+                <li class="nav-item mx-2">
+                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="!isAuthenticated()">My Bikes</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="/">User Examples</a>
+                <li class="nav-item mx-2">
+                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="!isAuthenticated()">My Bike Reports</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="/">Resources</a>
+                <li class="nav-item mx-2">
+                    <a class="nav-link text-light" th:href="@{/technician/dashboard}" sec:authorize="isAuthenticated()">Dashboard</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="isAuthenticated()">Facility overview</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="isAuthenticated()">Customers</a>
                 </li>
             </ul>
             <div class="d-flex">
