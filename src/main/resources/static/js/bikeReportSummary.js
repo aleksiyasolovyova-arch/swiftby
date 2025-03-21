@@ -62,4 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => {
             alert("Failed to load report summary. Please try again later.");
         });
+
 });
+
