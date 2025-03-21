@@ -1,7 +1,6 @@
 package be.kdg.swiftby.service.impl;
 
 import be.kdg.swiftby.domain.report.BikeReportSummary;
-import be.kdg.swiftby.domain.report.BikeReport;
 import be.kdg.swiftby.service.intf.BikeReportSummaryPdfService;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -87,14 +86,13 @@ public class BikeReportSummaryPdfServiceImpl implements BikeReportSummaryPdfServ
     }
 
     private void addStyledCard(Document doc, String cardTitle, Font labelFont, Font valueFont, String... lines) throws DocumentException {
-        // Create a table to simulate a card with background color
-        PdfPTable table = new PdfPTable(1); // 1 column
+        PdfPTable table = new PdfPTable(1);
         table.setWidthPercentage(100);
 
         // Add card header with dark blue background
         PdfPCell headerCell = new PdfPCell(new Phrase(cardTitle, new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD, TEXT_COLOR)));
         headerCell.setBackgroundColor(HEADER_COLOR);
-        headerCell.setBorder(Rectangle.NO_BORDER); // Remove border for the card header
+        headerCell.setBorder(Rectangle.NO_BORDER);
         headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(headerCell);
 
