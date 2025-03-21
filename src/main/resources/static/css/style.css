@@ -179,8 +179,8 @@ autocomplete-results {
     box-shadow: 0 0 15px rgba(250, 218, 122, 0.7);
 }
 .bike-thumbnail {
-    width: 80px;
-    height: 80px;
+    width: 130px;
+    height: 130px;
     object-fit: contain;
     border-radius: 10px;
     background: white;
@@ -213,4 +213,7 @@ autocomplete-results {
     color: #999;
     text-align: center;
     padding: 10px;
+}
+::placeholder{
+    color: white !important;
 }

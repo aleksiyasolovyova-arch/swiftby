@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             if (bikes.length > 0) {
                 bikeList.innerHTML = bikes.map(bike => `
-    <div class="card text-start shadow-sm p-3 bike-card ${selectedBikeId == bike.id ? 'selected' : ''}">
+    <div class="card text-start shadow-sm p-3 bike-card p-3 ${selectedBikeId == bike.id ? 'selected' : ''}">
         <div class="d-flex align-items-center gap-3">
             <img src="/images/bikeGeneric.webp" alt="Bike" class="bike-thumbnail">
             <div class="flex-grow-1">

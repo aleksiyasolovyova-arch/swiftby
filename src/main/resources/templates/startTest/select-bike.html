@@ -8,64 +8,108 @@
     <link rel="stylesheet" href="/css/style.css">
     <script src="/js/select-bike.js" defer></script>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <header th:insert="~{fragments/header :: header(${currentPage})}"></header>
 
-<div class="container-fluid py-5">
-    <h1 class="text-center text-accent mb-4">🚴 Select a Bike</h1>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="glassmorphism p-3 h-100">
+<div class="container d-flex flex-column flex-grow-1 justify-content-center align-items-center w-100 ">
+    <h1 class="text-center text-accent m-4 row">🚴 Select a Bike</h1>
+    <div class="row w-100 justify-content-center ">
+        <div class="col-md-5">
+            <div class="glassmorphism p-3">
                 <h2 class="text-accent mb-3">User's Bikes</h2>
                 <div id="bikeList" class="d-flex flex-column gap-3"></div>
                 <button id="selectBike" class="btn glowing-button w-100 mt-3" disabled> Proceed with Selected Bike</button>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div id="newBikeForm" class="glassmorphism hidden h-100">
-                <h2 class="text-secondary">➕ Add a New Bike</h2>
-                <input type="text" id="brand" class="form-control fancy-input my-2" placeholder="Brand" required>
-                <input type="text" id="type" class="form-control fancy-input my-2" placeholder="Type" required>
-                <input type="text" id="chassisNumber" class="form-control fancy-input my-2" placeholder="Chassis Number" required>
+        <div class="col-md-6">
+            <div id="newBikeForm" class="glassmorphism  hidden p-3">
+                <h2 class="text-accent"> Add a New Bike</h2>
+                <h3 class="text-secondary my-3">Bike details</h3>
 
-                <label for="powertrain" class="form-label">Powertrain:</label>
-                <select id="powertrain" class="form-control fancy-input my-2">
-                    <option value="" disabled selected>Loading powertrains...</option>
-                </select>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="brand" class="form-label">Brand:</label>
+                        <input type="text" id="brand" class="form-control fancy-input my-2" placeholder="Brand name" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="type" class="form-label">Type:</label>
+                        <input type="text" id="type" class="form-control fancy-input my-2" placeholder="Type" required>
+                    </div>
+                </div>
 
-                <label for="bikeSize" class="form-label">Bike Size:</label>
-                <select id="bikeSize" class="form-control fancy-input my-2">
-                    <option value="" disabled selected>Loading sizes...</option>
-                </select>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="chassisNumber" class="form-label">Chassis number:</label>
+                        <input type="text" id="chassisNumber" class="form-control fancy-input my-2" placeholder="Chassis Number" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="powertrain" class="form-label">Powertrain:</label>
+                        <select id="powertrain" class="form-control fancy-input my-2">
+                            <option value="" disabled selected>Loading powertrains...</option>
+                        </select>
+                    </div>
+                </div>
 
-                <label for="maxSupport" class="form-label">Max Support (%)</label>
-                <input type="number" id="maxSupport" class="form-control fancy-input my-2" value="100" min="0" max="100" required>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="bikeSize" class="form-label">Bike Size:</label>
+                        <select id="bikeSize" class="form-control fancy-input my-2">
+                            <option value="" disabled selected>Loading sizes...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="maxSupport" class="form-label">Max Support (%)</label>
+                        <input type="number" id="maxSupport" class="form-control fancy-input my-2" value="100" min="0" max="100" required>
+                    </div>
+                </div>
 
-                <label for="batteryCapacity" class="form-label">Battery Capacity (Wh)</label>
-                <input type="number" id="batteryCapacity" class="form-control fancy-input my-2" value="500" required>
-            </div>
-        </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="batteryCapacity" class="form-label">Battery Capacity (Wh)</label>
+                        <input type="number" id="batteryCapacity" class="form-control fancy-input my-2" value="500" required>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Empty column for better alignment -->
+                    </div>
+                </div>
 
-        <div class="col-md-4">
-            <div class="glassmorphism h-100">
-                <h3 class="text-secondary">⚙️ Motor Details</h3>
-                <label for="engineType" class="form-label">Engine Type:</label>
-                <input type="text" id="engineType" class="form-control fancy-input my-2" placeholder="Engine type" required>
+                <hr>
+                <h3 class="text-secondary my-3">⚙️ Motor Details</h3>
 
-                <label for="gearType" class="form-label">Gear Type:</label>
-                <input type="text" id="gearType" class="form-control fancy-input my-2" placeholder="Gear type" required>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="engineType" class="form-label">Engine Type:</label>
+                        <input type="text" id="engineType" class="form-control fancy-input my-2" placeholder="Engine type" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="gearType" class="form-label">Gear Type:</label>
+                        <input type="text" id="gearType" class="form-control fancy-input my-2" placeholder="Gear type" required>
+                    </div>
+                </div>
 
-                <label for="maxPower" class="form-label">Max Power (W)</label>
-                <input type="number" id="maxPower" class="form-control fancy-input my-2" value="500" required>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="maxPower" class="form-label">Max Power (W)</label>
+                        <input type="number" id="maxPower" class="form-control fancy-input my-2" value="500" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nominalPower" class="form-label">Nominal Power (W)</label>
+                        <input type="number" id="nominalPower" class="form-control fancy-input my-2" value="250" required>
+                    </div>
+                </div>
 
-                <label for="nominalPower" class="form-label">Nominal Power (W)</label>
-                <input type="number" id="nominalPower" class="form-control fancy-input my-2" value="250" required>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="torque" class="form-label">Torque (Nm)</label>
+                        <input type="number" id="torque" class="form-control fancy-input my-2" value="75" required>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Empty column for better alignment -->
+                    </div>
+                </div>
 
-                <label for="torque" class="form-label">Torque (Nm)</label>
-                <input type="number" id="torque" class="form-control fancy-input my-2" value="75" required>
-
-                <button id="saveBikeButton" class="btn glowing-button w-100 mt-3">Save New Bike!</button>
+                <button id="saveBikeButton" class="btn glowing-button w-100 mt-3">💾 Save Bike</button>
             </div>
         </div>
     </div>
