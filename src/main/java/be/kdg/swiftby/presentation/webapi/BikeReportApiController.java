@@ -1,9 +1,9 @@
 package be.kdg.swiftby.presentation.webapi;
 
-import be.kdg.swiftby.domain.report.BikeReport;
 import be.kdg.swiftby.presentation.webapi.dto.bikereport.BikeReportMapperApi;
 import be.kdg.swiftby.presentation.webapi.dto.request.BikeReportRequestDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportApiResponseDto;
+import be.kdg.swiftby.service.dto.*;
 import be.kdg.swiftby.service.intf.BikeReportService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,12 +32,4 @@ public class BikeReportApiController {
         return ResponseEntity.ok(bikeReportDtos);
     }
 
-    @GetMapping("/summary/{summaryId}")
-    public ResponseEntity<List<BikeReportApiResponseDto>> getReportsBySummaryId(@PathVariable Long summaryId) {
-        List<BikeReport> reports = bikeReportService.getReportsBySummaryId(summaryId);
-        List<BikeReportApiResponseDto> reportDtos = reports.stream()
-                .map(bikeReportMapper::toBikeReportDto)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(reportDtos);
-    }
 }

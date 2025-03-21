@@ -1,37 +1,29 @@
 document.addEventListener("DOMContentLoaded", function () {
     const emailInput = document.getElementById("customerEmail");
+    const userForm = document.getElementById("userForm");
+    const inputWrapper = emailInput.parentNode;
     const suggestionsContainer = document.getElementById("search-output");
-    suggestionsContainer.style.display = "none";
-
+    suggestionsContainer.classList.add("autocomplete-results");
+    inputWrapper.appendChild(suggestionsContainer);
     let debounceTimeout;
-
     async function fetchUsers(query) {
         if (!query.trim()) {
             suggestionsContainer.innerHTML = ""
             suggestionsContainer.hidden = true;
             return;
         }
-
         try {
             const response = await fetch(`/api/bikeowners/search?email=${query}`);
             if (response.ok) {
                 const users = await response.json();
-                if (users.length > 0) {
-                    showSuggestions(users);
-                    suggestionsContainer.style.display = "block";
-                } else {
-                    suggestionsContainer.innerHTML = "<p class='no-results'>No users found</p>";
-                    suggestionsContainer.style.display = "block";
-                }
+                showSuggestions(users);
             } else {
                 suggestionsContainer.innerHTML = "<p class='no-results'>No users found</p>";
-                suggestionsContainer.style.display = "block";
             }
         } catch (error) {
             console.error("Error fetching users:", error);
         }
     }
-
     function showSuggestions(users) {
         suggestionsContainer.hidden = false;
         suggestionsContainer.innerHTML = "";
@@ -42,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
             suggestion.addEventListener("click", () => {
                 emailInput.value = user.email;
                 suggestionsContainer.innerHTML = "";
-                suggestionsContainer.style.display = "none";
                 window.location.href = `/startTest/select-bike?userId=${user.id}`;
             });
             suggestionsContainer.appendChild(suggestion);
@@ -79,4 +70,5 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Network error:", error);
         }
     });
+
 });

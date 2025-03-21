@@ -26,7 +26,6 @@ public interface BikeReportService {
             WheelDataDto wheelDataDto
     );
     void remove(Long id);
-    List<BikeReport> getReportsBySummaryId(Long summaryId);
     BikeReport aggregatedReport(Long reportId);
     BikeReportSummary saveReportSummary(Long bikeId, LocalDate reportDate);
     BikeReportSummary saveReportSummaryFromSavedReports(List<Long> savedReportIds);

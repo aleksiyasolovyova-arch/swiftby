@@ -68,14 +68,14 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
         return true;
     }
+
     startTestButton.addEventListener("click", async function (event) {
         event.preventDefault();
 
         if (!validateInputs()) return;
 
         startTestButton.disabled = true;
-        startTestButton.innerHTML = `Test started`;
-
+        startTestButton.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Starting...`;
 
         const testParams = {
             bikeId: parseInt(bikeId, 10),
@@ -89,7 +89,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         };
 
         console.log("Test Parameters:", testParams);
-
         try {
             const response = await fetch("/api/test/start", {
                 method: "POST",
@@ -99,23 +98,16 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             if (response.ok) {
                 const testData = await response.json();
-                console.log(" Test started:", testData);
-
-                testStatus.innerHTML = `
-                <div class="text-center">
-                    <img src="/images/loading.webp" alt="Loading..." class="loading-image mb-2">
-                    <p><strong>The test is executing. Please, do not close the page until the test is finished.</strong></p>
-                </div>
-            `;
+                testStatus.innerHTML = `<img src="/images/loading.webp" alt="Loading..." class="loading-image">`;
+                console.log("Test started:", testData);
 
                 connectWebSocket();
-            } else {
-                testStatus.innerHTML = `<div class="text-danger"> Failed to start test. Please try again later.</div>`;
             }
         } catch (error) {
-            testStatus.innerHTML = `<div class="text-danger"> Network error. Check your connection.</div>`;
+            testStatus.innerHTML = "Network error. Check your connection.";
+        } finally {
+            startTestButton.disabled = false;
+            startTestButton.innerHTML = "Start Test";
         }
-
     });
-
 });
