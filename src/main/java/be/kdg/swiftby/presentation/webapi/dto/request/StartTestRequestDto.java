@@ -2,34 +2,40 @@ package be.kdg.swiftby.presentation.webapi.dto.request;
 
 import be.kdg.swiftby.domain.bike.BIKE_SIZE;
 import be.kdg.swiftby.domain.bike.POWERTRAIN;
+import be.kdg.swiftby.service.TestType;
 import lombok.Data;
 
 @Data
 public class StartTestRequestDto {
-    // bike Owner Information
-    private String ownerEmail;
-    private String ownerFirstName;
-    private String ownerLastName;
-    private String ownerPhoneNumber;
 
-    // bike Information
-    private String brand;
-    private String type;
-    private String chassisNumber;
-    private BIKE_SIZE bikeSize;
-    private POWERTRAIN powertrain;
-    private Integer maxSupport;
+    // OWNER IS NOW SAVED SEPARATELY
+
+//    private String ownerEmail;
+//    private String ownerFirstName;
+//    private String ownerLastName;
+//    private String ownerPhoneNumber;
+
+    // BAKE IS NOW SAVED SEPARATELY
+
+//    private String brand;
+//    private String type;
+//    private String chassisNumber;
+//    private BIKE_SIZE bikeSize;
+//    private POWERTRAIN powertrain;
+//    private String engineType;
+//    private String gearType;
+//    private Integer mileage;
+//    private Integer productionDate;
+
+    //
+    private TestType testType;
+    private String testBenchNumber;
     private Integer batteryCapacity;
-    private String engineType;
-    private String gearType;
+    private Integer maxSupport;
     private Integer maxPower;
     private Integer nominalPower;
     private Integer torque;
-    private Integer mileage;
-    private Integer productionDate;
 
-    // Test Setup
-    private String testType;
-    private Integer testBenchNumber;
-
+    // BIKE ID WILL BE USED TO RETRIEVE BIKE TOGETHER WITH ITS OWNER
+    private Long bikeId;
 }

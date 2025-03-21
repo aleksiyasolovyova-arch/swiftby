@@ -30,22 +30,17 @@ public class CsvService {
 
     public List<BikeReportCsvRecord> processLatestCsvFile() throws IOException {
         File reportsFolder = new File(REPORTS_DIR);
-
         if (!reportsFolder.exists() || !reportsFolder.isDirectory()) {
             throw new IOException("Reports directory not found: " + REPORTS_DIR);
         }
-
-        // Get the latest CSV file in the folder
         File[] csvFiles = reportsFolder.listFiles((dir, name) -> name.endsWith(".csv"));
         if (csvFiles == null || csvFiles.length == 0) {
             throw new IOException("No CSV files found in reports directory.");
         }
-
-        File latestFile = csvFiles[0]; // Since we assume only one file, we pick the first
+        File latestFile = csvFiles[0];
         System.out.println("Processing CSV File: " + latestFile.getName());
 
         List<BikeReportCsvRecord> records = new ArrayList<>();
-
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(new BOMInputStream(new FileInputStream(latestFile)), StandardCharsets.UTF_8));
              CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
@@ -64,7 +59,6 @@ public class CsvService {
 
         System.out.println("Parsed Records Count: " + records.size());
 
-        // Delete file after successful processing
         if (!records.isEmpty()) {
             Files.delete(latestFile.toPath());
             System.out.println(" CSV file deleted: " + latestFile.getName());
@@ -106,7 +100,7 @@ public class CsvService {
                         Double.parseDouble(record.get("rolHz")),
                         Integer.parseInt(record.get("loadPower")),
                         Boolean.parseBoolean(record.get("statusPlug")),
-                        1L // Default test bench
+                        1L
                 ),
                 new WheelDataDto(
                         Double.parseDouble(record.get("bikeWheelSpeedKmh")),
@@ -125,7 +119,7 @@ public class CsvService {
                 for (File file : csvFiles) {
                     boolean deleted = file.delete();
                     if (deleted) {
-                        System.out.println("🗑️ Deleted CSV file on shutdown: " + file.getName());
+                        System.out.println("Deleted CSV file on shutdown: " + file.getName());
                     } else {
                         System.out.println(" Failed to delete: " + file.getName());
                     }

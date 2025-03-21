@@ -47,7 +47,7 @@ dependencies {
     implementation("org.webjars:webjars-locator-core:0.59")
     implementation("org.webjars:bootstrap:5.3.3")
     implementation("org.webjars.npm:bootstrap-icons:1.11.3")
-
+    implementation ("com.itextpdf:itext7-core:7.1.15")
     implementation("commons-io:commons-io:2.18.0")
     implementation("org.mapstruct:mapstruct:1.6.3")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")

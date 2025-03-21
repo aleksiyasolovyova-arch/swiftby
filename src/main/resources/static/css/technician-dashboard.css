@@ -1,47 +1,163 @@
-.col-md-6 {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 8px;
-}
-.btn {
-    margin-bottom: 15px;
-}
-
-#image {
-    height: 550px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
-}
-
-#image img {
-    max-height: 100%;
-    max-width: 100%;
-    border-radius: 8px;
+body {
+    background-color: #e8eef5;
+    font-family: Arial, sans-serif;
+    color: #344a57;
 }
 
 .container-fluid {
     margin-top: 30px;
+    padding: 20px;
 }
 
-.progress-container {
-    position: relative;
-    width: 200px;
-    height: 200px;
+/* Top Buttons */
+.row.mb-4.text-center {
+    margin-bottom: 40px;
 }
 
-.progress-text, .progress-details {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+/* Buttons Styling */
+.btn-outline-dark {
+    border-color: #344a57;
+    color: #344a57;
+}
+
+.btn-outline-dark:hover {
+    background-color: #344a57;
+    color: #f5f7ff;
+}
+
+.btn-success {
+    background-color: #5c7285;
+    border-color: #5c7285;
+}
+
+.btn-success:hover {
+    background-color: #344a57;
+}
+
+#image {
+    border: 1px solid #5c7285;
+    display: flex;
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Centers vertically */
+    max-width: 700px;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #f5f7ff;
+    padding: 10px;
+}
+
+#image:hover {
+    background: #aed2e3; /* Light blue hover effect */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+    transform: scale(1.02);
+    transition: all 0.3s ease-in-out;
+}
+
+#image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.test-reports-container {
+    width: 100%;
+    max-width: 950px; /* Adjusted to perfectly match Pre-Test Checklist */
+    background: #fada7a;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.1);
+    border: 2px solid #d1a743;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto; /* Center it */
 }
 
-.progress-icon {
-    display: block;
-    font-size: 1.5em;
-    margin-bottom: 5px;
+.test-reports-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #344a57;
+    margin-bottom: 15px;
+}
+
+.test-reports-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    height: 400px;
+}
+
+.test-reports-list li {
+    margin-bottom: 10px;
+}
+
+.test-report-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid #d1d8e0;
+    font-size: 1rem;
+}
+
+.test-report-card:hover {
+    background: #e8eef5;
+    transform: translateY(-3px);
+}
+
+.report-id {
+    font-weight: bold;
+    color: #344a57;
+}
+
+.report-date {
+    font-size: 0.9rem;
+    color: #5c7285;
+}
+
+/* Battery Metrics */
+#chartContainer {
+    border: 2px solid #5c7285;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Pre-Test Checklist */
+.checklist-container {
+    background-color: #fada7a;
+    padding: 40px;
+    border-radius: 12px;
+    border: 2px solid #5c7285;
+    width: 100%;
+    max-width: 950px; /* Matches Test Reports size perfectly */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h3 {
+    color: #344a57;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    background: #5c7285;
+    padding: 10px;
+    border-radius: 6px;
+    color: white;
+}
+
+.list-unstyled {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    color: #344a57;
+    border: 2px solid #5c7285;
+}
+
+.form-check-input:checked {
+    background-color: #344a57;
+    border-color: #344a57;
 }
