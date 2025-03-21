@@ -59,6 +59,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation ("io.github.cdimascio:dotenv-java:3.0.0")
     implementation("com.postmarkapp:postmark:1.11.1")
+    //pdf
+    implementation("com.itextpdf:itextpdf:5.5.13.2")
 
 
 }

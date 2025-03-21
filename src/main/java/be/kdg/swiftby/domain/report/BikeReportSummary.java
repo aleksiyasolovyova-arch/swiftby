@@ -40,6 +40,8 @@ public class BikeReportSummary {
     private Integer maxPower;
     private Integer nominalPower;
     private Integer torque;
+    @Column(nullable = true)
+    private Double enginePower;
     private double torqueCrank;
     private double cadence;
     private double rollerTorque;
@@ -54,15 +56,38 @@ public class BikeReportSummary {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "summary_id")
     private List<BikeReport> reports;
-//    private long reportCount;
-//
-//    private double avgBatteryCurrent;
-//    private double avgBatteryVoltage;
-//    private double avgBatteryCapacity;
-//    private double avgBatteryTemperature;
-//
-//    private double avgMotorPower;
-//    private double avgWheelSpeed;
+
+
+    public BikeReportSummary(Bike bike, LocalDate reportTime,
+                             Double avgMileage, Double avgAssistanceLevel,
+                             Double horizontalInclination, Double verticalInclination,
+                             Double current, Double voltage, Double capacity, Double temperature,
+                             Double enginePower, Double torqueCrank, Double cadence,
+                             Double rollerTorque, Double loadCell, Double rol,
+                             Double speed, Double power, String technicianComment) {  // ✅ Include technicianComment
+        this.bike = bike;
+        this.reportTime = reportTime;
+        this.avgMileage = avgMileage;
+        this.avgAssistanceLevel = avgAssistanceLevel;
+        this.horizontalInclination = horizontalInclination;
+        this.verticalInclination = verticalInclination;
+        this.current = current;
+        this.voltage = voltage;
+        this.capacity = capacity;
+        this.temperature = temperature;
+        this.enginePower = enginePower;
+        this.torqueCrank = torqueCrank;
+        this.cadence = cadence;
+        this.rollerTorque = rollerTorque;
+        this.loadCell = loadCell;
+        this.rol = rol;
+        this.speed = speed;
+        this.power = power;
+        this.technicianComment = technicianComment;
+
+    }
+
+
 
     public BikeReportSummary() {
     }
