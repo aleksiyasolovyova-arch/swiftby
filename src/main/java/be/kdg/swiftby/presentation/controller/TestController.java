@@ -14,6 +14,12 @@ public class TestController {
     public String idkAnymore(){
         return "startTest/find-user";
     }
+
+    @GetMapping("startTest/checklist")
+    public String checklist(){
+        return "startTest/checklist";
+    }
+
     @GetMapping("startTest/find-user")
     public String showFindUserPage() {
         return "startTest/find-user";
