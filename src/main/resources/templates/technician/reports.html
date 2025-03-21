@@ -10,6 +10,9 @@
     <title>reports</title>
 </head>
 <body>
+
+<header th:insert="~{fragments/header :: header(${currentPage})}"></header>
+
 <div class="bg-light">
     <div class="container py-5">
         <div class="search-container">
@@ -44,6 +47,7 @@
     <div class="row" id="bike-cards-container">
     </div>
 </div>
+<footer th:insert="~{fragments/footer :: footer}"></footer>
 
 </body>
 </html>
