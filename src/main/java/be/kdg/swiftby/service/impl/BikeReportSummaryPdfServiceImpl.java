@@ -28,7 +28,7 @@ public class BikeReportSummaryPdfServiceImpl implements BikeReportSummaryPdfServ
             PdfWriter writer = PdfWriter.getInstance(document, out);
             document.open();
 
-            // Set title font
+            // title font
             Font titleFont = new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD, TEXT_COLOR);
             Font labelFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, TEXT_COLOR);
             Font valueFont = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL, TEXT_COLOR);
@@ -40,10 +40,10 @@ public class BikeReportSummaryPdfServiceImpl implements BikeReportSummaryPdfServ
 
 
 
-            // --- Report Details Section ---
+            // report details
             addStyledCard(document, "Report Details", labelFont, valueFont, "Report Date:", summary.getReportTime().format(DateTimeFormatter.ISO_DATE));
 
-            // --- Performance Data Section ---
+            //performance Data Section
             addStyledCard(document, "Performance Data", labelFont, valueFont,
                     "Average Mileage:", String.format("%.2f km", summary.getAvgMileage()),
                     "Average Assistance Level:", String.format("%.2f%%", summary.getAvgAssistanceLevel()),
@@ -52,7 +52,7 @@ public class BikeReportSummaryPdfServiceImpl implements BikeReportSummaryPdfServ
                     "Horizontal Inclination:", String.format("%.2f°", summary.getHorizontalInclination()),
                     "Vertical Inclination:", String.format("%.2f°", summary.getVerticalInclination()));
 
-            // --- Battery & Engine Data Section ---
+            //battery & engine Data Section
             addStyledCard(document, "Battery & Engine Data", labelFont, valueFont,
                     "Charge Status:", summary.isChargeStatus() ? "Charging" : "Not Charging",
                     "Battery Current:", String.format("%.2f A", summary.getCurrent()),
@@ -62,7 +62,7 @@ public class BikeReportSummaryPdfServiceImpl implements BikeReportSummaryPdfServ
                     "Engine Type:", summary.getEngineType(),
                     "Gear Type:", summary.getGearType());
 
-            // --- Motor & Load Data Section ---
+            //motor &load Data Section
             addStyledCard(document, "Motor & Load Data", labelFont, valueFont,
                     "Max Power:", String.format("%d W", summary.getMaxPower()),
                     "Nominal Power:", String.format("%d W", summary.getNominalPower()),
@@ -75,7 +75,7 @@ public class BikeReportSummaryPdfServiceImpl implements BikeReportSummaryPdfServ
                     "Rol:", String.format("%.2f", summary.getRol()),
                     "Status Plug:", summary.isStatusPlug() ? "Plugged In" : "Not Plugged");
 
-            // --- Technician Notes Section ---
+            //technician Notes Section
             addStyledCard(document, "Technician Notes", labelFont, valueFont, "Technician Comment:", summary.getTechnicianComment() != null ? summary.getTechnicianComment() : "No comments");
 
             document.close();
@@ -89,14 +89,14 @@ public class BikeReportSummaryPdfServiceImpl implements BikeReportSummaryPdfServ
         PdfPTable table = new PdfPTable(1);
         table.setWidthPercentage(100);
 
-        // Add card header with dark blue background
+        // card header
         PdfPCell headerCell = new PdfPCell(new Phrase(cardTitle, new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD, TEXT_COLOR)));
         headerCell.setBackgroundColor(HEADER_COLOR);
         headerCell.setBorder(Rectangle.NO_BORDER);
         headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(headerCell);
 
-        // Add content in the card
+        //  content
         for (int i = 0; i < lines.length; i += 2) {
             PdfPCell labelCell = new PdfPCell(new Phrase(lines[i], labelFont));
             PdfPCell valueCell = new PdfPCell(new Phrase(lines[i + 1], valueFont));
