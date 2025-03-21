@@ -6,8 +6,8 @@
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script defer src="/js/dashboard.js"></script>
-    <link rel="stylesheet" href="/css/technician-dashboard.css">
+    <script defer src="/js/technician/dashboard.js"></script>
+    <link rel="stylesheet" href="/css/technician/technician-dashboard.css">
     <meta charset="UTF-8">
     <title>Technician's Dashboard</title>
 </head>
@@ -19,13 +19,19 @@
 <div class="container-fluid">
     <div class="row mb-4 text-center">
         <div class="col-md-3">
-            <button type="button" class="btn btn-outline-dark w-100">Start New Test</button>
+            <a href="/startTest/checklist">
+                <button type="button" class="btn btn-outline-dark w-100">Start New Test</button>
+
+            </a>
         </div>
         <div class="col-md-3">
             <button type="button" class="btn btn-outline-dark w-100">Insert RAW Data</button>
         </div>
         <div class="col-md-3">
-            <button type="button" class="btn btn-outline-dark w-100">4/6 Tests Active</button>
+            <a href="/technician/reports">
+                <button type="button" class="btn btn-outline-dark w-100">View Reports</button>
+
+            </a>
         </div>
         <div class="col-md-3">
             <button type="button" class="btn btn-success w-100">Bench Status: Optimal</button>
@@ -34,14 +40,12 @@
 
     <div class="row mb-4">
         <div class="col-md-6 d-flex flex-row justify-content-center">
-            <div id="image" >
+
+
+            <div id="image">
+
                 <img src="/images/Bike.JPG" alt="Bike">
-                <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="65%" cy="30%" r="10" fill="red"/>
-                    <circle cx="40%" cy="60%" r="10" fill="yellow"/>
-                    <circle cx="30%" cy="80%" r="10" fill="red"/>
-                </svg>
+
             </div>
         </div>
 
@@ -49,16 +53,28 @@
             <div class="test-reports-container">
                 <h4 class="test-reports-title">Test Reports</h4>
                 <ul class="test-reports-list overflow-scroll">
-                    <li class="test-report-card"><span class="report-id">#101</span><span class="report-date">2024-03-15</span></li>
-                    <li class="test-report-card"><span class="report-id">#102</span><span class="report-date">2024-03-12</span></li>
-                    <li class="test-report-card"><span class="report-id">#103</span><span class="report-date">2024-03-10</span></li>
-                    <li class="test-report-card"><span class="report-id">#104</span><span class="report-date">2024-03-08</span></li>
-                    <li class="test-report-card"><span class="report-id">#105</span><span class="report-date">2024-03-05</span></li>
-                    <li class="test-report-card"><span class="report-id">#101</span><span class="report-date">2024-03-15</span></li>
-                    <li class="test-report-card"><span class="report-id">#102</span><span class="report-date">2024-03-12</span></li>
-                    <li class="test-report-card"><span class="report-id">#103</span><span class="report-date">2024-03-10</span></li>
-                    <li class="test-report-card"><span class="report-id">#104</span><span class="report-date">2024-03-08</span></li>
-                    <li class="test-report-card"><span class="report-id">#105</span><span class="report-date">2024-03-05</span></li>
+                    <a href="/report-summary?id=1">
+                        <li class="test-report-card"><span class="report-id">#101</span><span class="report-date">2024-03-15</span>
+                        </li>
+                        <li class="test-report-card"><span class="report-id">#102</span><span class="report-date">2024-03-12</span>
+                        </li>
+                        <li class="test-report-card"><span class="report-id">#103</span><span class="report-date">2024-03-10</span>
+                        </li>
+                        <li class="test-report-card"><span class="report-id">#104</span><span class="report-date">2024-03-08</span>
+                        </li>
+                        <li class="test-report-card"><span class="report-id">#105</span><span class="report-date">2024-03-05</span>
+                        </li>
+                        <li class="test-report-card"><span class="report-id">#101</span><span class="report-date">2024-03-15</span>
+                        </li>
+                        <li class="test-report-card"><span class="report-id">#102</span><span class="report-date">2024-03-12</span>
+                        </li>
+                        <li class="test-report-card"><span class="report-id">#103</span><span class="report-date">2024-03-10</span>
+                        </li>
+                        <li class="test-report-card"><span class="report-id">#104</span><span class="report-date">2024-03-08</span>
+                        </li>
+                        <li class="test-report-card"><span class="report-id">#105</span><span class="report-date">2024-03-05</span>
+                        </li>
+                    </a>
                 </ul>
             </div>
         </div>
@@ -105,5 +121,7 @@
         </div>
     </div>
 </div>
+<footer th:insert="~{fragments/footer :: footer}"></footer>
+
 </body>
 </html>
