@@ -5,100 +5,92 @@
     <script src="/js/bikeReportSummary.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}"/>
+
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link href="/css/style.css" rel="stylesheet">
     <link href="/css/bike-report-summary.css" rel="stylesheet">
 </head>
-<body>
-<header th:insert="~{fragments/header :: header(${currentPage})}"></header>
-<div class="summary-container">
-    <h1 class="title-glow">️ Bike Report Summary</h1>
+<body class="d-flex flex-column min-vh-100">
 
-    <div id="summaryContainer" th:data-summary-id="${summaryId}"></div>
+<header th:insert="~{fragments/header :: header(${currentPage})}" class="mb-4"></header>
 
-    <div class="glass-card">
-        <div class="card-header"> Report Details</div>
-        <div class="card-body">
-            <p><strong>Report ID:</strong> <span id="summaryId"></span></p>
-            <p><strong>Bike ID:</strong> <span id="bikeId"></span></p>
-            <p><strong>Report Date:</strong> <span id="reportTime"></span></p>
+<main class="container d-flex flex-column justify-content-center align-items-center flex-grow-1">
+    <!-- Outer container for centering the content -->
+    <div class="container d-flex flex-column justify-content-center align-items-center w-100 max-w-800">
+        <h1 class="title-glow">️ Bike Report Summary</h1>
+
+        <div id="summaryContainer" th:data-summary-id="${summaryId}"></div>
+
+        <div class="glass-card">
+            <div class="card-header"> Report Details</div>
+            <div class="card-body">
+                <p><strong>Report ID:</strong> <span id="summaryId"></span></p>
+                <p><strong>Bike ID:</strong> <span id="bikeId"></span></p>
+                <p><strong>Report Date:</strong> <span id="reportTime"></span></p>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="card-header"> Performance Data</div>
+            <div class="card-body">
+                <p><strong>Average Mileage:</strong> <span id="avgMileage"></span> km</p>
+                <p><strong>Average Assistance Level:</strong> <span id="avgAssistanceLevel"></span>%</p>
+                <p><strong>Speed:</strong> <span id="speed"></span> km/h</p>
+                <p><strong>Power:</strong> <span id="power"></span> W</p>
+                <p><strong>Horizontal Inclination:</strong> <span id="horizontalInclination"></span>°</p>
+                <p><strong>Vertical Inclination:</strong> <span id="verticalInclination"></span>°</p>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="card-header"> Battery & Engine Data</div>
+            <div class="card-body">
+                <p><strong>Charge Status:</strong> <span id="chargeStatus"></span></p>
+                <p><strong>Battery Current:</strong> <span id="current"></span></p>
+                <p><strong>Battery Voltage:</strong> <span id="voltage"></span></p>
+                <p><strong>Battery Capacity:</strong> <span id="capacity"></span></p>
+                <p><strong>Battery Temperature:</strong> <span id="temperature"></span></p>
+                <p><strong>Engine Type:</strong> <span id="engineType"></span></p>
+                <p><strong>Gear Type:</strong> <span id="gearType"></span></p>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="card-header"> Motor & Load Data</div>
+            <div class="card-body">
+                <p><strong>Max Power:</strong> <span id="maxPower"></span></p>
+                <p><strong>Nominal Power:</strong> <span id="nominalPower"></span></p>
+                <p><strong>Torque:</strong> <span id="torque"></span></p>
+                <p><strong>Torque Crank:</strong> <span id="torqueCrank"></span></p>
+                <p><strong>Cadence:</strong> <span id="cadence"></span></p>
+                <p><strong>Roller Torque:</strong> <span id="rollerTorque"></span></p>
+                <p><strong>Load Cell:</strong> <span id="loadCell"></span></p>
+                <p><strong>Load Power:</strong> <span id="loadPower"></span></p>
+                <p><strong>Rol:</strong> <span id="rol"></span></p> <!-- ✅ ADDED "Rol" -->
+                <p><strong>Status Plug:</strong> <span id="statusPlug"></span></p>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="card-header"> Technician Notes</div>
+            <div class="card-body">
+                <p><strong>Technician Comment:</strong> <span id="technicianComment"></span></p>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="card-header"> Reports</div>
+            <ul class="list-group list-group-flush" id="reportList"></ul>
+        </div>
+
+        <div class="text-center mt-3">
+            <button class="btn glowing-button" onclick="window.history.back()">⬅ Go Back</button>
         </div>
     </div>
+</main>
 
-    <div class="glass-card">
-        <div class="card-header"> Performance Data</div>
-        <div class="card-body">
-            <p><strong>Average Mileage:</strong> <span id="avgMileage"></span> km</p>
-            <p><strong>Average Assistance Level:</strong> <span id="avgAssistanceLevel"></span>%</p>
-            <p><strong>Speed:</strong> <span id="speed"></span> km/h</p>
-            <p><strong>Power:</strong> <span id="power"></span> W</p>
-            <p><strong>Horizontal Inclination:</strong> <span id="horizontalInclination"></span>°</p>
-            <p><strong>Vertical Inclination:</strong> <span id="verticalInclination"></span>°</p>
-        </div>
-    </div>
-
-
-    <div class="glass-card">
-        <div class="card-header"> Battery & Engine Data</div>
-        <div class="card-body">
-            <p><strong>Charge Status:</strong> <span id="chargeStatus"></span></p>
-            <p><strong>Battery Current:</strong> <span id="current"></span></p>
-            <p><strong>Battery Voltage:</strong> <span id="voltage"></span></p>
-            <p><strong>Battery Capacity:</strong> <span id="capacity"></span></p>
-            <p><strong>Battery Temperature:</strong> <span id="temperature"></span></p>
-            <p><strong>Engine Type:</strong> <span id="engineType"></span></p>
-            <p><strong>Gear Type:</strong> <span id="gearType"></span></p>
-        </div>
-    </div>
-
-    <div class="glass-card">
-        <div class="card-header"> Motor & Load Data</div>
-        <div class="card-body">
-            <p><strong>Max Power:</strong> <span id="maxPower"></span></p>
-            <p><strong>Nominal Power:</strong> <span id="nominalPower"></span></p>
-            <p><strong>Torque:</strong> <span id="torque"></span></p>
-            <p><strong>Torque Crank:</strong> <span id="torqueCrank"></span></p>
-            <p><strong>Cadence:</strong> <span id="cadence"></span></p>
-            <p><strong>Roller Torque:</strong> <span id="rollerTorque"></span></p>
-            <p><strong>Load Cell:</strong> <span id="loadCell"></span></p>
-            <p><strong>Load Power:</strong> <span id="loadPower"></span></p>
-            <p><strong>Rol:</strong> <span id="rol"></span></p> <!-- ✅ ADDED "Rol" -->
-            <p><strong>Status Plug:</strong> <span id="statusPlug"></span></p>
-        </div>
-    </div>
-
-
-    <div class="glass-card">
-        <div class="card-header"> Technician Notes</div>
-        <div class="card-body">
-            <p><strong>Technician Comment:</strong> <span id="technicianComment"></span></p>
-        </div>
-    </div>
-
-    <div id="qrcode"></div>
-    <button id="downloadQR" class="btn btn-primary mt-3">Download QR Code</button>
-
-    <div class="glass-card" id="full-report-table">
-        <div class="card-header"> Full Report </div>
-        <div class="card-body table-container">
-            <table class="table table-striped table-bordered text-black " >
-                <thead class="table-dark" id="summaryTableHead">
-                <tr>
-                    <th>Field</th>
-                    <th>Value</th>
-                </tr>
-                </thead>
-                <tbody id="summaryTableBody">
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-
-
-    <div class="text-center mt-3">
-        <button class="btn glowing-button" onclick="window.history.back()">⬅ Go Back</button>
-    </div>
+<footer th:insert="~{fragments/footer :: footer}" class="mt-4"></footer>
 
 </div>
 <footer th:insert="~{fragments/footer :: footer}" class="mt-4"></footer>

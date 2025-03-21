@@ -16,24 +16,6 @@ public class HomeController {
     public String home() {
         return "index";
     }
-    @GetMapping("startTest")
-    public String idkAnymore(){
-        return "startTest/find-user";
-    }
-    @GetMapping("startTest/find-user")
-    public String showFindUserPage() {
-        return "startTest/find-user";
-    }
-    @GetMapping("startTest/select-bike")
-    public String showSelectBikePage(@RequestParam("userId") Long userId, Model model) {
-        model.addAttribute("userId", userId);
-        return "startTest/select-bike";
-    }
-    @GetMapping("startTest/test-setup")
-    public String showTestSetupPage(@RequestParam("bikeId") Long bikeId, Model model) {
-        model.addAttribute("bikeId", bikeId);
-        return "startTest/test-setup";
-    }
 
 
     @GetMapping("/workInProgress")

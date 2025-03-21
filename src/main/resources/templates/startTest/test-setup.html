@@ -5,47 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Test Setup</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}"/>
+
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/test-setup.js" defer></script>
 </head>
-<body>
-<header th:insert="~{fragments/header :: header(${currentPage})}"></header>
-<div class="container d-flex justify-content-center align-items-center min-vh-100">
-  <div class="glassmorphism p-4">
-    <h1 class="text-accent text-center mb-4"> Test Setup</h1>
+<body class="d-flex flex-column min-vh-100">
 
-    <div id="performanceInputs">
-      <label for="batteryCapacity" class="form-label"> Battery Capacity (Wh):</label>
-      <input type="number" id="batteryCapacity" class="form-control fancy-input" value="500" required>
+<header th:insert="~{fragments/header :: header(${currentPage})}" class="mb-4"></header>
 
-      <label for="maxSupport" class="form-label"> Max Support (%):</label>
-      <input type="number" id="maxSupport" class="form-control fancy-input" value="340" required>
+<main class="container d-flex flex-column justify-content-center align-items-center flex-grow-1">
+  <div class="container d-flex justify-content-center align-items-center">
+    <div class="glassmorphism p-4">
+      <h1 class="text-accent text-center mb-4"> Test Setup</h1>
 
-      <label for="maxPower" class="form-label"> Max Power (W):</label>
-      <input type="number" id="maxPower" class="form-control fancy-input" value="6002" required>
+      <div id="performanceInputs">
+        <label for="batteryCapacity" class="form-label"> Battery Capacity (Wh):</label>
+        <input type="number" id="batteryCapacity" class="form-control fancy-input" value="500" required>
 
-      <label for="nominalPower" class="form-label"> Nominal Power (W):</label>
-      <input type="number" id="nominalPower" class="form-control fancy-input" value="250" required>
+        <label for="maxSupport" class="form-label"> Max Support (%):</label>
+        <input type="number" id="maxSupport" class="form-control fancy-input" value="340" required>
 
-      <label for="torque" class="form-label"> Torque (Nm):</label>
-      <input type="number" id="torque" class="form-control fancy-input" value="85" required>
+        <label for="maxPower" class="form-label"> Max Power (W):</label>
+        <input type="number" id="maxPower" class="form-control fancy-input" value="6002" required>
+
+        <label for="nominalPower" class="form-label">🛠 Nominal Power (W):</label>
+        <input type="number" id="nominalPower" class="form-control fancy-input" value="250" required>
+
+        <label for="torque" class="form-label"> Torque (Nm):</label>
+        <input type="number" id="torque" class="form-control fancy-input" value="85" required>
+      </div>
+
+      <label for="testType" class="form-label mt-3"> Test Type:</label>
+      <select id="testType" class="form-select fancy-input">
+        <option value="STRESS">Stress</option>
+        <option value="PERFORMANCE">Performance</option>
+        <option value="FAST" selected>Fast</option>
+      </select>
+
+      <label for="testBenchNumber" class="form-label mt-3"> Test Bench Number:</label>
+      <input type="number" id="testBenchNumber" class="form-control fancy-input" value="1" required>
+
+      <button id="startTestButton" class="btn glowing-button w-100 mt-4"> Start Test</button>
+
+      <p id="testStatus" class="mt-3 text-center text-glow"></p>
     </div>
-
-    <label for="testType" class="form-label mt-3"> Test Type:</label>
-    <select id="testType" class="form-select fancy-input">
-      <option value="STRESS">Stress</option>
-      <option value="PERFORMANCE">Performance</option>
-      <option value="FAST" selected>Fast</option>
-    </select>
-
-    <label for="testBenchNumber" class="form-label mt-3"> Test Bench Number:</label>
-    <input type="number" id="testBenchNumber" class="form-control fancy-input" value="1" required>
-
-    <button id="startTestButton" class="btn glowing-button w-100 mt-4"> Start Test</button>
-
-    <p id="testStatus" class="mt-3 text-center text-glow"></p>
   </div>
-</div>
+</main>
+
+
 <footer th:insert="~{fragments/footer :: footer}" class="mt-4"></footer>
+
+
 </body>
 </html>

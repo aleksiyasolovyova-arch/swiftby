@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailService implements UserDetailsService {
    //change eventually so it's not hardcoded technician
-    private PasswordEncoder encoder;
+//    private PasswordEncoder encoder;
 
      private final TechnicianRepository technicianRepository;
      public CustomUserDetailService(TechnicianRepository technicianRepository) {

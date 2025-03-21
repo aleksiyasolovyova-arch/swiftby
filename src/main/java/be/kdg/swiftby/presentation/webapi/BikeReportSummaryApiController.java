@@ -1,14 +1,18 @@
 package be.kdg.swiftby.presentation.webapi;
 
+import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.presentation.webapi.dto.BikeReportSummaryApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportSummaryDto;
+import be.kdg.swiftby.service.intf.BikeReportSummaryPdfService;
 import be.kdg.swiftby.service.intf.BikeReportSummaryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/report-summaries")
@@ -16,9 +20,33 @@ import org.springframework.web.bind.annotation.RestController;
 public class BikeReportSummaryApiController {
     private final BikeReportSummaryService bikeReportSummaryService;
     private final BikeReportSummaryApiMapper bikeReportSummaryApiMapper;
+    private final BikeReportSummaryPdfService bikeReportSummaryPdfService;
 
     @GetMapping("/{id}")
     public ResponseEntity<BikeReportSummaryDto> getSummaryById(@PathVariable Long id) {
         return ResponseEntity.ok(bikeReportSummaryApiMapper.toBikeReportSummaryDto(bikeReportSummaryService.getSummaryById(id)));
     }
+
+
+    @GetMapping("/{bikeId}/generate-pdf")
+    public ResponseEntity<byte[]> generateReportPdf(@PathVariable Long bikeId,
+                                                    @RequestParam("reportDate") String reportDate) {
+        // Convert to LocalDateTime to match database format
+        LocalDateTime startOfDay = LocalDate.parse(reportDate).atStartOfDay();
+
+        BikeReportSummary summary = bikeReportSummaryService.getSummaryByBikeAndDate(bikeId, startOfDay.toLocalDate());
+
+        if (summary == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        byte[] pdfBytes = bikeReportSummaryPdfService.generatePdf(summary);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=BikeReport_" + bikeId + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes);
+    }
+
+
 }

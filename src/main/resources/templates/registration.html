@@ -6,6 +6,8 @@
     <title>Register - BikeTrust</title>
 
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}"/>
+
     <link rel="stylesheet" th:href="@{/css/registration.css}"/>
 
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
@@ -42,15 +44,16 @@
             </div>
 
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label" th:utext="#{label.user.password}">Password</label>
                 <input type="password" id="password" name="password" class="form-control" required th:field="*{password}">
                 <span id="passwordError" class="text-danger" th:errors="*{password}"></span>
             </div>
 
             <div class="mb-3">
-                <label for="matchingPassword" class="form-label">Confirm Password</label>
+                <label for="matchingPassword" class="form-label" th:utext="#{label.user.confirmPass}">Confirm Password</label>
                 <input type="password" id="matchingPassword" name="matchingPassword" class="form-control" required th:field="*{matchingPassword}">
                 <span id="matchingPasswordError" class="text-danger" th:errors="*{matchingPassword}"></span>
+                <span id="globalError" class="alert alert-danger col-sm-4" style="display:none"></span>
             </div>
 
             <div class="mb-3">
@@ -67,9 +70,6 @@
 
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
-
-
-        <div id="globalError" class="alert alert-danger mt-3" style="display:none;"></div>
     </div>
 </main>
 
@@ -89,13 +89,8 @@
                 }
             }).fail(function(xhr) {
                 $("#globalError").hide().html(""); // Clear previous errors
-
                 let errorData = xhr.responseJSON;
-                if (errorData.error === "UserAlreadyExist") {
-                    $("#emailError").html(errorData.message).show();
-                } else {
                     $("#globalError").show().html(errorData.message);
-                }
             });
         });
     });
