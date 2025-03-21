@@ -36,6 +36,9 @@ public interface BikeReportRepository extends JpaRepository<BikeReport,Long> {
     GROUP BY br.bike_id, br.report_time
 """, nativeQuery = true)
     Optional<?> getAggregatedBikeReport(@Param("bikeId") Long bikeId, @Param("reportDate") LocalDate reportDate);
+
+
+    List<BikeReport> findBySummaryId(Long summaryId);
 }
 
 

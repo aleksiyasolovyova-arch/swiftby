@@ -11,24 +11,23 @@
     <script src="/js/select-bike.js" defer></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
+<header th:insert="~{fragments/header :: header(${currentPage})}"></header>
 
-<header th:insert="~{fragments/header :: header(${currentPage})}" class="mb-4"></header>
+<div class="container d-flex flex-column flex-grow-1 justify-content-center align-items-center w-100 ">
+    <h1 class="text-center text-accent m-4 row">🚴 Select a Bike</h1>
+    <div class="row w-100 justify-content-center ">
+        <div class="col-md-5">
+            <div class="glassmorphism p-3">
+                <h2 class="text-accent mb-3">User's Bikes</h2>
+                <div id="bikeList" class="d-flex flex-column gap-3"></div>
+                <button id="selectBike" class="btn glowing-button w-100 mt-3" disabled> Proceed with Selected Bike</button>
+            </div>
+        </div>
 
-<main class="container d-flex flex-column justify-content-center align-items-center flex-grow-1">
-    <div>
-        <div class="glassmorphism text-center p-4 w-100">
-            <h1 class="text-accent">🚴 Select a Bike</h1>
-            <div id="bikeList" class="my-3"></div>
-            <button id="selectBike" class="btn glowing-button w-100" disabled>Proceed for the selected bike</button>
-
-
-            <hr class="m-3">
-            <h3>Or</h3>
-            <hr class="m-3">
-
-            <div id="newBikeForm" class="mt-4 hidden">
+        <div class="col-md-6">
+            <div id="newBikeForm" class="glassmorphism  hidden p-3">
                 <h2 class="text-accent"> Add a New Bike</h2>
-                <h3 class="text-secondary">Bike details</h3>
+                <h3 class="text-secondary my-3">Bike details</h3>
 
                 <div class="row">
                     <div class="col-md-6">
@@ -77,10 +76,11 @@
                     </div>
                 </div>
 
-                <h3 class="text-secondary"> Motor Details</h3>
+                <hr>
+                <h3 class="text-secondary my-3">⚙️ Motor Details</h3>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <label for="engineType" class="form-label">Engine Type:</label>
                         <input type="text" id="engineType" class="form-control fancy-input my-2" placeholder="Engine type" required>
                     </div>
@@ -115,10 +115,9 @@
             </div>
         </div>
     </div>
-</main>
 
+</div>
 
 <footer th:insert="~{fragments/footer :: footer}" class="mt-4"></footer>
-
 </body>
 </html>

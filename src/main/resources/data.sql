@@ -44,7 +44,8 @@ INSERT INTO motor (max_power, nominal_power, torque, engine_type, gear_type) VAL
 
 INSERT INTO bike (battery_capacity, bike_size, max_support, powertrain, motor_id, brand, chassis_number, type, bike_owner_id)
 VALUES
-    (5000, 2, 250, 1, 1, 'Trek', 'CHSN12345', 'Mountain', 1),  -- Owned by Alice
+    (5000, 2, 250, 1, 1, 'Trek', 'CHSN12345', 'Mountain', 1),
+    (5000, 2, 250, 1, 1, 'Trek', 'CHSN0000', 'Mountain', 1),-- Owned by Alice
     (6000, 3, 300, 0, 2, 'Giant', 'CHSN67890', 'Road', 2);     -- Owned by Bob
 
 
