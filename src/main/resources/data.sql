@@ -1,6 +1,7 @@
+-- passwords, in order: password/iLoveCookies123
 INSERT INTO super_admin (email, first_name, last_name, password, phone_number) VALUES
-                                                                                   ('daniil.mumladze@student.kdg.be', 'Daniil', 'Mumladze', 'password', '0495123456'),
-                                                                                   ('mohammed-jan.jalloh@student.kdg.be', 'MJ', 'Jalloh', 'iLoveCookies123', '0492123456');
+                                                                                   ('daniil.mumladze@student.kdg.be', 'Daniil', 'Mumladze', '$2a$12$B2Z5NXujfYW1BbkvuEsAieagqjRfgl7ALG6YP5kklNpdsjrdytn6G', '0495123456'),
+                                                                                   ('mohammed-jan.jalloh@student.kdg.be', 'MJ', 'Jalloh', '$2a$12$C0Op6Raw5BmKNOuaFTnO9uPZbH854VCWgY1AhZgPgQACqAdBX92Pm', '0492123456');
 
 INSERT INTO axial_sensor_data (horizontal_inclination, vertical_inclination) VALUES
                                                                                  (15.5, 30.2),
@@ -11,25 +12,28 @@ INSERT INTO battery_data (capacity, charge_status, current, temperature, voltage
                                                                                       (5000, TRUE, 12.5, 25.4, 48.2),
                                                                                       (6000, FALSE, 10.8, 30.0, 50.1),
                                                                                       (7000, TRUE, 11.2, 28.5, 49.5);
-
+-- passwords, in order: password123/securepass
 INSERT INTO bike_owner (email, first_name, last_name, password, phone_number) VALUES
-                                                                                  ('alice@example.com', 'Alice', 'Doe', 'password123', '555-1234'),
-                                                                                  ('bob@example.com', 'Bob', 'Smith', 'securepass', '555-5678');
+                                                                                  ('alice@example.com', 'Alice', 'Doe', '$2a$12$GK/Xh4.LP7OSc/P.85CahOmR8XlzbCGghhNvFXhajvbV8dgcdGpHW', '555-1234'),
+                                                                                  ('bob@example.com', 'Bob', 'Smith', '$2a$12$NrfMkUFyBjFwTMZaKEvfEucjUPd1rRJRYkL/Sg61oY8dvjdFb.IrO', '555-5678');
 
 INSERT INTO facility (address_extra, city, country, email, name, street, street_number, zip_code) VALUES
     ('Unit 5', 'Springfield', 'USA', 'facility@example.com', 'Test Facility', 'Main St', '123', '98765'),
     ('Enter through garage', 'Stroempeltown', 'Belgica', 'storm.vanloon@student.kdg.be', 'StroempelRepairs', 'Stroempelstreet', '86', '2005');
 
+-- passwords, in order: p4ssword/sk44ra/Breadbreaker/helloWorld
 INSERT INTO technician (facility_id, email, first_name, last_name, password, phone_number) VALUES
-                                                                                   (1, 'farah.bekkal@student.kdg.be', 'Farah', 'Bekkal', 'p4ssword', '01492123456'),
-                                                                                   (2, 'skaara.poncin@student.kdg.be', 'Skaara', 'Poncin', 'sk44ra', '+320497334455'),
-                                                                                   (2, 'yoran.delcroix@student.kdg.be', 'Yoran', 'Delcroix', 'Breadbreaker', '+320498000000');
+                                                                                   (1, 'farah.bekkal@student.kdg.be', 'Farah', 'Bekkal', '$2a$12$hFfPdsIFV.ixaBmnwmcKr..D54dqnroPodYfnmjVUnFTLHG39IZWi', '01492123456'),
+                                                                                   (2, 'skaara.poncin@student.kdg.be', 'Skaara', 'Poncin', '$2a$12$AKSegUlAcs9t4tgwF4l4CuQ5vfhPmKnozycvaeYRcSLrA5aCOsb9i', '+320497334455'),
+                                                                                   (2, 'yoran.delcroix@student.kdg.be', 'Yoran', 'Delcroix', '$2a$12$GALjP67ZIgeerpOSPhRlyeWYMetlAYKM9ehL3Mxd1gUQFkqePx/Fe', '+320498000000'),
+                                                                                   (2, 'aleksiya.solovyova@student.kdg.be', 'Aleksiya', 'Solovyova', '$2a$12$Fvk0.w09r1tB7C/yX7RyQedlKWbuKAhY8oVXO0EbX8BvxUmFBIFvO', '+320498000000');
 
+--passwords, in order: Belgium<3/lenov0wner/C0mputerL0v3r/HelpingBob
 INSERT INTO administrator (facility_id, email, first_name, last_name, password, phone_number) VALUES
-    (1, 'alina.dimova@student.kdg.be', 'Alina', 'Dimova', 'Belgium<3', '784-556-778'),
-    (1, 'aleksiya.solovyova@student.kdg.be', 'Aleksiya', 'Solovyova', 'lenov0wner', '+359 246 44 88'),
-    (2, 'storm.vanloon@student.kdg.be', 'Storm', 'van Loon', 'C0mputerL0v3r', '0492454545'),
-    (2, 'bob.thehelper@stroempeltown.be', 'Bob', 'The Helper', 'HelpingBob', '0476010203');
+    (1, 'alina.dimova@student.kdg.be', 'Alina', 'Dimova', '$2a$12$2.47mwMkxWpJVa1s/9TnKeMdjsQc5.L9zCO5npqrnzWwwSrdV1jeG', '784-556-778'),
+    (1, 'aleksiya.solovyova@student.kdg.be', 'Aleksiya', 'Solovyova', '$2a$12$in.yf3xeexORUO4uDeAPZeG9J7lKYBzAWDSY1T7.XlrfJD5VAYk4m', '+359 246 44 88'),
+    (2, 'storm.vanloon@student.kdg.be', 'Storm', 'van Loon', '$2a$12$fEjdz49TVnoTiiXgSoG/PurTH7rUxLZ8vMofz9hkPD7CAM03.MXme', '0492454545'),
+    (2, 'bob.thehelper@stroempeltown.be', 'Bob', 'The Helper', '$2a$12$b1kRFuVAHPSEEKUI9UpmwO0tIgYXhlGn9W54e3.WmaHYviJo91Iv.', '0476010203');
 
 
 
