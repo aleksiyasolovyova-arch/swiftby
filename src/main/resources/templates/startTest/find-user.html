@@ -9,28 +9,30 @@
   <script src="/js/find-user.js" defer></script>
 </head>
 <body>
+<header th:insert="~{fragments/header :: header(${currentPage})}"></header>
 
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
-  <div class="glassmorphism text-center p-4">
-    <h1 class="text-accent"> Find User</h1>
-    <div class="input-container">
-      <input type="email" id="customerEmail" class="form-control fancy-input my-3" placeholder="Enter user email" required>
-      <div id="search-output" ></div>
+  <div class="row w-100">
+
+    <div class="col-md-5 glassmorphism text-center p-4 mx-auto">
+      <h1 class="text-accent"> Find User</h1>
+      <div class="input-container">
+        <input type="email" id="customerEmail" class="form-control fancy-input my-3" placeholder="Enter user email" required>
+        <div id="search-output"></div>
+      </div>
     </div>
-
-
-<!--    <button id="findUserButton" class="btn fancy-button w-100">Find User</button>-->
-
-    <div id="userForm" class="mt-4 hidden">
-      <h2 class="text-secondary">➕ Add New User</h2>
-      <input type="text" id="email" class="form-control fancy-input my-2" placeholder="email" required>
+    <div class="col-md-5 glassmorphism text-center p-4 mx-auto">
+      <h2 class="text-secondary"> Add New User</h2>
+      <input type="text" id="email" class="form-control fancy-input my-2" placeholder="Email" required>
       <input type="text" id="firstName" class="form-control fancy-input my-2" placeholder="First Name" required>
       <input type="text" id="lastName" class="form-control fancy-input my-2" placeholder="Last Name" required>
       <input type="text" id="phoneNumber" class="form-control fancy-input my-2" placeholder="Phone Number" required>
       <button id="saveUserButton" class="btn glowing-button w-100">Save User</button>
     </div>
+
   </div>
 </div>
 
+<footer th:insert="~{fragments/footer :: footer}" class="mt-4"></footer>
 </body>
 </html>
