@@ -19,9 +19,6 @@ public class TechnicianController {
         return "technician/reports";
     }
 
-    @GetMapping("tests")
-    public String tests() {
-        return "technician/tests";
-    }
+
 
 }
