@@ -32,6 +32,6 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
 
     @Override
     public BikeReportSummary getSummaryByBikeAndDate(Long bikeId, LocalDate reportDate) {
-        return null;
+        return bikeReportSummaryRepository.getBikeReportSummary(bikeId, reportDate);
     }
 }
