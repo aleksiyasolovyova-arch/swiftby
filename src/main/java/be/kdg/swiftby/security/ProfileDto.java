@@ -21,6 +21,9 @@ public class ProfileDto {
     @NonNull
     @NotEmpty
     private String password;
+
+    @NonNull
+    @NotEmpty
     private String matchingPassword;
 
     @NonNull
