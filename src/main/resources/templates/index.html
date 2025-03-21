@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,9 @@
     <h1>BikeTrust</h1>
     <p>Revolutionizing E-Bike Testing, One Ride at a Time</p>
     <p>BikeTrust brings precision testing to electric bicycles with <strong>eVALeBike</strong> — a cutting-edge test bench designed to simulate real-world riding conditions, ensuring the quality and performance of new, used, and re-manufactured e-bikes.</p>
-    <a th:href="@{/registration}" class="btn btn-primary">Get Started</a>
+    <th:block sec:authorize="isAnonymous()">
+      <a th:href="@{/registration}" class="btn btn-primary">Get Started</a>
+    </th:block>
   </div>
 </section>
 

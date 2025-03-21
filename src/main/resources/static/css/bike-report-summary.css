@@ -2,9 +2,14 @@ body {
     background: linear-gradient(135deg, #344a57, #5c7285, #aed2e3);
     font-family: 'Roboto Mono', monospace;
     color: #f5f7ff;
+    margin: 0;
+    padding: 0;
 }
-.container {
 
+.summary-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
     width: 100%;
     max-width: 1200px;

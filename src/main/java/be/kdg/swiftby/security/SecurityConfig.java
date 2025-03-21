@@ -43,7 +43,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(antMatcher("/api/**")).permitAll()
                         .requestMatchers(
-                                antMatcher("/**"),
                                 antMatcher("/js/**"),
                                 antMatcher("/webjars/**"),
                                 antMatcher("/css/**"),

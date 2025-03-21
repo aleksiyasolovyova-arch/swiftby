@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function fetchUsers(query) {
         if (!query.trim()) {
-            suggestionsContainer.innerHTML = ""
-            suggestionsContainer.hidden = true;
+            suggestionsContainer.innerHTML = "";
+            suggestionsContainer.style.display = "none";
             return;
         }
 
@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showSuggestions(users) {
-        suggestionsContainer.hidden = false;
         suggestionsContainer.innerHTML = "";
         users.forEach(user => {
             const suggestion = document.createElement("div");

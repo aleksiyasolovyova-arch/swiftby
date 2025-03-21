@@ -11,6 +11,6 @@ public class BikeReportSummaryController {
     @GetMapping("/report-summary")
     public String showSummaryPage(@RequestParam Long id, Model model) {
         model.addAttribute("summaryId", id);
-            return "bike_report_summary";
+        return "bike_report_summary";
     }
 }
