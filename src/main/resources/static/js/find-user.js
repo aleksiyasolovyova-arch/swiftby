@@ -8,7 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let debounceTimeout;
     async function fetchUsers(query) {
         if (!query.trim()) {
-            suggestionsContainer.innerHTML = "";
+            suggestionsContainer.innerHTML = ""
+            suggestionsContainer.hidden = true;
             return;
         }
         try {
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
     function showSuggestions(users) {
+        suggestionsContainer.hidden = false;
         suggestionsContainer.innerHTML = "";
         users.forEach(user => {
             const suggestion = document.createElement("div");
