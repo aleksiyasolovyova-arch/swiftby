@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -12,7 +13,7 @@ public class BikeReport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate reportTime;
+    private LocalDateTime reportTime;
     private int mileage;
     private int assistanceLevel;
     private String technicianComment;
@@ -37,12 +38,15 @@ public class BikeReport {
     @ManyToOne
     @JoinColumn(name = "bike_id")
     private Bike bike;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "summary_id")
+    private BikeReportSummary summary;
 
     public BikeReport() {
     }
 
 
-    public BikeReport(LocalDate reportTime, int mileage, int assistanceLevel, String technicianComment, AxialSensorData axialSensorData, BatteryData batteryData, MotorData motorData, PedalData pedalData, TestBenchData testBenchData, WheelData wheelData) {
+    public BikeReport(LocalDateTime reportTime, int mileage, int assistanceLevel, String technicianComment, AxialSensorData axialSensorData, BatteryData batteryData, MotorData motorData, PedalData pedalData, TestBenchData testBenchData, WheelData wheelData) {
         this.reportTime = reportTime;
         this.mileage = mileage;
         this.assistanceLevel = assistanceLevel;

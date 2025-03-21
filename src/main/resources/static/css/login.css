@@ -1,0 +1,68 @@
+:root {
+    --primary-color: #344a57;
+    --secondary-color: #5c7285;
+    --accent-color: #aed2e3;
+    --light-bg-color: #f5f7ff;
+    --cta-color: #fada7a;
+}
+
+body {
+    background-color: var(--light-bg-color);
+    color: var(--primary-color);
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.login-container h1 {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.breadcrumb {
+    background-color: var(--accent-color);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.form-control {
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: var(--cta-color);
+    border: none;
+    color: var(--primary-color);
+    padding: 10px;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.alert-danger {
+    margin-top: 10px;
+}

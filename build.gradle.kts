@@ -6,6 +6,7 @@ plugins {
 }
 
 group = "be.kdg"
+
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -33,6 +34,8 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation ("org.springframework.boot:spring-boot-starter-security")
+    implementation ("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
@@ -44,13 +47,21 @@ dependencies {
     implementation("org.webjars:webjars-locator-core:0.59")
     implementation("org.webjars:bootstrap:5.3.3")
     implementation("org.webjars.npm:bootstrap-icons:1.11.3")
-
+    implementation ("com.itextpdf:itext7-core:7.1.15")
     implementation("commons-io:commons-io:2.18.0")
     implementation("org.mapstruct:mapstruct:1.6.3")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
 
+    // used for dotenv
+    implementation("io.github.cdimascio:dotenv-java:2.2.0")
+
+    // websocket
+    implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation ("io.github.cdimascio:dotenv-java:3.0.0")
     implementation("com.postmarkapp:postmark:1.11.1")
+    //pdf
+    implementation("com.itextpdf:itextpdf:5.5.13.2")
+
 
 }
 

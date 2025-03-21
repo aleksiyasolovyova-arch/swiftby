@@ -1,0 +1,75 @@
+body {
+    background: linear-gradient(135deg, #344a57, #5c7285, #aed2e3);
+    font-family: 'Roboto Mono', monospace;
+    color: #f5f7ff;
+}
+.container {
+
+    padding: 20px;
+}
+.title-glow {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 0 0 12px rgba(250, 218, 122, 0.8);
+    color: #fada7a;
+    margin-bottom: 20px;
+}
+.glass-card {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    animation: fadeIn 0.5s ease-in-out;
+    margin-bottom: 20px;
+}
+.card-header {
+    background: linear-gradient(90deg, #5c7285, #344a57);
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+}
+
+.card-body {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 0 0 10px 10px;
+}
+.list-group-item {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #f5f7ff;
+    padding: 10px;
+}
+
+.glowing-button {
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-in-out;
+    background: linear-gradient(45deg, #fada7a, #ffd700);
+    border: none;
+    color: #344a57;
+    box-shadow: 0 5px 15px rgba(250, 218, 122, 0.6);
+    display: block;
+    width: 200px;
+    margin: 20px auto 0 auto;
+    text-align: center;
+}
+.glowing-button:hover {
+    background: linear-gradient(45deg, #ffd700, #fada7a);
+    box-shadow: 0 10px 20px rgba(250, 218, 122, 0.8);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

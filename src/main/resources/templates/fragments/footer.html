@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
+    <title>Footer</title>
+</head>
+
+
+<div th:fragment="footer" class="footer mt-auto py-3 text-white"
+     style="background-color: #5c7285; color: #f5f7ff;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <a class="navbar-brand text-light fw-bold" href="/">eVALeBike</a>
+            </div>
+            <div class="col-md-3">
+                <h5>Company</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-light text-decoration-none">How It Works</a></li>
+                    <li><a href="/" class="text-light text-decoration-none">Pricing</a></li>
+                    <li><a href="/" class="text-light text-decoration-none">Docs</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5>Resources</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-light text-decoration-none">Blog</a></li>
+                    <li><a href="/" class="text-light text-decoration-none">Help Center</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5>About</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-light text-decoration-none">Terms & Conditions</a></li>
+                    <li><a href="/" class="text-light text-decoration-none">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <p class="mb-0">&copy; 2025 eVALeBike. All Rights Reserved.</p>
+        </div>
+    </div>
+</div>
+
+

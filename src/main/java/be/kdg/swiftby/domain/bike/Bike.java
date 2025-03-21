@@ -1,9 +1,12 @@
 package be.kdg.swiftby.domain.bike;
 
 import be.kdg.swiftby.domain.report.BikeReport;
+import be.kdg.swiftby.domain.report.BikeReportSummary;
+import be.kdg.swiftby.domain.testEnv.BikeOwner;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -11,7 +14,7 @@ import java.util.Set;
 @Setter
 @RequiredArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "reports")
+@ToString(exclude = {"reports","summaries"})
 public class Bike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +26,8 @@ public class Bike {
     @NonNull private BIKE_SIZE bikeSize;
     @NonNull private Integer maxSupport;
     @NonNull private Integer batteryCapacity;
-    @OneToOne
+    // CHEANGED THIS TO ONE -> MANY SINCE MULTIPLE BIKES CAN HAVE THE SAME MOTOR
+    @ManyToOne
     @JoinColumn(name = "motor_id")
     @NonNull private Motor motor;
 
@@ -31,7 +35,13 @@ public class Bike {
     //    private int actualTorque;
     //    private double actualPower;
 
+    // TEMP TO TEST STARTING THE TEST FUNCTIONALITY AND TESTING THE FORM
+    @ManyToOne
+    @JoinColumn(name = "bike_owner_id")
+    private BikeOwner bikeOwner;
+
     @OneToMany(mappedBy = "bike")
     private Set<BikeReport> reports;
-
+    @OneToMany(mappedBy = "bike")
+    private Set<BikeReportSummary> summaries;
 }

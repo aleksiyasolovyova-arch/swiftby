@@ -11,6 +11,7 @@ import be.kdg.swiftby.service.intf.BikeService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BikeServiceImpl implements BikeService {
@@ -42,18 +43,37 @@ public class BikeServiceImpl implements BikeService {
     }
 
     @Override
+    public Bike getByIdWithOwner(Long id) {
+        return bikeRepository.findByIdWithOwner(id)
+                .orElseThrow(() -> new RuntimeException("Bike not found with id " + id));
+    }
+
+
+    @Override
+    public List<Bike> getByBikeOwnerId(Long id) {
+        return bikeRepository.findByBikeOwner_Id(id);
+    }
+
+    @Override
     public Bike save(BikeDto bikeDto) {
+        Optional<Bike> existingBike = bikeRepository.findBikeByChassisNumber(bikeDto.chassisNumber());
+
         Bike bike = bikeMapper.toBike(bikeDto);
 
+        if (existingBike.isPresent()) {
+            System.out.println("Bike already exists, skip adding");
+            // TODO: show this in the front end
+        }
         if (bikeDto.motor() != null) {
             Motor motor = motorMapper.toMotor(bikeDto.motor());
             Motor existingMotor = motorRepository
                     .findByEngineType(motor.getEngineType())
                     .orElseGet(() -> motorRepository.save(motor));
             bike.setMotor(existingMotor);
-        } else {
-            bike.setMotor(null);
         }
+//        else {
+//            bike.setMotor(null);
+//        }
 
         return bikeRepository.save(bike);
     }

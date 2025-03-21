@@ -9,6 +9,8 @@ import java.util.List;
 public interface BikeService {
     List<Bike> getAll();
     Bike getById(Long id);
+    Bike getByIdWithOwner(Long id);
+    List<Bike> getByBikeOwnerId(Long id);
     Bike save(BikeDto bikeDto);
     List<Bike> findByMotorEngineType(String engineType);
     void remove(Long id);
