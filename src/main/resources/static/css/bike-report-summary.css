@@ -2,20 +2,9 @@ body {
     background: linear-gradient(135deg, #344a57, #5c7285, #aed2e3);
     font-family: 'Roboto Mono', monospace;
     color: #f5f7ff;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
 }
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-width: 800px;
-    width: 100%;
+
     padding: 20px;
 }
 .title-glow {
