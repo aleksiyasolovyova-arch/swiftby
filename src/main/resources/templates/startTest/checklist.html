@@ -8,7 +8,8 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}"/>
 
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <script src="/js/find-user.js" defer></script>
+    <link rel="stylesheet" th:href="@{/css/checklist.css}">
+    <script src="/js/checklist.js" defer></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -18,29 +19,36 @@
 <main class="container d-flex flex-column justify-content-center align-items-center flex-grow-1">
     <div class="container d-flex justify-content-center align-items-center">
         <div class="glassmorphism text-center p-4">
-            <h1 class="text-accent"> Find User</h1>
-            <div class="input-container">
-                <input type="email" id="customerEmail" class="form-control fancy-input my-3" placeholder="Enter user email"
-                       required>
-                <div id="search-output" hidden></div>
+            <div id="userForm" class="mt-4">
+                <h2 class="text-secondary text-center">PRE-TEST CHECKLIST</h2>
+                <div class="p-4 border rounded bg-light">
+                    <div class="form-check">
+                        <input type="checkbox" id="rollerTorque" class="form-check-input">
+                        <label for="rollerTorque" class="form-check-label">Roller Torque Sufficient</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="beltConnection" class="form-check-input">
+                        <label for="beltConnection" class="form-check-label">Belt Connection</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="networkConnected" class="form-check-input">
+                        <label for="networkConnected" class="form-check-label">Network Connected</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="wheelSecured" class="form-check-input">
+                        <label for="wheelSecured" class="form-check-label">Wheels Secured</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="tirePressureOptimal" class="form-check-input">
+                        <label for="tirePressureOptimal" class="form-check-label">Tire Pressure Optimal</label>
+                    </div>
+                    <a href="/startTest/find-user">
+                        <button id="checklist" class="btn btn-primary mt-3 w-100" disabled>Next</button>
+
+                    </a>
+                </div>
             </div>
 
-
-            <!--    <button id="findUserButton" class="btn fancy-button w-100">Find User</button>-->
-
-            <hr class="m-3">
-            <h3>Or</h3>
-            <hr class="m-3">
-
-            <div id="userForm" class="mt-4 hidden">
-                <h2 class="text-secondary">➕ Add New User</h2>
-                <input type="text" id="email" class="form-control fancy-input my-2" placeholder="email" required>
-                <input type="text" id="firstName" class="form-control fancy-input my-2" placeholder="First Name" required>
-                <input type="text" id="lastName" class="form-control fancy-input my-2" placeholder="Last Name" required>
-                <input type="text" id="phoneNumber" class="form-control fancy-input my-2" placeholder="Phone Number"
-                       required>
-                <button id="checklist" class="btn glowing-button w-100">Save User</button>
-            </div>
         </div>
     </div>
 </main>

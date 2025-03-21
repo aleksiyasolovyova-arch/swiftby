@@ -1,0 +1,33 @@
+.glassmorphism {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 400px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.bg-light {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+}
+
+.btn-primary {
+    background: rgba(0, 123, 255, 0.8);
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background: rgba(0, 123, 255, 1);
+}
