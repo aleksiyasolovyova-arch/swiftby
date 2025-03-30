@@ -97,7 +97,6 @@ body {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
 autocomplete-results {
     position: absolute;
     width: 100%;
@@ -164,8 +163,58 @@ autocomplete-results {
         opacity: 1;
     }
 }
+.bike-card {
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+.bike-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(250, 218, 122, 0.4);
+}
+.bike-card.selected {
+    border: 2px solid #fada7a;
+    box-shadow: 0 0 15px rgba(250, 218, 122, 0.7);
+}
+.bike-thumbnail {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: white;
+    padding: 5px;
+}
+#search-output {
+    display: none;
+    position: absolute;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 10;
+}
 
-::placeholder {
+.autocomplete-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.autocomplete-item:hover {
+    background: #fada7a;
+    color: #344a57;
+}
+.no-results {
+    color: #999;
+    text-align: center;
+    padding: 10px;
+}
+::placeholder{
     color: white !important;
 }
 

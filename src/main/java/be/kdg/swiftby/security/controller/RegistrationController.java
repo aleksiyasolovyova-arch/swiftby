@@ -26,7 +26,6 @@ import java.util.Locale;
 public class RegistrationController {
     private final ProfileServiceInt profileService;
 
-
     public RegistrationController(ProfileServiceInt profileService) {
         this.profileService = profileService;
     }
@@ -39,7 +38,7 @@ public class RegistrationController {
 
     //Idk if I should be handling errors here-refactor
     @PostMapping("/registration")
-    public ModelAndView registerUserAccount( @Valid @ModelAttribute("user")ProfileDto userDto,
+    public ModelAndView registerUserAccount(@ModelAttribute("user") @Valid ProfileDto userDto,
                                             HttpServletRequest request, Errors errors,
                                             ModelAndView mav) {
         if (errors.hasErrors()) {

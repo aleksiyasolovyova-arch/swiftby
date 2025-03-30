@@ -2,11 +2,20 @@ body {
     background: linear-gradient(135deg, #344a57, #5c7285, #aed2e3);
     font-family: 'Roboto Mono', monospace;
     color: #f5f7ff;
+    margin: 0;
+    padding: 0;
 }
-.container {
 
+.summary-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
+
 .title-glow {
     text-align: center;
     font-size: 2rem;
@@ -72,4 +81,103 @@ body {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+.table th, .table td {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #f5f7ff;
+}
+
+.table thead {
+    background-color: rgba(80, 80, 80, 0.8);
+}
+/* Table container to enable horizontal scrolling */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Enables scrolling */
+    max-height: 500px; /* Optional: makes table vertically scrollable */
+    margin-bottom: 15px;
+}
+
+/* Make sure the table is responsive */
+.table {
+    width: 100%;
+    min-width: 1200px; /* Prevents squishing */
+    table-layout: auto; /* Auto-fit the columns */
+    border-collapse: collapse;
+    overflow-x: auto;
+}
+
+/* Table styling */
+.table th, .table td {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #f5f7ff;
+    padding: 10px;
+    word-wrap: break-word; /* Prevents text overflow */
+    white-space: nowrap; /* Ensures better readability */
+}
+
+/* Improve header visibility */
+.table thead {
+    background-color: rgba(80, 80, 80, 0.8);
+}
+
+/* Scrollbar Styling */
+.table-container::-webkit-scrollbar {
+    height: 8px; /* Horizontal scrollbar height */
+}
+.table-container::-webkit-scrollbar-thumb {
+    background-color: #fada7a; /* Color of the scrollbar */
+    border-radius: 10px;
+}
+/* Make sure #full-report-table stays within the screen */
+#full-report-table {
+    width: 90vw; /* Slightly smaller than full width */
+    max-width: 1400px; /* Prevent excessive width */
+    height: auto;
+    max-height: 75vh; /* Ensure it fits within the screen */
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    animation: fadeIn 0.4s ease-in-out;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#full-report-table .table-container {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 55vh;
+}
+#full-report-table .table {
+    width: 100%;
+    min-width: 1100px;
+    table-layout: auto;
+}
+
+#full-report-table .table th,
+#full-report-table .table td {
+    background-color: rgba(255, 255, 255, 0.07);
+    color: #f5f7ff;
+    padding: 8px;
+    word-wrap: break-word;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 14px;
+}
+
+#full-report-table .table thead {
+    background-color: rgba(80, 80, 80, 0.9);
+}
+
+#full-report-table .table-container::-webkit-scrollbar {
+    height: 6px;
+}
+#full-report-table .table-container::-webkit-scrollbar-thumb {
+    background-color: #fada7a;
+    border-radius: 6px;
 }
