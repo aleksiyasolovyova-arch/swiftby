@@ -3,6 +3,7 @@ package be.kdg.swiftby.websocket;
 import be.kdg.swiftby.csv.CsvService;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.service.TestState;
+import be.kdg.swiftby.service.dto.api.dto.StartTestDto;
 import be.kdg.swiftby.service.dto.api.dto.TestDto;
 import be.kdg.swiftby.service.intf.BikeReportService;
 import be.kdg.swiftby.service.intf.TestBenchApiService;
@@ -25,6 +26,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class TestWebSocketHandler extends TextWebSocketHandler {
     private final CsvService csvService;
     private final BikeReportService bikeReportService;
+    private final ConcurrentHashMap<UUID, StartTestDto> testMetadata = new ConcurrentHashMap<>();
 
     private final TestBenchApiService testService;
 
@@ -71,8 +73,10 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
             if (testState == TestState.COMPLETED) {
                 System.out.println("Test " + testId + " completed. Fetching report & processing CSV...");
 
-                testService.getReport(testId);  // Ensure this is correctly generating a report
-                BikeReportSummary summary = processCsvAfterTestCompletion(ongoingTests.get(testId));
+                testService.getReport(testId);
+                StartTestDto startData = testMetadata.remove(testId);
+                BikeReportSummary summary = processCsvAfterTestCompletion(ongoingTests.get(testId), startData);
+
 
                 if (summary != null) {
                     System.out.println("Summary generated with ID: " + summary.getId());
@@ -88,7 +92,7 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
         }
     }
 
-    private BikeReportSummary processCsvAfterTestCompletion(Long bikeId) {
+    private BikeReportSummary processCsvAfterTestCompletion(Long bikeId,StartTestDto startData) {
         try {
             System.out.println(" Processing CSV for Bike ID: " + bikeId);
 
@@ -145,6 +149,10 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
             }
         }
     }
+    public void storeStartTestData(UUID testId, StartTestDto dto) {
+        testMetadata.put(testId, dto);
+    }
+
 
 
 }

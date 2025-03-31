@@ -51,7 +51,7 @@ public class TestBenchApiServiceImpl implements TestBenchApiService {
         HttpEntity<StartTestDto> requestEntity = new HttpEntity<>(requestBody, headers);
 
         try {
-            System.out.println("🚀 Sending test request to API...");
+            System.out.println(" Sending test request to API...");
 
             ResponseEntity<TestDto> response = restTemplate.postForEntity(url, requestEntity, TestDto.class);
 
@@ -59,7 +59,9 @@ public class TestBenchApiServiceImpl implements TestBenchApiService {
                 TestDto testDto = response.getBody();
                 if (testDto != null) {
                     System.out.println("Test started successfully. ID: " + testDto.id());
-                    testWebSocketHandler.trackTest(testDto.id(),bikeId);
+                    testWebSocketHandler.storeStartTestData(testDto.id(), requestBody);
+                    testWebSocketHandler.trackTest(testDto.id(), bikeId); 
+
 
                     return testDto;
                 }
@@ -115,6 +117,10 @@ public class TestBenchApiServiceImpl implements TestBenchApiService {
                 fos.write(reportData);
             }
             System.out.println("report saved successfully: " + filePath);
+            System.out.println("\nCSV Contents:\n-------------------------");
+            String csvContent = new String(reportData);
+            System.out.println(csvContent);
+            System.out.println("-------------------------");
         } catch (IOException e) {
             System.err.println("error saving report: " + e.getMessage());
         }

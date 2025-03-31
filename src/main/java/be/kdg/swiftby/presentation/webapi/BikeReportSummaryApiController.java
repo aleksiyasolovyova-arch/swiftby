@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/report-summaries")
@@ -27,9 +28,15 @@ public class BikeReportSummaryApiController {
         return ResponseEntity.ok(bikeReportSummaryApiMapper.toBikeReportSummaryDto(bikeReportSummaryService.getSummaryById(id)));
     }
 
+    @GetMapping
+    public ResponseEntity<List<BikeReportSummaryDto>> getAll(){
+        return ResponseEntity.ok(bikeReportSummaryService.getAllSummaries().stream()
+                .map(bikeReportSummaryApiMapper::toBikeReportSummaryDto)
+                .toList());
+    }
 
     @GetMapping("/{bikeId}/generate-pdf")
-    public ResponseEntity<byte[]> generateReportPdf(@PathVariable Long bikeId,
+    public ResponseEntity<byte[]> generateReportPdfByBikeAndDate(@PathVariable Long bikeId,
                                                     @RequestParam("reportDate") String reportDate) {
         // Convert to LocalDateTime to match database format
         LocalDateTime startOfDay = LocalDate.parse(reportDate).atStartOfDay();
@@ -42,8 +49,26 @@ public class BikeReportSummaryApiController {
 
         byte[] pdfBytes = bikeReportSummaryPdfService.generatePdf(summary);
 
+
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=BikeReport_" + bikeId + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes);
+    }
+    @GetMapping("/{id}/generatePdf")
+    public ResponseEntity<byte[]> generateReportPdf(@PathVariable Long id) {
+
+        BikeReportSummary summary = bikeReportSummaryService.getSummaryById(id);
+
+        if (summary == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        byte[] pdfBytes = bikeReportSummaryPdfService.generatePdf(summary);
+
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=BikeReport_" + id + ".pdf")
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdfBytes);
     }

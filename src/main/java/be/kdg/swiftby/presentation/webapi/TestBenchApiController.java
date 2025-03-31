@@ -30,7 +30,8 @@ public class TestBenchApiController {
         // save the bike owner
         Bike bike = bikeService.getByIdWithOwner(request.getBikeId());
         BikeOwner bikeOwner = bike.getBikeOwner();
-
+        System.out.println("hohoho");
+        System.out.println(request);
         TestDto testDto = testService.startTest(
                 TestType.valueOf(request.getTestType().name()),
                 request.getBatteryCapacity(),

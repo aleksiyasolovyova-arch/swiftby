@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/")
 public class TestController {
 
+    @GetMapping("checklist")
+    public String showPreTestCheckList(){
+        return "startTest/checklist";
+    }
     @GetMapping("startTest")
     public String idkAnymore(){
         return "startTest/find-user";
