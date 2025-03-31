@@ -119,6 +119,11 @@ public class BikeReportServiceImpl implements BikeReportService {
     }
 
     @Override
+    public List<BikeReport> getReportsBySummaryId(Long summaryId) {
+        return bikeReportRepository.findBySummaryId(summaryId);
+    }
+
+    @Override
     public BikeReport aggregatedReport(Long reportId) {
         return null;
     }
@@ -139,6 +144,8 @@ public class BikeReportServiceImpl implements BikeReportService {
         summary.setTorque(bike.getMotor().getTorque());
         summary.setMaxPower(bike.getMotor().getMaxPower());
         summary.setNominalPower(bike.getMotor().getNominalPower());
+        summary.setEngineType(bike.getMotor().getEngineType());
+        summary.setGearType(bike.getMotor().getGearType());
 
         summary.setReportTime(reportDate);
         summary.setAvgMileage(reports.stream().mapToDouble(BikeReport::getMileage).average().orElse(0));

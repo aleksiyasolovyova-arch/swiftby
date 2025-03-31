@@ -62,19 +62,29 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             if (bikes.length > 0) {
                 bikeList.innerHTML = bikes.map(bike => `
-                    <div>
-                        <input type="radio" name="bikeSelection" value="${bike.id}" id="bike-${bike.id}">
-                        <label for="bike-${bike.id}">${bike.brand} - ${bike.type} (${bike.chassisNumber})</label>
-                    </div>
-                `).join("");
+    <div class="card text-start shadow-sm p-3 bike-card p-3 ${selectedBikeId == bike.id ? 'selected' : ''}">
+        <div class="d-flex align-items-center gap-3">
+            <img src="/images/bikeGeneric.webp" alt="Bike" class="bike-thumbnail">
+            <div class="flex-grow-1">
+                <h5>${bike.brand} - ${bike.type}</h5>
+                <p class="mb-1"><strong>Chassis:</strong> ${bike.chassisNumber}</p>
+                <p class="mb-1"><strong>Battery:</strong> ${bike.batteryCapacity} Wh</p>
+                <p class="mb-1"><strong>Size:</strong> ${bike.bikeSize}</p>
+                <button class="btn btn-outline-light mt-2 select-bike-btn" data-bike-id="${bike.id}">Select</button>
+            </div>
+        </div>
+    </div>
+`).join("");
 
-                document.querySelectorAll("input[name='bikeSelection']").forEach(input => {
-                    input.addEventListener("change", () => {
-                        selectedBikeId = input.value;
+                document.querySelectorAll(".select-bike-btn").forEach(button => {
+                    button.addEventListener("click", () => {
+                        selectedBikeId = button.dataset["bikeId"];
                         proceedButton.disabled = false;
-                        console.log("Selected bikeId:", selectedBikeId);
+                        document.querySelectorAll(".bike-card").forEach(card => card.classList.remove("selected"));
+                        button.closest(".bike-card").classList.add("selected");
                     });
                 });
+
             } else {
                 console.warn("No bikes found. Showing new bike form.");
                 document.getElementById("newBikeForm").style.display = "block";
@@ -120,7 +130,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         try {
             const response = await fetch("/api/bikes", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(bikeData),
             });
 
