@@ -12,7 +12,9 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             document.getElementById("summaryId").textContent = data.id;
-            document.getElementById("bikeId").textContent = data.bikeId || "N/A";
+            const bikeIdEl = document.getElementById("bikeId");
+            if (bikeIdEl) bikeIdEl.textContent = data.bikeId || "N/A";
+
             document.getElementById("reportTime").textContent = data.reportTime || "N/A";
 
             document.getElementById("avgMileage").textContent = (data.avgMileage ?? 0).toFixed(2);
@@ -44,6 +46,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
             fetchBikeReports(summaryId);
             generateQRCode(summaryId);
+            const pdfBtn = document.getElementById("downloadPDF");
+            if (pdfBtn) {
+                pdfBtn.addEventListener("click", () => {
+                    const summaryId = document.getElementById("summaryId")?.textContent;
+                    if (!summaryId) {
+                        alert("Summary ID is missing.");
+                        return;
+                    }
+
+                    const url = `/api/report-summaries/${summaryId}/generatePdf`;
+                    window.open(url, "_blank");
+                });
+            }
+
+
         })
         .catch(error => {
             alert("Failed to load report summary. Please try again later.");
@@ -51,6 +68,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Fetch Reports for this Summary ID
     function fetchBikeReports(summaryId) {
+        const tableHead = document.getElementById("summaryTableHead");
+        const tableBody = document.getElementById("summaryTableBody");
+        if (!tableHead || !tableBody) return;
         fetch(`/api/bikereports/summary/${summaryId}`)
             .then(response => response.json())
             .then(reports => {
@@ -127,31 +147,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function generateQRCode(summaryId) {
         const qrContainer = document.getElementById("qrcode");
-        qrContainer.innerHTML = "";
+        const downloadBtn = document.getElementById("downloadQR");
+        if (!qrContainer || !downloadBtn) return;
 
-        const reportUrl = `https://localhost:8080/report-summary?id=${summaryId}`;
+        qrContainer.innerHTML = "";
+        const reportUrl = `${window.location.origin}/report-summary?id=${summaryId}`;
         new QRCode(qrContainer, {
             text: reportUrl,
             width: 150,
             height: 150
         });
 
-        document.getElementById("downloadQR").addEventListener("click", function () {
-            setTimeout(() => {
-                const qrCanvas = qrContainer.querySelector("canvas");
-                if (qrCanvas) {
-                    const qrImage = qrCanvas.toDataURL("image/png");
+        downloadBtn.addEventListener("click", () => {
+            const qrCanvas = qrContainer.querySelector("canvas");
+            if (!qrCanvas) return;
 
-                    const a = document.createElement("a");
-                    a.href = qrImage;
-                    a.download = `QR_Code_${summaryId}.png`;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                } else {
-                    console.error("QR Code image not found!");
-                }
-            }, 500);
+            const qrImage = qrCanvas.toDataURL("image/png");
+            const a = document.createElement("a");
+            a.href = qrImage;
+            a.download = `QR_Code_${summaryId}.png`;
+            a.click();
         });
     }
 });

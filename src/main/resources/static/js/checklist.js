@@ -1,16 +1,17 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const checkboxes = document.querySelectorAll("#userForm input[type='checkbox']");
-    const checklistButton = document.getElementById("checklist");
+document.addEventListener("DOMContentLoaded", () => {
+    const checklistSwitches = document.querySelectorAll(".checklist-switch");
+    const proceedButton = document.getElementById("proceedButton");
 
-    function toggleButton() {
-        const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-        checklistButton.disabled = !allChecked;
+    function checkAllToggles() {
+        const allChecked = Array.from(checklistSwitches).every(sw => sw.checked);
+        proceedButton.disabled = !allChecked;
     }
 
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener("change", toggleButton);
+    checklistSwitches.forEach(sw => {
+        sw.addEventListener("change", checkAllToggles);
     });
 
-    // Initial state (disabled button)
-    toggleButton();
+    proceedButton.addEventListener("click", () => {
+        window.location.href = "/startTest";
+    });
 });

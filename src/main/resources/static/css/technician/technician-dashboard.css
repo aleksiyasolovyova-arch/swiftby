@@ -1,7 +1,27 @@
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
 body {
-    background-color: #e8eef5;
-    font-family: Arial, sans-serif;
-    color: #344a57;
+    background: linear-gradient(135deg, #344a57, #5c7285, #aed2e3);
+    font-family: 'Roboto Mono', monospace;
+    color: #f5f7ff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+.container-fluid {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
 }
 
 .container-fluid {
@@ -9,76 +29,80 @@ body {
     padding: 20px;
 }
 
-/* Top Buttons */
 .row.mb-4.text-center {
     margin-bottom: 40px;
 }
 
-/* Buttons Styling */
 .btn-outline-dark {
-    border-color: #344a57;
-    color: #344a57;
+    border-color: #fada7a;
+    color: #fada7a;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
 }
 
 .btn-outline-dark:hover {
-    background-color: #344a57;
-    color: #f5f7ff;
+    background-color: #fada7a;
+    color: #344a57;
+    box-shadow: 0 0 10px rgba(250, 218, 122, 0.6);
 }
 
 .btn-success {
-    background-color: #5c7285;
-    border-color: #5c7285;
+    background-color: #fada7a;
+    border-color: #fada7a;
+    color: #344a57;
+    font-weight: bold;
 }
 
 .btn-success:hover {
-    background-color: #344a57;
+    background-color: #ffd700;
+    box-shadow: 0 0 10px rgba(250, 218, 122, 0.7);
 }
 
 #image {
-    border: 1px solid #5c7285;
+    border: 2px solid #fada7a;
     display: flex;
-    justify-content: center; /* Centers the content horizontally */
-    align-items: center; /* Centers vertically */
+    justify-content: center;
+    align-items: center;
     max-width: 700px;
     height: 100%;
-    border-radius: 8px;
+    border-radius: 15px;
     overflow: hidden;
-    background-color: #f5f7ff;
+    background-color: rgba(255, 255, 255, 0.1);
     padding: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
 }
 
 #image:hover {
-    background: #aed2e3; /* Light blue hover effect */
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+    background: #aed2e3;
     transform: scale(1.02);
-    transition: all 0.3s ease-in-out;
 }
 
 #image img {
     width: 100%;
     height: auto;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 12px;
 }
 
 .test-reports-container {
     width: 100%;
-    max-width: 950px; /* Adjusted to perfectly match Pre-Test Checklist */
-    background: #fada7a;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.1);
-    border: 2px solid #d1a743;
+    max-width: 950px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     text-align: center;
-    margin-left: auto;
-    margin-right: auto; /* Center it */
+    backdrop-filter: blur(10px);
 }
 
 .test-reports-title {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: bold;
-    color: #344a57;
-    margin-bottom: 15px;
+    color: #fada7a;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(250, 218, 122, 0.6);
 }
 
 .test-reports-list {
@@ -86,6 +110,7 @@ body {
     padding: 0;
     margin: 0;
     height: 400px;
+    overflow-y: auto;
 }
 
 .test-reports-list li {
@@ -96,67 +121,58 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
+    background: rgba(255, 255, 255, 0.1);
     padding: 12px 18px;
-    border-radius: 8px;
+    border-radius: 10px;
     transition: all 0.3s ease-in-out;
-    border: 1px solid #d1d8e0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     font-size: 1rem;
+    color: #f5f7ff;
 }
 
 .test-report-card:hover {
-    background: #e8eef5;
+    background: rgba(250, 218, 122, 0.15);
     transform: translateY(-3px);
 }
 
 .report-id {
     font-weight: bold;
-    color: #344a57;
+    color: #fada7a;
 }
 
 .report-date {
     font-size: 0.9rem;
-    color: #5c7285;
+    color: #aed2e3;
 }
 
-/* Battery Metrics */
 #chartContainer {
-    border: 2px solid #5c7285;
+    border: 2px solid rgba(255, 255, 255, 0.2);
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    color: #f5f7ff;
 }
-
-/* Pre-Test Checklist */
-.checklist-container {
-    background-color: #fada7a;
-    padding: 40px;
-    border-radius: 12px;
-    border: 2px solid #5c7285;
+.test-reports-container {
     width: 100%;
-    max-width: 950px; /* Matches Test Reports size perfectly */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-h3 {
-    color: #344a57;
-    font-weight: bold;
-    text-transform: uppercase;
+    max-width: 950px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     text-align: center;
-    background: #5c7285;
-    padding: 10px;
-    border-radius: 6px;
-    color: white;
+    backdrop-filter: blur(10px);
+    margin-top: 30px;
 }
 
-.list-unstyled {
-    padding: 20px;
-    border-radius: 8px;
-    color: #344a57;
-    border: 2px solid #5c7285;
-}
-
-.form-check-input:checked {
-    background-color: #344a57;
-    border-color: #344a57;
+.test-reports-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #fada7a;
+    margin-bottom: 20px;
+    text-shadow: 0 0 12px rgba(250, 218, 122, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }

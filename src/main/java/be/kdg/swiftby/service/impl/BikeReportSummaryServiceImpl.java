@@ -16,12 +16,12 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
 
     @Override
     public List<BikeReportSummary> getAllSummaries() {
-        return bikeReportSummaryRepository.findAll();
+        return bikeReportSummaryRepository.findAllByOrderByReportTimeDesc();
     }
 
     @Override
     public BikeReportSummary getSummaryById(Long id) {
-        return bikeReportSummaryRepository.findById(id)
+        return bikeReportSummaryRepository.findByIdWithBike(id)
                 .orElseThrow(() -> new RuntimeException("Summary not found"));
     }
 

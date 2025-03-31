@@ -107,7 +107,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 maxPower: parseInt(document.getElementById("maxPower").value, 10) || 500,
                 nominalPower: parseInt(document.getElementById("nominalPower").value, 10) || 250,
                 torque: parseInt(document.getElementById("torque").value, 10) || 75
-            }
+            },
+            // torqueCrank: document.getElementById("torqueCrank").value.trim()
+
         };
 
         if (!bikeData.brand || !bikeData.type || !bikeData.chassisNumber) {
@@ -124,13 +126,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             if (response.ok) {
                 const newBike = await response.json();
-                console.log("✅ New bike saved:", newBike);
+                console.log(" New bike saved:", newBike);
                 window.location.href = `/startTest/test-setup?bikeId=${newBike.id}`;
             } else {
-                console.error("❌ Error saving bike:", await response.text());
+                console.error("Error saving bike:", await response.text());
             }
         } catch (error) {
-            console.error("❌ Network error:", error);
+            console.error("Network error:", error);
         }
     });
 

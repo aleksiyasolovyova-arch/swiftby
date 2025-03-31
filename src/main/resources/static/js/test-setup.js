@@ -51,11 +51,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     function validateInputs() {
         const requiredFields = [
-            "batteryCapacity",
-            "maxSupport",
-            "maxPower",
-            "nominalPower",
-            "torque",
+            // "batteryCapacity",
+            // "maxSupport",
+            // "maxPower",
+            // "nominalPower",
+            // "torque",
             "testType",
             "testBenchNumber"
         ];
@@ -81,11 +81,11 @@ document.addEventListener("DOMContentLoaded", async function () {
             bikeId: parseInt(bikeId, 10),
             testType: document.getElementById("testType").value,
             testBenchNumber: document.getElementById("testBenchNumber").value,
-            batteryCapacity: parseInt(document.getElementById("batteryCapacity").value, 10) || 0,
-            maxSupport: parseInt(document.getElementById("maxSupport").value, 10) || 0,
-            maxPower: parseInt(document.getElementById("maxPower").value, 10) || 0,
-            nominalPower: parseInt(document.getElementById("nominalPower").value, 10) || 0,
-            torque: parseInt(document.getElementById("torque").value, 10) || 0
+            // batteryCapacity: parseInt(document.getElementById("batteryCapacity").value, 10) || 0,
+            // maxSupport: parseInt(document.getElementById("maxSupport").value, 10) || 0,
+            // maxPower: parseInt(document.getElementById("maxPower").value, 10) || 0,
+            // nominalPower: parseInt(document.getElementById("nominalPower").value, 10) || 0,
+            // torque: parseInt(document.getElementById("torque").value, 10) || 0
         };
 
         console.log("Test Parameters:", testParams);
