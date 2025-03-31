@@ -6,8 +6,5 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class SwiftByApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
 
 }

@@ -16,7 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 
-@Service
+
 public class EmailService {
 
     private final ApiClient apiClient;
