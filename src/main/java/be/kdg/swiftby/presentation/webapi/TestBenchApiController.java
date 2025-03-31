@@ -32,13 +32,18 @@ public class TestBenchApiController {
         BikeOwner bikeOwner = bike.getBikeOwner();
         System.out.println("hohoho");
         System.out.println(request);
+        int batteryCapacity = bike.getBatteryCapacity();
+        int maxSupport = bike.getMaxSupport();
+        int enginePowerMax = bike.getMotor().getMaxPower();
+        int enginePowerNominal = bike.getMotor().getNominalPower();
+        int engineTorque = bike.getMotor().getTorque();
         TestDto testDto = testService.startTest(
                 TestType.valueOf(request.getTestType().name()),
-                request.getBatteryCapacity(),
-                request.getMaxSupport(),
-                request.getMaxPower(),
-                request.getNominalPower(),
-                request.getTorque(),
+                batteryCapacity,
+                maxSupport,
+                enginePowerMax,
+                enginePowerNominal,
+                engineTorque,
                 bike.getId()
         );
         testWebSocketHandler.trackTest(testDto.id(), bike.getId());

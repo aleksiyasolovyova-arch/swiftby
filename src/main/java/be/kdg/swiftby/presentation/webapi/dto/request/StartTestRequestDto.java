@@ -30,11 +30,11 @@ public class StartTestRequestDto {
     //
     private TestType testType;
     private String testBenchNumber;
-    private Integer batteryCapacity;
-    private Integer maxSupport;
-    private Integer maxPower;
-    private Integer nominalPower;
-    private Integer torque;
+//    private Integer batteryCapacity;
+//    private Integer maxSupport;
+//    private Integer maxPower;
+//    private Integer nominalPower;
+//    private Integer torque;
 
     // BIKE ID WILL BE USED TO RETRIEVE BIKE TOGETHER WITH ITS OWNER
     private Long bikeId;
