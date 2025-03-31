@@ -1,80 +1,97 @@
-.search-container {
-    max-width: 800px;
-    margin: 0 auto;
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap');
+
+body {
+    background: linear-gradient(135deg, #344a57, #5c7285, #aed2e3);
+    font-family: 'Roboto Mono', monospace;
+    color: #f5f7ff;
+    margin: 0;
+    padding: 0;
 }
 
+/* -------------------- Updated Search Styling -------------------- */
 .search-wrapper {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 20px rgba(250, 218, 122, 0.1);
     transition: all 0.3s ease;
-}
-
-.search-header {
-    padding: 20px;
-    border-bottom: 1px solid #eee;
+    padding: 1.5rem;
 }
 
 .search-input-group {
     position: relative;
     display: flex;
     align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border: 1px solid rgba(250, 218, 122, 0.4);
+    transition: border 0.3s ease, box-shadow 0.3s ease;
 }
+
 
 .search-input {
-    border: 2px solid #eee;
-    border-radius: 30px;
-    padding: 15px 25px;
-    padding-right: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    color: #f5f7ff;
     width: 100%;
-    transition: all 0.3s ease;
+    padding: 12px 10px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1rem;
 }
 
-.search-input:focus {
-    border-color: #007bff;
-    box-shadow: none;
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
 }
+
+
+.search-input-group:focus-within {
+    border: 2px solid #fada7a;
+    box-shadow: 0 0 10px rgba(250, 218, 122, 0.4);
+}
+
 
 .search-icon {
-    position: absolute;
-    right: 20px;
-    color: #666;
+    font-size: 1.5rem;
+    color: #fada7a;
+    margin-left: 0.5rem;
 }
 
+/* -------------------- Updated Filter Chips -------------------- */
 .category-filters {
-    padding: 15px 20px;
-    background: #f8f9fa;
-    border-radius: 0 0 15px 15px;
+    padding-top: 1rem;
+    text-align: center;
 }
 
 .filter-chip {
     display: inline-block;
-    padding: 8px 15px;
+    padding: 8px 16px;
     margin: 5px;
-    background: white;
-    border: 1px solid #ddd;
     border-radius: 20px;
+    background: transparent;
+    border: 1px solid #fada7a;
+    color: #fada7a;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 }
 
-.filter-chip:hover {
-    background: #007bff;
-    color: white;
-    border-color: #007bff;
-}
-
+.filter-chip:hover,
 .filter-chip.active {
-    background: #007bff;
-    color: white;
-    border-color: #007bff;
+    background: #fada7a;
+    color: #344a57;
+    box-shadow: 0 4px 10px rgba(250, 218, 122, 0.5);
 }
 
 .filter-chip i {
     margin-right: 5px;
-    font-size: 0.9em;
 }
-
+/* -------------------- Quick Filters -------------------- */
 .quick-filters {
     display: flex;
     gap: 10px;
@@ -94,3 +111,58 @@
     background: #dee2e6;
 }
 
+/* -------------------- Card Styling -------------------- */
+.glassmorphism-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    backdrop-filter: blur(12px);
+    border: 2px solid white !important;
+    color: white !important;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    z-index: 1;
+    padding: 1rem;
+}
+
+.glassmorphism-card:hover {
+    transform: scale(1.03) !important;
+    border-color: #fada7a !important; /* subtle yellow border glow on hover */
+    box-shadow :
+            0 0 10px 2px rgba(250, 218, 122, 0.6),
+            0 0 20px 4px rgba(250, 218, 122, 0.4),
+            0 0 40px 6px rgba(250, 218, 122, 0.3) !important;
+    z-index: 5;
+}
+
+
+
+@keyframes glow {
+    from {
+        box-shadow:
+                0 0 10px 5px rgba(250, 218, 122, 0.4),
+                0 0 20px 10px rgba(250, 218, 122, 0.2);
+    }
+    to {
+        box-shadow:
+                0 0 15px 8px rgba(250, 218, 122, 0.8),
+                0 0 40px 12px rgba(250, 218, 122, 0.5);
+    }
+}
+
+/* -------------------- Glowing Button -------------------- */
+.glowing-button {
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, #fada7a, #ffd700);
+    border: none;
+    color: #344a57;
+    box-shadow: 0 5px 15px rgba(250, 218, 122, 0.6);
+    transition: all 0.3s ease-in-out;
+}
+
+.glowing-button:hover {
+    background: linear-gradient(45deg, #ffd700, #fada7a);
+    box-shadow: 0 10px 25px rgba(250, 218, 122, 0.8);
+}

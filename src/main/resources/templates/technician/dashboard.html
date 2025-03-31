@@ -19,7 +19,7 @@
 <div class="container-fluid">
     <div class="row mb-4 text-center">
         <div class="col-md-3">
-            <a href="/startTest/checklist">
+            <a href="/checklist">
                 <button type="button" class="btn btn-outline-dark w-100">Start New Test</button>
 
             </a>
@@ -51,75 +51,46 @@
 
         <div class="col-md-6 align-self-end">
             <div class="test-reports-container">
-                <h4 class="test-reports-title">Test Reports</h4>
-                <ul class="test-reports-list overflow-scroll">
-                    <a href="/report-summary?id=1">
-                        <li class="test-report-card"><span class="report-id">#101</span><span class="report-date">2024-03-15</span>
-                        </li>
-                        <li class="test-report-card"><span class="report-id">#102</span><span class="report-date">2024-03-12</span>
-                        </li>
-                        <li class="test-report-card"><span class="report-id">#103</span><span class="report-date">2024-03-10</span>
-                        </li>
-                        <li class="test-report-card"><span class="report-id">#104</span><span class="report-date">2024-03-08</span>
-                        </li>
-                        <li class="test-report-card"><span class="report-id">#105</span><span class="report-date">2024-03-05</span>
-                        </li>
-                        <li class="test-report-card"><span class="report-id">#101</span><span class="report-date">2024-03-15</span>
-                        </li>
-                        <li class="test-report-card"><span class="report-id">#102</span><span class="report-date">2024-03-12</span>
-                        </li>
-                        <li class="test-report-card"><span class="report-id">#103</span><span class="report-date">2024-03-10</span>
-                        </li>
-                        <li class="test-report-card"><span class="report-id">#104</span><span class="report-date">2024-03-08</span>
-                        </li>
-                        <li class="test-report-card"><span class="report-id">#105</span><span class="report-date">2024-03-05</span>
-                        </li>
-                    </a>
-                </ul>
+                <h4 class="test-reports-title"> Latest Test Reports</h4>
+                <ul class="test-reports-list overflow-scroll" id="reportList"></ul>
             </div>
+
+
+            <!--            <div class="test-reports-container">-->
+<!--                <h4 class="test-reports-title">Test Reports</h4>-->
+<!--                <ul class="test-reports-list overflow-scroll">-->
+<!--                    <a href="/report-summary?id=1">-->
+<!--                        <li class="test-report-card"><span class="report-id">#101</span><span class="report-date">2024-03-15</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#102</span><span class="report-date">2024-03-12</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#103</span><span class="report-date">2024-03-10</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#104</span><span class="report-date">2024-03-08</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#105</span><span class="report-date">2024-03-05</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#101</span><span class="report-date">2024-03-15</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#102</span><span class="report-date">2024-03-12</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#103</span><span class="report-date">2024-03-10</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#104</span><span class="report-date">2024-03-08</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#105</span><span class="report-date">2024-03-05</span>-->
+<!--                        </li>-->
+<!--                    </a>-->
+<!--                </ul>-->
+<!--            </div>-->
         </div>
     </div>
 
-    <div class="row mb-5">  <!-- Increased bottom margin for better spacing -->
-        <div class="col-md-6 mx-auto border rounded p-4 shadow-sm" id="chartContainer">
-        </div>
+<!--    <div class="row mb-5">  &lt;!&ndash; Increased bottom margin for better spacing &ndash;&gt;-->
+<!--        <div class="col-md-6 mx-auto border rounded p-4 shadow-sm" id="chartContainer">-->
+<!--        </div>-->
 
-        <div class="col-md-6 mx-auto text-center border rounded p-4 shadow-sm">
-            <h3 class="mb-4">Pre-Test Checklist</h3>
-            <ul class="list-unstyled bg-white">
-                <li class="d-flex align-items-center mb-3">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheck1">
-                        <label class="form-check-label" for="flexSwitchCheck1">Roller Torque Sufficient</label>
-                    </div>
-                </li>
-                <li class="d-flex align-items-center mb-3">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheck2">
-                        <label class="form-check-label" for="flexSwitchCheck2">Belt Connection</label>
-                    </div>
-                </li>
-                <li class="d-flex align-items-center mb-3">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheck3">
-                        <label class="form-check-label" for="flexSwitchCheck3">Network Connected</label>
-                    </div>
-                </li>
-                <li class="d-flex align-items-center mb-3">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheck4">
-                        <label class="form-check-label" for="flexSwitchCheck4">Wheels Secured</label>
-                    </div>
-                </li>
-                <li class="d-flex align-items-center mb-3">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheck5">
-                        <label class="form-check-label" for="flexSwitchCheck5">Tire Pressure Optimal</label>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
+<!--    </div>-->
 </div>
 <footer th:insert="~{fragments/footer :: footer}"></footer>
 

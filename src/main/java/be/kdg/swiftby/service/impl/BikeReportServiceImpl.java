@@ -136,10 +136,15 @@ public class BikeReportServiceImpl implements BikeReportService {
         List<BikeReport> reports = bikeReportRepository.findAllById(savedReportIds);
         // extract bikeId and date from the first report
         Long bikeId = reports.get(0).getBike().getId();
+        Bike bike = reports.get(0).getBike();
         LocalDate reportDate = reports.get(0).getReportTime().toLocalDate();
 
         BikeReportSummary summary = new BikeReportSummary();
         summary.setBike(reports.get(0).getBike());
+        summary.setTorque(bike.getMotor().getTorque());
+        summary.setMaxPower(bike.getMotor().getMaxPower());
+        summary.setNominalPower(bike.getMotor().getNominalPower());
+
         summary.setReportTime(reportDate);
         summary.setAvgMileage(reports.stream().mapToDouble(BikeReport::getMileage).average().orElse(0));
         summary.setAvgAssistanceLevel(reports.stream().mapToDouble(BikeReport::getAssistanceLevel).average().orElse(0));

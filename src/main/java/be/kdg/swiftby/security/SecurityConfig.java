@@ -50,9 +50,13 @@ public class SecurityConfig {
                                 // REMOVE AFTER FINISHING TESTING
                                 antMatcher("/test"),
                                 antMatcher("/new-test"),
-                                antMatcher("/report-summary/**")
+                                antMatcher("/report-summary/**"),
+                                // MAKE REPORT SUMMARY PAGE PUBLIC
+                                antMatcher("/report-summary"),
+                                antMatcher("/api/report-summaries/**")
                                 ).permitAll()
                                 .anyRequest().authenticated())
+
                 .exceptionHandling(
                         exceptionHandling -> exceptionHandling.authenticationEntryPoint((request, response, authException) -> {
                             if (request.getRequestURI().startsWith("/api")) {

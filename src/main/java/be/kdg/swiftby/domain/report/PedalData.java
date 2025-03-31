@@ -21,6 +21,5 @@ public class PedalData {
     public PedalData(PedalDataDto dto) {
         this.cadence = dto.cadence();
         this.torqueCrank = dto.torqueCrank();
-
     }
 }
