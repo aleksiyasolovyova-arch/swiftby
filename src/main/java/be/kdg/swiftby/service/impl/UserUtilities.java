@@ -1,5 +1,6 @@
 package be.kdg.swiftby.service.impl;
 
+import be.kdg.swiftby.domain.testEnv.Employee;
 import be.kdg.swiftby.domain.testEnv.User;
 import be.kdg.swiftby.repository.testEnvironment.AdministratorRepository;
 import be.kdg.swiftby.repository.testEnvironment.BikeOwnerRepository;

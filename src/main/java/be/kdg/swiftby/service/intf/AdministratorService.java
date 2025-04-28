@@ -11,8 +11,6 @@ public interface AdministratorService {
 
     Administrator getByEmail(String email);
 
-    Administrator save(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber);
-
     void remove(Long id);
 
     List<Administrator> getAllByFacilityId(Long facilityId);
@@ -21,4 +19,11 @@ public interface AdministratorService {
 
     void removeAllByFacilityId(Long id);
 
+    Administrator create(Long facilityId, String email,
+                         String password, String firstName, String lastName,
+                         String phoneNumber);
+
+    Administrator update(Long id, Long oldFacilityId, String email,
+                         String password, String firstName, String lastName,
+                         String phoneNumber, Long newFacilityId);
 }

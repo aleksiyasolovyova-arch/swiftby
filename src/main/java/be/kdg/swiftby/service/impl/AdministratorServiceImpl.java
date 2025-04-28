@@ -48,13 +48,24 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
-    public Administrator save(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber) {
-        //If there already exists a user with that email, throw an exception
+    public Administrator create(Long facilityId, String email,
+                                String password, String firstName, String lastName,
+                                String phoneNumber) {
+
+        Facility facility = facilityRepository.findById(facilityId)
+                .orElseThrow(() -> NotFoundException.forFacility(facilityId));
+
         if (userUtilities.isExistingUser(email)) {
             throw AlreadyExistsException.forUserWithEmail(email);
-        }
+        };
 
-        return new Administrator(facility, email, password, firstName, lastName, phoneNumber);
+        Administrator admin = administratorRepository.save(new Administrator(
+                facility, email, password, firstName, lastName, phoneNumber
+        ));
+
+        log.debug("Admin is created: {}", admin);
+
+        return admin;
     }
 
     @Override
@@ -92,6 +103,39 @@ public class AdministratorServiceImpl implements AdministratorService {
         }
         administratorRepository.deleteAllByFacilityId(id);
         log.debug("Removed all admins in facility with id {}", id);
+    }
+
+
+    @Override
+    public Administrator update(Long id, Long oldFacilityId, String email,
+                                String password, String firstName, String lastName,
+                                String phoneNumber, Long newFacilityId) {
+
+        Facility oldFacility = facilityRepository.findById(oldFacilityId)
+                .orElseThrow(() -> NotFoundException.forFacility(oldFacilityId));
+
+        Administrator admin = administratorRepository.findByFacilityAndId(oldFacility, id)
+                .orElseThrow(() -> NotFoundException.forAdmin(id));
+
+        if (email != null && userUtilities.isExistingUser(email) && !admin.getEmail().equals(email)) {
+            throw AlreadyExistsException.forUserWithEmail(email);
+        }
+
+        Facility newFacility = null;
+
+        if (newFacilityId != null) {
+            newFacility = facilityRepository.findById(newFacilityId)
+                    .orElseThrow(() -> NotFoundException.forFacility(newFacilityId));
+        }
+
+        admin.setEmail(email != null ? email : admin.getEmail());
+        admin.setPassword(password != null ? password : admin.getPassword());
+        admin.setFirstName(firstName != null ? firstName : admin.getFirstName());
+        admin.setLastName(lastName != null ? lastName : admin.getLastName());
+        admin.setPhoneNumber(phoneNumber != null ? phoneNumber : admin.getPhoneNumber());
+        admin.setFacility(newFacilityId != null ? newFacility : admin.getFacility());
+
+        return admin;
     }
 
 }

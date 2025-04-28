@@ -63,8 +63,6 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
 
     @Scheduled(fixedRate = 3000)
     public void checkTestStatus() {
-        System.out.println("🔄 Checking test statuses...");
-
         for (UUID testId : ongoingTests.keySet()) {
             System.out.println("📡 Checking test ID: " + testId);
             TestDto testDto = testService.getTest(testId);

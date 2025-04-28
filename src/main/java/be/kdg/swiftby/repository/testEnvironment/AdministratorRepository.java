@@ -16,4 +16,6 @@ public interface AdministratorRepository extends JpaRepository<Administrator, Lo
     void deleteAllByFacilityId(Long id);
 
     Optional<Administrator> findByFacilityIdAndId(Long facilityId, Long id);
+    Optional<Administrator> findByFacilityAndId(Facility facility, Long id);
+
 }

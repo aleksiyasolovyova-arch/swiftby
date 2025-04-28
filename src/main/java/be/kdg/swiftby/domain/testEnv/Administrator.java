@@ -32,6 +32,12 @@ public class Administrator extends Employee {
     private Facility facility;
 
     public Administrator(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber) {
-        super();
+        super(email, password, firstName, lastName, phoneNumber);
+        this.facility = facility;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }
