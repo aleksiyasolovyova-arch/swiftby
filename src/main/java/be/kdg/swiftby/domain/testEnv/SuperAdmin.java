@@ -11,11 +11,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class SuperAdmin extends User {
-    @OneToMany(mappedBy= "superAdmin")
-    private Set<Administrator> administrators;
-
-
-    public SuperAdmin(String email, String password, String firstName, String lastName, String phoneNumber) {
+   public SuperAdmin(String email, String password, String firstName, String lastName, String phoneNumber) {
         super();
     }
 }

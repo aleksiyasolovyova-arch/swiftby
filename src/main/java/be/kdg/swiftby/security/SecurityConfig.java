@@ -42,6 +42,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/registration").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(antMatcher("/api/**")).permitAll()
+                        .requestMatchers(antMatcher("/ws/**")).permitAll()
                         .requestMatchers(
                                 antMatcher("/js/**"),
                                 antMatcher("/webjars/**"),

@@ -93,5 +93,17 @@ public class AdministratorServiceImpl implements AdministratorService {
         administratorRepository.deleteAllByFacilityId(id);
         log.debug("Removed all admins in facility with id {}", id);
     }
+    // In AdministratorServiceImpl.java
+    @Override
+    public List<Administrator> getAllUnapproved() {
+        return administratorRepository.findAllUnapproved();
+    }
+    @Override
+    public void approve(Long adminId) {
+        Administrator admin = administratorRepository.findById(adminId)
+                .orElseThrow(() -> NotFoundException.forAdmin(adminId));
+        admin.setApproved(true);
+        administratorRepository.save(admin);
+    }
 
 }

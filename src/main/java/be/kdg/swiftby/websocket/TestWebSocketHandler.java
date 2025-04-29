@@ -56,35 +56,21 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
     }
 
     public void trackTest(UUID testId, Long bikeId) {
-        System.out.println("Tracking test: " + testId + " for Bike ID: " + bikeId);
         ongoingTests.put(testId, bikeId);
         sendUpdate(testId, TestState.STARTED,null);
     }
 
     @Scheduled(fixedRate = 3000)
     public void checkTestStatus() {
-        System.out.println("🔄 Checking test statuses...");
-
         for (UUID testId : ongoingTests.keySet()) {
-            System.out.println("📡 Checking test ID: " + testId);
             TestDto testDto = testService.getTest(testId);
             TestState testState = testDto.state();
-            System.out.println("✅ Test " + testId + " is in state: " + testState);
 
             if (testState == TestState.COMPLETED) {
-                System.out.println("🚀 Test " + testId + " completed. Fetching report & processing CSV...");
 
                 testService.getReport(testId);
                 StartTestDto startData = testMetadata.remove(testId);
                 BikeReportSummary summary = processCsvAfterTestCompletion(ongoingTests.get(testId), startData);
-
-
-                if (summary != null) {
-                    System.out.println("✅ Summary generated with ID: " + summary.getId());
-                } else {
-                    System.out.println("❌ Summary generation failed!");
-                }
-
                 Long summaryId = (summary != null) ? summary.getId() : null;
                 ongoingTests.remove(testId);
 
@@ -95,7 +81,6 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
 
     private BikeReportSummary processCsvAfterTestCompletion(Long bikeId,StartTestDto startData) {
         try {
-            System.out.println("🚴 Processing CSV for Bike ID: " + bikeId);
 
             List<Long> savedReportIds = csvService.processLatestCsvFile().stream()
                     .map(record -> {
@@ -112,42 +97,28 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
                                 record.testBenchDataDto(),
                                 record.wheelDataDto()
                         ).getId();
-                        System.out.println("✅ Saved Report ID: " + reportId);
                         return reportId;
                     })
                     .toList();
 
-            System.out.println("🔄 Generating Summary Report from Reports: " + savedReportIds);
             BikeReportSummary summary = bikeReportService.saveReportSummaryFromSavedReports(savedReportIds);
-
-            if (summary != null) {
-                System.out.println("✅ Summary Created Successfully: " + summary.getId());
-            } else {
-                System.out.println("❌ Summary creation failed!");
-            }
 
             return summary;
         } catch (Exception e) {
-            System.err.println("❌ Error processing CSV: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
     }
 
     private void sendUpdate(UUID testId, TestState status, Long summaryId) {
-        System.out.println("📡 Sending WebSocket Update:");
-        System.out.println("🆔 Test ID: " + testId);
-        System.out.println("📄 Summary ID: " + summaryId);
-        System.out.println("🔄 Status: " + status);
 
         String message = "{\"testId\": \"" + testId + "\", \"status\": \"" + status + "\", \"summaryId\": " + (summaryId != null ? summaryId : "null") + "}";
 
         for (WebSocketSession session : sessions) {
             try {
                 session.sendMessage(new TextMessage(message));
-                System.out.println("✅ WebSocket message sent successfully!");
             } catch (IOException e) {
-                System.err.println("❌ WebSocket Error sending message: " + e.getMessage());
+                System.out.println("websocket error sending message: " + e.getMessage());
                 e.printStackTrace();
             }
         }

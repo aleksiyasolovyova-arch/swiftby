@@ -35,10 +35,8 @@ public class Bike {
     //    private int actualTorque;
     //    private double actualPower;
 
-    // TEMP TO TEST STARTING THE TEST FUNCTIONALITY AND TESTING THE FORM
-    @ManyToOne
-    @JoinColumn(name = "bike_owner_id")
-    private BikeOwner bikeOwner;
+    @OneToMany(mappedBy = "bike", fetch = FetchType.LAZY )
+    private Set<BikeOwnership> ownerships;
 
     @OneToMany(mappedBy = "bike")
     private Set<BikeReport> reports;

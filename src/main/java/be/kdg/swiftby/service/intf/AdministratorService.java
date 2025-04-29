@@ -20,5 +20,7 @@ public interface AdministratorService {
     Administrator getByFacilityIdAndAdministratorId(Long facilityId, Long adminId);
 
     void removeAllByFacilityId(Long id);
+    List<Administrator> getAllUnapproved();
 
+    void approve(Long adminId);
 }

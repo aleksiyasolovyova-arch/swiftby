@@ -16,4 +16,7 @@ public interface TechnicianService {
     Technician getByFacilityIdAndTechnicianId(Long facilityId, Long technicianId);
 
     void removeAllByFacilityId(Long id);
+    List<Technician> getAllUnapproved();
+
+    void approve(Long technicianId);
 }

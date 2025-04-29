@@ -21,5 +21,6 @@ public interface TechnicianRepository extends JpaRepository<Technician, Long> {
     Optional<Technician> findByEmail(String email);
     void deleteAllByFacilityId(Long id);
     boolean existsByEmail(String email);
-
+    @Query("SELECT t FROM Technician t WHERE t.isApproved = false")
+    List<Technician> findAllUnapproved();
 }
