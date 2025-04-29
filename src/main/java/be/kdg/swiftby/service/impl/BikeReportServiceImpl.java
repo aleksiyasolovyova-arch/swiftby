@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -152,7 +151,7 @@ public class BikeReportServiceImpl implements BikeReportService {
         summary.setAvgAssistanceLevel(reports.stream().mapToDouble(BikeReport::getAssistanceLevel).average().orElse(0));
         summary.setHorizontalInclination(reports.stream().mapToDouble(r -> r.getAxialSensorData().getHorizontalInclination()).average().orElse(0));
         summary.setVerticalInclination(reports.stream().mapToDouble(r -> r.getAxialSensorData().getVerticalInclination()).average().orElse(0));
-        summary.setCurrent(reports.stream().mapToDouble(r -> r.getBatteryData().getCurrent()).average().orElse(0));
+        summary.setBatteryCurrent(reports.stream().mapToDouble(r -> r.getBatteryData().getBatteryCurrent()).average().orElse(0));
         summary.setVoltage(reports.stream().mapToDouble(r -> r.getBatteryData().getVoltage()).average().orElse(0));
         summary.setCapacity(reports.stream().mapToDouble(r -> r.getBatteryData().getCapacity()).average().orElse(0));
         summary.setTemperature(reports.stream().mapToDouble(r -> r.getBatteryData().getTemperature()).average().orElse(0));

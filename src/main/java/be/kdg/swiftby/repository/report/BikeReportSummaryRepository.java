@@ -4,17 +4,19 @@ import be.kdg.swiftby.domain.report.BikeReportSummary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface BikeReportSummaryRepository extends JpaRepository<BikeReportSummary, Long> {
 
     @Query("SELECT BikeReportSummary( " +
             "b, br.reportTime, AVG(br.mileage), AVG(br.assistanceLevel), " +
             "AVG(asd.horizontalInclination), AVG(asd.verticalInclination), " +
-            "AVG(bd.current), AVG(bd.voltage), AVG(bd.capacity), AVG(bd.temperature), " +
+            "AVG(bd.batteryCurrent), AVG(bd.voltage), AVG(bd.capacity), AVG(bd.temperature), " +
             "AVG(md.enginePower), AVG(pd.torqueCrank), AVG(pd.cadence), " +
             "AVG(tbd.rollerTorque), AVG(tbd.loadCell), AVG(tbd.rol), AVG(wd.speed), AVG(wd.power), " +
             "COUNT(br.id)) " +
