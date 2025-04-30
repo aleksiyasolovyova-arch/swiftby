@@ -6,11 +6,16 @@ import java.util.List;
 
 public interface TechnicianService {
 
-    List<Technician> getAllTechnicians();
-    Technician getTechnicianById(Long id);
-    Technician saveTechnician(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber);
+    List<Technician> getAll();
+    Technician getById(Long id);
+    Technician create(Long facilityId,
+                      String email,
+                      String password,
+                      String firstName,
+                      String lastName,
+                      String phoneNumber);
 
-    void removeTechnician(Long id);
+    void remove(Long id);
     List<Technician> getAllByFacilityId(Long id);
 
     Technician getByFacilityIdAndTechnicianId(Long facilityId, Long technicianId);
@@ -19,4 +24,8 @@ public interface TechnicianService {
     List<Technician> getAllUnapproved();
 
     void approve(Long technicianId);
+
+    Technician update(Long id, Long oldFacilityId, String email,
+                      String password, String firstName, String lastName,
+                      String phoneNumber, Long newFacilityId);
 }

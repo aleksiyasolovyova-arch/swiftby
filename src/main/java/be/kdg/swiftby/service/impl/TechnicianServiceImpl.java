@@ -4,7 +4,6 @@ import be.kdg.swiftby.domain.exception.AlreadyExistsException;
 import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.testEnv.Facility;
 import be.kdg.swiftby.domain.testEnv.Technician;
-import be.kdg.swiftby.domain.testEnv.TestBench;
 import be.kdg.swiftby.repository.testEnvironment.AdministratorRepository;
 import be.kdg.swiftby.repository.testEnvironment.FacilityRepository;
 import be.kdg.swiftby.repository.testEnvironment.TechnicianRepository;
@@ -43,37 +42,45 @@ public class TechnicianServiceImpl implements TechnicianService {
     }
 
     @Override
-    public List<Technician> getAllTechnicians() {
+    public List<Technician> getAll() {
         return technicianRepository.findAll();
     }
 
     @Override
-    public Technician getTechnicianById(Long id) {
+    public Technician getById(Long id) {
         return technicianRepository.findById(id)
                 .orElseThrow(() -> NotFoundException.forTechnician(id));
     }
 
 
     @Override
-    public Technician saveTechnician(Facility facility,
-                                     String email,
-                                     String password,
-                                     String firstName,
-                                     String lastName,
-                                     String phoneNumber) {
+    public Technician create(Long facilityId,
+                             String email,
+                             String password,
+                             String firstName,
+                             String lastName,
+                             String phoneNumber) {
+
+        Facility facility = facilityRepository.findById(facilityId)
+                .orElseThrow(() -> NotFoundException.forFacility(facilityId));
+
         //If there already exists a user with that email, throw an exception
         if (userUtilities.isExistingUser(email)) {
             throw AlreadyExistsException.forUserWithEmail(email);
         }
 
-        return technicianRepository.save(
-                        new Technician(facility, email, password, firstName, lastName, phoneNumber)
-                );
+        Technician technician = technicianRepository.save(
+                new Technician(facility, email, password, firstName, lastName, phoneNumber)
+        );
+
+        log.debug("New technician is created: {}", technician);
+
+        return technician;
     }
 
 
     @Override
-    public void removeTechnician(Long id) {
+    public void remove(Long id) {
         technicianRepository.deleteById(id);
     }
 
@@ -114,4 +121,35 @@ public class TechnicianServiceImpl implements TechnicianService {
         technicianRepository.save(technician);
     }
 
+    @Override
+    public Technician update(Long oldFacilityId, Long id, String email,
+                             String password, String firstName, String lastName,
+                             String phoneNumber, Long newFacilityId) {
+
+        Facility oldFacility = facilityRepository.findById(oldFacilityId)
+                .orElseThrow(() -> NotFoundException.forFacility(oldFacilityId));
+
+        Technician technician = technicianRepository.findByFacilityAndId(oldFacility, id)
+                .orElseThrow(() -> NotFoundException.forAdmin(id));
+
+        if (email != null && userUtilities.isExistingUser(email) && !technician.getEmail().equals(email)) {
+            throw AlreadyExistsException.forUserWithEmail(email);
+        }
+
+        Facility newFacility = null;
+
+        if (newFacilityId != null) {
+            newFacility = facilityRepository.findById(newFacilityId)
+                    .orElseThrow(() -> NotFoundException.forFacility(newFacilityId));
+        }
+
+        technician.setEmail(email != null ? email : technician.getEmail());
+        technician.setPassword(password != null ? password : technician.getPassword());
+        technician.setFirstName(firstName != null ? firstName : technician.getFirstName());
+        technician.setLastName(lastName != null ? lastName : technician.getLastName());
+        technician.setPhoneNumber(phoneNumber != null ? phoneNumber : technician.getPhoneNumber());
+        technician.setFacility(newFacilityId != null ? newFacility : technician.getFacility());
+
+        return technician;
+    }
 }

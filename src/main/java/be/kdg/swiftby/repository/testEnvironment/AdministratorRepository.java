@@ -18,4 +18,6 @@ public interface AdministratorRepository extends JpaRepository<Administrator, Lo
     @Query("SELECT a FROM Administrator a WHERE a.isApproved = false")
     List<Administrator> findAllUnapproved();
     Optional<Administrator> findByFacilityIdAndId(Long facilityId, Long id);
+    Optional<Administrator> findByFacilityAndId(Facility facility, Long id);
+
 }
