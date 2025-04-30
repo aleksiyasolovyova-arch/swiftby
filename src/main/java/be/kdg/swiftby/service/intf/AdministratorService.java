@@ -18,7 +18,9 @@ public interface AdministratorService {
     Administrator getByFacilityIdAndAdministratorId(Long facilityId, Long adminId);
 
     void removeAllByFacilityId(Long id);
+    List<Administrator> getAllUnapproved();
 
+    void approve(Long adminId);
     Administrator create(Long facilityId, String email,
                          String password, String firstName, String lastName,
                          String phoneNumber);

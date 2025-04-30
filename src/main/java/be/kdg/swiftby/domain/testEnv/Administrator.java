@@ -9,35 +9,20 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class Administrator extends Employee {
-
-
-    // TODO: CREATE AN INTERMEDIATE CLASS FOR THIS AND NOT USE MANY_TO_MANY ANNOTATION
-    @ManyToMany
-    @JoinTable(
-            name = "admin_bike_owner",
-            joinColumns = @JoinColumn(name = "administrator_id"),
-            inverseJoinColumns = @JoinColumn(name = "bike_owner_id")
-    )
-    private Set<BikeOwner> bikeOwners;
-
-    @ManyToOne
-    @NonNull
-    private SuperAdmin superAdmin;
 
     @ManyToOne
     @JoinColumn(name = "facility_id")
     private Facility facility;
-
     public Administrator(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber) {
-        super(email, password, firstName, lastName, phoneNumber);
         this.facility = facility;
+        this.setEmail(email);
+        this.setPassword(password);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setPhoneNumber(phoneNumber);
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
+
 }

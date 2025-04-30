@@ -109,6 +109,17 @@ public class TechnicianServiceImpl implements TechnicianService {
         administratorRepository.deleteAllByFacilityId(id);
         log.debug("Removed all technicians in facility with id {}", id);
     }
+    @Override
+    public List<Technician> getAllUnapproved() {
+        return technicianRepository.findAllUnapproved();
+    }
+    @Override
+    public void approve(Long technicianId) {
+        Technician technician = technicianRepository.findById(technicianId)
+                .orElseThrow(() -> NotFoundException.forTechnician(technicianId));
+        technician.setApproved(true);
+        technicianRepository.save(technician);
+    }
 
     @Override
     public Technician update(Long oldFacilityId, Long id, String email,

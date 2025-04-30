@@ -2,12 +2,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     const params = new URLSearchParams(window.location.search);
     const userId = params.get("userId");
 
-    if (!userId) {
-        alert("User ID is missing!");
-        window.location.href = "/startTest/find-user";
-        return;
-    }
-
     const bikeList = document.getElementById("bikeList");
     const proceedButton = document.getElementById("selectBike");
     const bikeSizeSelect = document.getElementById("bikeSize");
@@ -15,83 +9,66 @@ document.addEventListener("DOMContentLoaded", async function () {
     let selectedBikeId = null;
 
     async function loadBikeSizes() {
-        try {
-            console.log("Fetching available bike sizes...");
-            const response = await fetch("/api/bikes/sizes");
-            const sizes = await response.json();
+        const response = await fetch("/api/bikes/sizes");
+        const sizes = await response.json();
 
-            // Clear existing options & populate from API
-            bikeSizeSelect.innerHTML = "";
-            sizes.forEach(size => {
-                const option = document.createElement("option");
-                option.value = size;
-                option.textContent = size.charAt(0) + size.slice(1).toLowerCase(); // Format size
-                bikeSizeSelect.appendChild(option);
-            });
-
-        } catch (error) {
-            console.error("❌ Error fetching bike sizes:", error);
-        }
+        bikeSizeSelect.innerHTML = "";
+        sizes.forEach(size => {
+            const option = document.createElement("option");
+            option.value = size;
+            option.textContent = size.charAt(0) + size.slice(1).toLowerCase(); // Format size
+            bikeSizeSelect.appendChild(option);
+        });
     }
 
     async function loadPowertrains() {
-        try {
-            console.log("Fetching available powertrains...");
-            const response = await fetch("/api/bikes/powertrains");
-            const powertrains = await response.json();
+        console.log("Fetching available powertrains...");
+        const response = await fetch("/api/bikes/powertrains");
+        const powertrains = await response.json();
 
-            // Clear existing options & populate from API
-            powertrainSelect.innerHTML = "";
-            powertrains.forEach(powertrain => {
-                const option = document.createElement("option");
-                option.value = powertrain;
-                option.textContent = powertrain.charAt(0) + powertrain.slice(1).toLowerCase(); // Format name
-                powertrainSelect.appendChild(option);
-            });
-
-        } catch (error) {
-            console.error("❌ Error fetching powertrains:", error);
-        }
+        powertrainSelect.innerHTML = "";
+        powertrains.forEach(powertrain => {
+            const option = document.createElement("option");
+            option.value = powertrain;
+            option.textContent = powertrain.charAt(0) + powertrain.slice(1).toLowerCase();
+            powertrainSelect.appendChild(option);
+        });
     }
 
     async function loadBikes() {
-        try {
-            console.log("Fetching bikes for userId:", userId);
-            const response = await fetch(`/api/bikes/owner/${userId}`);
-            const bikes = await response.json();
+        const response = await fetch(`/api/bikes/owner/${userId}`);
+        const bikes = await response.json();
 
-            if (bikes.length > 0) {
-                bikeList.innerHTML = bikes.map(bike => `
-    <div class="card text-start shadow-sm p-3 bike-card p-3 ${selectedBikeId == bike.id ? 'selected' : ''}">
-        <div class="d-flex align-items-center gap-3">
-            <img src="/images/bikeGeneric.webp" alt="Bike" class="bike-thumbnail">
-            <div class="flex-grow-1">
-                <h5>${bike.brand} - ${bike.type}</h5>
-                <p class="mb-1"><strong>Chassis:</strong> ${bike.chassisNumber}</p>
-                <p class="mb-1"><strong>Battery:</strong> ${bike.batteryCapacity} Wh</p>
-                <p class="mb-1"><strong>Size:</strong> ${bike.bikeSize}</p>
-                <button class="btn btn-outline-light mt-2 select-bike-btn" data-bike-id="${bike.id}">Select</button>
+        if (bikes.length > 0) {
+            bikeList.innerHTML = bikes.map(bike => `
+            <div class="card text-start shadow-sm p-3 bike-card p-3 ${selectedBikeId == bike.id ? 'selected' : ''}">
+                <div class="d-flex align-items-center gap-3">
+                    <img src="/images/bikeGeneric.webp" alt="Bike" class="bike-thumbnail">
+                    <div class="flex-grow-1">
+                        <h5>${bike.brand} - ${bike.type}</h5>
+                        <p class="mb-1"><strong>Chassis:</strong> ${bike.chassisNumber}</p>
+                        <p class="mb-1"><strong>Battery:</strong> ${bike.batteryCapacity} Wh</p>
+                        <p class="mb-1"><strong>Size:</strong> ${bike.bikeSize}</p>
+                        <button class="btn btn-outline-light mt-2 select-bike-btn" data-bike-id="${bike.id}">Select</button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-`).join("");
+            `).join("");
 
-                document.querySelectorAll(".select-bike-btn").forEach(button => {
-                    button.addEventListener("click", () => {
-                        selectedBikeId = button.dataset["bikeId"];
-                        proceedButton.disabled = false;
-                        document.querySelectorAll(".bike-card").forEach(card => card.classList.remove("selected"));
-                        button.closest(".bike-card").classList.add("selected");
-                    });
+            document.querySelectorAll(".select-bike-btn").forEach(button => {
+                button.addEventListener("click", () => {
+                    selectedBikeId = button.dataset["bikeId"];
+                    proceedButton.disabled = false;
+                    document.querySelectorAll(".bike-card").forEach(card => card.classList.remove("selected"));
+                    button.closest(".bike-card").classList.add("selected");
                 });
+            });
 
-            } else {
-                console.warn("No bikes found. Showing new bike form.");
-                document.getElementById("newBikeForm").style.display = "block";
-            }
-        } catch (error) {
-            console.error("❌ Error loading bikes:", error);
+        } else {
+            console.warn("No bikes found. Showing new bike form.");
+            document.getElementById("newBikeForm").style.display = "block";
         }
+
     }
 
     proceedButton.addEventListener("click", () => {
@@ -127,26 +104,21 @@ document.addEventListener("DOMContentLoaded", async function () {
             return;
         }
 
-        try {
-            const response = await fetch("/api/bikes", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(bikeData),
-            });
+        const response = await fetch("/api/bikes", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(bikeData),
+        });
 
-            if (response.ok) {
-                const newBike = await response.json();
-                console.log(" New bike saved:", newBike);
-                window.location.href = `/startTest/test-setup?bikeId=${newBike.id}`;
-            } else {
-                console.error("Error saving bike:", await response.text());
-            }
-        } catch (error) {
-            console.error("Network error:", error);
+        if (response.ok) {
+            const newBike = await response.json();
+            console.log(" New bike saved:", newBike);
+            window.location.href = `/startTest/test-setup?bikeId=${newBike.id}`;
+        } else {
+            console.error("Error saving bike:", await response.text());
         }
+
     });
-
-
     loadBikeSizes();
     loadPowertrains();
     loadBikes();

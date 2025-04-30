@@ -13,8 +13,12 @@ import java.util.Optional;
 public interface BikeRepository extends JpaRepository<Bike, Long> {
     List<Bike> findByMotorEngineType(String engineType);
     Optional<Bike> findBikeByChassisNumber(String chassisNumber);
-    List<Bike> findByBikeOwner_Id(Long ownerId);
-    @Query("SELECT b FROM Bike b JOIN FETCH b.bikeOwner WHERE b.id = :id")
-    Optional<Bike> findByIdWithOwner(@Param("id") Long id);
+    @Query("""
+    SELECT DISTINCT b FROM Bike b
+    LEFT JOIN FETCH b.ownerships bo
+    LEFT JOIN FETCH bo.owner
+    WHERE b.id = :id
+""")
+    Optional<Bike> findByIdWithOwnerships(@Param("id") Long id);
 
 }
