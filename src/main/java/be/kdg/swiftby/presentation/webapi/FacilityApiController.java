@@ -1,5 +1,6 @@
 package be.kdg.swiftby.presentation.webapi;
 
+import be.kdg.swiftby.domain.bike.Bike;
 import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.testEnv.Administrator;
 import be.kdg.swiftby.presentation.viewmodels.EmployeeCreateViewModel;
@@ -8,16 +9,12 @@ import be.kdg.swiftby.presentation.webapi.dto.AdministratorApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.FacilityApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.TechnicianApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.TestBenchApiMapper;
+import be.kdg.swiftby.presentation.webapi.dto.bikereport.BikeMapperApi;
 import be.kdg.swiftby.presentation.webapi.dto.request.EmployeeRequestDto;
-import be.kdg.swiftby.presentation.webapi.dto.response.AdministratorApiResponseDto;
-import be.kdg.swiftby.presentation.webapi.dto.response.FacilityApiResponseDto;
-import be.kdg.swiftby.presentation.webapi.dto.response.TechnicianApiResponseDto;
-import be.kdg.swiftby.presentation.webapi.dto.response.TestBenchApiResponseDto;
-import be.kdg.swiftby.service.intf.AdministratorService;
-import be.kdg.swiftby.service.intf.FacilityService;
-import be.kdg.swiftby.service.intf.TechnicianService;
-import be.kdg.swiftby.service.intf.TestBenchService;
+import be.kdg.swiftby.presentation.webapi.dto.response.*;
+import be.kdg.swiftby.service.intf.*;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -27,31 +24,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("api/facilities")
 public class FacilityApiController {
-    FacilityService facilityService;
-    TestBenchService testBenchService;
-    TechnicianService technicianService;
-    AdministratorService administratorService;
-
-    TestBenchApiMapper testBenchApiMapper;
-    FacilityApiMapper facilityApiMapper;
-
-    TechnicianApiMapper technicianApiMapper;
-    AdministratorApiMapper administratorApiMapper;
-
-    Logger log = LoggerFactory.getLogger(FacilityApiController.class);
-
-    public FacilityApiController(FacilityService facilityService, TestBenchService testBenchService, TechnicianService technicianService, AdministratorService administratorService, TestBenchApiMapper testBenchApiMapper, FacilityApiMapper facilityApiMapper, TechnicianApiMapper technicianApiMapper, AdministratorApiMapper administratorApiMapper) {
-        this.facilityService = facilityService;
-        this.testBenchService = testBenchService;
-        this.technicianService = technicianService;
-        this.administratorService = administratorService;
-        this.testBenchApiMapper = testBenchApiMapper;
-        this.facilityApiMapper = facilityApiMapper;
-        this.technicianApiMapper = technicianApiMapper;
-        this.administratorApiMapper = administratorApiMapper;
-    }
+   private final FacilityService facilityService;
+   private final TestBenchService testBenchService;
+   private final TechnicianService technicianService;
+   private final AdministratorService administratorService;
+   private final TestBenchApiMapper testBenchApiMapper;
+   private final FacilityApiMapper facilityApiMapper;
+   private final TechnicianApiMapper technicianApiMapper;
+   private final AdministratorApiMapper administratorApiMapper;
+   private final BikeService bikeService;
+   private final Logger log = LoggerFactory.getLogger(FacilityApiController.class);
+   private final BikeMapperApi bikeApiMapper;
 
     //facilities
     @GetMapping("")
@@ -218,6 +204,17 @@ public class FacilityApiController {
                     administratorId, facilityId);
             return ResponseEntity.ok(admin);
     }
+    @GetMapping("/{facilityId}/bikes")
+    public ResponseEntity<List<BikeApiResponseDto>> getAllBikesByFacilityId(@PathVariable Long facilityId) {
+        List<Bike> bikes = bikeService.getAllByFacilityId(facilityId);
+        if (bikes.isEmpty()) {
+            log.warn("No bikes found for facility ID {}", facilityId);
+            return ResponseEntity.noContent().build();
+        }
+        List<BikeApiResponseDto> response = bikeApiMapper.toBikeDtoList(bikes);
+        return ResponseEntity.ok(response);
+    }
+
 
 
 }
