@@ -35,6 +35,8 @@ variables:
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   image: docker:20.10.24 # Latest version of docker
+  tags:
+    - dind
   services:
     - docker:20.10.16-dind
   before_script:
@@ -46,8 +48,7 @@ build-job:       # This job runs in the build stage, which runs first.
     - docker push $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG
     - docker push $DOCKER_IMAGE_NAME:latest
     - echo "docker image complete."
-  tags:
-    - dind
+
 
 
 #TESTING GO BRRRR
