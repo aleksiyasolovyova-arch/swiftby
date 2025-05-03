@@ -2,6 +2,9 @@
 INSERT INTO super_admin (email, first_name, last_name, password, phone_number) VALUES
                                                                                    ('daniil.mumladze@student.kdg.be', 'Daniil', 'Mumladze', '$2a$12$B2Z5NXujfYW1BbkvuEsAieagqjRfgl7ALG6YP5kklNpdsjrdytn6G', '0495123456'),
                                                                                    ('mohammed-jan.jalloh@student.kdg.be', 'MJ', 'Jalloh', '$2a$12$C0Op6Raw5BmKNOuaFTnO9uPZbH854VCWgY1AhZgPgQACqAdBX92Pm', '0492123456');
+-- password: bobTheHelper
+INSERT INTO system_admin (email, first_name, last_name, password, phone_number) VALUES
+                                                                                    ('bob@helper.com', 'Bob', 'Helper', '$2a$12$0AQwvBMDXS.V72Em2a9ftOLoMeJijLPJ3ynyJVWKAhfIasHPK6Eee', '0476010203');
 
 INSERT INTO axial_sensor_data (horizontal_inclination, vertical_inclination) VALUES
                                                                                  (15.5, 30.2),
