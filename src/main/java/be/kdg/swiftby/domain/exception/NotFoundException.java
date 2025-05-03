@@ -77,5 +77,8 @@ public class NotFoundException extends RuntimeException {
     public static NotFoundException forUserWithEmail(String email) {
         return new NotFoundException(String.format("User not found with email %s", email));
     }
+    public static NotFoundException forFacilityName(String facilityName) {
+        return new NotFoundException(String.format("Facility not found with name %s", facilityName));
+    }
 
 }

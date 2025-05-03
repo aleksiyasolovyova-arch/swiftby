@@ -43,7 +43,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(antMatcher("/api/**")).permitAll()
                         .requestMatchers(antMatcher("/ws/**")).permitAll()
-                        .requestMatchers(antMatcher("/technician/**")).hasRole("TECHNICIAN")
+                        .requestMatchers(antMatcher("/technician/**")).hasAnyRole("TECHNICIAN", "ADMINISTRATOR", "SUPERADMIN")
+                        .requestMatchers(antMatcher("/sysadmin/unapproved-employees")).hasRole("SUPERADMIN")
                         .requestMatchers(
                                 antMatcher("/js/**"),
                                 antMatcher("/webjars/**"),

@@ -38,4 +38,7 @@ public class ProfileDto {
     private String phoneNumber;
     private String role;
 
+    @NotEmpty
+    private String facilityName;
+
 }

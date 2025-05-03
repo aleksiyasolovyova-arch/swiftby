@@ -3,9 +3,11 @@ package be.kdg.swiftby.security.service;
 import be.kdg.swiftby.domain.exception.AlreadyExistsException;
 import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.testEnv.Administrator;
+import be.kdg.swiftby.domain.testEnv.SuperAdmin;
 import be.kdg.swiftby.domain.testEnv.Technician;
 import be.kdg.swiftby.domain.testEnv.User;
 import be.kdg.swiftby.repository.testEnvironment.AdministratorRepository;
+import be.kdg.swiftby.repository.testEnvironment.SuperAdminRepository;
 import be.kdg.swiftby.repository.testEnvironment.TechnicianRepository;
 import be.kdg.swiftby.security.CustomUserDetails;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -17,36 +19,47 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
+    private final SuperAdminRepository superAdminRepository;
     private final TechnicianRepository technicianRepository;
     private final AdministratorRepository administratorRepository;
 
-    public CustomUserDetailService(TechnicianRepository technicianRepository, AdministratorRepository administratorRepository) {
+    public CustomUserDetailService(SuperAdminRepository superAdminRepository, TechnicianRepository technicianRepository, AdministratorRepository administratorRepository) {
+        this.superAdminRepository = superAdminRepository;
         this.technicianRepository = technicianRepository;
         this.administratorRepository = administratorRepository;
     }
 
 
     @Override
-    public UserDetails loadUserByUsername(final String username) throws AlreadyExistsException {
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         return technicianRepository.findByEmail(username)
                 .map(user -> buildUserDetails(user, "TECHNICIAN"))
-                .orElseGet(() -> administratorRepository.findAdministratorByEmail(username)
-                        .map(user -> buildUserDetails(user, "ADMIN"))
-                .orElseThrow(() -> NotFoundException.forUserWithEmail(username)));
+                .or(() -> administratorRepository.findAdministratorByEmail(username)
+                        .map(user -> buildUserDetails(user, "ADMIN")))
+                .or(() -> superAdminRepository.findByEmail(username)
+                        .map(user -> buildUserDetails(user, "SUPERADMIN")))
+                .orElseThrow(() -> NotFoundException.forUserWithEmail(username));
     }
+
 
     private UserDetails buildUserDetails(User user, String role) {
         String email;
         String password;
 
-        if (user instanceof Technician technician) {
-            email = technician.getEmail();
-            password = technician.getPassword();
-        } else if (user instanceof Administrator administrator) {
-            email = administrator.getEmail();
-            password = administrator.getPassword();
-        } else {
-            throw new IllegalArgumentException("Unsupported user type");
+        switch (user) {
+            case Technician technician -> {
+                email = technician.getEmail();
+                password = technician.getPassword();
+            }
+            case Administrator administrator -> {
+                email = administrator.getEmail();
+                password = administrator.getPassword();
+            }
+            case SuperAdmin superadmin -> {
+                email = superadmin.getEmail();
+                password = superadmin.getPassword();
+            }
+            case null, default -> throw new IllegalArgumentException("Unsupported user type");
         }
         return new
 
