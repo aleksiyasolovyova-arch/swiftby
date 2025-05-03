@@ -39,7 +39,7 @@ deploy-job:
     # Copy project files to VM (adjust path as needed)
     - rsync -az --exclude=.git --exclude=build --delete -e "ssh -p $SSH_PORT" . $VM_USER@$VM_IP:~/app/
     # Optionally run deployment script on VM
-    - ssh -p $SSH_PORT $VM_USER@$VM_IP "cd ~/app && bash scripts/deploy.sh"
+    - ssh -p $SSH_PORT $VM_USER@$VM_IP "cd ~/biketrust && bash scripts/deploy.sh"
   only:
     - main
 
@@ -53,7 +53,7 @@ destroy-job:
     - chmod 600 ~/.ssh/id_rsa
     - ssh-keyscan -p $SSH_PORT $VM_IP >> ~/.ssh/known_hosts
   script:
-    - ssh -p $SSH_PORT $VM_USER@$VM_IP "cd ~/app && bash scripts/destroy.sh"
+    - ssh -p $SSH_PORT $VM_USER@$VM_IP "cd ~/biketrust && bash scripts/destroy.sh"
   when: manual
   only:
     - main
