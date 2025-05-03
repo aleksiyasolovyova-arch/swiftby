@@ -1,97 +1,59 @@
-# This file is a template, and might need editing before it works on your project.
-# This is a sample GitLab CI/CD configuration file that should run without any modifications.
-# It demonstrates a basic 3 stage CI/CD pipeline. Instead of real tests or scripts,
-# it uses echo commands to simulate the pipeline execution.
-#
-# A pipeline is composed of independent jobs that run scripts, grouped into stages.
-# Stages run in sequential order, but jobs within stages run in parallel.
-#
-# For more information, see: https://docs.gitlab.com/ee/ci/yaml/#stages
-#
-# You can copy and paste this template into a new `.gitlab-ci.yml` file.
-# You should not add this template to an existing `.gitlab-ci.yml` file by using the `include:` keyword.
-#
-# To contribute improvements to CI/CD templates, please follow the Development guide at:
-# https://docs.gitlab.com/development/cicd/templates/
-# This specific template is located at:
-# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
-
-stages:          # List of stages for jobs, and their order of execution
+stages:
   - build
   - test
   - deploy
   - destroy
 
 variables:
-  DOCKER_REGISTRY: $CI_REGISTRY
-  DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE
-  DOCKER_IMAGE_TAG: $CI_COMMIT_SHA
-  VM_IP: "51.124.189.117"
-  VM_USER: "mj"
+  VM_IP: "51.124.189.117"      # Your VM's public IP
+  VM_USER: "mj"                # Your VM's username
   SSH_PORT: 22
 
-
-
-build-job:       # This job runs in the build stage, which runs first.
+build-job:
   stage: build
-  image: docker:20.10.24 # Latest version of docker
-  tags:
-    - dind
-  services:
-    - docker:20.10.16-dind
-  before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  script:
-    - echo "Building docker image..."
-    - docker pull $DOCKER_IMAGE_NAME:latest || true
-    - docker build --cache-from $DOCKER_IMAGE_NAME:latest --tag $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG --tag $DOCKER_IMAGE_NAME:latest .
-    - docker push $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG
-    - docker push $DOCKER_IMAGE_NAME:latest
-    - echo "docker image complete."
-
-
-
-#TESTING GO BRRRR
-unit-test-job:   # This job runs in the test stage.
-  stage: test    # It only starts when the job in the build stage completes successfully.
   image: gradle:jdk21
   script:
-    - echo "Running unit tests... This will take about 60 seconds."
+    - ./gradlew build
+
+unit-test-job:
+  stage: test
+  image: gradle:jdk21
+  script:
     - ./gradlew test
   artifacts:
     when: always
     reports:
       junit: build/test-results/test/*.xml
 
-#OH NOOO LA SECURITYYY
-
-
-#DEPLOYINI PROGRAMINI
-deploy-job:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  environment: 
-    name: development
-    url: https://swiftby.be
-  image: almalinux:latest
+deploy-job:
+  stage: deploy
+  image: alpine:latest
   before_script:
-    - dnf install -y openssh bash
-    - echo "testing"
+    - apk add --no-cache openssh bash rsync
+    # Setup SSH key from GitLab CI/CD variable
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -p $SSH_PORT $VM_IP >> ~/.ssh/known_hosts
   script:
-    - echo "Deploying application..."
-    - bash scripts/deploy.sh
-    - echo "Application successfully deployed."
+    # Copy project files to VM (adjust path as needed)
+    - rsync -az --exclude=.git --exclude=build --delete -e "ssh -p $SSH_PORT" . $VM_USER@$VM_IP:~/app/
+    # Optionally run deployment script on VM
+    - ssh -p $SSH_PORT $VM_USER@$VM_IP "cd ~/app && bash scripts/deploy.sh"
   only:
     - main
 
-# DESTROY IT ALLL
 destroy-job:
   stage: destroy
   image: alpine:latest
   before_script:
-    - apk add --no-cache bash openssh
+    - apk add --no-cache openssh bash
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -p $SSH_PORT $VM_IP >> ~/.ssh/known_hosts
   script:
-    - echo "Destroying deployment..."
-    - bash scripts/destroy.sh
+    - ssh -p $SSH_PORT $VM_USER@$VM_IP "cd ~/app && bash scripts/destroy.sh"
   when: manual
   only:
     - main
