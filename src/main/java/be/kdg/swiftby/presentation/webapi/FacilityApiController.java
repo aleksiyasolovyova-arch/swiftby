@@ -218,6 +218,12 @@ public class FacilityApiController {
                     administratorId, facilityId);
             return ResponseEntity.ok(admin);
     }
+    // TODO: MOVE TO A TECHNICIAN CONTROLLER SINCE IT'S NOT FACILITY SPECIFIC
+    @DeleteMapping("/technicians/{technicianId}")
+    public ResponseEntity<Void> deleteTechnician(@PathVariable Long technicianId) {
+        technicianService.remove(technicianId);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }

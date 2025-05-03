@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Technician Management</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css"> <!-- uses shared glowing/glass styles -->
+    <script src="/js/technician-management.js" defer></script>
+</head>
+<body class="d-flex flex-column min-vh-100">
+<header th:insert="~{fragments/header :: header('Technicians')}"></header>
+<input type="hidden" id="facilityId" th:value="${facility.id}" />
+
+<div class="container flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+    <h1 class="title-glow my-4 text-center">Technician Management</h1>
+
+    <div class="row w-100 justify-content-center g-5">
+        <div class="container-fluid px-4">
+            <h2 class="text-accent text-center m-4">Find Technician</h2>
+            <input id="searchInput" type="text" class="form-control fancy-input mb-4 mx-auto" placeholder="Search by email..." style="max-width: 400px;">
+        </div>
+            <div class="container-fluid px-4">
+            <div class="technician-section glassmorphism p-4">
+                <div id="technicianList" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="editTechnicianModal" tabindex="-1" aria-labelledby="editModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content glassmorphism">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Edit Technician</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="editTechnicianForm">
+                        <div class="modal-body">
+                            <input type="hidden" id="editTechnicianId">
+                            <div class="mb-3">
+                                <label for="editEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control fancy-input" id="editEmail" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editFirstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control fancy-input" id="editFirstName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editLastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control fancy-input" id="editLastName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editPhoneNumber" class="form-label">Phone</label>
+                                <input type="text" class="form-control fancy-input" id="editPhoneNumber" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn glowing-button w-100">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:insert="~{fragments/footer :: footer}" class="mt-5"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
