@@ -1,6 +1,7 @@
 package be.kdg.swiftby.presentation.webapi;
 
 import be.kdg.swiftby.domain.bike.Bike;
+import be.kdg.swiftby.domain.report.TestBenchData;
 import be.kdg.swiftby.domain.testEnv.BikeOwner;
 import be.kdg.swiftby.presentation.webapi.dto.request.StartTestRequestDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.TestResponseDto;
@@ -9,11 +10,13 @@ import be.kdg.swiftby.service.dto.api.dto.TestDto;
 import be.kdg.swiftby.service.intf.BikeOwnerService;
 import be.kdg.swiftby.service.intf.BikeService;
 import be.kdg.swiftby.service.intf.TestBenchApiService;
+import be.kdg.swiftby.service.intf.TestBenchService;
 import be.kdg.swiftby.websocket.TestWebSocketHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,6 +24,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TestBenchApiController {
     private final TestBenchApiService testService;
+    private final TestBenchService testBenchService;
     private final BikeOwnerService bikeOwnerService;
     private final BikeService bikeService;
     private final TestWebSocketHandler testWebSocketHandler;
@@ -75,4 +79,8 @@ public class TestBenchApiController {
                 test.engineTorque()
         );
     }
+
+
+
+
 }

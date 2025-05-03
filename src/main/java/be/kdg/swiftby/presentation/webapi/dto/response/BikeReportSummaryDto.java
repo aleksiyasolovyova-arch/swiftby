@@ -32,4 +32,5 @@ public record BikeReportSummaryDto(
         double power,
         String technicianComment,
         List<Long> reportIds
+
 ) {}

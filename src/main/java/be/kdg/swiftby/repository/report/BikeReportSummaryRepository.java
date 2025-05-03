@@ -1,5 +1,6 @@
 package be.kdg.swiftby.repository.report;
 
+import be.kdg.swiftby.domain.report.BikeReport;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -33,6 +34,12 @@ public interface BikeReportSummaryRepository extends JpaRepository<BikeReportSum
     List<BikeReportSummary> findAllByOrderByReportTimeDesc();
     @Query("SELECT s FROM BikeReportSummary s JOIN FETCH s.bike WHERE s.id = :id")
     Optional<BikeReportSummary> findByIdWithBike(@Param("id") Long id);
+
+
+    @Query("SELECT s FROM BikeReportSummary s LEFT JOIN FETCH s.reports WHERE s.id = :id")
+    Optional<BikeReportSummary> findByIdWithReports(@Param("id") Long id);
+
+
 
 
 

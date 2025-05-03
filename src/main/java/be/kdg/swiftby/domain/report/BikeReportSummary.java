@@ -56,6 +56,7 @@ public class BikeReportSummary {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "summary_id")
     private List<BikeReport> reports;
+
 //    private long reportCount;
 //
 //    private double avgBatteryCurrent;

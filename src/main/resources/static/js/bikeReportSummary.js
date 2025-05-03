@@ -44,6 +44,56 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("power").textContent = `${(data.power ?? 0).toFixed(2)} W`;
             document.getElementById("technicianComment").textContent = data.technicianComment || "No comments";
 
+            // Fill Visual Inspection table
+            if (data.visualInspection) {
+                const tableBody = document.getElementById("visualInspectionTableBody");
+                tableBody.innerHTML = "";
+                data.visualInspection.forEach(item => {
+                    const row = document.createElement("tr");
+                    const partCell = document.createElement("td");
+                    partCell.textContent = item.part || "Unknown Part";
+                    const conditionCell = document.createElement("td");
+                    conditionCell.textContent = item.condition || "N/A";
+                    row.appendChild(partCell);
+                    row.appendChild(conditionCell);
+                    tableBody.appendChild(row);
+                });
+            }
+
+
+            // Fill Functional Performance table
+            if (data.functionalPerformance) {
+                const tableBody = document.getElementById("functionalPerformanceTableBody");
+                tableBody.innerHTML = "";
+                data.functionalPerformance.forEach(item => {
+                    const row = document.createElement("tr");
+                    const partCell = document.createElement("td");
+                    partCell.textContent = item.part || "Unknown Part";
+                    const statusCell = document.createElement("td");
+                    statusCell.textContent = item.status || "N/A";
+                    row.appendChild(partCell);
+                    row.appendChild(statusCell);
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // Fill Bearing Health table
+            if (data.bearingHealth) {
+                const tableBody = document.getElementById("bearingHealthTableBody");
+                tableBody.innerHTML = "";
+                data.bearingHealth.forEach(item => {
+                    const row = document.createElement("tr");
+                    const componentCell = document.createElement("td");
+                    componentCell.textContent = item.component || "Unknown Component";
+                    const conditionCell = document.createElement("td");
+                    conditionCell.textContent = item.condition || "N/A";
+                    row.appendChild(componentCell);
+                    row.appendChild(conditionCell);
+                    tableBody.appendChild(row);
+                });
+            }
+
+
             fetchBikeReports(summaryId);
             generateQRCode(summaryId);
             const pdfBtn = document.getElementById("downloadPDF");

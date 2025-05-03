@@ -1,8 +1,11 @@
 package be.kdg.swiftby.presentation.webapi;
 
+import be.kdg.swiftby.domain.report.BikeReport;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.presentation.webapi.dto.BikeReportSummaryApiMapper;
+import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportApiResponseDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportSummaryDto;
+import be.kdg.swiftby.service.dto.BikeReportChartDto;
 import be.kdg.swiftby.service.intf.BikeReportSummaryPdfService;
 import be.kdg.swiftby.service.intf.BikeReportSummaryService;
 import lombok.RequiredArgsConstructor;
@@ -71,7 +74,20 @@ public class BikeReportSummaryApiController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=BikeReport_" + id + ".pdf")
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdfBytes);
+
+
+
     }
+
+    @GetMapping("/{summaryId}/chart-data")
+    public ResponseEntity<List<BikeReportChartDto>> getChartData(@PathVariable Long summaryId) {
+        return ResponseEntity.ok(bikeReportSummaryService.getChartDataForSummary(summaryId));
+    }
+
+
+
+
+
 
 
 }
