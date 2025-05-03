@@ -23,7 +23,7 @@ unit-test-job:
   artifacts:
     when: always
     reports:
-      junit: build/test-results/test/*.xml
+      junit: builds/test-results/test/*.xml
 
 deploy-job:
   stage: deploy
@@ -57,3 +57,21 @@ destroy-job:
   when: manual
   only:
     - main
+
+smoke-test-job:
+  stage: deploy
+  image: curlimages/curl:latest
+  script:
+    - |
+      echo "Running smoke test..."
+      STATUS=$(curl -k -s -o /dev/null -w "%{http_code}" https://swiftby.be)
+      if [ "$STATUS" -eq 200 ]; then
+        echo "Smoke test passed: App is up!"
+      else
+        echo "Smoke test failed: App returned HTTP $STATUS"
+        exit 1
+      fi
+  needs: ["deploy-job"]
+  only:
+    - main
+  
