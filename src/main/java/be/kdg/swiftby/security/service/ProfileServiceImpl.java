@@ -1,10 +1,13 @@
 package be.kdg.swiftby.security.service;
 
 import be.kdg.swiftby.domain.exception.AlreadyExistsException;
+import be.kdg.swiftby.domain.testEnv.Administrator;
 import be.kdg.swiftby.domain.testEnv.Technician;
 import be.kdg.swiftby.domain.testEnv.User;
+import be.kdg.swiftby.repository.testEnvironment.AdministratorRepository;
 import be.kdg.swiftby.security.ProfileDto;
 import be.kdg.swiftby.repository.testEnvironment.TechnicianRepository;
+import be.kdg.swiftby.service.intf.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,26 +15,42 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProfileServiceImpl implements ProfileServiceInt {
     private final TechnicianRepository technicianRepository;
+    private final AdministratorRepository administratorRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ProfileServiceImpl(TechnicianRepository technicianRepository, PasswordEncoder passwordEncoder) {
+    public ProfileServiceImpl(TechnicianRepository technicianRepository, AdministratorRepository administratorRepository, PasswordEncoder passwordEncoder) {
         this.technicianRepository = technicianRepository;
+        this.administratorRepository = administratorRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
+    //Should i make it a separate check for the email?
     @Override
-    public User registerNewUserAccount(ProfileDto technician) throws AlreadyExistsException {
-        if (technicianRepository.existsByEmail(technician.getUsername())) {
-            throw AlreadyExistsException.forUserWithEmail("There is an account with that email: " + technician.getUsername());
-        }
-        Technician user = new Technician();
-        user.setFirstName(technician.getFirstName());
-        user.setLastName(technician.getLastName());
-        user.setPassword(passwordEncoder.encode(technician.getPassword()));
-        user.setEmail(technician.getUsername());
+    public User registerNewUserAccount(ProfileDto profile) throws AlreadyExistsException {
+        String email = profile.getUsername();
+        String role = profile.getRole();
 
-        return technicianRepository.save(user);
+        boolean emailExists = technicianRepository.existsByEmail(email) || administratorRepository.existsByEmail(email);
+        if (emailExists) {
+            throw AlreadyExistsException.forUserWithEmail("There is an account with that email: " + email);
+        }
+        if ("TECHNICIAN".equalsIgnoreCase(role)) {
+            Technician technician = new Technician();
+            technician.setFirstName(profile.getFirstName());
+            technician.setLastName(profile.getLastName());
+            technician.setPassword(passwordEncoder.encode(profile.getPassword()));
+            technician.setEmail(profile.getUsername());
+            return technicianRepository.save(technician);
+        } else if ("ADMINISTRATOR".equalsIgnoreCase(role)) {
+            Administrator admin = new Administrator();
+            admin.setFirstName(profile.getFirstName());
+            admin.setLastName(profile.getLastName());
+            admin.setPassword(passwordEncoder.encode(profile.getPassword()));
+            admin.setEmail(profile.getUsername());
+            return administratorRepository.save(admin);
+        }
+        throw new IllegalArgumentException("Invalid role selected: " + role);
     }
 }
 

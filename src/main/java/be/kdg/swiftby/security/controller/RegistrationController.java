@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,23 +40,25 @@ public class RegistrationController {
     //Idk if I should be handling errors here-refactor
     @PostMapping("/registration")
     public ModelAndView registerUserAccount(@ModelAttribute("user") @Valid ProfileDto userDto,
-                                            HttpServletRequest request, Errors errors,
-                                            ModelAndView mav) {
-        if (errors.hasErrors()) {
-            for (ObjectError error : errors.getAllErrors()) {
-                System.out.println("Error: " + error.getDefaultMessage());
-            }
+                                            BindingResult result,
+                                            HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
+
+        if (result.hasErrors()) {
             mav.setViewName("registration");
             return mav;
         }
 
         try {
             User registered = profileService.registerNewUserAccount(userDto);
-        } catch (AlreadyExistsException uaEX) {
-            mav.addObject("message", "An account for that username/email already exists.");
+        } catch (AlreadyExistsException ex) {
+            result.rejectValue("username", "user.exists", "An account for that email already exists.");
+            mav.setViewName("registration");
             return mav;
         }
 
-        return new ModelAndView("successRegister", "user", userDto);
+        mav.setViewName("successRegister");
+        mav.addObject("user", userDto);
+        return mav;
     }
 }

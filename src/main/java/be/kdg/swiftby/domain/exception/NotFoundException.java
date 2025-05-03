@@ -74,5 +74,8 @@ public class NotFoundException extends RuntimeException {
     public static NotFoundException forAdminEmail(String email) {
         return new NotFoundException(String.format("Admin not found with email %s", email));
     }
+    public static NotFoundException forUserWithEmail(String email) {
+        return new NotFoundException(String.format("User not found with email %s", email));
+    }
 
 }

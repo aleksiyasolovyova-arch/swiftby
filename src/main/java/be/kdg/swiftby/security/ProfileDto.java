@@ -36,6 +36,6 @@ public class ProfileDto {
     @NonNull
     @NotEmpty
     private String phoneNumber;
-    private Long facilityId;
+    private String role;
 
 }

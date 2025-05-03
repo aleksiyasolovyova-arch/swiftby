@@ -1,6 +1,11 @@
 package be.kdg.swiftby.security.service;
 
 import be.kdg.swiftby.domain.exception.AlreadyExistsException;
+import be.kdg.swiftby.domain.exception.NotFoundException;
+import be.kdg.swiftby.domain.testEnv.Administrator;
+import be.kdg.swiftby.domain.testEnv.Technician;
+import be.kdg.swiftby.domain.testEnv.User;
+import be.kdg.swiftby.repository.testEnvironment.AdministratorRepository;
 import be.kdg.swiftby.repository.testEnvironment.TechnicianRepository;
 import be.kdg.swiftby.security.CustomUserDetails;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -12,28 +17,48 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
-   //change eventually so it's not hardcoded technician
-//    private PasswordEncoder encoder;
+    private final TechnicianRepository technicianRepository;
+    private final AdministratorRepository administratorRepository;
 
-     private final TechnicianRepository technicianRepository;
-     public CustomUserDetailService(TechnicianRepository technicianRepository) {
-         this.technicianRepository = technicianRepository;
-     }
+    public CustomUserDetailService(TechnicianRepository technicianRepository, AdministratorRepository administratorRepository) {
+        this.technicianRepository = technicianRepository;
+        this.administratorRepository = administratorRepository;
+    }
 
 
-     @Override
+    @Override
     public UserDetails loadUserByUsername(final String username) throws AlreadyExistsException {
-         return technicianRepository
-                 .findByEmail(username)
-                 .map(technician -> new CustomUserDetails(
-                         technician.getEmail(),
-                         technician.getPassword(),
-                         true,
-                         true,
-                         true,
-                         true,
-                         AuthorityUtils.createAuthorityList("ROLE_" + technician.getClass().getSimpleName().toUpperCase())
-                 ))
-                 .orElseThrow(() -> AlreadyExistsException.forUserWithEmail(username));
-     }
+        return technicianRepository.findByEmail(username)
+                .map(user -> buildUserDetails(user, "TECHNICIAN"))
+                .orElseGet(() -> administratorRepository.findAdministratorByEmail(username)
+                        .map(user -> buildUserDetails(user, "ADMIN"))
+                .orElseThrow(() -> NotFoundException.forUserWithEmail(username)));
+    }
+
+    private UserDetails buildUserDetails(User user, String role) {
+        String email;
+        String password;
+
+        if (user instanceof Technician technician) {
+            email = technician.getEmail();
+            password = technician.getPassword();
+        } else if (user instanceof Administrator administrator) {
+            email = administrator.getEmail();
+            password = administrator.getPassword();
+        } else {
+            throw new IllegalArgumentException("Unsupported user type");
+        }
+        return new
+
+                CustomUserDetails(
+                email,
+                password,
+                true,
+                true,
+                true,
+                true,
+                AuthorityUtils.createAuthorityList("ROLE_"+role)
+        );
+    }
+
 }
