@@ -43,29 +43,11 @@ public class CustomUserDetailService implements UserDetailsService {
 
 
     private UserDetails buildUserDetails(User user, String role) {
-        String email;
-        String password;
-
-        switch (user) {
-            case Technician technician -> {
-                email = technician.getEmail();
-                password = technician.getPassword();
-            }
-            case Administrator administrator -> {
-                email = administrator.getEmail();
-                password = administrator.getPassword();
-            }
-            case SuperAdmin superadmin -> {
-                email = superadmin.getEmail();
-                password = superadmin.getPassword();
-            }
-            case null, default -> throw new IllegalArgumentException("Unsupported user type");
-        }
         return new
 
                 CustomUserDetails(
-                email,
-                password,
+                user.getEmail(),
+                user.getPassword(),
                 true,
                 true,
                 true,
