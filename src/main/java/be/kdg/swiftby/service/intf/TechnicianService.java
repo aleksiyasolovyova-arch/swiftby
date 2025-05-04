@@ -3,6 +3,7 @@ package be.kdg.swiftby.service.intf;
 import be.kdg.swiftby.domain.testEnv.*;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TechnicianService {
 
@@ -14,7 +15,7 @@ public interface TechnicianService {
                       String firstName,
                       String lastName,
                       String phoneNumber);
-
+    Technician getByEmail(String email);
     void remove(Long id);
     List<Technician> getAllByFacilityId(Long id);
 

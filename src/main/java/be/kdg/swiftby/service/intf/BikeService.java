@@ -14,4 +14,6 @@ public interface BikeService {
     Bike save(BikeDto bikeDto);
     List<Bike> findByMotorEngineType(String engineType);
     void remove(Long id);
+    List<Bike> getAllByFacilityId(Long facilityId);
+
 }

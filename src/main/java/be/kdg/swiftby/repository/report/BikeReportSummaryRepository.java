@@ -33,6 +33,8 @@ public interface BikeReportSummaryRepository extends JpaRepository<BikeReportSum
     List<BikeReportSummary> findAllByOrderByReportTimeDesc();
     @Query("SELECT s FROM BikeReportSummary s JOIN FETCH s.bike WHERE s.id = :id")
     Optional<BikeReportSummary> findByIdWithBike(@Param("id") Long id);
+    List<BikeReportSummary> findByBikeIdOrderByReportTimeDesc(Long bikeId);
+
 
 
 
