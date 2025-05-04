@@ -42,10 +42,10 @@ INSERT INTO motor (max_power, nominal_power, torque, engine_type, gear_type) VAL
                                                                                  (500, 250, 100, 'Brushless', 'Automatic'),
                                                                                  (600, 300, 120, 'Brushed', 'Manual');
 
-INSERT INTO bike (battery_capacity, bike_size, max_support, powertrain, motor_id, brand, chassis_number, type, bike_owner_id)
+INSERT INTO bike (battery_capacity, bike_size, max_support, powertrain, motor_id, brand, chassis_number, type)
 VALUES
-    (5000, 2, 250, 1, 1, 'Trek', 'CHSN12345', 'Mountain', 1),  -- Owned by Alice
-    (6000, 3, 300, 0, 2, 'Giant', 'CHSN67890', 'Road', 2);     -- Owned by Bob
+    (5000, 2, 250, 1, 1, 'Trek', 'CHSN12345', 'Mountain'),  -- Owned by Alice
+    (6000, 3, 300, 0, 2, 'Giant', 'CHSN67890', 'Road');     -- Owned by Bob
 
 
 INSERT INTO motor_data (engine, engine_power) VALUES

@@ -20,12 +20,12 @@ public interface BikeReportRepository extends JpaRepository<BikeReport,Long> {
     @Query("""
                 SELECT new be.kdg.swiftby.service.dto.BikeReportAggregationDto(
                     r.bike.id,
-                    MIN(r.reportTime), 
+                    MIN(r.reportTime),
                     AVG(r.mileage),
                     AVG(r.assistanceLevel),
                     AVG(ax.horizontalInclination),
                     AVG(ax.verticalInclination),
-                    AVG(bat.current),
+                    AVG(bat.batteryCurrent),
                     AVG(bat.voltage),
                     AVG(bat.capacity),
                     AVG(bat.temperature),
