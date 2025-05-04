@@ -43,6 +43,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(antMatcher("/api/**")).permitAll()
                         .requestMatchers(antMatcher("/ws/**")).permitAll()
+                        // anyone with a token should be able to set up their password
+                        .requestMatchers(antMatcher("/set-password/**")).permitAll()
                         .requestMatchers(antMatcher("/technician/**")).hasAnyRole("TECHNICIAN", "ADMINISTRATOR", "SUPERADMIN")
                         .requestMatchers(antMatcher("/sysadmin/unapproved-employees")).hasRole("SUPERADMIN")
                         .requestMatchers(

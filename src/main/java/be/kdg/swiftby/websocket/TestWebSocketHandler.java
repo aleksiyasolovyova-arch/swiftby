@@ -103,6 +103,7 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
 
             BikeReportSummary summary = bikeReportService.saveReportSummaryFromSavedReports(savedReportIds);
 
+
             return summary;
         } catch (Exception e) {
             e.printStackTrace();
