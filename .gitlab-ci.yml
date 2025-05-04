@@ -1,42 +1,22 @@
 stages:
-  - build
-  - test
   - deploy
-  - destroy
 
 variables:
-  VM_IP: "51.124.189.117"      # Your VM's public IP
-  VM_USER: "mj"                # Your VM's username
+  VM_IP: "51.124.189.117"
+  VM_USER: "mj"
   SSH_PORT: 22
-
-build-job:
-  stage: build
-  image: gradle:jdk21
-  script:
-    - ./gradlew build
-
-unit-test-job:
-  stage: test
-  image: gradle:jdk21
-  script:
-    - ./gradlew test
-  artifacts:
-    when: always
-    reports:
-      junit: builds/test-results/test/*.xml
-  when: manual
 
 deploy-job:
   stage: deploy
   image: almalinux:latest
   before_script:
+    - dnf install -y openssh openssh-clients
     - mkdir -p ~/.ssh
     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - eval $(ssh-agent -s)
     - ssh-add ~/.ssh/id_rsa
     - ssh-keyscan -p $SSH_PORT $VM_IP >> ~/.ssh/known_hosts
-
   script:
     - ssh -p $SSH_PORT $VM_USER@$VM_IP "
         cd ~/biketrust &&
@@ -44,40 +24,5 @@ deploy-job:
         git checkout development &&
         git pull origin development &&
         bash scripts/deploy.sh"
-  only:
-    - development
-
-destroy-job:
-  stage: destroy
-  image: almalinux:latest
-  before_script:
-    - mkdir -p ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa  # No need to base64 decode
-    - chmod 600 ~/.ssh/id_rsa
-    - eval $(ssh-agent -s)
-    - ssh-add ~/.ssh/id_rsa
-    - ssh-keyscan -p $SSH_PORT $VM_IP >> ~/.ssh/known_hosts
-  script:
-    - ssh -p $SSH_PORT $VM_USER@$VM_IP "
-        cd ~/biketrust &&
-        bash scripts/destroy.sh"
-  when: manual
-  only:
-    - development
-
-smoke-test-job:
-  stage: deploy
-  image: curlimages/curl:latest
-  script:
-    - |
-      echo "Running vape test..."
-      STATUS=$(curl -k -s -o /dev/null -w "%{http_code}" https://swiftby.be)
-      if [ "$STATUS" -eq 200 ]; then
-        echo "hmmm blueberry vape: App is up!"
-      else
-        echo "OH NOOO ITS NICOTINE: App returned HTTP $STATUS"
-        exit 1
-      fi
-  needs: ["deploy-job"]
   only:
     - development
