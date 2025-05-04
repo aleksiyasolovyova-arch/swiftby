@@ -41,4 +41,6 @@ public class BikeReportApiController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(reportDtos);
     }
+
+
 }

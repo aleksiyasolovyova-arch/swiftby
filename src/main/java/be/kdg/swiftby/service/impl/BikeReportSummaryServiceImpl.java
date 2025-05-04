@@ -2,6 +2,7 @@ package be.kdg.swiftby.service.impl;
 
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.repository.report.BikeReportSummaryRepository;
+import be.kdg.swiftby.service.dto.BikeReportChartDto;
 import be.kdg.swiftby.service.intf.BikeReportSummaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,5 +35,25 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
     public BikeReportSummary getSummaryByBikeAndDate(Long bikeId, LocalDate reportDate) {
         return bikeReportSummaryRepository.getBikeReportSummary(bikeId, reportDate);
     }
+
+
+    @Override
+    public List<BikeReportChartDto> getChartDataForSummary(Long summaryId) {
+        return bikeReportSummaryRepository.findByIdWithReports(summaryId)
+                .orElseThrow(() -> new RuntimeException("Summary not found"))
+                .getReports()
+                .stream()
+                .map(report -> new BikeReportChartDto(
+                        report.getReportTime(),
+                        report.getBatteryData() != null ? report.getBatteryData().getVoltage() : 0.0,
+                        report.getBatteryData() != null ? report.getBatteryData().getCurrent() : 0.0,
+                        report.getMotorData() != null ? report.getMotorData().getEnginePower() : 0.0,
+                        report.getBatteryData() != null ? report.getBatteryData().getTemperature() : 0.0
+                ))
+                .toList();
+    }
+
+
+
 
 }

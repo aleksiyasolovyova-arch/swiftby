@@ -22,10 +22,17 @@ document.addEventListener("DOMContentLoaded", async function () {
                 } else if (data.status === "COMPLETED" && data.summaryId) {
                     console.log(`Test completed! Summary ID: ${data.summaryId}`);
 
+
+
                     testStatus.innerHTML = `Test completed! Summary ID: ${data.summaryId}`;
 
                     const reportUrl = `/report-summary?id=${data.summaryId}`;
-                    console.log(`Summary Report Available at: ${reportUrl}`);
+
+                    const functionalCheckUrl = `/functional-check?testId=${data.testId}&summaryId=${data.summaryId}`;
+                    window.location.href = functionalCheckUrl;
+
+                    // const reportUrl = `/report-summary?id=${data.summaryId}`;
+                    // console.log(`Summary Report Available at: ${reportUrl}`);
 
                     if (!document.getElementById("summaryReportButton")) {
                         console.log("➕ Adding summary report button to DOM...");
@@ -103,3 +110,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     });
 });
+
+
+// http://localhost:8080/startTest/test-setup?bikeId=1

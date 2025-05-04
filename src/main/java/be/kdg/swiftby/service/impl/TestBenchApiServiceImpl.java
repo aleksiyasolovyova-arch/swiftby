@@ -1,5 +1,6 @@
 package be.kdg.swiftby.service.impl;
 
+import be.kdg.swiftby.domain.report.TestBenchData;
 import be.kdg.swiftby.service.TestType;
 import be.kdg.swiftby.service.dto.api.dto.StartTestDto;
 import be.kdg.swiftby.service.dto.api.dto.TestDto;
@@ -125,4 +126,6 @@ public class TestBenchApiServiceImpl implements TestBenchApiService {
             System.err.println("error saving report: " + e.getMessage());
         }
     }
+
+
 }
