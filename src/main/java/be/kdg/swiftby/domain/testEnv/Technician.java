@@ -16,6 +16,7 @@ public class Technician extends Employee{
     private Facility facility;
 
     public Technician(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber) {
-        super();
+        super(email, password, firstName, lastName, phoneNumber);
+        this.facility = facility;
     }
 }

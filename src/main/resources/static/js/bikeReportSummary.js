@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    // Fetch Report Summary
     fetch(`/api/report-summaries/${summaryId}`)
         .then(response => response.json())
         .then(data => {
@@ -116,7 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Failed to load report summary. Please try again later.");
         });
 
-    // Fetch Reports for this Summary ID
     function fetchBikeReports(summaryId) {
         const tableHead = document.getElementById("summaryTableHead");
         const tableBody = document.getElementById("summaryTableBody");
@@ -133,7 +131,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const keys = Object.keys(flattenReport(reports[0]));
 
-                // Table headers
                 const headerRow = document.createElement("tr");
                 keys.forEach(key => {
                     const th = document.createElement("th");
@@ -142,7 +139,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
                 tableHead.appendChild(headerRow);
 
-                // Table rows
                 reports.forEach(report => {
                     const flat = flattenReport(report);
                     const row = document.createElement("tr");

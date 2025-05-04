@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        try {
             const response = await fetch(`/api/bikeowners/search?email=${query}`);
             if (response.ok) {
                 const users = await response.json();
@@ -27,9 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 suggestionsContainer.innerHTML = "<p class='no-results'>No users found</p>";
                 suggestionsContainer.style.display = "block";
             }
-        } catch (error) {
-            console.error("Error fetching users:", error);
-        }
     }
 
     function showSuggestions(users) {

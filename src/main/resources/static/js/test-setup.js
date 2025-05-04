@@ -5,8 +5,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     const testStatus = document.getElementById("testStatus");
     let socket;
     function connectWebSocket() {
-        console.log("🔌 Attempting to connect WebSocket...");
-
         socket = new WebSocket("ws://localhost:8080/ws/test-status");
 
         socket.onopen = function () {
@@ -88,14 +86,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             bikeId: parseInt(bikeId, 10),
             testType: document.getElementById("testType").value,
             testBenchNumber: document.getElementById("testBenchNumber").value,
-            // batteryCapacity: parseInt(document.getElementById("batteryCapacity").value, 10) || 0,
-            // maxSupport: parseInt(document.getElementById("maxSupport").value, 10) || 0,
-            // maxPower: parseInt(document.getElementById("maxPower").value, 10) || 0,
-            // nominalPower: parseInt(document.getElementById("nominalPower").value, 10) || 0,
-            // torque: parseInt(document.getElementById("torque").value, 10) || 0
         };
 
-        console.log("Test Parameters:", testParams);
         try {
             const response = await fetch("/api/test/start", {
                 method: "POST",

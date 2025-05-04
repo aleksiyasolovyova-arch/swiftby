@@ -1,7 +1,9 @@
 package be.kdg.swiftby.service.impl;
 
 import be.kdg.swiftby.domain.bike.Bike;
+import be.kdg.swiftby.domain.bike.BikeOwnership;
 import be.kdg.swiftby.domain.bike.Motor;
+import be.kdg.swiftby.repository.bike.BikeOwnershipRepository;
 import be.kdg.swiftby.repository.bike.BikeRepository;
 import be.kdg.swiftby.repository.bike.MotorRepository;
 import be.kdg.swiftby.service.dto.BikeDto;
@@ -20,14 +22,16 @@ public class BikeServiceImpl implements BikeService {
     private final BikeMapper bikeMapper;
     private final MotorRepository motorRepository;
     private final MotorMapper motorMapper;
+    private final BikeOwnershipRepository bikeOwnershipRepository;
 
 
 
-    public BikeServiceImpl(BikeRepository bikeRepository, BikeMapper bikeMapper, MotorRepository motorRepository, MotorMapper motorMapper) {
+    public BikeServiceImpl(BikeRepository bikeRepository, BikeMapper bikeMapper, MotorRepository motorRepository, MotorMapper motorMapper, BikeOwnershipRepository bikeOwnershipRepository) {
         this.bikeRepository = bikeRepository;
         this.bikeMapper = bikeMapper;
         this.motorRepository = motorRepository;
         this.motorMapper = motorMapper;
+        this.bikeOwnershipRepository = bikeOwnershipRepository;
     }
 
 
@@ -44,15 +48,20 @@ public class BikeServiceImpl implements BikeService {
 
     @Override
     public Bike getByIdWithOwner(Long id) {
-        return bikeRepository.findByIdWithOwner(id)
+        return bikeRepository.findByIdWithOwnerships(id)
                 .orElseThrow(() -> new RuntimeException("Bike not found with id " + id));
     }
 
 
     @Override
-    public List<Bike> getByBikeOwnerId(Long id) {
-        return bikeRepository.findByBikeOwner_Id(id);
+    public List<Bike> getByBikeOwnerId(Long bikeOwnerId) {
+        List<BikeOwnership> ownerships = bikeOwnershipRepository.findByOwnerId(bikeOwnerId);
+        return ownerships.stream()
+                .map(BikeOwnership::getBike)
+                .toList();
     }
+
+
 
     @Override
     public Bike save(BikeDto bikeDto) {
@@ -90,4 +99,9 @@ public class BikeServiceImpl implements BikeService {
             throw new RuntimeException("Bike not found with id " + id);
         }
     }
+    @Override
+    public List<Bike> getAllByFacilityId(Long facilityId) {
+        return bikeRepository.findAllByFacilityId(facilityId);
+    }
+
 }

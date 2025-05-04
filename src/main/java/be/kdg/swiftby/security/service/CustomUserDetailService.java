@@ -1,6 +1,14 @@
 package be.kdg.swiftby.security.service;
 
 import be.kdg.swiftby.domain.exception.AlreadyExistsException;
+import be.kdg.swiftby.domain.exception.NotFoundException;
+import be.kdg.swiftby.domain.testEnv.Administrator;
+import be.kdg.swiftby.domain.testEnv.SuperAdmin;
+import be.kdg.swiftby.domain.testEnv.Technician;
+import be.kdg.swiftby.domain.testEnv.User;
+import be.kdg.swiftby.repository.testEnvironment.AdministratorRepository;
+import be.kdg.swiftby.repository.testEnvironment.BikeOwnerRepository;
+import be.kdg.swiftby.repository.testEnvironment.SuperAdminRepository;
 import be.kdg.swiftby.repository.testEnvironment.TechnicianRepository;
 import be.kdg.swiftby.security.CustomUserDetails;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -12,28 +20,44 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
-   //change eventually so it's not hardcoded technician
-//    private PasswordEncoder encoder;
+    private final SuperAdminRepository superAdminRepository;
+    private final TechnicianRepository technicianRepository;
+    private final AdministratorRepository administratorRepository;
+    private final BikeOwnerRepository bikeOwnerRepository;
 
-     private final TechnicianRepository technicianRepository;
-     public CustomUserDetailService(TechnicianRepository technicianRepository) {
-         this.technicianRepository = technicianRepository;
-     }
+    public CustomUserDetailService(SuperAdminRepository superAdminRepository, TechnicianRepository technicianRepository, AdministratorRepository administratorRepository, BikeOwnerRepository bikeOwnerRepository) {
+        this.superAdminRepository = superAdminRepository;
+        this.technicianRepository = technicianRepository;
+        this.administratorRepository = administratorRepository;
+        this.bikeOwnerRepository = bikeOwnerRepository;
+    }
 
 
-     @Override
-    public UserDetails loadUserByUsername(final String username) throws AlreadyExistsException {
-         return technicianRepository
-                 .findByEmail(username)
-                 .map(technician -> new CustomUserDetails(
-                         technician.getEmail(),
-                         technician.getPassword(),
-                         true,
-                         true,
-                         true,
-                         true,
-                         AuthorityUtils.createAuthorityList("ROLE_" + technician.getClass().getSimpleName().toUpperCase())
-                 ))
-                 .orElseThrow(() -> AlreadyExistsException.forUserWithEmail(username));
-     }
+    @Override
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+        return technicianRepository.findByEmail(username)
+                .map(user -> buildUserDetails(user, "TECHNICIAN"))
+                .or(() -> administratorRepository.findAdministratorByEmail(username)
+                        .map(user -> buildUserDetails(user, "ADMIN")))
+                .or(() -> superAdminRepository.findByEmail(username)
+                        .map(user -> buildUserDetails(user, "SUPERADMIN")))
+                .or(() -> bikeOwnerRepository.findByEmail(username)
+                        .map(user -> buildUserDetails(user, "BIKEOWNER")))
+                .orElseThrow(() -> NotFoundException.forUserWithEmail(username));
+    }
+
+
+    private UserDetails buildUserDetails(User user, String role) {
+        return new
+                CustomUserDetails(
+                user.getEmail(),
+                user.getPassword(),
+                true,
+                true,
+                true,
+                true,
+                AuthorityUtils.createAuthorityList("ROLE_"+role)
+        );
+    }
+
 }

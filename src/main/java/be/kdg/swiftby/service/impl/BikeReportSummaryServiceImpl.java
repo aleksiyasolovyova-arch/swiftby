@@ -28,7 +28,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
 
     @Override
     public List<BikeReportSummary> getSummariesByBikeId(Long bikeId) {
-        return null;
+        return bikeReportSummaryRepository.findByBikeIdOrderByReportTimeDesc(bikeId);
     }
 
     @Override

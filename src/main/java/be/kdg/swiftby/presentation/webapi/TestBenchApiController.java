@@ -33,7 +33,6 @@ public class TestBenchApiController {
     public ResponseEntity<TestResponseDto> startTest(@RequestBody StartTestRequestDto request) {
         // save the bike owner
         Bike bike = bikeService.getByIdWithOwner(request.getBikeId());
-        BikeOwner bikeOwner = bike.getBikeOwner();
         System.out.println("hohoho");
         System.out.println(request);
         int batteryCapacity = bike.getBatteryCapacity();
