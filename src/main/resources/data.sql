@@ -15,14 +15,16 @@ INSERT INTO battery_data (capacity, charge_status, current, temperature, voltage
                                                                                       (5000, TRUE, 12.5, 25.4, 48.2),
                                                                                       (6000, FALSE, 10.8, 30.0, 50.1),
                                                                                       (7000, TRUE, 11.2, 28.5, 49.5);
--- passwords, in order: password123/securepass
-INSERT INTO bike_owner (email, first_name, last_name, password, phone_number) VALUES
-                                                                                  ('alice@example.com', 'Alice', 'Doe', '$2a$12$GK/Xh4.LP7OSc/P.85CahOmR8XlzbCGghhNvFXhajvbV8dgcdGpHW', '555-1234'),
-                                                                                  ('bob@example.com', 'Bob', 'Smith', '$2a$12$NrfMkUFyBjFwTMZaKEvfEucjUPd1rRJRYkL/Sg61oY8dvjdFb.IrO', '555-5678');
 
 INSERT INTO facility (address_extra, city, country, email, name, street, street_number, zip_code) VALUES
-    ('Unit 5', 'Springfield', 'USA', 'facility@example.com', 'Test Facility', 'Main St', '123', '98765'),
-    ('Enter through garage', 'Stroempeltown', 'Belgica', 'storm.vanloon@student.kdg.be', 'StroempelRepairs', 'Stroempelstreet', '86', '2005');
+                                                                                                      ('Unit 5', 'Springfield', 'USA', 'facility@example.com', 'Test Facility', 'Main St', '123', '98765'),
+                                                                                                      ('Enter through garage', 'Stroempeltown', 'Belgica', 'storm.vanloon@student.kdg.be', 'StroempelRepairs', 'Stroempelstreet', '86', '2005');
+
+-- passwords, in order: password123/securepass
+INSERT INTO bike_owner (email, first_name, last_name, password, phone_number,facility_id) VALUES
+                                                                                  ('alice@example.com', 'Alice', 'Doe', '$2a$12$GK/Xh4.LP7OSc/P.85CahOmR8XlzbCGghhNvFXhajvbV8dgcdGpHW', '555-1234',1),
+                                                                                  ('bob@example.com', 'Bob', 'Smith', '$2a$12$NrfMkUFyBjFwTMZaKEvfEucjUPd1rRJRYkL/Sg61oY8dvjdFb.IrO', '555-5678',1);
+
 
 -- passwords, in order: p4ssword/sk44ra/Breadbreaker/helloWorld
 INSERT INTO technician (facility_id, email, first_name, last_name, password, phone_number) VALUES

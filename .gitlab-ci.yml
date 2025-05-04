@@ -23,7 +23,7 @@ unit-test-job:
   artifacts:
     when: always
     reports:
-      junit: build/test-results/test/*.xml
+      junit: builds/test-results/test/*.xml
 
 deploy-job:
   stage: deploy
@@ -39,7 +39,7 @@ deploy-job:
     # Copy project files to VM (adjust path as needed)
     - rsync -az --exclude=.git --exclude=build --delete -e "ssh -p $SSH_PORT" . $VM_USER@$VM_IP:~/app/
     # Optionally run deployment script on VM
-    - ssh -p $SSH_PORT $VM_USER@$VM_IP "cd ~/app && bash scripts/deploy.sh"
+    - ssh -p $SSH_PORT $VM_USER@$VM_IP "cd ~/biketrust && bash scripts/deploy.sh"
   only:
     - main
 
@@ -53,7 +53,25 @@ destroy-job:
     - chmod 600 ~/.ssh/id_rsa
     - ssh-keyscan -p $SSH_PORT $VM_IP >> ~/.ssh/known_hosts
   script:
-    - ssh -p $SSH_PORT $VM_USER@$VM_IP "cd ~/app && bash scripts/destroy.sh"
+    - ssh -p $SSH_PORT $VM_USER@$VM_IP "cd ~/biketrust && bash scripts/destroy.sh"
   when: manual
   only:
     - main
+
+smoke-test-job:
+  stage: deploy
+  image: curlimages/curl:latest
+  script:
+    - |
+      echo "Running smoke test..."
+      STATUS=$(curl -k -s -o /dev/null -w "%{http_code}" https://swiftby.be)
+      if [ "$STATUS" -eq 200 ]; then
+        echo "Smoke test passed: App is up!"
+      else
+        echo "Smoke test failed: App returned HTTP $STATUS"
+        exit 1
+      fi
+  needs: ["deploy-job"]
+  only:
+    - main
+  

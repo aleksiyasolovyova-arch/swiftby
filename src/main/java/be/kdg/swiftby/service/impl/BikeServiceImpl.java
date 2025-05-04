@@ -99,4 +99,9 @@ public class BikeServiceImpl implements BikeService {
             throw new RuntimeException("Bike not found with id " + id);
         }
     }
+    @Override
+    public List<Bike> getAllByFacilityId(Long facilityId) {
+        return bikeRepository.findAllByFacilityId(facilityId);
+    }
+
 }
