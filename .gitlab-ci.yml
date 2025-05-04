@@ -24,13 +24,14 @@ unit-test-job:
     when: always
     reports:
       junit: builds/test-results/test/*.xml
+  when: manual
 
 deploy-job:
   stage: deploy
   image: almalinux:latest
   before_script:
     - mkdir -p ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" | base64 --decode > ~/.ssh/id_rsa  # decode if the key is base64 encoded
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - eval $(ssh-agent -s)
     - ssh-add ~/.ssh/id_rsa
