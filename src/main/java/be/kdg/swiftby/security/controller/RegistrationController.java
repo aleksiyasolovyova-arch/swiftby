@@ -46,7 +46,7 @@ public class RegistrationController {
     @PostMapping("/registration")
     public ModelAndView registerUserAccount(@ModelAttribute("user") @Valid ProfileDto userDto,
                                             BindingResult result,
-                                            HttpServletRequest request) {
+                                            HttpServletRequest request) throws IOException, PostmarkException {
         ModelAndView mav = new ModelAndView();
 
         if (result.hasErrors()) {
@@ -64,8 +64,5 @@ public class RegistrationController {
 
         emailService.sendAccountRegistrationEmail(userDto.getUsername(), userDto.getFirstName(), "www.swiftby.be");
         return new ModelAndView("successRegister", "user", userDto);
-        mav.setViewName("successRegister");
-        mav.addObject("user", userDto);
-        return mav;
     }
 }

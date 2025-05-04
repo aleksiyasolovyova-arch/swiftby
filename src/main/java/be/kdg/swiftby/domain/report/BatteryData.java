@@ -23,7 +23,7 @@ public class BatteryData {
 
     public BatteryData(BatteryDataDto dto) {
         this.chargeStatus = dto.chargeStatus();
-        this.batteryCurrent = dto.current();
+        this.batteryCurrent = dto.batteryCurrent();
         this.voltage = dto.voltage();
         this.capacity = dto.capacity();
         this.temperature = dto.temperature();

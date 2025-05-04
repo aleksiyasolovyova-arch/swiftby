@@ -46,7 +46,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
                 .map(report -> new BikeReportChartDto(
                         report.getReportTime(),
                         report.getBatteryData() != null ? report.getBatteryData().getVoltage() : 0.0,
-                        report.getBatteryData() != null ? report.getBatteryData().getCurrent() : 0.0,
+                        report.getBatteryData() != null ? report.getBatteryData().getBatteryCurrent() : 0.0,
                         report.getMotorData() != null ? report.getMotorData().getEnginePower() : 0.0,
                         report.getBatteryData() != null ? report.getBatteryData().getTemperature() : 0.0
                 ))
