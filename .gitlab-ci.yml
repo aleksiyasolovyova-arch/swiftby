@@ -27,9 +27,9 @@ unit-test-job:
 
 deploy-job:
   stage: deploy
-  image: alpine:latest
+  image: almalinux:8  # Or the version you're using on your VM
   before_script:
-    - apk add --no-cache openssh bash
+    - dnf install -y openssh-clients  # Install the necessary dependencies for AlmaLinux
     - mkdir -p ~/.ssh
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
@@ -46,6 +46,7 @@ deploy-job:
   only:
     - development
 
+
 destroy-job:
   stage: destroy
   image: alpine:latest
@@ -61,7 +62,7 @@ destroy-job:
     - ssh -p $SSH_PORT $VM_USER@$VM_IP "
         cd ~/biketrust &&
         bash scripts/destroy.sh"
-  when: manual
+  when: always
   only:
     - development
 
@@ -81,4 +82,3 @@ smoke-test-job:
   needs: ["deploy-job"]
   only:
     - development
-  
