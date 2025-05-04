@@ -45,8 +45,14 @@ public class SecurityConfig {
                         .requestMatchers(antMatcher("/ws/**")).permitAll()
                         // anyone with a token should be able to set up their password
                         .requestMatchers(antMatcher("/set-password/**")).permitAll()
-                        .requestMatchers(antMatcher("/technician/**")).hasAnyRole("TECHNICIAN", "ADMINISTRATOR", "SUPERADMIN")
+                        //role permissions
+                        .requestMatchers(antMatcher("/technician/**"),
+                                         antMatcher("/bikes"),
+                                         antMatcher("/bike-details")).hasAnyRole("TECHNICIAN", "ADMINISTRATOR", "SUPERADMIN")
                         .requestMatchers(antMatcher("/sysadmin/unapproved-employees")).hasRole("SUPERADMIN")
+                        .requestMatchers(HttpMethod.POST, "/sysadmin/**").hasRole("SUPERADMIN")
+                        .requestMatchers(antMatcher("/startTest/**"), antMatcher("/functional-check/")).hasRole("TECHNICIAN")
+                        .requestMatchers(antMatcher("/admin/technicians/*")).hasAnyRole("ADMINISTRATOR", "SUPERADMIN")
                         .requestMatchers(
                                 antMatcher("/js/**"),
                                 antMatcher("/webjars/**"),
