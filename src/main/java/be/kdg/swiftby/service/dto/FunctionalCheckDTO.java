@@ -10,7 +10,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FunctionalCheckDTO {
-    private UUID testId;
     private String lightsStatus;
     private String brakesStatus;
     private String displayStatus;

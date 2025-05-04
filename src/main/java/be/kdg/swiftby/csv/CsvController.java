@@ -28,37 +28,37 @@ public class CsvController {
     private final TestWebSocketHandler testWebSocketHandler;
 
 
-    @PostMapping("/process-latest")
-    public ResponseEntity<String> processLatestCsv() {
-        try {
-            List<BikeReportCsvRecord> bikeReportRecords = csvService.processLatestCsvFile();
-
-            if (bikeReportRecords.isEmpty()) {
-                return ResponseEntity.badRequest().body("No records found in CSV file.");
-            }
-
-            // Track saved report IDs
-            List<Long> savedReportIds = bikeReportRecords.stream()
-                    .map(record -> bikeReportService.save(
-                            1L,
-                            record.reportTime(),
-                            record.mileage(),
-                            record.assistanceLevel(),
-                            record.technicianComment(),
-                            record.axialSensorDataDto(),
-                            record.batteryDataDto(),
-                            record.motorDataDto(),
-                            record.pedalDataDto(),
-                            record.testBenchDataDto(),
-                            record.wheelDataDto()
-                    ).getId())
-                    .toList();
-
-            BikeReportSummary summary = bikeReportService.saveReportSummaryFromSavedReports(savedReportIds);
-            return ResponseEntity.ok("CSV successfully processed and summary saved: " + summary);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(" Error processing CSV: " + e.getMessage());
-        }
-    }
-
+//    @PostMapping("/process-latest")
+//    public ResponseEntity<String> processLatestCsv() {
+//        try {
+//            List<BikeReportCsvRecord> bikeReportRecords = csvService.processLatestCsvFile();
+//
+//            if (bikeReportRecords.isEmpty()) {
+//                return ResponseEntity.badRequest().body("No records found in CSV file.");
+//            }
+//
+//            // Track saved report IDs
+//            List<Long> savedReportIds = bikeReportRecords.stream()
+//                    .map(record -> bikeReportService.save(
+//                            1L,
+//                            record.reportTime(),
+//                            record.mileage(),
+//                            record.assistanceLevel(),
+//                            record.technicianComment(),
+//                            record.axialSensorDataDto(),
+//                            record.batteryDataDto(),
+//                            record.motorDataDto(),
+//                            record.pedalDataDto(),
+//                            record.testBenchDataDto(),
+//                            record.wheelDataDto()
+//                    ).getId())
+//                    .toList();
+//
+//            BikeReportSummary summary = bikeReportService.saveReportSummaryFromSavedReports(savedReportIds);
+//            return ResponseEntity.ok("CSV successfully processed and summary saved: " + summary);
+//        } catch (Exception e) {
+//            return ResponseEntity.badRequest().body(" Error processing CSV: " + e.getMessage());
+//        }
+//    }
+//
 }

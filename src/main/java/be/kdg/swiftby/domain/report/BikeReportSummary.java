@@ -57,6 +57,10 @@ public class BikeReportSummary {
     @JoinColumn(name = "summary_id")
     private List<BikeReport> reports;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "functionality_check_id")
+    private FunctionalityCheck functionalityCheck;
+
 //    private long reportCount;
 //
 //    private double avgBatteryCurrent;

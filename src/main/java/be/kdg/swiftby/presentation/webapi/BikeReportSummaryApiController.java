@@ -6,6 +6,7 @@ import be.kdg.swiftby.presentation.webapi.dto.BikeReportSummaryApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportApiResponseDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportSummaryDto;
 import be.kdg.swiftby.service.dto.BikeReportChartDto;
+import be.kdg.swiftby.service.intf.BikeReportService;
 import be.kdg.swiftby.service.intf.BikeReportSummaryPdfService;
 import be.kdg.swiftby.service.intf.BikeReportSummaryService;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +26,16 @@ public class BikeReportSummaryApiController {
     private final BikeReportSummaryService bikeReportSummaryService;
     private final BikeReportSummaryApiMapper bikeReportSummaryApiMapper;
     private final BikeReportSummaryPdfService bikeReportSummaryPdfService;
+    private final BikeReportService bikeReportService;
 
     @GetMapping("/{id}")
     public ResponseEntity<BikeReportSummaryDto> getSummaryById(@PathVariable Long id) {
         return ResponseEntity.ok(bikeReportSummaryApiMapper.toBikeReportSummaryDto(bikeReportSummaryService.getSummaryById(id)));
+    }
+    @PatchMapping("/{summaryId}/attach-check/{checkId}")
+    public ResponseEntity<Void> attachCheck(@PathVariable Long summaryId, @PathVariable Long checkId) {
+        bikeReportService.attachFunctionalityCheck(summaryId, checkId);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
@@ -37,6 +44,16 @@ public class BikeReportSummaryApiController {
                 .map(bikeReportSummaryApiMapper::toBikeReportSummaryDto)
                 .toList());
     }
+//
+//    @PostMapping("/api/report-summaries/{summaryId}/attach-functional-check/{checkId}")
+//    public ResponseEntity<Void> attachCheck(
+//            @PathVariable Long summaryId,
+//            @PathVariable Long checkId
+//    ) {
+//        bikeReportService.attachFunctionalityCheck(summaryId, checkId);
+//        return ResponseEntity.ok().build();
+//    }
+
 
     @GetMapping("/{bikeId}/generate-pdf")
     public ResponseEntity<byte[]> generateReportPdfByBikeAndDate(@PathVariable Long bikeId,
