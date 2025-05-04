@@ -38,7 +38,7 @@ public class CustomUserDetailService implements UserDetailsService {
         return technicianRepository.findByEmail(username)
                 .map(user -> buildUserDetails(user, "TECHNICIAN"))
                 .or(() -> administratorRepository.findAdministratorByEmail(username)
-                        .map(user -> buildUserDetails(user, "ADMIN")))
+                        .map(user -> buildUserDetails(user, "ADMINISTRATOR")))
                 .or(() -> superAdminRepository.findByEmail(username)
                         .map(user -> buildUserDetails(user, "SUPERADMIN")))
                 .or(() -> bikeOwnerRepository.findByEmail(username)

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Facility Overview</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/facility-overview.css}">
+    <script th:src="@{/js/facility-overview.js}" defer></script>
+</head>
+<body>
+<header th:insert="~{fragments/header :: header(${currentPage})}" class="mb-4"></header>
+<div class="container mt-5 glassmorphism">
+    <input type="hidden" id="facilityId" th:value="${facilityId}" />
+
+    <h2 id="facilityName" class="facility-header text-center"></h2>
+    <p id="facilityAddress" class="facility-address text-center"></p>
+
+    <div class="row technician-section">
+        <div class="col-md-6">
+            <h4 class="section-title">Test Benches</h4>
+            <div id="testBenchList" class="row g-3"></div>
+        </div>
+        <div class="col-md-6">
+            <h4 class="section-title">Bikes</h4>
+            <div id="bikeList" class="row g-3"></div>
+        </div>
+    </div>
+
+    <div class="row mt-4 p-4 technician-section">
+        <div class="col-md-6">
+            <h4 class="section-title">Technicians</h4>
+            <ul id="technicianList" class="list-group technician-list"></ul>
+        </div>
+        <div class="col-md-6">
+            <h4 class="section-title">Customers</h4>
+            <p class="text-muted">Coming soon...</p>
+        </div>
+    </div>
+</div>
+<footer th:insert="~{fragments/footer :: footer}" class="mt-4"></footer>
+</body>
+</html>
+
