@@ -53,4 +53,14 @@ public class EmailService {
         }
         MessageResponse response = apiClient.deliverMessage(message);
     }
+
+    public void sendAccountRegistrationEmail(String userEmail, String userName, String link) throws IOException, PostmarkException {
+        String subject = "Your Swiftby Account Registration";
+        String body = String.format(
+                "Hey %s,\n\nYour account has been registered in the system, to set up your password click on this link: %s\n\nKind regards,\nTeam Swiftby",
+                userName,
+                link
+        );
+        sendEmail(userEmail, subject, body, null);
+    }
 }
