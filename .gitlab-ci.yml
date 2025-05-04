@@ -41,7 +41,7 @@ deploy-job:
     # Optionally run deployment script on VM
     - ssh -p $SSH_PORT $VM_USER@$VM_IP "cd ~/biketrust && bash scripts/deploy.sh"
   only:
-    - main
+    - development
 
 destroy-job:
   stage: destroy
@@ -56,7 +56,7 @@ destroy-job:
     - ssh -p $SSH_PORT $VM_USER@$VM_IP "cd ~/biketrust && bash scripts/destroy.sh"
   when: manual
   only:
-    - main
+    - development
 
 smoke-test-job:
   stage: deploy
@@ -73,5 +73,5 @@ smoke-test-job:
       fi
   needs: ["deploy-job"]
   only:
-    - main
+    - development
   
