@@ -4,7 +4,6 @@ import be.kdg.swiftby.domain.bike.Bike;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,7 +30,7 @@ public class BikeReportSummary {
     private double horizontalInclination;
     private double verticalInclination;
     private boolean chargeStatus;
-    private double current;
+    private double batteryCurrent;
     private double voltage;
     private double capacity;
     private double temperature;
