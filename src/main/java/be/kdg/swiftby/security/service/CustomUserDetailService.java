@@ -7,6 +7,7 @@ import be.kdg.swiftby.domain.testEnv.SuperAdmin;
 import be.kdg.swiftby.domain.testEnv.Technician;
 import be.kdg.swiftby.domain.testEnv.User;
 import be.kdg.swiftby.repository.testEnvironment.AdministratorRepository;
+import be.kdg.swiftby.repository.testEnvironment.BikeOwnerRepository;
 import be.kdg.swiftby.repository.testEnvironment.SuperAdminRepository;
 import be.kdg.swiftby.repository.testEnvironment.TechnicianRepository;
 import be.kdg.swiftby.security.CustomUserDetails;
@@ -22,11 +23,13 @@ public class CustomUserDetailService implements UserDetailsService {
     private final SuperAdminRepository superAdminRepository;
     private final TechnicianRepository technicianRepository;
     private final AdministratorRepository administratorRepository;
+    private final BikeOwnerRepository bikeOwnerRepository;
 
-    public CustomUserDetailService(SuperAdminRepository superAdminRepository, TechnicianRepository technicianRepository, AdministratorRepository administratorRepository) {
+    public CustomUserDetailService(SuperAdminRepository superAdminRepository, TechnicianRepository technicianRepository, AdministratorRepository administratorRepository, BikeOwnerRepository bikeOwnerRepository) {
         this.superAdminRepository = superAdminRepository;
         this.technicianRepository = technicianRepository;
         this.administratorRepository = administratorRepository;
+        this.bikeOwnerRepository = bikeOwnerRepository;
     }
 
 
@@ -38,34 +41,17 @@ public class CustomUserDetailService implements UserDetailsService {
                         .map(user -> buildUserDetails(user, "ADMIN")))
                 .or(() -> superAdminRepository.findByEmail(username)
                         .map(user -> buildUserDetails(user, "SUPERADMIN")))
+                .or(() -> bikeOwnerRepository.findByEmail(username)
+                        .map(user -> buildUserDetails(user, "BIKEOWNER")))
                 .orElseThrow(() -> NotFoundException.forUserWithEmail(username));
     }
 
 
     private UserDetails buildUserDetails(User user, String role) {
-        String email;
-        String password;
-
-        switch (user) {
-            case Technician technician -> {
-                email = technician.getEmail();
-                password = technician.getPassword();
-            }
-            case Administrator administrator -> {
-                email = administrator.getEmail();
-                password = administrator.getPassword();
-            }
-            case SuperAdmin superadmin -> {
-                email = superadmin.getEmail();
-                password = superadmin.getPassword();
-            }
-            case null, default -> throw new IllegalArgumentException("Unsupported user type");
-        }
         return new
-
                 CustomUserDetails(
-                email,
-                password,
+                user.getEmail(),
+                user.getPassword(),
                 true,
                 true,
                 true,
