@@ -86,6 +86,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             bikeId: parseInt(bikeId, 10),
             testType: document.getElementById("testType").value,
             testBenchNumber: document.getElementById("testBenchNumber").value,
+            checkId:
         };
 
         try {

@@ -5,7 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface FunctionalityCheckRepository extends JpaRepository<FunctionalityCheck, UUID> {
+public interface FunctionalityCheckRepository extends JpaRepository<FunctionalityCheck,Long > {
 
     Optional<FunctionalityCheck> findByTestId(UUID testId);
 }
+
