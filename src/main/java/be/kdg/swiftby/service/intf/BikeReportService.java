@@ -29,6 +29,6 @@ public interface BikeReportService {
     List<BikeReport> getReportsBySummaryId(Long summaryId);
     BikeReport aggregatedReport(Long reportId);
     BikeReportSummary saveReportSummary(Long bikeId, LocalDate reportDate);
-    BikeReportSummary saveReportSummaryFromSavedReports(List<Long> savedReportIds, Long checkId);
+    BikeReportSummary saveReportSummaryFromSavedReports(List<Long> savedReportIds);
     void attachFunctionalityCheck(Long summaryId, Long checkId);
 }

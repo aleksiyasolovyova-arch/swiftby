@@ -25,11 +25,11 @@ public class FunctionalityCheckServiceImpl implements FunctionalityCheckService 
         return repository.save(entity);
     }
 
-    @Override
-    public FunctionalCheckDTO getByTestId(UUID testId) {
-        FunctionalityCheck entity = repository.findByTestId(testId)
-                .orElseThrow(() -> new RuntimeException("Functional check not found for testId: " + testId));
-
-        return mapper.toDto(entity);
-    }
+//    @Override
+//    public FunctionalCheckDTO getByTestId(UUID testId) {
+//        FunctionalityCheck entity = repository.findByTestId(testId)
+//                .orElseThrow(() -> new RuntimeException("Functional check not found for testId: " + testId));
+//
+//        return mapper.toDto(entity);
+//    }
 }

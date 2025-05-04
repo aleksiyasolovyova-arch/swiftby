@@ -8,5 +8,5 @@ import java.util.UUID;
 public interface FunctionalityCheckService {
     FunctionalityCheck save(FunctionalCheckDTO dto);
 
-    FunctionalCheckDTO getByTestId(UUID testId);
+//    FunctionalCheckDTO getByTestId(UUID testId);
 }

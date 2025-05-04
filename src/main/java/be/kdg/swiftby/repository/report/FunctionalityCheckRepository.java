@@ -7,6 +7,6 @@ import java.util.UUID;
 
 public interface FunctionalityCheckRepository extends JpaRepository<FunctionalityCheck,Long > {
 
-    Optional<FunctionalityCheck> findByTestId(UUID testId);
+//    Optional<FunctionalityCheck> findByTestId(UUID testId);
 }
 

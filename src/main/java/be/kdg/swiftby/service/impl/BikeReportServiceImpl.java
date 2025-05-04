@@ -140,17 +140,12 @@ public class BikeReportServiceImpl implements BikeReportService {
     }
 
     @Override
-    public BikeReportSummary saveReportSummaryFromSavedReports(List<Long> savedReportIds, Long checkId) {
+    public BikeReportSummary saveReportSummaryFromSavedReports(List<Long> savedReportIds) {
         BikeReportAggregationDto aggregation = bikeReportRepository.aggregateReports(savedReportIds);
         Bike bike = bikeRepository.findById(aggregation.getBikeId())
                 .orElseThrow(() -> NotFoundException.forBike(aggregation.getBikeId()));
 
         BikeReportSummary summary = BikeReportAggregationDto.toSummary(aggregation, bike);
-
-        if (checkId != null) {
-            FunctionalityCheck check = functionalityCheckRepository.findById(checkId).get();
-            summary.setFunctionalityCheck(check);
-        }
 
         BikeReportSummary savedSummary = bikeReportSummaryRepository.save(summary);
 

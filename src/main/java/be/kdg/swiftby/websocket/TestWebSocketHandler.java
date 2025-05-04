@@ -70,7 +70,7 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
 
                 testService.getReport(testId);
                 StartTestDto startData = testMetadata.remove(testId);
-                BikeReportSummary summary = processCsvAfterTestCompletion(ongoingTests.get(testId), startData,ch);
+                BikeReportSummary summary = processCsvAfterTestCompletion(ongoingTests.get(testId),startData);
                 Long summaryId = (summary != null) ? summary.getId() : null;
                 ongoingTests.remove(testId);
 
@@ -79,7 +79,7 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
         }
     }
 
-    private BikeReportSummary processCsvAfterTestCompletion(Long bikeId,StartTestDto startData, Long checkId) {
+    private BikeReportSummary processCsvAfterTestCompletion(Long bikeId,StartTestDto startData ) {
         try {
 
             List<Long> savedReportIds = csvService.processLatestCsvFile().stream()
@@ -101,7 +101,7 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
                     })
                     .toList();
 
-            BikeReportSummary summary = bikeReportService.saveReportSummaryFromSavedReports(savedReportIds,checkId);
+            BikeReportSummary summary = bikeReportService.saveReportSummaryFromSavedReports(savedReportIds);
 
 
             return summary;

@@ -32,6 +32,11 @@ public class BikeReportSummaryApiController {
     public ResponseEntity<BikeReportSummaryDto> getSummaryById(@PathVariable Long id) {
         return ResponseEntity.ok(bikeReportSummaryApiMapper.toBikeReportSummaryDto(bikeReportSummaryService.getSummaryById(id)));
     }
+    @PatchMapping("/{summaryId}/attach-check/{checkId}")
+    public ResponseEntity<Void> attachCheck(@PathVariable Long summaryId, @PathVariable Long checkId) {
+        bikeReportService.attachFunctionalityCheck(summaryId, checkId);
+        return ResponseEntity.noContent().build();
+    }
 
     @GetMapping
     public ResponseEntity<List<BikeReportSummaryDto>> getAll(){
