@@ -1,7 +1,5 @@
 package be.kdg.swiftby.presentation.controller;
 
-import be.kdg.swiftby.domain.testEnv.Administrator;
-import be.kdg.swiftby.domain.testEnv.Technician;
 import be.kdg.swiftby.service.intf.AdministratorService;
 import be.kdg.swiftby.service.intf.TechnicianService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/sysadmin")
 @RequiredArgsConstructor
-public class SysadminController {
+public class SuperAdminController {
 
     private final AdministratorService administratorService;
     private final TechnicianService technicianService;

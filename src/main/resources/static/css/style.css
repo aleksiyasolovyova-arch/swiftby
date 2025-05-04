@@ -92,7 +92,6 @@ body {
     font-weight: bold;
 }
 
-/* Fade-in animation */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -217,6 +216,63 @@ autocomplete-results {
 ::placeholder{
     color: white !important;
 }
+.technician-section {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
 
+.tech-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #fada7a;
+    border-radius: 16px;
+    padding: 20px;
+    height: 100%;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s ease;
+    color: #f5f7ff;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+}
+
+.tech-card:hover {
+    box-shadow: 0 0 15px rgba(250, 218, 122, 0.5);
+}
+
+.tech-card p {
+    margin: 5px 0;
+    font-size: 0.95rem;
+    word-break: break-word;
+}
+.tech-card:hover {
+    box-shadow: 0 0 15px rgba(250, 218, 122, 0.5);
+}
+
+.btn-glow-yellow {
+    background: linear-gradient(45deg, #fada7a, #ffd700);
+    color: #344a57;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 14px;
+    box-shadow: 0 5px 10px rgba(250, 218, 122, 0.6);
+    transition: all 0.3s ease;
+}
+.btn-glow-yellow:hover {
+    background: linear-gradient(45deg, #ffd700, #fada7a);
+    box-shadow: 0 10px 20px rgba(250, 218, 122, 0.8);
+}
+.modal-content.glassmorphism {
+    background: #344a57 !important;
+    border: none !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
 
 
