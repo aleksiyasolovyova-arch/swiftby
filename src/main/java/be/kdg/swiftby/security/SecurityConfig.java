@@ -52,7 +52,7 @@ public class SecurityConfig {
                         .requestMatchers(antMatcher("/sysadmin/unapproved-employees")).hasRole("SUPERADMIN")
                         .requestMatchers(HttpMethod.POST, "/sysadmin/**").hasRole("SUPERADMIN")
                         .requestMatchers(antMatcher("/startTest/**"), antMatcher("/functional-check/")).hasRole("TECHNICIAN")
-                        .requestMatchers(antMatcher("/admin/technicians/*")).hasAnyRole("ADMINISTRATOR", "SUPERADMIN")
+                        .requestMatchers(antMatcher("/admin/technicians/*"), antMatcher("/facility/*/overview")).hasAnyRole("ADMINISTRATOR", "SUPERADMIN")
                         .requestMatchers(
                                 antMatcher("/js/**"),
                                 antMatcher("/webjars/**"),
