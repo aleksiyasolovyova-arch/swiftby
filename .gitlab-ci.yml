@@ -29,21 +29,22 @@ deploy-job:
   stage: deploy
   image: alpine:latest
   before_script:
-    - apk add --no-cache openssh bash rsync
-    # Set up SSH key from GitLab CI/CD variable
+    - apk add --no-cache openssh bash
     - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - eval $(ssh-agent -s)
     - ssh-add ~/.ssh/id_rsa
     - ssh-keyscan -p $SSH_PORT $VM_IP >> ~/.ssh/known_hosts
   script:
-    - rsync -az --exclude=.git --exclude=build --delete -e "ssh -p $SSH_PORT" . $VM_USER@$VM_IP:~/app/
-    - ssh -p $SSH_PORT $VM_USER@$VM_IP "cd ~/biketrust && bash scripts/deploy.sh"
+    - ssh -p $SSH_PORT $VM_USER@$VM_IP "
+        cd ~/biketrust &&
+        git reset --hard &&
+        git checkout development &&
+        git pull origin development &&
+        bash scripts/deploy.sh"
   only:
     - development
-
 
 destroy-job:
   stage: destroy
@@ -53,9 +54,13 @@ destroy-job:
     - mkdir -p ~/.ssh
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
+    - eval $(ssh-agent -s)
+    - ssh-add ~/.ssh/id_rsa
     - ssh-keyscan -p $SSH_PORT $VM_IP >> ~/.ssh/known_hosts
   script:
-    - ssh -p $SSH_PORT $VM_USER@$VM_IP "cd ~/biketrust && bash scripts/destroy.sh"
+    - ssh -p $SSH_PORT $VM_USER@$VM_IP "
+        cd ~/biketrust &&
+        bash scripts/destroy.sh"
   when: manual
   only:
     - development
@@ -65,12 +70,12 @@ smoke-test-job:
   image: curlimages/curl:latest
   script:
     - |
-      echo "Running smoke test..."
+      echo "Running vape test..."
       STATUS=$(curl -k -s -o /dev/null -w "%{http_code}" https://swiftby.be)
       if [ "$STATUS" -eq 200 ]; then
-        echo "Smoke test passed: App is up!"
+        echo "hmmm blueberry vape: App is up!"
       else
-        echo "Smoke test failed: App returned HTTP $STATUS"
+        echo "OH NOOO ITS NICOTINE: App returned HTTP $STATUS"
         exit 1
       fi
   needs: ["deploy-job"]
