@@ -17,26 +17,19 @@ public class FunctionalityCheckServiceImpl implements FunctionalityCheckService 
 
     private final FunctionalityCheckRepository repository;
 
-    @Qualifier("functionalityCheckApiMapper")
     private final FunctionalityCheckApiMapper mapper;
 
     @Override
-    public FunctionalCheckDTO save(UUID testId,FunctionalCheckDTO dto) {
-        // Map the DTO to an Entity
+    public FunctionalityCheck save(FunctionalCheckDTO dto) {
         FunctionalityCheck entity = mapper.toEntity(dto);
-
-        // Save the entity to the database
-        FunctionalityCheck saved = repository.save(entity);
-
-        // Map back to DTO and return
-        return mapper.toDto(saved);
+        return repository.save(entity);
     }
 
-    @Override
-    public FunctionalCheckDTO getByTestId(UUID testId) {
-        FunctionalityCheck entity = repository.findByTestId(testId)
-                .orElseThrow(() -> new RuntimeException("Functional check not found for testId: " + testId));
-
-        return mapper.toDto(entity);
-    }
+//    @Override
+//    public FunctionalCheckDTO getByTestId(UUID testId) {
+//        FunctionalityCheck entity = repository.findByTestId(testId)
+//                .orElseThrow(() -> new RuntimeException("Functional check not found for testId: " + testId));
+//
+//        return mapper.toDto(entity);
+//    }
 }

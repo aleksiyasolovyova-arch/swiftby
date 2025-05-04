@@ -38,4 +38,5 @@ public class StartTestRequestDto {
 
     // BIKE ID WILL BE USED TO RETRIEVE BIKE TOGETHER WITH ITS OWNER
     private Long bikeId;
+    private Long checkId;
 }

@@ -1,5 +1,6 @@
 package be.kdg.swiftby.presentation.webapi;
 
+import be.kdg.swiftby.domain.report.FunctionalityCheck;
 import be.kdg.swiftby.service.dto.FunctionalCheckDTO;
 import be.kdg.swiftby.service.intf.FunctionalityCheckService;
 import lombok.RequiredArgsConstructor;
@@ -17,20 +18,10 @@ public class FunctionalityCheckApiController {
     private final FunctionalityCheckService service;
 
     @PostMapping("/{testId}")
-    public ResponseEntity<FunctionalCheckDTO> saveFunctionalCheck(
-            @PathVariable UUID testId,
-            @RequestBody FunctionalCheckDTO dto) {
-        dto.setTestId(testId); // Ensure the testId is set in the DTO
-        FunctionalCheckDTO saved = service.save(testId, dto);
-        return ResponseEntity.ok(saved);
+    public ResponseEntity<Long> saveFunctionalCheck(
+            @RequestBody FunctionalCheckDTO dto
+    ) {
+        FunctionalityCheck saved = service.save(dto);
+        return ResponseEntity.ok(saved.getId());
     }
-
-    @GetMapping("/{testId}")
-    public ResponseEntity<FunctionalCheckDTO> getFunctionalCheckByTestId(@PathVariable UUID testId) {
-        FunctionalCheckDTO found = service.getByTestId(testId);
-        return ResponseEntity.ok(found);
-    }
-
-
-
 }

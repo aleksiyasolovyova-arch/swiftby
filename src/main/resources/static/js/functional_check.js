@@ -25,19 +25,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(dto)
             });
 
-            if (response.ok) {
-                statusDiv.innerHTML = `<p class="text-success">Functional Check saved successfully!</p>`;
+            if (!response.ok) throw new Error("Saving functional check failed");
 
-                const reportButton = document.createElement("a");
-                reportButton.href = `/report-summary?id=${summaryId}`;
-                reportButton.textContent = "View Summary Report";
-                reportButton.classList.add("btn", "btn-success", "w-100", "mt-3");
-                statusDiv.appendChild(reportButton);
-            } else {
-                statusDiv.innerHTML = `<p class="text-danger">Failed to save functional check.</p>`;
-            }
+            const checkId = await response.json();
+
+            const attachResponse = await fetch(`/api/report-summaries/${summaryId}/attach-check/${checkId}`, {
+                method: 'PATCH'
+            });
+
+            if (!attachResponse.ok) throw new Error("Attaching functional check failed");
+
+            statusDiv.innerHTML = `<p class="text-success">Functional Check saved and linked successfully!</p>`;
+
+            const reportButton = document.createElement("a");
+            reportButton.href = `/report-summary?id=${summaryId}`;
+            reportButton.textContent = "View Summary Report";
+            reportButton.classList.add("btn", "btn-success", "w-100", "mt-3");
+            statusDiv.appendChild(reportButton);
+
         } catch (err) {
-            statusDiv.innerHTML = `<p class="text-danger">Error occurred. Try again.</p>`;
+            console.error(err);
+            statusDiv.innerHTML = `<p class="text-danger">Error occurred: ${err.message}</p>`;
         }
     });
 });

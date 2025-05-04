@@ -11,12 +11,8 @@ import java.util.UUID;
 @Setter
 public class FunctionalityCheck {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-
-   @Column(nullable = false, unique = true)
-   private UUID testId;
-
+    @GeneratedValue
+    private Long id;
 
     private String lightsStatus;
     private String brakesStatus;
