@@ -56,7 +56,7 @@ INSERT INTO bike (battery_capacity, bike_size, max_support, powertrain, motor_id
 VALUES
     (5000, 2, 250, 1, 1, 'Trek', 'CHSN12345', 'Mountain'),
     (6000, 3, 300, 0, 2, 'Giant', 'CHSN67890', 'Road'),
-    (6000, 3, 300, 0, 2, 'Giant', 'CHSN67890', 'Road');
+    (6000, 3, 300, 0, 2, 'Giant', 'CHSN67891', 'Road');
 
 
 INSERT INTO bike_ownerships (bike_id, bike_owner_id) VALUES (1, 1),
