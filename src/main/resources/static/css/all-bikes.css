@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #344a57, #5c7285, #aed2e3);
+    color: #f5f7ff;
+}
+
+main {
+    flex: 1; /* this pushes the footer to the bottom */
+    padding: 2rem;
+}
+
+body {
+    background: linear-gradient(135deg, #344a57, #5c7285, #aed2e3);
+    font-family: 'Roboto Mono', monospace;
+    color: #f5f7ff;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 60px; /* Prevent overlap with footer */
+}
+
+h2, h4 {
+    color: #f5f7ff;
+    text-align: center;
+}
+
+p {
+    color: #aed2e3;
+}
+
+/* Main container with glassmorphism */
+.glassmorphism {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+/* Bike card layout */
+#bikeList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Bike cards */
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    color: #f5f7ff;
+    width: 260px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    background: #fada7a;
+    color: #344a57;
+}
+
+/* Header text */
+.facility-header {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Optional glowing buttons */
+.glowing-button {
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    color: #f5f7ff;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.glowing-button:hover {
+    background: linear-gradient(45deg, #ffd700, #fada7a);
+    color: #344a57;
+    box-shadow: 0 10px 20px rgba(250, 218, 122, 0.8);
+    transform: scale(1.05);
+}
+
+/* Footer styling */
+footer {
+    font-size: 0.9rem;
+    color: white;
+}
