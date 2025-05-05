@@ -35,7 +35,9 @@ public class BikeController {
 
         if (facility == null) {
             try {
+                System.out.println("You bitch");
                 facility = technicianService.getByEmail(email).getFacility();
+                System.out.println(facility);
             } catch (Exception ignored) {}
         }
 
