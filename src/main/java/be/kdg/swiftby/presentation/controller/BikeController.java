@@ -42,6 +42,7 @@ public class BikeController {
         model.addAttribute("facilityId", facility.getId());
         return "all-bikes";
     }
+
     @GetMapping("/bike-details")
     public String showBikeDetails(@RequestParam Long id, Model model) {
         Bike bike = bikeService.getById(id);

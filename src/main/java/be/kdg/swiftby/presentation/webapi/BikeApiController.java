@@ -44,6 +44,7 @@ public class BikeApiController {
         Bike bike = bikeService.getById(id);
         return ResponseEntity.ok(bikeMapper.toBikeDto(bike));
     }
+
     @GetMapping("/owner/{bikeOwnerId}")
     public ResponseEntity<List<BikeApiResponseDto>> getBikesByOwner(@PathVariable Long bikeOwnerId) {
         List<Bike> bikes = bikeService.getByBikeOwnerId(bikeOwnerId);
