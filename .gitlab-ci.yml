@@ -58,8 +58,9 @@ destroy-job:
   stage: destroy
   image: almalinux:latest
   before_script:
+    - dnf install -y openssh openssh-clients
     - mkdir -p ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa  # No need to base64 decode
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa  
     - chmod 600 ~/.ssh/id_rsa
     - eval $(ssh-agent -s)
     - ssh-add ~/.ssh/id_rsa
