@@ -1,6 +1,6 @@
 #!/bin/bash
-#Author: MJ
-#Date: 05/05/2025
+# Author: MJ
+# Date: 05/05/2025
 
 set -euo pipefail
 LOG_FILE="deploy.log"
@@ -19,10 +19,10 @@ main() {
   fi
 
   log "stop container"
-  sudo $COMPOSE down || true
+  $COMPOSE down || true
 
   log "detahced mode"
-  sudo $COMPOSE up -d
+  $COMPOSE up -d
 
   log "Deploynini completini successfullini."
 }
