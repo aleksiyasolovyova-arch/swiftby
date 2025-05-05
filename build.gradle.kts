@@ -1,3 +1,4 @@
+
 plugins {
     java
     id("org.springframework.boot") version "3.4.2"
@@ -5,6 +6,7 @@ plugins {
 }
 
 group = "be.kdg"
+
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -12,6 +14,8 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
+
+
 
 configurations {
     compileOnly {
@@ -27,17 +31,45 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation ("org.springframework.boot:spring-boot-starter-security")
+    implementation ("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
-    runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly("org.postgresql:postgresql:42.7.2")
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    runtimeOnly("com.microsoft.sqlserver:mssql-jdbc")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation("org.apache.commons:commons-csv:1.13.0")
+    implementation("org.webjars:webjars-locator-core:0.59")
+    implementation("org.webjars:bootstrap:5.3.3")
+    implementation("org.webjars.npm:bootstrap-icons:1.11.3")
+    implementation ("com.itextpdf:itext7-core:7.1.15")
+    implementation("commons-io:commons-io:2.18.0")
+    implementation("org.mapstruct:mapstruct:1.6.3")
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
+
+    // used for dotenv
+    implementation("io.github.cdimascio:dotenv-java:2.2.0")
+
+    // websocket
+    implementation("org.springframework.boot:spring-boot-starter-websocket")
+    implementation ("io.github.cdimascio:dotenv-java:3.0.0")
+    implementation("com.postmarkapp:postmark:1.11.1")
+    //pdf
+    implementation("com.itextpdf:itextpdf:5.5.13.2")
+
+
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+
+
+

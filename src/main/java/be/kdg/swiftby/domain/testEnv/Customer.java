@@ -1,17 +1,36 @@
 package be.kdg.swiftby.domain.testEnv;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import be.kdg.swiftby.domain.bike.Bike;
+import be.kdg.swiftby.domain.bike.BikeOwnership;
+import be.kdg.swiftby.domain.report.BikeReport;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Set;
+
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Data
-public class Customer extends SBUser{
-    // TODO: CREATE AN INTERMEDIATE CLASS FOR THIS AND NOT USE MANY_TO_MANY ANNOTATION
-    @ManyToMany(mappedBy = "customers")
-    private Set<Administrator> administrators;
+@Getter
+@Setter
+@NoArgsConstructor
+public class BikeOwner extends User {
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY )
+    private Set<BikeOwnership> ownerships;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "facility_id")
+    private Facility facility;
+
+    public BikeOwner(String email, String password, String firstName, String lastName, String phoneNumber) {
+        super();
+    }
+    public BikeOwner(String email, String firstName, String lastName, String phoneNumber) {
+        this.setEmail(email);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setPhoneNumber(phoneNumber);
+    }
+
 
 }

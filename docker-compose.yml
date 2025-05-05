@@ -1,14 +1,11 @@
 services:
-  db:
-    image: postgres:17.2-alpine
-    restart: always
-    environment:
-      POSTGRES_DB: 'swift_by_db'
-      POSTGRES_USER: 'admin'
-      POSTGRES_PASSWORD: 'admin'
+  app:
+    build: .
+    restart: on-failure
     ports:
-      - '5435:5432'
-    volumes:
-      - db-data:/var/lib/postgresql/data
-volumes:
-  db-data:
+      - '80:80'
+    environment:
+      API_KEY: 9f3b570c-1185-471c-b901-a9ae735a27c3
+      API_LINK: https://testbench.raoul.dev/api/test
+      EMAIL_API: 1cc818ab-3dff-4089-bcfe-634d2f455015
+      SPRING_PROFILES_ACTIVE: dev

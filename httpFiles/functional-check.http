@@ -1,0 +1,17 @@
+### Save a new Functional Check
+POST http://localhost:8080/api/functional-checks
+Content-Type: application/json
+
+{
+  "testId": "11111111-2222-3333-4444-555555555555",
+  "lightsStatus": "+",
+  "brakesStatus": "-",
+  "displayStatus": "n.v.t",
+  "hornStatus": "+",
+  "motorStatus": "+",
+  "batteryStatus": "-"
+}
+
+### Get Functional Check by testId
+GET http://localhost:8080/api/functional-checks/11111111-2222-3333-4444-555555555555
+Accept: application/json

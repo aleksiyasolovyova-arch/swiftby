@@ -1,0 +1,278 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap');
+
+body {
+    background: linear-gradient(135deg, #344a57, #5c7285, #aed2e3);
+    font-family: 'Roboto Mono', monospace;
+    color: #f5f7ff;
+}
+
+.glassmorphism {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.fancy-input {
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    font-family: 'Roboto Mono', monospace;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.fancy-input:focus {
+    border-color: #fada7a;
+    box-shadow: 0 0 12px rgba(250, 218, 122, 0.8);
+}
+
+.glowing-button {
+    border-radius: 10px;
+    padding: 12px;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-in-out;
+    background: linear-gradient(45deg, #fada7a, #ffd700);
+    border: none;
+    color: #344a57;
+    box-shadow: 0 5px 15px rgba(250, 218, 122, 0.6);
+}
+
+.glowing-button:hover {
+    background: linear-gradient(45deg, #ffd700, #fada7a);
+    box-shadow: 0 10px 20px rgba(250, 218, 122, 0.8);
+}
+
+.autocomplete-results {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    max-height: 200px;
+    overflow-y: auto;
+    width: calc(100% - 20px);
+    z-index: 10;
+    margin-top: 5px;
+    left: 10px;
+    padding: 5px;
+}
+
+.autocomplete-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
+    color: #344a57;
+    font-weight: bold;
+}
+
+.autocomplete-item:hover {
+    background: #fada7a;
+    color: #344a57;
+}
+
+.user-details {
+    font-size: 0.8rem;
+    color: #5c7285;
+}
+
+.no-results {
+    padding: 10px;
+    text-align: center;
+    color: #5c7285;
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+autocomplete-results {
+    position: absolute;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100;
+    margin-top: 5px;
+    left: 0;
+}
+
+/* Ensure correct positioning inside parent container */
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Suggestion Items */
+.autocomplete-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #344a57;
+}
+
+.autocomplete-item:hover {
+    background: #fada7a;
+    color: #344a57;
+}
+
+.user-details {
+    font-size: 0.85rem;
+    color: #5c7285;
+}
+
+
+.no-results {
+    padding: 10px;
+    text-align: center;
+    color: #5c7285;
+    font-weight: bold;
+}
+
+.loading-image {
+    width: 50px;
+    height: 50px;
+    display: block;
+    margin: 20px auto;
+    opacity: 0.8;
+    animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    to {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+.bike-card {
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+.bike-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(250, 218, 122, 0.4);
+}
+.bike-card.selected {
+    border: 2px solid #fada7a;
+    box-shadow: 0 0 15px rgba(250, 218, 122, 0.7);
+}
+.bike-thumbnail {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: white;
+    padding: 5px;
+}
+#search-output {
+    display: none;
+    position: absolute;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 10;
+}
+
+.autocomplete-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.autocomplete-item:hover {
+    background: #fada7a;
+    color: #344a57;
+}
+.no-results {
+    color: #999;
+    text-align: center;
+    padding: 10px;
+}
+::placeholder{
+    color: white !important;
+}
+.technician-section {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.tech-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #fada7a;
+    border-radius: 16px;
+    padding: 20px;
+    height: 100%;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s ease;
+    color: #f5f7ff;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+}
+
+.tech-card:hover {
+    box-shadow: 0 0 15px rgba(250, 218, 122, 0.5);
+}
+
+.tech-card p {
+    margin: 5px 0;
+    font-size: 0.95rem;
+    word-break: break-word;
+}
+.tech-card:hover {
+    box-shadow: 0 0 15px rgba(250, 218, 122, 0.5);
+}
+
+.btn-glow-yellow {
+    background: linear-gradient(45deg, #fada7a, #ffd700);
+    color: #344a57;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 14px;
+    box-shadow: 0 5px 10px rgba(250, 218, 122, 0.6);
+    transition: all 0.3s ease;
+}
+.btn-glow-yellow:hover {
+    background: linear-gradient(45deg, #ffd700, #fada7a);
+    box-shadow: 0 10px 20px rgba(250, 218, 122, 0.8);
+}
+.modal-content.glassmorphism {
+    background: #344a57 !important;
+    border: none !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+

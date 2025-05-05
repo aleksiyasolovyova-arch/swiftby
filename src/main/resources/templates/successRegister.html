@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Successful - BikeTrust</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/registration.css}"/>
+</head>
+
+<body>
+
+<header th:insert="~{fragments/header :: header(${currentPage})}"></header>
+
+<main>
+    <div class="success-container glassmorphism">
+        <h1 class="success-message"> Registration Successful!</h1>
+        <p class="subtext">Your account has been created successfully. You can now log in.</p>
+
+        <a th:href="@{/login}" class="btn glowing-button">Go to Login</a>
+    </div>
+</main>
+
+<footer th:insert="~{fragments/footer :: footer}"></footer>
+
+</body>
+</html>

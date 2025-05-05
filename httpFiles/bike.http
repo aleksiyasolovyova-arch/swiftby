@@ -1,0 +1,77 @@
+// BIKES
+
+### get all bikes - 200
+GET http://localhost:8080/api/bikes
+Accept: application/json
+
+
+### get one existing bike - 200
+GET http://localhost:8080/api/bikes/1
+Accept: application/json
+
+###
+GET http://localhost:8080/api/bikes/owner/1
+Accept: application/json
+
+
+### get one non-existing bike - 404
+GET http://localhost:8080/api/bikes/0
+Accept: application/json
+
+
+### get bikes by motor engine type - 200
+GET http://localhost:8080/api/bikes/motor-engine-type/Bosch%20CX
+Accept: application/json
+
+
+### save a bike - 200
+POST http://localhost:8080/api/bikes
+Content-Type: application/json
+
+{
+  "brand": "Trek",
+  "type": "E-Mountain",
+  "chassisNumber": "ABC123",
+  "powertrain": "CHAIN",
+  "bikeSize": "M",
+  "maxSupport": 250,
+  "motor": {
+    "engineType": "Bosch CX",
+    "gearType": "Automatic",
+    "maxPower": 500,
+    "nominalPower": 250,
+    "torque": 85
+  },
+  "batteryCapacity": 500
+}
+
+
+### delete existing bike - 204
+DELETE http://localhost:8080/api/bikes/1
+Accept: application/json
+
+
+### delete non-existing bike - 404
+DELETE http://localhost:8080/api/bikes/0
+Accept: application/json
+
+###
+POST http://localhost:8080/api/bikes
+Content-Type: application/json
+
+{
+  "brand": "Trek",
+  "type": "Mountain",
+  "chassisNumber": "123ABC",
+  "powertrain": "BELT",
+  "bikeSize": "XL",
+  "maxSupport": 100,
+  "batteryCapacity": 500,
+  "motorRequestDto": {
+    "engineType": "MID_DRIVE",
+    "gearType": "DERAILLEUR",
+    "maxPower": 500,
+    "nominalPower": 250,
+    "torque": 75
+  }
+}

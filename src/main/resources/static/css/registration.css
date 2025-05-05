@@ -1,0 +1,93 @@
+body {
+    background: linear-gradient(135deg, #344a57, #5c7285, #aed2e3);
+    font-family: 'Roboto Mono', monospace;
+    color: #f5f7ff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-container {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 450px;
+    width: 100%;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    animation: fadeIn 0.5s ease-in-out;
+    text-align: center;
+}
+
+.form-control {
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #fada7a;
+    box-shadow: 0 0 12px rgba(250, 218, 122, 0.8);
+}
+
+
+.btn-primary {
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(45deg, #fada7a, #ffd700);
+    border: none;
+    color: #344a57;
+    box-shadow: 0 5px 15px rgba(250, 218, 122, 0.6);
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #ffd700, #fada7a);
+    box-shadow: 0 10px 20px rgba(250, 218, 122, 0.8);
+    color: #344a57;
+}
+
+.success-container {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    animation: fadeIn 0.5s ease-in-out;
+    text-align: center;
+}
+
+.success-message {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fada7a;
+}
+
+.subtext {
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

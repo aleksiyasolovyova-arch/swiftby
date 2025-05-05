@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script defer src="/js/technician/dashboard.js"></script>
+    <link rel="stylesheet" href="/css/technician/technician-dashboard.css">
+    <meta charset="UTF-8">
+    <title>Technician's Dashboard</title>
+</head>
+
+<body>
+
+<header th:insert="~{fragments/header :: header(${currentPage})}"></header>
+
+<div class="container-fluid">
+    <div class="row mb-4 text-center">
+        <div class="col-md-3">
+            <a href="/checklist">
+                <button type="button" class="btn btn-outline-dark w-100">Start New Test</button>
+
+            </a>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-outline-dark w-100">Insert RAW Data</button>
+        </div>
+        <div class="col-md-3">
+            <a href="/technician/reports">
+                <button type="button" class="btn btn-outline-dark w-100">View Reports</button>
+
+            </a>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-success w-100">Bench Status: Optimal</button>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6 d-flex flex-row justify-content-center">
+
+
+            <div id="image">
+
+                <img src="/images/Bike.JPG" alt="Bike">
+
+            </div>
+        </div>
+
+        <div class="col-md-6 align-self-end">
+            <div class="test-reports-container">
+                <h4 class="test-reports-title"> Latest Test Reports</h4>
+                <ul class="test-reports-list overflow-scroll" id="reportList"></ul>
+            </div>
+
+
+            <!--            <div class="test-reports-container">-->
+<!--                <h4 class="test-reports-title">Test Reports</h4>-->
+<!--                <ul class="test-reports-list overflow-scroll">-->
+<!--                    <a href="/report-summary?id=1">-->
+<!--                        <li class="test-report-card"><span class="report-id">#101</span><span class="report-date">2024-03-15</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#102</span><span class="report-date">2024-03-12</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#103</span><span class="report-date">2024-03-10</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#104</span><span class="report-date">2024-03-08</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#105</span><span class="report-date">2024-03-05</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#101</span><span class="report-date">2024-03-15</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#102</span><span class="report-date">2024-03-12</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#103</span><span class="report-date">2024-03-10</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#104</span><span class="report-date">2024-03-08</span>-->
+<!--                        </li>-->
+<!--                        <li class="test-report-card"><span class="report-id">#105</span><span class="report-date">2024-03-05</span>-->
+<!--                        </li>-->
+<!--                    </a>-->
+<!--                </ul>-->
+<!--            </div>-->
+        </div>
+    </div>
+
+<!--    <div class="row mb-5">  &lt;!&ndash; Increased bottom margin for better spacing &ndash;&gt;-->
+<!--        <div class="col-md-6 mx-auto border rounded p-4 shadow-sm" id="chartContainer">-->
+<!--        </div>-->
+
+<!--    </div>-->
+</div>
+<footer th:insert="~{fragments/footer :: footer}"></footer>
+
+</body>
+</html>

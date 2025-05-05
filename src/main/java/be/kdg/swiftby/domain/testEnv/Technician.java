@@ -1,13 +1,22 @@
 package be.kdg.swiftby.domain.testEnv;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Technician extends Employee{
     @ManyToOne
-    private Administrator administrator;
+    @JoinColumn(name = "facility_id")
+    private Facility facility;
+
+    public Technician(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber) {
+        super(email, password, firstName, lastName, phoneNumber);
+        this.facility = facility;
+    }
 }

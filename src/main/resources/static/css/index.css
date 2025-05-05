@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap');
+
+body {
+    background: linear-gradient(135deg, #344a57, #5c7285, #aed2e3);
+    color: #f5f7ff;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.hero-section {
+    background-size: cover;
+    background: linear-gradient(rgba(92, 114, 133, 0.7), rgba(92, 114, 133, 0.7)), url(../images/test-bench-side.JPG) center;
+    color: #f5f7ff;
+    padding: 100px 0;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary, .btn-subscribe {
+    background: linear-gradient(45deg, #fada7a, #ffd700);
+    border: none;
+    color: #344a57;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 5px 15px rgba(250, 218, 122, 0.6);
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-primary:hover, .btn-subscribe:hover {
+    background: linear-gradient(45deg, #ffd700, #fada7a);
+    box-shadow: 0 10px 20px rgba(250, 218, 122, 0.8);
+}
+
+.features-section {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 80px 0;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+}
+
+.carousel-section {
+    padding: 80px 0;
+}
+
+.carousel-item img {
+    max-width: 75%;
+    height: 500px;
+    margin: auto;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+}
+
+.newsletter-section {
+    background: rgba(92, 114, 133, 0.3);
+    backdrop-filter: blur(10px);
+    color: #f5f7ff;
+    padding: 60px 0;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.newsletter-section input[type="email"] {
+    padding: 12px;
+    width: 320px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.newsletter-section input[type="email"]::placeholder {
+    color: #ddd;
+}
+
+.newsletter-section input[type="email"]:focus {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}

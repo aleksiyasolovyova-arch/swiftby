@@ -1,0 +1,227 @@
+// FACILITIES
+### get all facilities - 200
+GET http://localhost:8080/api/facilities
+Accept: application/json
+
+### get one existing facility - 200
+GET http://localhost:8080/api/facilities/1
+Accept: application/json
+
+### get one non-existing facility - 404
+GET http://localhost:8080/api/facilities/0
+Accept: application/json
+
+
+
+// TESTBENCHES
+### get all testbenches from existing facility - 200
+GET http://localhost:8080/api/facilities/1/testbenches
+Accept: application/json
+
+### get all testbenches from non-existing facility - 404
+GET http://localhost:8080/api/facilities/0/testbenches
+Accept: application/json
+
+### get one existing testbench from existing facility - 200
+GET http://localhost:8080/api/facilities/2/testbenches/3
+Accept: application/json
+
+### get one none-existing testbench from existing facility - 404
+GET http://localhost:8080/api/facilities/1/testbenches/0
+Accept: application/json
+
+### get one existing testbench from non-existing facility - 404
+GET http://localhost:8080/api/facilities/0/testbenches/3
+Accept: application/json
+
+### get one existing testbench from an existing facility that is not related - 404
+GET http://localhost:8080/api/facilities/1/testbenches/3
+Accept: application/json
+
+
+
+// TECHNICIANS
+### get all technicians from existing facility - 200
+GET http://localhost:8080/api/facilities/2/technicians
+Accept: application/json
+
+### get all technicians from non-existing facility - 404
+GET http://localhost:8080/api/facilities/0/technicians
+Accept: application/json
+
+### get one technician from existing facility - 200
+GET http://localhost:8080/api/facilities/1/technicians/1
+Accept: application/json
+
+### get none-existing technician from existing facility - 404
+GET http://localhost:8080/api/facilities/1/technicians/0
+Accept: application/json
+
+### create technician from existing facility - 201
+POST http://localhost:8080/api/facilities/1/technicians
+Accept: application/json
+Content-Type: application/json
+//password: goobydooby
+
+{
+  "email": "goobert@scs.com",
+  "password": "$2a$12$hSfRdFO3TZFN9wJxJ8Kn3uu49KCtbzd8g63VI5zYO9/DVJgysEWiK",
+  "firstName": "Goobert",
+  "lastName": "Doobert",
+  "phoneNumber": "999"
+}
+
+### create already existing technician - 409
+POST http://localhost:8080/api/facilities/1/technicians
+Accept: application/json
+Content-Type: application/json
+//password: goobydooby
+
+{
+  "firstName": "Alina",
+  "lastName": "Copycat",
+  "password": "$2a$12$7umM7R4JrLdFICxhpFOBTu9JALislEpPvfNvQpM7u5QW7AkVc6zKa",
+  "phoneNumber": "112",
+  "email": "alina.dimova@student.kdg.be"
+}
+
+### create technician from non-existing facility - 404
+POST http://localhost:8080/api/facilities/0/technicians
+Accept: application/json
+Content-Type: application/json
+
+{
+  "firstName": "Alina",
+  "lastName": "Copycat",
+  "password": "$2a$12$7umM7R4JrLdFICxhpFOBTu9JALislEpPvfNvQpM7u5QW7AkVc6zKa",
+  "phoneNumber": "112",
+  "email": "alina@student.kdg.be"
+}
+
+### update existing technician from existing facility - 200
+PATCH http://localhost:8080/api/facilities/1/technicians/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "firstName": "SHREK",
+  "email": "shrek@shrexy.com"
+}
+
+### update non-existing tech from existing facility - 404
+PATCH http://localhost:8080/api/facilities/1/technicians/3
+Accept: application/json
+Content-Type: application/json
+
+{
+  "firstName": "SHREK",
+  "email": "shrek@shrexy.com"
+}
+
+### update non-existing tech from existing facility - 404
+PATCH http://localhost:8080/api/facilities/0/technicians/3
+Accept: application/json
+Content-Type: application/json
+
+{
+  "firstName": "SHREK",
+  "email": "shrek@shrexy.com"
+}
+
+### update existing tech from non-existing facility - 404
+PATCH http://localhost:8080/api/facilities/0/technicians/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "firstName": "SHREK",
+  "email": "shrek@shrexy.com"
+}
+
+###
+
+//ADMINISTRATORS
+### get all administrators from existing facility - 200
+GET http://localhost:8080/api/facilities/2/administrators
+Accept: application/json
+
+### get all administrators from non-existing facility - 404
+GET http://localhost:8080/api/facilities/0/administrators
+Accept: application/json
+
+### get one administrator from existing facility - 200
+GET http://localhost:8080/api/facilities/2/administrators/3
+Accept: application/json
+
+### get one administrator from non-related facility - 404
+GET http://localhost:8080/api/facilities/1/administrators/3
+Accept: application/json
+
+### get none-existing administrator from existing facility - 404
+GET http://localhost:8080/api/facilities/1/administrators/0
+Accept: application/json
+
+### create administrator from existing facility - 201
+POST http://localhost:8080/api/facilities/1/administrators
+Accept: application/json
+Content-Type: application/json
+//password: john
+
+{
+  "firstName": "Johnny",
+  "lastName": "Depp",
+  "password": "$2a$12$7umM7R4JrLdFICxhpFOBTu9JALislEpPvfNvQpM7u5QW7AkVc6zKa",
+  "phoneNumber": "+12345656789",
+  "email": "johnny@gmail.com"
+}
+
+### create administrator from non existing facility - 404
+POST http://localhost:8080/api/facilities/4/administrators
+Accept: application/json
+Content-Type: application/json
+//password: john
+
+{
+  "firstName": "Johnny",
+  "lastName": "Depp",
+  "password": "$2a$12$7umM7R4JrLdFICxhpFOBTu9JALislEpPvfNvQpM7u5QW7AkVc6zKa",
+  "phoneNumber": "+12345656789",
+  "email": "johnny@gmail.com"
+}
+
+### create already existing administrator from existing facility - 409
+POST http://localhost:8080/api/facilities/1/administrators
+Accept: application/json
+Content-Type: application/json
+//password: john
+
+{
+  "firstName": "Alina",
+  "lastName": "Copycat",
+  "password": "$2a$12$7umM7R4JrLdFICxhpFOBTu9JALislEpPvfNvQpM7u5QW7AkVc6zKa",
+  "phoneNumber": "112",
+  "email": "alina.dimova@student.kdg.be"
+}
+
+### update existing administrator from existing facility - 200
+PATCH http://localhost:8080/api/facilities/1/administrators/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "firstName": "Johnny",
+  "email": "johnny@gmail.com"
+}
+
+### update existing administrator with already existing email from existing facility - 409
+PATCH http://localhost:8080/api/facilities/1/administrators/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "firstName": "Johnny",
+  "email": "aleksiya.solovyova@student.kdg.be"
+}
+
+
+
