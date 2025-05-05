@@ -6,7 +6,9 @@ import be.kdg.swiftby.service.dto.FunctionalCheckDTO;
 import java.util.UUID;
 
 public interface FunctionalityCheckService {
-    FunctionalityCheck save(FunctionalCheckDTO dto);
 
-//    FunctionalCheckDTO getByTestId(UUID testId);
+    FunctionalityCheck save(FunctionalityCheck check);
+
+    FunctionalityCheck findById(Long id);
+
 }
