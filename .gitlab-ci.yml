@@ -10,7 +10,7 @@ variables:
   TF_VAR_region: "westeurope"
   PROJECT_REPO: "https://oauth2:${SWIFT_BY_TOKEN}@gitlab.com/kdg-ti/integration-4/2024-2025/team-8/biketrust.git"
   INFRA_REPO: "https://oauth2:${INFRA_REPO_TOKEN}@gitlab.com/kdg-ti/integration-4/2024-2025/team-8/infrastructureautomation.git"
-  
+
 create-vm:
   stage: create_vm
   image: alpine:3.18
@@ -53,12 +53,13 @@ test:
         ./gradlew test
        EOF
   artifacts:
+    when: always
     reports:
       junit: build/test-results/test/TEST-*.xml
   allow_failure: false
   only:
     - development
-  
+
 
 destroy:
   stage: destroy

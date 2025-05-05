@@ -1,25 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     const summaryContainer = document.getElementById("summaryContainer");
     const summaryId = summaryContainer.dataset.summaryId;
-    const bikeContainer = document.getElementById("bikeId");
-    const bikeId = bikeContainer ? bikeContainer.dataset.bikeId : null;
 
     if (!summaryId) {
-        alert("No report ID provided and nothing stored from last visit.");
+        alert("No report ID provided!");
         return;
     }
 
     fetch(`/api/report-summaries/${summaryId}`)
-        .then(response => {
-            if (!response.ok) throw new Error(); // silent fail trigger
-            return response.json();
-        })
-
+        .then(response => response.json())
         .then(data => {
             document.getElementById("summaryId").textContent = data.id;
-            if (bikeContainer && (bikeId != data.bikeId)) {
-                bikeContainer.innerText="N/A"
-            }
+            const bikeIdEl = document.getElementById("bikeId");
+            if (bikeIdEl) bikeIdEl.textContent = data.bikeId || "N/A";
 
             document.getElementById("reportTime").textContent = data.reportTime || "N/A";
 
@@ -48,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("statusPlug").textContent = data.statusPlug ? "Plugged In" : "Not Plugged In";
             document.getElementById("speed").textContent = `${(data.speed ?? 0).toFixed(2)} km/h`;
             document.getElementById("power").textContent = `${(data.power ?? 0).toFixed(2)} W`;
+            document.getElementById("technicianComment").textContent = data.technicianComment || "No comments";
 
             if (data.functionalityCheckId) {
                 fetch(`/api/functional-checks/${data.functionalityCheckId}`)
@@ -120,30 +114,63 @@ document.addEventListener("DOMContentLoaded", function () {
 
             fetch(`/api/report-summaries/${summaryId}/battery-test`)
                 .then(resp => {
-                    if (!resp.ok) throw new Error("Battery test not found");
+                    if (!resp.ok) throw new Error("Battery test data unavailable");
                     return resp.json();
                 })
-                .then(renderBatteryTest)
+                .then(data => {
+                    document.getElementById("availableCapacityWh").textContent =
+                        data.availableCapacityWh?.toFixed(2) ?? "N/A";
+                    document.getElementById("promisedCapacityWh").textContent =
+                        data.promisedCapacityWh ?? "N/A";
+                    document.getElementById("batteryHealthPercent").textContent =
+                        data.batteryHealthPercent !== undefined
+                            ? data.batteryHealthPercent.toFixed(1) + "%"
+                            : "N/A";
+                    document.getElementById("batteryTestScore").textContent =
+                        data.score !== undefined ? Math.round(data.score) : "N/A";
+
+                    document.getElementById("batteryTestCard").style.display = "block";
+                    document.getElementById("batteryTestUnavailable").style.display = "none";
+                })
                 .catch(err => {
-                    console.error("Battery test fetch failed:", err);
-                    const card = document.getElementById("batteryTestCard");
-                    if (card) card.style.display = "none";
+                    console.warn("Battery test not available:", err);
+                    document.getElementById("batteryTestCard").style.display = "none";
+                    document.getElementById("batteryTestUnavailable").style.display = "block";
                 });
 
 
-            function renderBatteryTest(data) {
-                const cap = document.getElementById("availableCapacityWh");
-                const promised = document.getElementById("promisedCapacityWh");
-                const health = document.getElementById("batteryHealthPercent");
-                const score = document.getElementById("batteryTestScore");
+            // Bearing Health
+            fetch(`/api/report-summaries/${summaryId}/bearing-health?horizontalThreshold=3.0&verticalThreshold=3.0`)
+                .then(resp => {
+                    if (!resp.ok) throw new Error("Failed to evaluate bearing health");
+                    return resp.text();
+                })
+                .then(result => {
+                    document.getElementById("bearingHealthResult").textContent = result;
+                })
+                .catch(err => {
+                    console.warn("No bearing health result found:", err);
+                    document.getElementById("bearingHealthCard").style.display = "none";
+                });
 
-                if (cap) cap.textContent = data.availableCapacityWh?.toFixed(2) ?? "N/A";
-                if (promised) promised.textContent = data.promisedCapacityWh?.toFixed(1) ?? "N/A";
-                if (health) health.textContent = data.batteryHealthPercent != null ? data.batteryHealthPercent.toFixed(1) + "%" : "N/A";
-                if (score) score.textContent = data.score != null ? Math.round(data.score) : "N/A";
 
-                document.getElementById("batteryTestCard")?.classList.remove("d-none");
-                document.getElementById("batteryTestUnavailable")?.classList.add("d-none");
+
+
+
+            // Fill Visual Inspection table
+            if (data.visualInspection) {
+                const tableBody = document.getElementById("visualInspectionTableBody");
+                tableBody.innerHTML = "";
+                data.visualInspection.forEach(item => {
+                    const row = document.createElement("tr");
+                    const partCell = document.createElement("td");
+                    partCell.textContent = item.part || "Unknown Part";
+                    const conditionCell = document.createElement("td");
+                    conditionCell.textContent = item.condition || "N/A";
+                    row.appendChild(partCell);
+                    row.appendChild(conditionCell);
+                    tableBody.appendChild(row);
+                });
             }
 
 
@@ -188,6 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
 
+            // Fill Bearing Health table
             if (data.bearingHealth) {
                 const tableBody = document.getElementById("bearingHealthTableBody");
                 tableBody.innerHTML = "";
@@ -205,6 +233,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             fetchBikeReports(summaryId);
+            generateQRCode(summaryId);
             const pdfBtn = document.getElementById("downloadPDF");
             if (pdfBtn) {
                 pdfBtn.addEventListener("click", () => {
@@ -220,51 +249,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-
         })
         .catch(error => {
             alert("Failed to load report summary. Please try again later.");
         });
-
-
-    function renderComparisonTable(reportA, reportB) {
-        const fields = {
-            "Average Mileage (km)": [reportA.avgMileage, reportB.avgMileage],
-            "Assistance Level (%)": [reportA.avgAssistanceLevel, reportB.avgAssistanceLevel],
-            "Speed (km/h)": [reportA.speed, reportB.speed],
-            "Power (W)": [reportA.power, reportB.power],
-            "Horizontal Inclination (°)": [reportA.horizontalInclination, reportB.horizontalInclination],
-            "Vertical Inclination (°)": [reportA.verticalInclination, reportB.verticalInclination],
-            "Battery Voltage (V)": [reportA.voltage, reportB.voltage],
-            "Battery Current (A)": [reportA.current, reportB.current],
-            "Battery Capacity (Ah)": [reportA.capacity, reportB.capacity],
-            "Battery Temp (°C)": [reportA.temperature, reportB.temperature],
-            "Max Engine Power (W)": [reportA.maxEnginePowerMeasured, reportB.maxEnginePowerMeasured],
-            "Promised Engine Power (W)": [reportA.maxEnginePowerPromised, reportB.maxEnginePowerPromised],
-            "Deviation (%)": [reportA.enginePowerDeviation, reportB.enginePowerDeviation],
-            "Cadence (RPM)": [reportA.cadence, reportB.cadence],
-            "Torque Crank (Nm)": [reportA.torqueCrank, reportB.torqueCrank],
-            "Status Plug": [reportA.statusPlug, reportB.statusPlug],
-            "Overall Score": [reportA.overallScore, reportB.overallScore],
-            // Add more if needed
-        };
-
-        const tbody = document.getElementById("comparisonTableBody");
-        tbody.innerHTML = '';
-
-        Object.entries(fields).forEach(([label, [a, b]]) => {
-            const tr = document.createElement('tr');
-            const different = a !== b;
-            tr.innerHTML = `
-            <td>${label}</td>
-            <td class="${different ? 'bg-warning text-dark' : ''}">${a ?? 'N/A'}</td>
-            <td class="${different ? 'bg-warning text-dark' : ''}">${b ?? 'N/A'}</td>
-        `;
-            tbody.appendChild(tr);
-        });
-    }
-
-
 
     function fetchBikeReports(summaryId) {
         const tableHead = document.getElementById("summaryTableHead");
@@ -331,20 +319,39 @@ document.addEventListener("DOMContentLoaded", function () {
             rol: report.testBenchData?.rol,
             loadPower: report.testBenchData?.loadPower,
             statusPlug: report.testBenchData?.statusPlug,
+            testBenchId: report.testBenchData?.testBenchId,
+            brand: report.bike?.brand,
+            type: report.bike?.type,
+            chassisNumber: report.bike?.chassisNumber,
+            powertrain: report.bike?.powertrain,
+            bikeSize: report.bike?.bikeSize,
+            maxSupport: report.bike?.maxSupport,
+            batteryCapacity: report.bike?.batteryCapacity
         };
     }
 
-    document.getElementById("viewGraphBtn")?.addEventListener("click", () => {
-        const id = new URLSearchParams(window.location.search).get("id") || localStorage.getItem("lastSummaryId");
-        const compareId = document.getElementById("compareId")?.value;
+    function generateQRCode(summaryId) {
+        const qrContainer = document.getElementById("qrcode");
+        const downloadBtn = document.getElementById("downloadQR");
+        if (!qrContainer || !downloadBtn) return;
 
-        if (id) localStorage.setItem("lastSummaryId", id);
-        if (compareId) localStorage.setItem("lastCompareToId", compareId);
+        qrContainer.innerHTML = "";
+        const reportUrl = `${window.location.origin}/report-summary?id=${summaryId}`;
+        new QRCode(qrContainer, {
+            text: reportUrl,
+            width: 150,
+            height: 150
+        });
 
-        window.location.href = "/report-visualization";
-    });
+        downloadBtn.addEventListener("click", () => {
+            const qrCanvas = qrContainer.querySelector("canvas");
+            if (!qrCanvas) return;
 
-
-
-
+            const qrImage = qrCanvas.toDataURL("image/png");
+            const a = document.createElement("a");
+            a.href = qrImage;
+            a.download = `QR_Code_${summaryId}.png`;
+            a.click();
+        });
+    }
 });

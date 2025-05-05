@@ -1,10 +1,7 @@
 package be.kdg.swiftby.presentation.controller;
 
-import be.kdg.swiftby.domain.bike.BikeInstance;
-import be.kdg.swiftby.domain.bike.BikeModel;
+import be.kdg.swiftby.domain.bike.Bike;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
-import be.kdg.swiftby.domain.testEnv.BikeOwner;
-import be.kdg.swiftby.domain.testEnv.Employee;
 import be.kdg.swiftby.domain.testEnv.Facility;
 import be.kdg.swiftby.service.intf.AdministratorService;
 import be.kdg.swiftby.service.intf.BikeInstanceService;
@@ -52,7 +49,6 @@ public class BikeController {
 
         return "all-bikes";
     }
-
     @GetMapping("/bike-details")
     public String showBikeDetails(@RequestParam Long id, Model model) {
         BikeInstance bikeInstance = bikeInstanceService.getById(id);
@@ -69,5 +65,3 @@ public class BikeController {
         model.addAttribute("models", models);
         return "bike-models";
     }
-
-}

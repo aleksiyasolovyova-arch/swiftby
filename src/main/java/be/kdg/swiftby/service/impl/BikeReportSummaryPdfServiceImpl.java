@@ -72,8 +72,12 @@ public class BikeReportSummaryPdfServiceImpl implements BikeReportSummaryPdfServ
                     "Rol:", String.format("%.2f", summary.getRol()),
                     "Status Plug:", summary.isStatusPlug() ? "Plugged In" : "Not Plugged");
 
+
             //technician Notes Section
             addStyledCard(document, "Technician Notes", labelFont, valueFont, "Technician Comment:", summary.getTechnicianComment() != null ? summary.getTechnicianComment() : "No comments");
+
+
+
 
             document.close();
             return out.toByteArray();

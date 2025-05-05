@@ -1,3 +1,2 @@
-GET http://localhost:8080/api/report-summaries/1/battery-test
-
+GET http://localhost:8080/api/report-summaries/5/battery-test
 Accept: application/json

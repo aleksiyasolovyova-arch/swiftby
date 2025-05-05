@@ -1,22 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>All Bikes</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" href="/css/all-bikes.css">
-    <script src="/js/all-bikes.js" defer></script>
-
+    <script src="/js/all-bikes-customer.js" defer></script>
 </head>
 <body>
+<header th:insert="~{fragments/header :: header('Bikes')}"></header>
 
-<header th:insert="~{fragments/header :: header('Bikes')}" class="mb-4"></header>
-
-<input type="hidden" id="facilityId" th:value="${facilityId}"/>
 <input type="hidden" id="bikeOwnerId" th:value="${bikeOwnerId}">
 
 <main class="m-0 p-0">
     <div class="container mb-4 mt-5 glassmorphism">
-        <h2 class="facility-header text-center mb-4">All Bikes in Facility</h2>
+        <h2 class="facility-header text-center mb-4">My bikes</h2>
 
         <div id="bikeList" class="d-flex flex-wrap justify-content-center gap-4"></div>
     </div>
@@ -26,6 +23,6 @@
 <footer th:insert="~{fragments/footer :: footer}" class="p-0 mt-4 ">
     <span>© 2025 eVALeBike</span>
 </footer>
-
 </body>
+
 </html>
