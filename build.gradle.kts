@@ -42,6 +42,7 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql:42.7.2")
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    runtimeOnly("com.microsoft.sqlserver:mssql-jdbc")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("org.apache.commons:commons-csv:1.13.0")
     implementation("org.webjars:webjars-locator-core:0.59")

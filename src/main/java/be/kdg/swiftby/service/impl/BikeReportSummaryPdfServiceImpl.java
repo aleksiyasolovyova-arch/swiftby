@@ -55,7 +55,7 @@ public class BikeReportSummaryPdfServiceImpl implements BikeReportSummaryPdfServ
             //battery & engine Data Section
             addStyledCard(document, "Battery & Engine Data", labelFont, valueFont,
                     "Charge Status:", summary.isChargeStatus() ? "Charging" : "Not Charging",
-                    "Battery Current:", String.format("%.2f A", summary.getCurrent()),
+                    "Battery Current:", String.format("%.2f A", summary.getBatteryCurrent()),
                     "Battery Voltage:", String.format("%.2f V", summary.getVoltage()),
                     "Battery Capacity:", String.format("%.2f Ah", summary.getCapacity()),
                     "Battery Temperature:", String.format("%.2f°C", summary.getTemperature()),

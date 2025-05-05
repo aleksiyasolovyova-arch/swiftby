@@ -2,8 +2,10 @@ package be.kdg.swiftby.security.controller;
 
 import be.kdg.swiftby.domain.exception.AlreadyExistsException;
 import be.kdg.swiftby.domain.testEnv.User;
+import be.kdg.swiftby.email.EmailService;
 import be.kdg.swiftby.security.ProfileDto;
 import be.kdg.swiftby.security.service.ProfileServiceInt;
+import com.postmarkapp.postmark.client.exception.PostmarkException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -20,15 +22,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Locale;
 
 @Controller
 public class RegistrationController {
     private final ProfileServiceInt profileService;
+    private final EmailService emailService;
 
-    public RegistrationController(ProfileServiceInt profileService) {
+    public RegistrationController(ProfileServiceInt profileService, EmailService emailService) {
         this.profileService = profileService;
+        this.emailService = emailService;
     }
 
     @GetMapping("/registration")
@@ -41,7 +46,7 @@ public class RegistrationController {
     @PostMapping("/registration")
     public ModelAndView registerUserAccount(@ModelAttribute("user") @Valid ProfileDto userDto,
                                             BindingResult result,
-                                            HttpServletRequest request) {
+                                            HttpServletRequest request) throws IOException, PostmarkException {
         ModelAndView mav = new ModelAndView();
 
         if (result.hasErrors()) {
@@ -57,8 +62,7 @@ public class RegistrationController {
             return mav;
         }
 
-        mav.setViewName("successRegister");
-        mav.addObject("user", userDto);
-        return mav;
+        emailService.sendAccountRegistrationEmail(userDto.getUsername(), userDto.getFirstName(), "www.swiftby.be");
+        return new ModelAndView("successRegister", "user", userDto);
     }
 }

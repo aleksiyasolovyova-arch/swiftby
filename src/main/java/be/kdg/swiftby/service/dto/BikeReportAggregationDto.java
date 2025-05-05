@@ -84,7 +84,7 @@ public class BikeReportAggregationDto {
         summary.setAvgAssistanceLevel(aggregation.getAvgAssistanceLevel());
         summary.setHorizontalInclination(aggregation.getHorizontalInclination());
         summary.setVerticalInclination(aggregation.getVerticalInclination());
-        summary.setCurrent(aggregation.getBatteryCurrent());
+        summary.setBatteryCurrent(aggregation.getBatteryCurrent());
         summary.setVoltage(aggregation.getBatteryVoltage());
         summary.setCapacity(aggregation.getBatteryCapacity());
         summary.setTemperature(aggregation.getBatteryTemperature());
