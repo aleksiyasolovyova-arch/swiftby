@@ -5,8 +5,8 @@ stages:
   - destroy
 
 variables:
-  VM_IP: "51.124.189.117"      # Your VM's public IP
-  VM_USER: "mj"                # Your VM's username
+  VM_IP: "51.124.189.117"      
+  VM_USER: "mj"                
   SSH_PORT: 22
 
 build-job:
@@ -14,6 +14,9 @@ build-job:
   image: gradle:jdk21
   script:
     - ./gradlew build
+  only:
+    - development
+    - main
 
 unit-test-job:
   stage: test
@@ -25,6 +28,9 @@ unit-test-job:
     reports:
       junit: builds/test-results/test/*.xml
   when: manual
+  only: 
+    - development
+    - main
 
 deploy-job:
   stage: deploy
@@ -46,6 +52,7 @@ deploy-job:
         bash scripts/deploy.sh"
   only:
     - development
+    - main
 
 destroy-job:
   stage: destroy
@@ -63,3 +70,4 @@ destroy-job:
         bash scripts/destroy.sh"
   only:
     - development
+    - main
