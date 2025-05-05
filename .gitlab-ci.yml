@@ -51,7 +51,6 @@ destroy-job:
   stage: destroy
   image: almalinux:latest
   before_script:
-    - dnf install -y openssh openssh-clients
     - mkdir -p ~/.ssh
     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa  # No need to base64 decode
     - chmod 600 ~/.ssh/id_rsa
@@ -62,6 +61,5 @@ destroy-job:
     - ssh -p $SSH_PORT $VM_USER@$VM_IP "
         cd ~/biketrust &&
         bash scripts/destroy.sh"
-  when: manual
   only:
     - development
