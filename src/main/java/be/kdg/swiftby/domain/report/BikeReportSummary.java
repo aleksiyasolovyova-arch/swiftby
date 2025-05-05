@@ -61,6 +61,9 @@ public class BikeReportSummary {
     @JoinColumn(name = "functionality_check_id")
     private FunctionalityCheck functionalityCheck;
 
+    @Column(name = "bearing_health")
+    private String bearingHealth;
+
 //    private long reportCount;
 //
 //    private double avgBatteryCurrent;

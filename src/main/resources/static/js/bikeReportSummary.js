@@ -43,6 +43,120 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("power").textContent = `${(data.power ?? 0).toFixed(2)} W`;
             document.getElementById("technicianComment").textContent = data.technicianComment || "No comments";
 
+            if (data.functionalityCheckId) {
+                fetch(`/api/functional-checks/${data.functionalityCheckId}`)
+                    .then(resp => resp.json())
+                    .then(check => {
+                        const container = document.getElementById("functionalCheckContainer");
+                        container.innerHTML = `
+                <div class="glass-card">
+                    <div class="card-header">Functional Check</div>
+                    <div class="card-body">
+                        <p><strong>Lights:</strong> ${check.lightsStatus}</p>
+                        <p><strong>Brakes:</strong> ${check.brakesStatus}</p>
+                        <p><strong>Display:</strong> ${check.displayStatus}</p>
+                        <p><strong>Horn:</strong> ${check.hornStatus}</p>
+                        <p><strong>Motor:</strong> ${check.motorStatus}</p>
+                        <p><strong>Battery:</strong> ${check.batteryStatus}</p>
+                    </div>
+                </div>
+            `;
+                    })
+                    .catch(err => console.error("Failed to load functionality check:", err));
+            }
+
+
+            fetch(`/api/report-summaries/${summaryId}/test-procedure-overview`)
+                .then(resp => {
+                    if (!resp.ok) throw new Error("Failed to load overview");
+                    return resp.json();
+                })
+                .then(overview => {
+                    document.getElementById("maxEnginePowerMeasured").textContent = overview.maxEnginePowerMeasured?.toFixed(2) ?? "N/A";
+                    document.getElementById("maxEnginePowerPromised").textContent = overview.maxEnginePowerPromised?.toFixed(2) ?? "N/A";
+                    document.getElementById("enginePowerDeviation").textContent = overview.enginePowerDeviation?.toFixed(2) ?? "N/A";
+
+                    document.getElementById("maxRollerTorqueMeasured").textContent = overview.maxRollerTorqueMeasured?.toFixed(2) ?? "N/A";
+                    document.getElementById("promisedTorque").textContent = overview.promisedTorque?.toFixed(2) ?? "N/A";
+                    document.getElementById("rollerTorqueDeviation").textContent = overview.rollerTorqueDeviation?.toFixed(2) ?? "N/A";
+
+                    document.getElementById("maxWheelPowerMeasured").textContent = overview.maxWheelPowerMeasured?.toFixed(2) ?? "N/A";
+                    document.getElementById("promisedWheelPower").textContent = overview.promisedWheelPower?.toFixed(2) ?? "N/A";
+                    document.getElementById("wheelPowerDeviation").textContent = overview.wheelPowerDeviation?.toFixed(2) ?? "N/A";
+
+                    document.getElementById("maxSupport").textContent = overview.maxSupport?.toFixed(2) ?? "N/A";
+                    document.getElementById("maxSupportDeviation").textContent = overview.maxSupportDeviation?.toFixed(2) ?? "N/A";
+
+                    document.getElementById("overallScore").textContent = overview.overallScore?.toFixed(2) ?? "N/A";
+                })
+                .catch(err => {
+                    console.warn("No test procedure overview found:", err);
+                    const card = document.getElementById("testProcedureOverviewCard");
+                    if (card) card.style.display = "none";
+                });
+
+            // Nominal Load Test
+            fetch(`/api/report-summaries/${summaryId}/nominal-load`)
+                .then(resp => {
+                    if (!resp.ok) throw new Error("Failed to load nominal load test");
+                    return resp.json();
+                })
+                .then(data => {
+                    document.getElementById("averageEnginePower").textContent = data.averageEnginePower?.toFixed(2) ?? "N/A";
+                    document.getElementById("temperatureIncrease").textContent = data.temperatureIncrease?.toFixed(2) ?? "N/A";
+                })
+                .catch(err => {
+                    console.warn("No nominal load test found:", err);
+                    const card = document.getElementById("nominalLoadTestCard");
+                    if (card) card.style.display = "none";
+                });
+
+
+            fetch(`/api/report-summaries/${summaryId}/battery-test`)
+                .then(resp => {
+                    if (!resp.ok) throw new Error("Battery test data unavailable");
+                    return resp.json();
+                })
+                .then(data => {
+                    document.getElementById("availableCapacityWh").textContent =
+                        data.availableCapacityWh?.toFixed(2) ?? "N/A";
+                    document.getElementById("promisedCapacityWh").textContent =
+                        data.promisedCapacityWh ?? "N/A";
+                    document.getElementById("batteryHealthPercent").textContent =
+                        data.batteryHealthPercent !== undefined
+                            ? data.batteryHealthPercent.toFixed(1) + "%"
+                            : "N/A";
+                    document.getElementById("batteryTestScore").textContent =
+                        data.score !== undefined ? Math.round(data.score) : "N/A";
+
+                    document.getElementById("batteryTestCard").style.display = "block";
+                    document.getElementById("batteryTestUnavailable").style.display = "none";
+                })
+                .catch(err => {
+                    console.warn("Battery test not available:", err);
+                    document.getElementById("batteryTestCard").style.display = "none";
+                    document.getElementById("batteryTestUnavailable").style.display = "block";
+                });
+
+
+            // Bearing Health
+            fetch(`/api/report-summaries/${summaryId}/bearing-health?horizontalThreshold=3.0&verticalThreshold=3.0`)
+                .then(resp => {
+                    if (!resp.ok) throw new Error("Failed to evaluate bearing health");
+                    return resp.text();
+                })
+                .then(result => {
+                    document.getElementById("bearingHealthResult").textContent = result;
+                })
+                .catch(err => {
+                    console.warn("No bearing health result found:", err);
+                    document.getElementById("bearingHealthCard").style.display = "none";
+                });
+
+
+
+
+
             // Fill Visual Inspection table
             if (data.visualInspection) {
                 const tableBody = document.getElementById("visualInspectionTableBody");

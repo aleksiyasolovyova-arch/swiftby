@@ -1,0 +1,2 @@
+GET http://localhost:8080/api/report-summaries/5/nominal-load
+Accept: application/json
