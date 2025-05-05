@@ -17,26 +17,24 @@
 <header th:insert="~{fragments/header :: header(${currentPage})}"></header>
 
 <div class="container-fluid">
-    <div class="row mb-4 text-center">
+    <div class="row mb-4 justify-content-center">
         <div class="col-md-3">
             <a href="/checklist">
                 <button type="button" class="btn btn-outline-dark w-100">Start New Test</button>
-
             </a>
         </div>
-        <div class="col-md-3">
-            <button type="button" class="btn btn-outline-dark w-100">Insert RAW Data</button>
-        </div>
+
         <div class="col-md-3">
             <a href="/technician/reports">
                 <button type="button" class="btn btn-outline-dark w-100">View Reports</button>
-
             </a>
         </div>
+
         <div class="col-md-3">
             <button type="button" class="btn btn-success w-100">Bench Status: Optimal</button>
         </div>
     </div>
+
 
     <div class="row mb-4">
         <div class="col-md-6 d-flex flex-row justify-content-center">
