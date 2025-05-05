@@ -1,15 +1,13 @@
 package be.kdg.swiftby.domain.testEnv;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-@Entity
+import jakarta.persistence.*;
+import lombok.*;
+
+@MappedSuperclass
 @EqualsAndHashCode(callSuper = true)
-@Data
-public abstract class Employee extends SBUser{
+@Getter
+@Setter
+public abstract class Employee extends User {
     @ManyToOne
     @JoinColumn(name = "facility_id")
     private Facility facility;
