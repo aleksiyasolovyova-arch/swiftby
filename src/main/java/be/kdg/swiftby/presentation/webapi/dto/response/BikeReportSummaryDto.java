@@ -1,5 +1,7 @@
 package be.kdg.swiftby.presentation.webapi.dto.response;
 
+import be.kdg.swiftby.service.dto.FunctionalCheckDTO;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,7 +14,7 @@ public record BikeReportSummaryDto(
         double horizontalInclination,
         double verticalInclination,
         boolean chargeStatus,
-        double current,
+        double batteryCurrent,
         double voltage,
         double capacity,
         double temperature,
@@ -31,6 +33,9 @@ public record BikeReportSummaryDto(
         double speed,
         double power,
         String technicianComment,
-        List<Long> reportIds
+        List<Long> reportIds,
+        Long functionalityCheckId,
+        String bearingHealth
+
 
 ) {}

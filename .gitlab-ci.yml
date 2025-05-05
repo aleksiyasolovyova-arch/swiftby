@@ -5,8 +5,8 @@ stages:
   - destroy
 
 variables:
-  VM_IP: "51.124.189.117"      
-  VM_USER: "mj"                
+  VM_IP: "51.124.189.117"
+  VM_USER: "mj"
   SSH_PORT: 22
 
 build-job:
@@ -28,7 +28,7 @@ unit-test-job:
     reports:
       junit: builds/test-results/test/*.xml
   when: manual
-  only: 
+  only:
     - development
     - main
 
@@ -60,7 +60,7 @@ destroy-job:
   before_script:
     - dnf install -y openssh openssh-clients
     - mkdir -p ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa  
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - eval $(ssh-agent -s)
     - ssh-add ~/.ssh/id_rsa

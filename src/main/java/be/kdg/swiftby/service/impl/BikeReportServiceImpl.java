@@ -105,11 +105,11 @@ public class BikeReportServiceImpl implements BikeReportService {
     }
 
     // TODO: USE THIS INSTEAD OF AGGREGATING IN JAVA
-    @Override
-    public BikeReportSummary saveReportSummary(Long bikeId, LocalDate reportDate) {
-        BikeReportSummary summary = bikeReportSummaryRepository.getBikeReportSummary(bikeId, reportDate);
-        return bikeReportSummaryRepository.save(summary);
-    }
+//    @Override
+//    public BikeReportSummary saveReportSummary(Long bikeId, LocalDate reportDate) {
+//        BikeReportSummary summary = bikeReportSummaryRepository.getBikeReportSummary(bikeId, reportDate);
+//        return bikeReportSummaryRepository.save(summary);
+//    }
 
     @Override
     public void remove(Long id) {

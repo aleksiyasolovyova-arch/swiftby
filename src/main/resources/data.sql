@@ -11,12 +11,14 @@ INSERT INTO super_admin (email, first_name, last_name, password, phone_number) V
 INSERT INTO axial_sensor_data (horizontal_inclination, vertical_inclination) VALUES
                                                                                  (15.5, 30.2),
                                                                                  (10.3, 25.7),
+                                                                                 (10.3, 25.7),
                                                                                  (12.8, 28.4);
 
-INSERT INTO battery_data (capacity, charge_status, battery_current, temperature, voltage) VALUES
-                                                                                      (5000, 1, 12.5, 25.4, 48.2),
-                                                                                      (6000, 0, 10.8, 30.0, 50.1),
-                                                                                      (7000, 1, 11.2, 28.5, 49.5);
+INSERT INTO battery_data (capacity, charge_status, battery_current, temperature, voltage)
+VALUES
+    (5000, 1, 12.5, 25.4, 48.2),
+    (6000, 0, 10.8, 30.0, 50.1),
+    (7000, 1, 11.2, 28.5, 49.5);
 
 INSERT INTO facility (address_extra, city, country, email, name, street, street_number, zip_code) VALUES
                                                                                                       ('Unit 5', 'Springfield', 'USA', 'facility@example.com', 'Test Facility', 'Main St', '123', '98765'),
@@ -55,11 +57,13 @@ INSERT INTO motor (max_power, nominal_power, torque, engine_type, gear_type) VAL
 INSERT INTO bike (battery_capacity, bike_size, max_support, powertrain, motor_id, brand, chassis_number, type)
 VALUES
     (5000, 2, 250, 1, 1, 'Trek', 'CHSN12345', 'Mountain'),
-    (6000, 3, 300, 0, 2, 'Giant', 'CHSN67890', 'Road');
+    (6000, 3, 300, 0, 2, 'Giant', 'CHSN67890', 'Road'),
+    (6000, 3, 300, 0, 2, 'Giant', 'CHSN67891', 'Road');
 
-INSERT INTO bike_ownerships (bike_id, bike_owner_id) VALUES (1, 1);
 
-INSERT INTO bike_ownerships (bike_id, bike_owner_id) VALUES (2, 2);
+INSERT INTO bike_ownerships (bike_id, bike_owner_id) VALUES (1, 1),
+                                                            (2, 2),
+                                                            (3, 1);
 
 INSERT INTO motor_data (engine, engine_power) VALUES
                                                   (1, 250.5),

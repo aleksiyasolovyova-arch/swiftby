@@ -6,6 +6,9 @@ import be.kdg.swiftby.presentation.webapi.dto.BikeReportSummaryApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportApiResponseDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportSummaryDto;
 import be.kdg.swiftby.service.dto.BikeReportChartDto;
+import be.kdg.swiftby.service.dto.data.BatteryTestDto;
+import be.kdg.swiftby.service.dto.data.NominalLoadTestDto;
+import be.kdg.swiftby.service.dto.data.TestProcedureOverviewDto;
 import be.kdg.swiftby.service.intf.BikeReportService;
 import be.kdg.swiftby.service.intf.BikeReportSummaryPdfService;
 import be.kdg.swiftby.service.intf.BikeReportSummaryService;
@@ -96,10 +99,55 @@ public class BikeReportSummaryApiController {
 
     }
 
-    @GetMapping("/{summaryId}/chart-data")
-    public ResponseEntity<List<BikeReportChartDto>> getChartData(@PathVariable Long summaryId) {
-        return ResponseEntity.ok(bikeReportSummaryService.getChartDataForSummary(summaryId));
+//    @GetMapping("/{summaryId}/chart-data")
+//    public ResponseEntity<List<BikeReportChartDto>> getChartData(@PathVariable Long summaryId) {
+//        return ResponseEntity.ok(bikeReportSummaryService.getChartDataForSummary(summaryId));
+//    }
+
+    @GetMapping("/{summaryId}/nominal-load")
+    public ResponseEntity<NominalLoadTestDto> getNominalLoad(@PathVariable Long summaryId) {
+        return ResponseEntity.ok(bikeReportSummaryService.getNominalLoadTest(summaryId));
     }
+
+
+    @GetMapping("/{summaryId}/battery-test")
+    public ResponseEntity<BatteryTestDto> getBatteryTest(@PathVariable Long summaryId) {
+        return ResponseEntity.ok(bikeReportSummaryService.getBatteryTest(summaryId));
+    }
+
+
+    @GetMapping("/{summaryId}/bearing-health")
+    public ResponseEntity<String> evaluateBearingHealth(
+            @PathVariable Long summaryId,
+            @RequestParam double horizontalThreshold,
+            @RequestParam double verticalThreshold
+    ) {
+        String result = bikeReportSummaryService.evaluateAndStoreBearingHealth(summaryId, horizontalThreshold, verticalThreshold);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/{summaryId}/test-procedure-overview")
+    public ResponseEntity<TestProcedureOverviewDto> getTestProcedureOverview(@PathVariable Long summaryId) {
+        return ResponseEntity.ok(bikeReportSummaryService.getTestProcedureOverview(summaryId));
+    }
+
+
+    @GetMapping("/{summaryId}/chart-data")
+    public List<BikeReportChartDto> getChartData(
+            @PathVariable Long summaryId,
+            @RequestParam(defaultValue = "raw") String mode,
+            @RequestParam(defaultValue = "1") int intervalSeconds
+    ) {
+        return bikeReportSummaryService.getChartDataWithInterval(summaryId, mode, intervalSeconds);
+    }
+
+
+
+
+
+
+
+
 
 
 

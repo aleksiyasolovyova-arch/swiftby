@@ -35,13 +35,16 @@ public class BikeController {
 
         if (facility == null) {
             try {
+                System.out.println("You bitch");
                 facility = technicianService.getByEmail(email).getFacility();
+                System.out.println(facility);
             } catch (Exception ignored) {}
         }
 
         model.addAttribute("facilityId", facility.getId());
         return "all-bikes";
     }
+
     @GetMapping("/bike-details")
     public String showBikeDetails(@RequestParam Long id, Model model) {
         Bike bike = bikeService.getById(id);
