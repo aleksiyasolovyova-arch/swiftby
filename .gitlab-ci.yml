@@ -1,12 +1,4 @@
 stages:
-  - deploy
-
-variables:
-  VM_IP: "51.124.189.117"
-  VM_USER: "mj"
-  SSH_PORT: 22
-
-stages:
   - build
   - test
   - deploy
