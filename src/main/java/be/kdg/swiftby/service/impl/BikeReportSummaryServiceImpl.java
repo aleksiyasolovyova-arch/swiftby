@@ -79,7 +79,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
                     long time = entry.getKey() * intervalSeconds;
 
                     double voltage = group.stream().mapToDouble(r -> r.getBatteryData() != null ? r.getBatteryData().getVoltage() : 0).average().orElse(0);
-                    double current = group.stream().mapToDouble(r -> r.getBatteryData() != null ? r.getBatteryData().getCurrent() : 0).average().orElse(0);
+                    double current = group.stream().mapToDouble(r -> r.getBatteryData() != null ? r.getBatteryData().getBatteryCurrent() : 0).average().orElse(0);
                     double temperature = group.stream().mapToDouble(r -> r.getBatteryData() != null ? r.getBatteryData().getTemperature() : 0).average().orElse(0);
                     double enginePower = group.stream().mapToDouble(r -> r.getMotorData() != null ? r.getMotorData().getEnginePower() : 0).average().orElse(0);
                     double wheelPower = group.stream().mapToDouble(r -> r.getWheelData() != null ? r.getWheelData().getPower() : 0).average().orElse(0);
