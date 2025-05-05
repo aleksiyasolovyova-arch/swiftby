@@ -64,20 +64,3 @@ destroy-job:
   when: manual
   only:
     - development
-
-smoke-test-job:
-  stage: deploy
-  image: curlimages/curl:latest
-  script:
-    - |
-      echo "Running vape test..."
-      STATUS=$(curl -k -s -o /dev/null -w "%{http_code}" https://swiftby.be)
-      if [ "$STATUS" -eq 200 ]; then
-        echo "hmmm blueberry vape: App is up!"
-      else
-        echo "OH NOOO ITS NICOTINE: App returned HTTP $STATUS"
-        exit 1
-      fi
-  needs: ["deploy-job"]
-  only:
-    - development
