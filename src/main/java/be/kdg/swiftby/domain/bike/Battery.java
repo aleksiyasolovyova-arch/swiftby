@@ -1,4 +1,4 @@
-package be.kdg.swiftby.domain.report;
+package be.kdg.swiftby.domain.bike;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,10 +7,10 @@ import jakarta.persistence.Id;
 import lombok.Data;
 @Entity
 @Data
-public class MotorData {
+public class Battery {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int engine;
-    private double enginePower;
+    private int capacity;
+
 }
