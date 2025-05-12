@@ -9,3 +9,5 @@ services:
       API_LINK: https://testbench.raoul.dev/api/test
       EMAIL_API: 1cc818ab-3dff-4089-bcfe-634d2f455015
       SPRING_PROFILES_ACTIVE: dev
+
+  70a2466 (development)
