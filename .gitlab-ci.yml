@@ -45,7 +45,7 @@ deploy-job:
     - ssh-keyscan -p $SSH_PORT $VM_IP >> ~/.ssh/known_hosts
   script:
     - ssh -p $SSH_PORT $VM_USER@$VM_IP "
-        cd ~/biketrust-main &&
+        cd ~/biketrust &&
         git reset --hard &&
         git checkout development &&
         git pull origin development &&
@@ -67,7 +67,7 @@ destroy-job:
     - ssh-keyscan -p $SSH_PORT $VM_IP >> ~/.ssh/known_hosts
   script:
     - ssh -p $SSH_PORT $VM_USER@$VM_IP "
-        cd ~/biketrust-main &&
+        cd ~/biketrust &&
         bash scripts/destroy.sh"
   only:
     - development
