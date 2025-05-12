@@ -4,13 +4,18 @@ import be.kdg.swiftby.TestUtils;
 import be.kdg.swiftby.config.DotenvInitializer;
 import be.kdg.swiftby.domain.bike.BikeInstance;
 import be.kdg.swiftby.domain.bike.BikeModel;
+import be.kdg.swiftby.domain.bike.Bike;
 import be.kdg.swiftby.domain.bike.BikeOwnership;
 import be.kdg.swiftby.domain.testEnv.Administrator;
 import be.kdg.swiftby.domain.testEnv.BikeOwner;
 import be.kdg.swiftby.domain.testEnv.Facility;
 import be.kdg.swiftby.domain.testEnv.Technician;
 import be.kdg.swiftby.repository.bike.BikeInstanceRepository;
+import be.kdg.swiftby.domain.testEnv.*;
 import be.kdg.swiftby.repository.bike.BikeOwnershipRepository;
+import be.kdg.swiftby.repository.bike.BikeRepository;
+import be.kdg.swiftby.repository.testEnvironment.BikeOwnerRepository;
+import be.kdg.swiftby.service.impl.UserServiceImpl;
 import be.kdg.swiftby.service.intf.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +37,8 @@ public class UserServiceTest {
     private TestUtils testUtils;
     @Autowired
     private BikeInstanceRepository bikeInstanceRepository;
+
+
 
     @Test
     void shouldReturnTechnician() {

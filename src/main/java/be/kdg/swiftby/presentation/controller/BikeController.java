@@ -3,6 +3,8 @@ package be.kdg.swiftby.presentation.controller;
 import be.kdg.swiftby.domain.bike.Bike;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.domain.testEnv.Facility;
+import be.kdg.swiftby.domain.testEnv.User;
+import be.kdg.swiftby.service.impl.UserUtilities;
 import be.kdg.swiftby.service.intf.AdministratorService;
 import be.kdg.swiftby.service.intf.BikeInstanceService;
 import be.kdg.swiftby.service.intf.BikeReportSummaryService;
@@ -37,6 +39,12 @@ public class BikeController {
         String email = principal.getName();
 
         User user = userService.getUserByEmail(email);
+     //   User user =  principal.getName();
+
+        Facility facility = null;
+        try {
+            facility = administratorService.getByEmail(email).getFacility();
+        } catch (Exception ignored) {}
 
         if (administratorService.existsByEmail(email) || technicianService.existsByEmail(email)) {
             Employee employee = (Employee) user;
