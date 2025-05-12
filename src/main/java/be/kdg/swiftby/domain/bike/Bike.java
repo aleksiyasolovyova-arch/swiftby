@@ -42,4 +42,16 @@ public class Bike {
     private Set<BikeReport> reports;
     @OneToMany(mappedBy = "bike")
     private Set<BikeReportSummary> summaries;
+
+    public Bike(@NonNull String brand, @NonNull String type, @NonNull String chassisNumber, @NonNull POWERTRAIN powertrain, @NonNull BIKE_SIZE bikeSize, @NonNull Integer maxSupport, @NonNull Integer batteryCapacity, @NonNull Motor motor, Set<BikeOwnership> ownerships) {
+        this.brand = brand;
+        this.type = type;
+        this.chassisNumber = chassisNumber;
+        this.powertrain = powertrain;
+        this.bikeSize = bikeSize;
+        this.maxSupport = maxSupport;
+        this.batteryCapacity = batteryCapacity;
+        this.motor = motor;
+        this.ownerships = ownerships;
+    }
 }

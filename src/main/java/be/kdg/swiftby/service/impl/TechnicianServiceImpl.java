@@ -20,14 +20,14 @@ import java.util.Optional;
 @Service
 @Transactional
 public class TechnicianServiceImpl implements TechnicianService {
-    TechnicianRepository technicianRepository;
-    AdministratorRepository administratorRepository;
-    FacilityRepository facilityRepository;
-    UserUtilities userUtilities;
+    private TechnicianRepository technicianRepository;
+    private AdministratorRepository administratorRepository;
+    private FacilityRepository facilityRepository;
+    private UserUtilities userUtilities;
 
-    FacilityMapper facilityMapper;
+    private FacilityMapper facilityMapper;
 
-    Logger log = LoggerFactory.getLogger(TechnicianService.class);
+    private Logger log = LoggerFactory.getLogger(TechnicianService.class);
 
     public TechnicianServiceImpl(TechnicianRepository technicianRepository,
                                  AdministratorRepository administratorRepository,

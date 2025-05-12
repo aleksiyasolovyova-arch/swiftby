@@ -3,6 +3,8 @@ package be.kdg.swiftby.presentation.controller;
 import be.kdg.swiftby.domain.bike.Bike;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.domain.testEnv.Facility;
+import be.kdg.swiftby.domain.testEnv.User;
+import be.kdg.swiftby.service.impl.UserUtilities;
 import be.kdg.swiftby.service.intf.AdministratorService;
 import be.kdg.swiftby.service.intf.BikeReportSummaryService;
 import be.kdg.swiftby.service.intf.BikeService;
@@ -25,8 +27,10 @@ public class BikeController {
     private final BikeReportSummaryService bikeReportSummaryService;
     // TODO: USE EMPLOYEE SERVICE FOR BETTER ABSTRACTION
     @GetMapping("/bikes")
-    public String showAllBikesForFacility(Principal principal, Model model) {
+    public String showAllBikes(Principal principal, Model model) {
         String email = principal.getName();
+
+     //   User user =  principal.getName();
 
         Facility facility = null;
         try {
