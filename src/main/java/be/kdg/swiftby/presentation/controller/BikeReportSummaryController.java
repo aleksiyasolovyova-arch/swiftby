@@ -1,6 +1,5 @@
 package be.kdg.swiftby.presentation.controller;
 
-import be.kdg.swiftby.domain.bike.BikeInstance;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.email.EmailService;
 import be.kdg.swiftby.service.intf.BikeReportSummaryPdfService;
@@ -27,12 +26,8 @@ public class BikeReportSummaryController {
     }
 
     @GetMapping("/report-summary")
-    public String showSummaryPage(@RequestParam Long id,
-                                  @RequestParam(required = false) Long compareTo,
-                                  Model model) {
-
+    public String showSummaryPage(@RequestParam Long id ,Model model) {
         BikeReportSummary summary = bikeReportSummaryService.getSummaryById(id);
-        Long bikeInstanceId = summary.getBikeInstance().getId();
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = null;
