@@ -12,7 +12,7 @@ INSERT INTO axial_sensor_data (horizontal_inclination, vertical_inclination) VAL
                                                                                  (15.5, 30.2),
                                                                                  (10.3, 25.7),
                                                                                  (10.3, 25.7),
-                                                                                 (12.8, 28.4);
+                                                                                  (12.8, 28.4);
 
 INSERT INTO battery_data (capacity, charge_status, battery_current, temperature, voltage)
 VALUES
