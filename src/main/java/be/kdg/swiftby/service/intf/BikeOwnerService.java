@@ -15,4 +15,6 @@ public interface BikeOwnerService {
     BikeOwner save(String email, String firstName, String lastName, String phoneNumber);
     void remove(Long id);
     List<BikeOwner> searchOwnersByEmail(String email);
+
+    boolean existsByEmail(String email);
 }

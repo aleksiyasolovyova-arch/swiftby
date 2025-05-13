@@ -87,4 +87,9 @@ public class BikeOwnerServiceImpl implements BikeOwnerService {
     public List<BikeOwner> searchOwnersByEmail(String email) {
         return bikeOwnerRepository.findByEmailContainingIgnoreCase(email);
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return bikeOwnerRepository.existsByEmail(email);
+    }
 }

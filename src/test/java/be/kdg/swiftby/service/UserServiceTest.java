@@ -80,15 +80,9 @@ public class UserServiceTest {
         //Act
         BikeOwner user = (BikeOwner) sut.getUserByEmail(bikeOwner.getEmail()); // get the user
         BikeOwnership bikeOwnership = bikeOwnershipRepository.findByOwnerId(user.getId()).getFirst(); // get the bike ownership
-        System.out.println("bikeownership id:" + bikeOwnership.getId());
         Bike foundBike = bikeRepository.findByBikeOwnershipId(bikeOwnership.getId()).orElseThrow(); // get the bike the user should have
 
         //Assert
-        assertThat(user)
-                .usingRecursiveComparison()
-                .ignoringFields("ownerships")
-                .isEqualTo(bikeOwner)
-        ;
         assertThat(bike)
                 .usingRecursiveComparison()
                 .ignoringFields("motor")
@@ -96,6 +90,11 @@ public class UserServiceTest {
                 .ignoringFields("reports")
                 .ignoringFields("summaries")
                 .isEqualTo(foundBike);
+        assertThat(user)
+                .usingRecursiveComparison()
+                .ignoringFields("ownerships")
+                .isEqualTo(bikeOwner)
+        ;
         assertEquals(BikeOwner.class, bikeOwner.getClass());
     }
 

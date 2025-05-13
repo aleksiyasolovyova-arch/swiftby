@@ -28,4 +28,6 @@ public interface AdministratorService {
     Administrator update(Long id, Long oldFacilityId, String email,
                          String password, String firstName, String lastName,
                          String phoneNumber, Long newFacilityId);
+
+    boolean existsByEmail(String email);
 }

@@ -1,10 +1,19 @@
 const bikeList = document.getElementById('bikeList');
 const facilityId = document.getElementById('facilityId').value;
+const bikeOwnerId = document.getElementById('bikeOwnerId').value;
+
 
 async function fetchBikes() {
-    const response = await fetch(`/api/facilities/${facilityId}/bikes`);
+    let response = null;
+    if (facilityId) {
+        response = await fetch(`/api/facilities/${facilityId}/bikes`);
+    } else if (bikeOwnerId) {
+        response = await fetch(`/api/bikeowners/${bikeOwnerId}/bikes`);
+    }
+
     const bikes = await response.json();
     bikeList.innerHTML = '';
+
 
     for (const bike of bikes) {
         const card = document.createElement('div');

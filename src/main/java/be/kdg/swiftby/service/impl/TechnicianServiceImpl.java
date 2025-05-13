@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -157,5 +156,10 @@ public class TechnicianServiceImpl implements TechnicianService {
     @Override
     public Technician getByEmail(String email) {
         return technicianRepository.findByEmail(email).get();
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return technicianRepository.existsByEmail(email);
     }
 }
