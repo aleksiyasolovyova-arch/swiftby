@@ -12,7 +12,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Technician extends Employee {
+public class Technician extends Employee{
     @ManyToOne
     @JoinColumn(name = "facility_id")
     private Facility facility;
