@@ -24,4 +24,8 @@ public class BikeOwnership {
     @JoinColumn(name = "bike_owner_id")
     private BikeOwner owner;
 
+    public BikeOwnership(Bike bike, BikeOwner owner) {
+        this.bike = bike;
+        this.owner = owner;
+    }
 }

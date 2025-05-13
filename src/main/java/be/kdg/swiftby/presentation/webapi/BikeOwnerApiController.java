@@ -1,12 +1,17 @@
 package be.kdg.swiftby.presentation.webapi;
 
+import be.kdg.swiftby.domain.bike.Bike;
 import be.kdg.swiftby.domain.testEnv.BikeOwner;
 import be.kdg.swiftby.domain.testEnv.PasswordResetToken;
 import be.kdg.swiftby.presentation.webapi.dto.BikeOwnerApiMapper;
+import be.kdg.swiftby.presentation.webapi.dto.bikereport.BikeMapperApi;
 import be.kdg.swiftby.presentation.webapi.dto.request.BikeOwnerRequestDto;
+import be.kdg.swiftby.presentation.webapi.dto.response.BikeApiResponseDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeOwnerApiResponseDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportApiResponseDto;
+import be.kdg.swiftby.service.dto.mapper.BikeMapper;
 import be.kdg.swiftby.service.intf.BikeOwnerService;
+import be.kdg.swiftby.service.intf.BikeService;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +23,14 @@ import java.util.List;
 public class BikeOwnerApiController {
     BikeOwnerService bikeOwnerService;
     BikeOwnerApiMapper bikeOwnerApiMapper;
+    BikeService bikeService;
+    BikeMapperApi bikeMapperApi;
 
-    public BikeOwnerApiController(BikeOwnerService bikeOwnerService, BikeOwnerApiMapper bikeOwnerApiMapper) {
+    public BikeOwnerApiController(BikeOwnerService bikeOwnerService, BikeOwnerApiMapper bikeOwnerApiMapper, BikeService bikeService, BikeMapperApi bikeMapperApi) {
         this.bikeOwnerService = bikeOwnerService;
         this.bikeOwnerApiMapper = bikeOwnerApiMapper;
+        this.bikeService = bikeService;
+        this.bikeMapperApi = bikeMapperApi;
     }
 
     @GetMapping("")
@@ -49,6 +58,15 @@ public class BikeOwnerApiController {
     public ResponseEntity<BikeOwnerApiResponseDto> createBikeOwner(@RequestBody BikeOwnerRequestDto request) {
         BikeOwner owner = bikeOwnerService.save(request.email(), request.firstName(), request.lastName(), request.phoneNumber());
         return ResponseEntity.ok(bikeOwnerApiMapper.toBikeOwnerDto(owner));
+    }
+
+    @GetMapping("/{bikeOwnerId}/bikes")
+    public ResponseEntity<List<BikeApiResponseDto>> getBikesByOwner(@PathVariable Long bikeOwnerId) {
+        List<Bike> bikes = bikeService.getByBikeOwnerId(bikeOwnerId);
+        if (bikes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(bikes.stream().map(bikeMapperApi::toBikeDto).toList());
     }
 
 

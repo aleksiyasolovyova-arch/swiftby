@@ -30,7 +30,7 @@ public class BikeOwnerController {
 
         model.addAttribute("bikeOwnerId", bikeOwnerId);
 
-        return "all-bikes-customer";
+        return "all-bikes";
 
     }
 }

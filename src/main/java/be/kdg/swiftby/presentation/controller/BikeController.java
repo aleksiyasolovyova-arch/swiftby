@@ -2,11 +2,12 @@ package be.kdg.swiftby.presentation.controller;
 
 import be.kdg.swiftby.domain.bike.Bike;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
+import be.kdg.swiftby.domain.testEnv.BikeOwner;
+import be.kdg.swiftby.domain.testEnv.Employee;
 import be.kdg.swiftby.domain.testEnv.Facility;
-import be.kdg.swiftby.service.intf.AdministratorService;
-import be.kdg.swiftby.service.intf.BikeReportSummaryService;
-import be.kdg.swiftby.service.intf.BikeService;
-import be.kdg.swiftby.service.intf.TechnicianService;
+import be.kdg.swiftby.domain.testEnv.User;
+import be.kdg.swiftby.service.impl.UserUtilities;
+import be.kdg.swiftby.service.intf.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,25 +24,24 @@ public class BikeController {
     private final TechnicianService technicianService;
     private final BikeService bikeService;
     private final BikeReportSummaryService bikeReportSummaryService;
+    private final UserService userService;
+    private final BikeOwnerService bikeOwnerService;
     // TODO: USE EMPLOYEE SERVICE FOR BETTER ABSTRACTION
     @GetMapping("/bikes")
-    public String showAllBikesForFacility(Principal principal, Model model) {
+    public String showAllBikes(Principal principal, Model model) {
         String email = principal.getName();
 
-        Facility facility = null;
-        try {
-            facility = administratorService.getByEmail(email).getFacility();
-        } catch (Exception ignored) {}
+        User user = userService.getUserByEmail(email);
 
-        if (facility == null) {
-            try {
-                System.out.println("You bitch");
-                facility = technicianService.getByEmail(email).getFacility();
-                System.out.println(facility);
-            } catch (Exception ignored) {}
+        if (administratorService.existsByEmail(email) || technicianService.existsByEmail(email)) {
+            Employee employee = (Employee) user;
+            Facility facility = employee.getFacility();
+            model.addAttribute("facilityId", facility.getId());
+        } else if (bikeOwnerService.existsByEmail(email)) {
+            BikeOwner bikeOwner = (BikeOwner) user;
+            model.addAttribute("bikeOwnerId", bikeOwner.getId());
         }
 
-        model.addAttribute("facilityId", facility.getId());
         return "all-bikes";
     }
 
