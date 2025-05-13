@@ -17,5 +17,4 @@ public record TestProcedureOverviewDto(
         double maxSupportDeviation,
 
         double overallScore
-) {
-}
+) {}

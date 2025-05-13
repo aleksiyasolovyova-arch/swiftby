@@ -14,8 +14,6 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 public interface BikeOwnerApiMapper {
     BikeOwnerApiResponseDto toBikeOwnerDto(BikeOwner bikeOwner);
-
     List<BikeOwnerApiResponseDto> toBikeOwnerDtoList(List<BikeOwner> bikeOwners);
-
     Bike toBike(BikeOwnerRequestDto bikeOwnerRequestDto);
 }

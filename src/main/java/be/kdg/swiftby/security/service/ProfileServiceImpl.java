@@ -8,8 +8,9 @@ import be.kdg.swiftby.domain.testEnv.Technician;
 import be.kdg.swiftby.domain.testEnv.User;
 import be.kdg.swiftby.repository.testEnvironment.AdministratorRepository;
 import be.kdg.swiftby.repository.testEnvironment.FacilityRepository;
-import be.kdg.swiftby.repository.testEnvironment.TechnicianRepository;
 import be.kdg.swiftby.security.ProfileDto;
+import be.kdg.swiftby.repository.testEnvironment.TechnicianRepository;
+import be.kdg.swiftby.service.intf.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class ProfileServiceImpl implements ProfileServiceInt {
         String email = profile.getUsername();
         String role = profile.getRole();
 
-        if (profile.getFacilityName() != null && !profile.getFacilityName().isBlank()) {
+        if(profile.getFacilityName() != null && !profile.getFacilityName().isBlank()) {
             facility = facilityRepository.findByName(profile.getFacilityName().trim())
                     .orElseThrow(() -> NotFoundException.forFacilityName("No facility found with name: " + profile.getFacilityName()));
         }

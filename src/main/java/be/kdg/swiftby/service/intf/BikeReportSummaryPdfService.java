@@ -4,5 +4,5 @@ import be.kdg.swiftby.domain.report.BikeReportSummary;
 
 public interface BikeReportSummaryPdfService {
 
-    byte[] generatePdf(BikeReportSummary summary);
+     byte[] generatePdf(BikeReportSummary summary);
 }

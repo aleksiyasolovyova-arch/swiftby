@@ -24,5 +24,4 @@ public record BikeInfoCsvRecord(
         int enginePowerMaxW,
         int enginePowerNominalW,
         int engineTorqueNm
-) {
-}
+) {}

@@ -1,9 +1,6 @@
 package be.kdg.swiftby.domain.testEnv;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.*;
 
 @MappedSuperclass
@@ -15,19 +12,14 @@ public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NonNull
-    private String email;
+    @NonNull private String email;
     //encrypted
-    @NonNull
-    private String password;
-    @NonNull
-    private String firstName;
-    @NonNull
-    private String lastName;
-    @NonNull
-    private String phoneNumber;
+    @NonNull private String password;
+    @NonNull private String firstName;
+    @NonNull private String lastName;
+    @NonNull private String phoneNumber;
 
-    public User(String email, String firstName, String lastName, String phoneNumber) {
+    public User( String email, String firstName,  String lastName,  String phoneNumber) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;

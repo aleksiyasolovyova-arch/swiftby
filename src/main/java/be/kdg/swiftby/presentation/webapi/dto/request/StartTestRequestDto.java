@@ -1,5 +1,7 @@
 package be.kdg.swiftby.presentation.webapi.dto.request;
 
+import be.kdg.swiftby.domain.bike.BIKE_SIZE;
+import be.kdg.swiftby.domain.bike.POWERTRAIN;
 import be.kdg.swiftby.service.TestType;
 import lombok.Data;
 

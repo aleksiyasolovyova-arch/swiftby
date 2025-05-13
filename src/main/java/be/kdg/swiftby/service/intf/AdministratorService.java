@@ -1,12 +1,12 @@
 package be.kdg.swiftby.service.intf;
 
 import be.kdg.swiftby.domain.testEnv.Administrator;
+import be.kdg.swiftby.domain.testEnv.Facility;
 
 import java.util.List;
 
 public interface AdministratorService {
     List<Administrator> getAll();
-
     Administrator getById(Long id);
 
     Administrator getByEmail(String email);
@@ -18,11 +18,9 @@ public interface AdministratorService {
     Administrator getByFacilityIdAndAdministratorId(Long facilityId, Long adminId);
 
     void removeAllByFacilityId(Long id);
-
     List<Administrator> getAllUnapproved();
 
     void approve(Long adminId);
-
     Administrator create(Long facilityId, String email,
                          String password, String firstName, String lastName,
                          String phoneNumber);

@@ -1,9 +1,9 @@
 package be.kdg.swiftby.domain.report;
 
 import be.kdg.swiftby.domain.testEnv.TestBench;
+import be.kdg.swiftby.service.dto.TestBenchDataDto;
 import jakarta.persistence.*;
 import lombok.Data;
-
 @Entity
 @Data
 public class TestBenchData {

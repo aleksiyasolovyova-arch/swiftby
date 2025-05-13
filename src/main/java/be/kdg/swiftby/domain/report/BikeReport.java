@@ -4,6 +4,7 @@ import be.kdg.swiftby.domain.bike.Bike;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity

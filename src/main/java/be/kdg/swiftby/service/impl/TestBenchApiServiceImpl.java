@@ -1,5 +1,6 @@
 package be.kdg.swiftby.service.impl;
 
+import be.kdg.swiftby.domain.report.TestBenchData;
 import be.kdg.swiftby.service.TestType;
 import be.kdg.swiftby.service.dto.api.dto.StartTestDto;
 import be.kdg.swiftby.service.dto.api.dto.TestDto;
@@ -41,7 +42,7 @@ public class TestBenchApiServiceImpl implements TestBenchApiService {
             int engineTorque,
             Long bikeId
     ) {
-        String url = baseUrl;
+        String url = baseUrl ;
         StartTestDto requestBody = new StartTestDto(testType, batteryCapacity, maxSupport, enginePowerMax, enginePowerNominal, engineTorque);
 
         HttpHeaders headers = new HttpHeaders();
@@ -60,7 +61,7 @@ public class TestBenchApiServiceImpl implements TestBenchApiService {
                 if (testDto != null) {
                     System.out.println("Test started successfully. ID: " + testDto.id());
                     testWebSocketHandler.storeStartTestData(testDto.id(), requestBody);
-                    testWebSocketHandler.trackTest(testDto.id(), bikeId);
+                    testWebSocketHandler.trackTest(testDto.id(), bikeId); 
 
 
                     return testDto;
@@ -71,12 +72,11 @@ public class TestBenchApiServiceImpl implements TestBenchApiService {
             throw new RuntimeException("unexpected error occurred: " + e.getMessage());
         }
     }
-
     @Override
     public TestDto getTest(
             UUID testId
     ) {
-        String url = baseUrl + "/" + testId;
+        String url = baseUrl +"/" + testId;
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Api-Key", apiKey);
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
@@ -88,7 +88,6 @@ public class TestBenchApiServiceImpl implements TestBenchApiService {
             return null;
         }
     }
-
     @Override
     public void getReport(UUID testId) {
         String url = baseUrl + "/" + testId + "/report";
@@ -108,7 +107,6 @@ public class TestBenchApiServiceImpl implements TestBenchApiService {
             System.err.println("error fetching report: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
         }
     }
-
     private void saveReportToFile(byte[] reportData, UUID testId) {
         String directoryPath = "reports";
         String filePath = directoryPath + "/report_" + testId + ".csv";

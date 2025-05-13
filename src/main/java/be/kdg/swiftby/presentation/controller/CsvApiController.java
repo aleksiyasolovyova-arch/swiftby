@@ -40,7 +40,7 @@ public class CsvApiController {
     }
 
     @GetMapping("/results")
-    public List<BikeReport> getBikeResults() {
+    public List<BikeReport> getBikeResults(){
         return bikeReportService.getAll();
     }
 
@@ -56,6 +56,7 @@ public class CsvApiController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=" + file.getName())
                 .body(resource);
     }
+
 
 
 }

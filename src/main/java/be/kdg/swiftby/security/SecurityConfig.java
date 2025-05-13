@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.authentication.configuration.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
@@ -63,8 +65,8 @@ public class SecurityConfig {
                                 // MAKE REPORT SUMMARY PAGE PUBLIC
                                 antMatcher("/report-summary"),
                                 antMatcher("/api/report-summaries/**")
-                        ).permitAll()
-                        .anyRequest().authenticated())
+                                ).permitAll()
+                                .anyRequest().authenticated())
 
                 .exceptionHandling(
                         exceptionHandling -> exceptionHandling.authenticationEntryPoint((request, response, authException) -> {
@@ -77,7 +79,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(login -> login.loginPage("/login").permitAll())
                 .build();
-    }
+    };
 
 
     @Bean
@@ -95,7 +97,6 @@ public class SecurityConfig {
         authProvider.setPasswordEncoder(encoder());
         return authProvider;
     }
-
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();

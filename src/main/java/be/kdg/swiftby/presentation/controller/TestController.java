@@ -11,17 +11,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TestController {
 
     @GetMapping("checklist")
-    public String showPreTestCheckList() {
+    public String showPreTestCheckList(){
         return "startTest/checklist";
     }
-
     @GetMapping("startTest")
-    public String idkAnymore() {
+    public String idkAnymore(){
         return "startTest/find-user";
     }
 
     @GetMapping("startTest/checklist")
-    public String checklist() {
+    public String checklist(){
         return "startTest/checklist";
     }
 
@@ -29,13 +28,11 @@ public class TestController {
     public String showFindUserPage() {
         return "startTest/find-user";
     }
-
     @GetMapping("startTest/select-bike")
     public String showSelectBikePage(@RequestParam("userId") Long userId, Model model) {
         model.addAttribute("userId", userId);
         return "startTest/select-bike";
     }
-
     @GetMapping("startTest/test-setup")
     public String showTestSetupPage(@RequestParam("bikeId") Long bikeId, Model model) {
         model.addAttribute("bikeId", bikeId);

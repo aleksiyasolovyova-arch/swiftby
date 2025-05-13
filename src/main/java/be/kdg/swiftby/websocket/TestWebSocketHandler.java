@@ -7,6 +7,7 @@ import be.kdg.swiftby.service.dto.api.dto.StartTestDto;
 import be.kdg.swiftby.service.dto.api.dto.TestDto;
 import be.kdg.swiftby.service.intf.BikeReportService;
 import be.kdg.swiftby.service.intf.TestBenchApiService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -56,7 +57,7 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
 
     public void trackTest(UUID testId, Long bikeId) {
         ongoingTests.put(testId, bikeId);
-        sendUpdate(testId, TestState.STARTED, null);
+        sendUpdate(testId, TestState.STARTED,null);
     }
 
     @Scheduled(fixedRate = 3000)
@@ -69,7 +70,7 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
 
                 testService.getReport(testId);
                 StartTestDto startData = testMetadata.remove(testId);
-                BikeReportSummary summary = processCsvAfterTestCompletion(ongoingTests.get(testId), startData);
+                BikeReportSummary summary = processCsvAfterTestCompletion(ongoingTests.get(testId),startData);
                 Long summaryId = (summary != null) ? summary.getId() : null;
                 ongoingTests.remove(testId);
 
@@ -78,7 +79,7 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
         }
     }
 
-    private BikeReportSummary processCsvAfterTestCompletion(Long bikeId, StartTestDto startData) {
+    private BikeReportSummary processCsvAfterTestCompletion(Long bikeId,StartTestDto startData ) {
         try {
 
             List<Long> savedReportIds = csvService.processLatestCsvFile().stream()
@@ -123,10 +124,10 @@ public class TestWebSocketHandler extends TextWebSocketHandler {
             }
         }
     }
-
     public void storeStartTestData(UUID testId, StartTestDto dto) {
         testMetadata.put(testId, dto);
     }
+
 
 
 }

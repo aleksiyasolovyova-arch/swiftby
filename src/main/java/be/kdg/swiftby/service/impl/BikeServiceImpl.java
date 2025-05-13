@@ -25,6 +25,7 @@ public class BikeServiceImpl implements BikeService {
     private final BikeOwnershipRepository bikeOwnershipRepository;
 
 
+
     public BikeServiceImpl(BikeRepository bikeRepository, BikeMapper bikeMapper, MotorRepository motorRepository, MotorMapper motorMapper, BikeOwnershipRepository bikeOwnershipRepository) {
         this.bikeRepository = bikeRepository;
         this.bikeMapper = bikeMapper;
@@ -61,6 +62,7 @@ public class BikeServiceImpl implements BikeService {
     }
 
 
+
     @Override
     public Bike save(BikeDto bikeDto) {
         Optional<Bike> existingBike = bikeRepository.findBikeByChassisNumber(bikeDto.chassisNumber());
@@ -89,7 +91,6 @@ public class BikeServiceImpl implements BikeService {
     public List<Bike> findByMotorEngineType(String engineType) {
         return bikeRepository.findByMotorEngineType(engineType);
     }
-
     @Override
     public void remove(Long id) {
         if (bikeRepository.existsById(id)) {
@@ -98,7 +99,6 @@ public class BikeServiceImpl implements BikeService {
             throw new RuntimeException("Bike not found with id " + id);
         }
     }
-
     @Override
     public List<Bike> getAllByFacilityId(Long facilityId) {
         return bikeRepository.findAllByFacilityId(facilityId);
