@@ -16,6 +16,7 @@ public class FacilitySessionAdvice {
         this.technicianRepo = technicianRepo;
         this.adminRepo = adminRepo;
     }
+
     @ModelAttribute
     public void addFacilityIdToSession(HttpSession session, Authentication authentication) {
         if (authentication == null) return;

@@ -10,14 +10,18 @@ import java.util.Optional;
 
 public interface AdministratorRepository extends JpaRepository<Administrator, Long> {
     Optional<Administrator> findAdministratorByEmail(String email);
+
     boolean existsByEmail(String email);
 
     List<Administrator> findAllByFacilityId(Long facilityId);
 
     void deleteAllByFacilityId(Long id);
+
     @Query("SELECT a FROM Administrator a WHERE a.isApproved = false")
     List<Administrator> findAllUnapproved();
+
     Optional<Administrator> findByFacilityIdAndId(Long facilityId, Long id);
+
     Optional<Administrator> findByFacilityAndId(Facility facility, Long id);
 
 }

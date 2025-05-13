@@ -1,21 +1,12 @@
 package be.kdg.swiftby.csv;
 
-import be.kdg.swiftby.domain.bike.Bike;
-import be.kdg.swiftby.domain.report.BikeReportSummary;
-import be.kdg.swiftby.domain.testEnv.BikeOwner;
-import be.kdg.swiftby.presentation.webapi.dto.request.StartTestRequestDto;
-import be.kdg.swiftby.service.dto.BikeDto;
-import be.kdg.swiftby.service.dto.MotorDto;
 import be.kdg.swiftby.service.intf.BikeOwnerService;
 import be.kdg.swiftby.service.intf.BikeReportService;
 import be.kdg.swiftby.service.intf.BikeService;
 import be.kdg.swiftby.websocket.TestWebSocketHandler;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.UUID;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/csv")

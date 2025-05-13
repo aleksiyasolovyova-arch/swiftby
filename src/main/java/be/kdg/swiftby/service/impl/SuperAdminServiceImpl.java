@@ -2,7 +2,6 @@ package be.kdg.swiftby.service.impl;
 
 import be.kdg.swiftby.domain.exception.AlreadyExistsException;
 import be.kdg.swiftby.domain.exception.NotFoundException;
-import be.kdg.swiftby.domain.testEnv.Facility;
 import be.kdg.swiftby.domain.testEnv.SuperAdmin;
 import be.kdg.swiftby.repository.testEnvironment.FacilityRepository;
 import be.kdg.swiftby.repository.testEnvironment.SuperAdminRepository;

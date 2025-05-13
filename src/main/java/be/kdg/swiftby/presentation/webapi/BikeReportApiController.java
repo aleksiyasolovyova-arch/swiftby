@@ -2,14 +2,16 @@ package be.kdg.swiftby.presentation.webapi;
 
 import be.kdg.swiftby.domain.report.BikeReport;
 import be.kdg.swiftby.presentation.webapi.dto.bikereport.BikeReportMapperApi;
-import be.kdg.swiftby.presentation.webapi.dto.request.BikeReportRequestDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportApiResponseDto;
 import be.kdg.swiftby.service.intf.BikeReportService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,11 +25,11 @@ public class BikeReportApiController {
     Logger log = LoggerFactory.getLogger(BikeReportApiController.class);
 
     @GetMapping
-    public ResponseEntity<List<BikeReportApiResponseDto>> getAll(){
+    public ResponseEntity<List<BikeReportApiResponseDto>> getAll() {
         System.out.println("meow");
         System.out.println(bikeReportService.getAllWithBikes());
         System.out.println("purr");
-        List<BikeReportApiResponseDto> bikeReportDtos=bikeReportService.getAllWithBikes().stream()
+        List<BikeReportApiResponseDto> bikeReportDtos = bikeReportService.getAllWithBikes().stream()
                 .map(bikeReportMapper::toBikeReportDto)
                 .toList();
         return ResponseEntity.ok(bikeReportDtos);

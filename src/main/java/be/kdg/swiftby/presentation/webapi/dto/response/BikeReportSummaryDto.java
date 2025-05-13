@@ -1,7 +1,5 @@
 package be.kdg.swiftby.presentation.webapi.dto.response;
 
-import be.kdg.swiftby.service.dto.FunctionalCheckDTO;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -38,4 +36,5 @@ public record BikeReportSummaryDto(
         String bearingHealth
 
 
-) {}
+) {
+}

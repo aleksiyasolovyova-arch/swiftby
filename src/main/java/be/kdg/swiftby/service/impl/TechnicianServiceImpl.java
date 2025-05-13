@@ -19,14 +19,14 @@ import java.util.List;
 @Service
 @Transactional
 public class TechnicianServiceImpl implements TechnicianService {
-    private TechnicianRepository technicianRepository;
-    private AdministratorRepository administratorRepository;
-    private FacilityRepository facilityRepository;
-    private UserUtilities userUtilities;
+    private final TechnicianRepository technicianRepository;
+    private final AdministratorRepository administratorRepository;
+    private final FacilityRepository facilityRepository;
+    private final UserUtilities userUtilities;
 
-    private FacilityMapper facilityMapper;
+    private final FacilityMapper facilityMapper;
 
-    private Logger log = LoggerFactory.getLogger(TechnicianService.class);
+    private final Logger log = LoggerFactory.getLogger(TechnicianService.class);
 
     public TechnicianServiceImpl(TechnicianRepository technicianRepository,
                                  AdministratorRepository administratorRepository,
@@ -109,10 +109,12 @@ public class TechnicianServiceImpl implements TechnicianService {
         administratorRepository.deleteAllByFacilityId(id);
         log.debug("Removed all technicians in facility with id {}", id);
     }
+
     @Override
     public List<Technician> getAllUnapproved() {
         return technicianRepository.findAllUnapproved();
     }
+
     @Override
     public void approve(Long technicianId) {
         Technician technician = technicianRepository.findById(technicianId)

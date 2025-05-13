@@ -1,22 +1,18 @@
 package be.kdg.swiftby.service.impl;
 
-import be.kdg.swiftby.domain.testEnv.Employee;
-import be.kdg.swiftby.domain.testEnv.User;
 import be.kdg.swiftby.repository.testEnvironment.AdministratorRepository;
 import be.kdg.swiftby.repository.testEnvironment.BikeOwnerRepository;
 import be.kdg.swiftby.repository.testEnvironment.SuperAdminRepository;
 import be.kdg.swiftby.repository.testEnvironment.TechnicianRepository;
-import be.kdg.swiftby.service.intf.UserService;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserUtilities {
 
     private final AdministratorRepository administratorRepository;
-    private final  TechnicianRepository technicianRepository;
-    private final  SuperAdminRepository superAdminRepository;
-    private final  BikeOwnerRepository bikeOwnerRepository;
+    private final TechnicianRepository technicianRepository;
+    private final SuperAdminRepository superAdminRepository;
+    private final BikeOwnerRepository bikeOwnerRepository;
 
     public UserUtilities(AdministratorRepository administratorRepository, TechnicianRepository technicianRepository, SuperAdminRepository superAdminRepository, BikeOwnerRepository bikeOwnerRepository) {
         this.administratorRepository = administratorRepository;

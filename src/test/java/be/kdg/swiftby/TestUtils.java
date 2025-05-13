@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 import java.util.UUID;
 
 @Component
@@ -37,7 +36,6 @@ public class TestUtils {
     private MotorRepository motorRepository;
     @Autowired
     private BikeOwnershipRepository bikeOwnershipRepository;
-
 
 
     public void cleanUp() {
@@ -146,7 +144,7 @@ public class TestUtils {
     }
 
     public BikeOwnership addBikeOwnershipLink(Bike bike, BikeOwner bikeOwner) {
-        BikeOwnership bikeOwnership =  bikeOwnershipRepository.save(new BikeOwnership(bike, bikeOwner));
+        BikeOwnership bikeOwnership = bikeOwnershipRepository.save(new BikeOwnership(bike, bikeOwner));
         bike.getOwnerships().add(bikeOwnership);
         bikeOwner.getOwnerships().add(bikeOwnership);
         bikeRepository.save(bike);
@@ -161,7 +159,6 @@ public class TestUtils {
         bikeowner.setOwnerships(new HashSet<>());
         return bikeowner;
     }
-
 
 
 }

@@ -6,7 +6,6 @@ import be.kdg.swiftby.domain.testEnv.BikeOwner;
 import be.kdg.swiftby.domain.testEnv.Employee;
 import be.kdg.swiftby.domain.testEnv.Facility;
 import be.kdg.swiftby.domain.testEnv.User;
-import be.kdg.swiftby.service.impl.UserUtilities;
 import be.kdg.swiftby.service.intf.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,6 +25,7 @@ public class BikeController {
     private final BikeReportSummaryService bikeReportSummaryService;
     private final UserService userService;
     private final BikeOwnerService bikeOwnerService;
+
     // TODO: USE EMPLOYEE SERVICE FOR BETTER ABSTRACTION
     @GetMapping("/bikes")
     public String showAllBikes(Principal principal, Model model) {

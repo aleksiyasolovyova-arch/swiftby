@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface FacilityService {
     List<Facility> getAll();
+
     Facility getById(Long id);
+
     Facility save(FacilityDto facilityApiResponseDto);
+
     void remove(Long id);
 }

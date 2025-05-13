@@ -1,7 +1,7 @@
 package be.kdg.swiftby.presentation.webapi.dto.response;
 
-import be.kdg.swiftby.domain.bike.POWERTRAIN;
 import be.kdg.swiftby.domain.bike.BIKE_SIZE;
+import be.kdg.swiftby.domain.bike.POWERTRAIN;
 
 public record BikeApiResponseDto(
         Long id,
@@ -13,4 +13,5 @@ public record BikeApiResponseDto(
         Integer maxSupport,
         Integer batteryCapacity
 //        Long motorId
-) {}
+) {
+}

@@ -16,4 +16,5 @@ public record TestDto(
         int enginePowerMax,
         int enginePowerNominal,
         int engineTorque
-) {}
+) {
+}

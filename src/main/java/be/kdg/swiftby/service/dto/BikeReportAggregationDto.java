@@ -70,6 +70,7 @@ public class BikeReportAggregationDto {
         this.chargeStatus = chargeStatus;
         this.statusPlug = statusPlug;
     }
+
     public static BikeReportSummary toSummary(BikeReportAggregationDto aggregation, Bike bike) {
         BikeReportSummary summary = new BikeReportSummary();
         summary.setBike(bike);

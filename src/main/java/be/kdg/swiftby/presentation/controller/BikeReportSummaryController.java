@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BikeReportSummaryController {
-    
+
     @GetMapping("/report-summary")
     public String showSummaryPage(@RequestParam Long id, Model model) {
         model.addAttribute("summaryId", id);

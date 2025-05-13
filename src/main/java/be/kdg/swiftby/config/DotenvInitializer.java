@@ -16,7 +16,7 @@ public class DotenvInitializer implements ApplicationContextInitializer<Configur
         Map<String, Object> envMap = new HashMap<>();
         dotenv.entries().forEach(entry -> envMap.put(entry.getKey(), entry.getValue()));
         applicationContext.getEnvironment()
-            .getPropertySources()
-            .addFirst(new MapPropertySource("dotenv", envMap));
+                .getPropertySources()
+                .addFirst(new MapPropertySource("dotenv", envMap));
     }
 }

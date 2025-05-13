@@ -13,6 +13,6 @@ public class CustomUserDetails extends User {
                              boolean credentialsNonExpired,
                              boolean accountNonLocked,
                              Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, enabled, accountNonExpired,credentialsNonExpired,accountNonLocked, authorities);
+        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
     }
 }

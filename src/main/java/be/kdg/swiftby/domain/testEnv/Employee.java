@@ -1,7 +1,12 @@
 package be.kdg.swiftby.domain.testEnv;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = true)

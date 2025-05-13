@@ -35,7 +35,6 @@ public class MotorServiceImpl implements MotorService {
     }
 
 
-
     @Override
     public Motor save(MotorDto motorDto) {
         Motor motor = motorMapper.toMotor(motorDto);

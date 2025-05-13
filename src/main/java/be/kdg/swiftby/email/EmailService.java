@@ -6,7 +6,6 @@ import com.postmarkapp.postmark.client.data.model.message.Message;
 import com.postmarkapp.postmark.client.data.model.message.MessageResponse;
 import com.postmarkapp.postmark.client.data.model.messages.Attachment;
 import com.postmarkapp.postmark.client.exception.PostmarkException;
-import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

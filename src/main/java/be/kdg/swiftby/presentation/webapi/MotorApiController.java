@@ -5,7 +5,6 @@ import be.kdg.swiftby.service.dto.MotorDto;
 import be.kdg.swiftby.service.dto.mapper.MotorMapper;
 import be.kdg.swiftby.service.intf.MotorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

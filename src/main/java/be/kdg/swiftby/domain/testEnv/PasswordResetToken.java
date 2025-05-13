@@ -19,6 +19,7 @@ public class PasswordResetToken {
     private BikeOwner user;
 
     private boolean used = false;
+
     public PasswordResetToken(String token, LocalDateTime expiresAt, BikeOwner user, boolean used) {
         this.token = token;
         this.expiresAt = expiresAt;

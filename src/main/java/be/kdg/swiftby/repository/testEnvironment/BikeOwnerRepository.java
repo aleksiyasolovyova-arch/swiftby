@@ -12,6 +12,7 @@ public interface BikeOwnerRepository extends JpaRepository<BikeOwner, Long> {
     boolean existsByEmail(String email);
 
     Optional<BikeOwner> findByEmail(String email);
+
     List<BikeOwner> findByEmailContainingIgnoreCase(String email);
 
 }

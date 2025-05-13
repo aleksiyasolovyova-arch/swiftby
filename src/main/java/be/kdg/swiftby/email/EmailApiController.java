@@ -4,8 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,7 +15,7 @@ import java.util.Map;
 //@RequestMapping("/api/email")
 public class EmailApiController {
 
-    private EmailService emailService;
+    private final EmailService emailService;
 
     public EmailApiController(EmailService emailService) {
         this.emailService = emailService;

@@ -1,9 +1,7 @@
 package be.kdg.swiftby.presentation.webapi;
 
-import be.kdg.swiftby.domain.report.BikeReport;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.presentation.webapi.dto.BikeReportSummaryApiMapper;
-import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportApiResponseDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportSummaryDto;
 import be.kdg.swiftby.service.dto.BikeReportChartDto;
 import be.kdg.swiftby.service.dto.data.BatteryTestDto;
@@ -35,6 +33,7 @@ public class BikeReportSummaryApiController {
     public ResponseEntity<BikeReportSummaryDto> getSummaryById(@PathVariable Long id) {
         return ResponseEntity.ok(bikeReportSummaryApiMapper.toBikeReportSummaryDto(bikeReportSummaryService.getSummaryById(id)));
     }
+
     @PatchMapping("/{summaryId}/attach-check/{checkId}")
     public ResponseEntity<Void> attachCheck(@PathVariable Long summaryId, @PathVariable Long checkId) {
         bikeReportService.attachFunctionalityCheck(summaryId, checkId);
@@ -42,7 +41,7 @@ public class BikeReportSummaryApiController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BikeReportSummaryDto>> getAll(){
+    public ResponseEntity<List<BikeReportSummaryDto>> getAll() {
         return ResponseEntity.ok(bikeReportSummaryService.getAllSummaries().stream()
                 .map(bikeReportSummaryApiMapper::toBikeReportSummaryDto)
                 .toList());
@@ -60,7 +59,7 @@ public class BikeReportSummaryApiController {
 
     @GetMapping("/{bikeId}/generate-pdf")
     public ResponseEntity<byte[]> generateReportPdfByBikeAndDate(@PathVariable Long bikeId,
-                                                    @RequestParam("reportDate") String reportDate) {
+                                                                 @RequestParam("reportDate") String reportDate) {
         // Convert to LocalDateTime to match database format
         LocalDateTime startOfDay = LocalDate.parse(reportDate).atStartOfDay();
 
@@ -78,6 +77,7 @@ public class BikeReportSummaryApiController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdfBytes);
     }
+
     @GetMapping("/{id}/generatePdf")
     public ResponseEntity<byte[]> generateReportPdf(@PathVariable Long id) {
 
@@ -94,7 +94,6 @@ public class BikeReportSummaryApiController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=BikeReport_" + id + ".pdf")
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdfBytes);
-
 
 
     }
@@ -140,19 +139,6 @@ public class BikeReportSummaryApiController {
     ) {
         return bikeReportSummaryService.getChartDataWithInterval(summaryId, mode, intervalSeconds);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

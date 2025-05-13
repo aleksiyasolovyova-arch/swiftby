@@ -90,12 +90,14 @@ public class BikeApiController {
         bikeService.remove(id);
         return ResponseEntity.noContent().build();
     }
+
     @GetMapping("/sizes")
     public List<String> getBikeSizes() {
         return Arrays.stream(BIKE_SIZE.values())
                 .map(Enum::name)
                 .toList();
     }
+
     @GetMapping("/powertrains")
     public List<String> getPowertrains() {
         return Arrays.stream(POWERTRAIN.values())

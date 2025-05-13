@@ -5,6 +5,6 @@ public record BatteryDataDto(
         double batteryCurrent,
         double voltage,
         double capacity,
-        double  temperature
+        double temperature
 ) {
 }

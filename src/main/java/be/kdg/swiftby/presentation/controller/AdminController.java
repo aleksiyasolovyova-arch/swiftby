@@ -1,7 +1,6 @@
 package be.kdg.swiftby.presentation.controller;
 
 import be.kdg.swiftby.domain.testEnv.Administrator;
-import be.kdg.swiftby.security.CustomUserDetails;
 import be.kdg.swiftby.service.intf.AdministratorService;
 import be.kdg.swiftby.service.intf.FacilityService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 @RequiredArgsConstructor
 @Controller
 public class AdminController {

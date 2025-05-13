@@ -6,13 +6,12 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.springframework.stereotype.Service;
 import org.apache.commons.io.input.BOMInputStream;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class CsvService {
 //    chargeStatus,assistanceLevel,torqueCrankNm,bikeWheelSpeedKmh,cadanceRpm,engineRpm,
 //    enginePowerWatt,wheelPowerWatt,rollTorque,loadcellN,rolHz,horizontalInclination,
 //    verticalInclination,loadPower,statusPlug
-     // Add this import
+    // Add this import
     private static final String REPORTS_DIR = "reports/";
 
     public List<BikeReportCsvRecord> processLatestCsvFile() throws IOException {
@@ -108,6 +107,7 @@ public class CsvService {
                 )
         );
     }
+
     @PreDestroy
     public void cleanReportsDirectoryOnShutdown() {
         File reportsFolder = new File(REPORTS_DIR);

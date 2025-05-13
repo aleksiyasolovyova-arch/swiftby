@@ -4,13 +4,16 @@ import be.kdg.swiftby.presentation.viewmodels.annotations.validators.NotBlankIfP
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;
 
 @Documented
 @Constraint(validatedBy = NotBlankIfPresentValidator.class)
-@Target({ FIELD, METHOD, PARAMETER })
+@Target({FIELD, METHOD, PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NotBlankIfPresent {
 
