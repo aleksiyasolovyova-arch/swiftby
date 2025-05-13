@@ -1,7 +1,10 @@
 package be.kdg.swiftby.presentation.viewmodels;
 
+import be.kdg.swiftby.presentation.viewmodels.annotations.NotBlankIfPresent;
 import be.kdg.swiftby.security.validation.ValidEmail;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

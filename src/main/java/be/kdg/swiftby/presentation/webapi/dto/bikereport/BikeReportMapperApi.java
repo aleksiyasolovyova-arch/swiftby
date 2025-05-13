@@ -5,7 +5,6 @@ import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportApiResponseDto;
 import org.mapstruct.Mapper;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
-
 // uses tells mapstruct what mappers it should use
 // (we need it since we have nested dto classes)
 @Mapper(componentModel = SPRING,

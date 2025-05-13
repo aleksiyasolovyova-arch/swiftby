@@ -15,8 +15,6 @@ public interface TestBenchApiService {
             int engineTorque,
             Long bikeId
     );
-
     TestDto getTest(UUID testId);
-
     void getReport(UUID testId);
 }

@@ -11,6 +11,5 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 @Mapper(componentModel = SPRING)
 public interface FacilityApiMapper {
     FacilityApiResponseDto toFacilityApiRequestDto(Facility facility);
-
     List<FacilityApiResponseDto> toFacilityApiRequestDtoList(List<Facility> facilities);
 }

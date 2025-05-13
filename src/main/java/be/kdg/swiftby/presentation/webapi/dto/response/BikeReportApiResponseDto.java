@@ -1,5 +1,6 @@
 package be.kdg.swiftby.presentation.webapi.dto.response;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record BikeReportApiResponseDto(
@@ -15,5 +16,4 @@ public record BikeReportApiResponseDto(
         AxialSensorDataApiResponseDto axialSensorData,
         TestBenchDataApiResponseDto testBenchData,
         BikeApiResponseDto bike
-) {
-}
+) {}

@@ -38,6 +38,8 @@ public class BikeReportSummaryPdfServiceImpl implements BikeReportSummaryPdfServ
             document.add(title);
 
 
+
+
             // report details
             addStyledCard(document, "Report Details", labelFont, valueFont, "Report Date:", summary.getReportTime().format(DateTimeFormatter.ISO_DATE));
 
@@ -76,6 +78,8 @@ public class BikeReportSummaryPdfServiceImpl implements BikeReportSummaryPdfServ
 
             //technician Notes Section
             addStyledCard(document, "Technician Notes", labelFont, valueFont, "Technician Comment:", summary.getTechnicianComment() != null ? summary.getTechnicianComment() : "No comments");
+
+
 
 
             document.close();

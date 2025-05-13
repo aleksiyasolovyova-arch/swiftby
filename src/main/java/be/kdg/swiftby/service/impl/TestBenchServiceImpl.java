@@ -1,6 +1,7 @@
 package be.kdg.swiftby.service.impl;
 
 import be.kdg.swiftby.domain.exception.NotFoundException;
+import be.kdg.swiftby.domain.report.TestBenchData;
 import be.kdg.swiftby.domain.testEnv.Facility;
 import be.kdg.swiftby.domain.testEnv.TestBench;
 import be.kdg.swiftby.repository.report.TestBenchDataRepository;
@@ -73,6 +74,16 @@ public class TestBenchServiceImpl implements TestBenchService {
         testBenchRepository.removeAllByFacility(facility);
         log.debug(String.format("Removed all testbenches for facility with id: %s", id));
     }
+
+
+
+
+
+
+
+
+
+
 
 
 }

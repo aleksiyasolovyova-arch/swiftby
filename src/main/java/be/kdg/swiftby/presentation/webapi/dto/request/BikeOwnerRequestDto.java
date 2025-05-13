@@ -5,5 +5,4 @@ public record BikeOwnerRequestDto(
         String firstName,
         String lastName,
         String phoneNumber
-) {
-}
+) {}

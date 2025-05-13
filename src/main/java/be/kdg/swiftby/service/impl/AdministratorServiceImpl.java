@@ -4,8 +4,7 @@ import be.kdg.swiftby.domain.exception.AlreadyExistsException;
 import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.testEnv.Administrator;
 import be.kdg.swiftby.domain.testEnv.Facility;
-import be.kdg.swiftby.repository.testEnvironment.AdministratorRepository;
-import be.kdg.swiftby.repository.testEnvironment.FacilityRepository;
+import be.kdg.swiftby.repository.testEnvironment.*;
 import be.kdg.swiftby.service.intf.AdministratorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     private final AdministratorRepository administratorRepository;
     private final UserUtilities userUtilities;
 
-    private final FacilityRepository facilityRepository;
+    private final  FacilityRepository facilityRepository;
 
     private final Logger log = LoggerFactory.getLogger(AdministratorServiceImpl.class);
 
@@ -58,7 +57,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
         if (userUtilities.isExistingUser(email)) {
             throw AlreadyExistsException.forUserWithEmail(email);
-        }
+        };
 
         Administrator admin = administratorRepository.save(new Administrator(
                 facility, email, password, firstName, lastName, phoneNumber
@@ -105,13 +104,11 @@ public class AdministratorServiceImpl implements AdministratorService {
         administratorRepository.deleteAllByFacilityId(id);
         log.debug("Removed all admins in facility with id {}", id);
     }
-
     // In AdministratorServiceImpl.java
     @Override
     public List<Administrator> getAllUnapproved() {
         return administratorRepository.findAllUnapproved();
     }
-
     @Override
     public void approve(Long adminId) {
         Administrator admin = administratorRepository.findById(adminId)

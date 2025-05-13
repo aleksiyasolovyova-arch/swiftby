@@ -16,12 +16,10 @@ public class TestBench {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NonNull
-    private Boolean isActive;
+    @NonNull private Boolean isActive;
     @ManyToOne
     @JoinColumn(name = "facility_id")
-    @NonNull
-    private Facility facility;
+    @NonNull private Facility facility;
     @OneToMany(mappedBy = "testBench")
     private Set<TestBenchData> testBenchData;
 

@@ -51,6 +51,9 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
     }
 
 
+
+
+
     @Override
     public List<BikeReportChartDto> getChartDataWithInterval(Long summaryId, String mode, int intervalSeconds) {
         BikeReportSummary summary = bikeReportSummaryRepository.findByIdWithReports(summaryId)
@@ -131,6 +134,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
         return bikeReportSummaryRepository.getTestProcedureOverview(summaryId)
                 .orElseThrow(() -> new RuntimeException("Overview not found"));
     }
+
 
 
     public BikeReportSummary getSummaryWithCheck(Long id) {
@@ -217,6 +221,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
 
         return result;
     }
+
 
 
     @Override

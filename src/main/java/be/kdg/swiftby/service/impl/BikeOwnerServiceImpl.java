@@ -61,8 +61,8 @@ public class BikeOwnerServiceImpl implements BikeOwnerService {
     @Override
     public BikeOwner save(String email, String firstName, String lastName, String phoneNumber) {
         if (userUtilities.isExistingUser(email)) {
-            throw AlreadyExistsException.forUserWithEmail(email);
-        }
+        throw AlreadyExistsException.forUserWithEmail(email);
+    }
         BikeOwner newUser = bikeOwnerRepository.save(new BikeOwner(email, firstName, lastName, phoneNumber));
         String token = UUID.randomUUID().toString();
         PasswordResetToken resetToken = new PasswordResetToken(
@@ -74,7 +74,6 @@ public class BikeOwnerServiceImpl implements BikeOwnerService {
         passwordResetTokenRepository.save(resetToken);
         return newUser;
     }
-
     @Override
     public void remove(Long id) {
         if (!bikeOwnerRepository.existsById(id)) {
@@ -84,7 +83,6 @@ public class BikeOwnerServiceImpl implements BikeOwnerService {
         bikeOwnerRepository.deleteById(id);
         log.debug("Removed BikeOwner with id {}", id);
     }
-
     @Transactional
     public List<BikeOwner> searchOwnersByEmail(String email) {
         return bikeOwnerRepository.findByEmailContainingIgnoreCase(email);

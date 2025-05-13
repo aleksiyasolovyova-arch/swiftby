@@ -5,6 +5,5 @@ public record BatteryTestDto(
         int promisedCapacityWh,
         double batteryHealthPercent,
         double score
-) {
-}
+) {}
 

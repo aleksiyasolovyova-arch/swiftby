@@ -2,6 +2,5 @@ package be.kdg.swiftby.presentation.webapi.dto.response;
 
 //2025-02-25: exactly the same as FacilityDto
 public record FacilityApiResponseDto(Long id, String name, String email,
-                                     String country, String city, String zipCode, String street, String streetNumber,
-                                     String addressExtra) {
+                                     String country, String city, String zipCode, String street, String streetNumber, String addressExtra) {
 }
