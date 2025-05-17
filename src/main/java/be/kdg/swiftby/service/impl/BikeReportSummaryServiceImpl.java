@@ -39,12 +39,12 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
 
     @Override
     public List<BikeReportSummary> getSummariesByBikeId(Long bikeId) {
-        return bikeReportSummaryRepository.findByBikeIdOrderByReportTimeDesc(bikeId);
+        return bikeReportSummaryRepository.findByBikeInstanceIdOrderByReportTimeDesc(bikeId);
     }
 
     @Override
     public BikeReportSummary getSummaryByBikeAndDate(Long bikeId, LocalDate reportDate) {
-        return bikeReportSummaryRepository.findByBikeIdOrderByReportTimeDesc(bikeId).stream()
+        return bikeReportSummaryRepository.findByBikeInstanceIdOrderByReportTimeDesc(bikeId).stream()
                 .filter(s -> s.getReportTime() != null && s.getReportTime().equals(reportDate))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Summary not found"));
@@ -235,6 +235,12 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
         summary.setFunctionalityCheck(check);
         bikeReportSummaryRepository.save(summary);
     }
+
+    @Override
+    public List<BikeReportSummary> getSummariesByBikeInstanceId(Long bikeInstanceId) {
+        return bikeReportSummaryRepository.findByBikeInstanceIdOrderByReportTimeDesc(bikeInstanceId);
+    }
+
 
 
 }

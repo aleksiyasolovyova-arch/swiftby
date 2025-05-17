@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BikeReportRepository extends JpaRepository<BikeReport,Long> {
+public interface BikeReportRepository extends JpaRepository<BikeReport, Long> {
     @Query("""
                 SELECT br FROM BikeReport br
                 LEFT JOIN FETCH br.bike b
