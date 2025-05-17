@@ -16,5 +16,6 @@ public interface BikeMapperApi {
     BikeModel toBike(BikeRequestDto bikeRequestDto);
     List<BikeApiResponseDto> toBikeDtoList(List<BikeModel> bikeModels);
     List<BikeApiResponseDto> toBikeInstanceDtoList(List<BikeInstance> bikeInstances);
+    BikeApiResponseDto toBikeDto(BikeInstance instance);
 
 }
