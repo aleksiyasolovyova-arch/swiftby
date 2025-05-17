@@ -36,4 +36,6 @@ public interface BikeReportSummaryService {
     String evaluateAndStoreBearingHealth(Long summaryId, double horizontalThreshold, double verticalThreshold);
 
     void attachFunctionalityCheck(Long summaryId, Long checkId);
+    List<BikeReportSummary> getSummariesByBikeInstanceId(Long bikeInstanceId);
+
 }

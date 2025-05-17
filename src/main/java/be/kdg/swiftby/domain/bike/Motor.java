@@ -20,6 +20,6 @@ public class Motor {
     @NonNull private Integer nominalPower;
     @NonNull private Integer torque;
     @OneToMany(mappedBy = "motor")
-    private Set<Bike> bikes;
+    private Set<BikeModel> bikeModels;
 
 }

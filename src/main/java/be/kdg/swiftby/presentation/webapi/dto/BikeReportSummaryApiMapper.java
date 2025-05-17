@@ -11,10 +11,7 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 @Mapper(componentModel = SPRING)
 public interface BikeReportSummaryApiMapper {
-    @Mapping(source = "bike.id", target = "bikeId")
-    @Mapping(source = "functionalityCheck.id",   target = "functionalityCheckId")
+    @Mapping(source = "functionalityCheck.id", target = "functionalityCheckId")
     BikeReportSummaryDto toBikeReportSummaryDto(BikeReportSummary bikeReportSummary);
-
-
 
 }

@@ -5,14 +5,13 @@ import be.kdg.swiftby.service.dto.BikeModelDto;
 
 import java.util.List;
 
-public interface BikeService {
+public interface BikeModelService {
     List<BikeModel> getAll();
-    BikeModel getById(Long id);
-    BikeModel getByIdWithOwner(Long id);
-    List<BikeModel> getByBikeOwnerId(Long id);
-    BikeModel save(BikeModelDto bikeModelDto);
-    List<BikeModel> findByMotorEngineType(String engineType);
-    void remove(Long id);
-    List<BikeModel> getAllByFacilityId(Long facilityId);
 
+    BikeModel save(BikeModelDto bikeModelDto);
+
+    List<BikeModel> findByMotorEngineType(String engineType);
+
+    void remove(Long id);
+    BikeModel getById(Long id);
 }

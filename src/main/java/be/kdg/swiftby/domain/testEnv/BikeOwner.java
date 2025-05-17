@@ -1,8 +1,6 @@
 package be.kdg.swiftby.domain.testEnv;
 
-import be.kdg.swiftby.domain.bike.Bike;
 import be.kdg.swiftby.domain.bike.BikeOwnership;
-import be.kdg.swiftby.domain.report.BikeReport;
 import jakarta.persistence.*;
 import lombok.*;
 

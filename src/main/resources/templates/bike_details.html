@@ -12,12 +12,12 @@
 <div class="container py-5">
 
     <div class="glassmorphism p-4 mb-4">
-        <h2 class="text-accent" th:text="${bike.brand} + ' - ' + ${bike.type}"></h2>
-        <p><strong>Chassis Number:</strong> <span th:text="${bike.chassisNumber}"></span></p>
-        <p><strong>Battery Capacity:</strong> <span th:text="${bike.batteryCapacity} + ' mAh'"></span></p>
-        <p><strong>Max Support:</strong> <span th:text="${bike.maxSupport} + ' W'"></span></p>
+        <h2 class="text-accent" th:text="${bikeModel.brand} + ' - ' + ${bikeModel.type}"></h2>
+        <p><strong>Chassis Number:</strong> <span th:text="${bikeModel.chassisNumber}"></span></p>
+        <p><strong>Battery Capacity:</strong> <span th:text="${bikeModel.batteryCapacity} + ' mAh'"></span></p>
+        <p><strong>Max Support:</strong> <span th:text="${bikeModel.maxSupport} + ' W'"></span></p>
         <p><strong>Powertrain:</strong>
-            <span th:text="${bike.powertrain} == 0 ? 'Hub' : 'Mid-drive'"></span>
+            <span th:text="${bikeModel.powertrain} == 0 ? 'Hub' : 'Mid-drive'"></span>
         </p>
     </div>
 
@@ -25,7 +25,7 @@
         <h3 class="mb-3">Test Report Summaries</h3>
 
         <div th:if="${summaries.empty}">
-            <p class="text-muted">No report summaries available for this bike yet.</p>
+            <p class="text-muted">No report summaries available for this bikeModel yet.</p>
         </div>
 
         <div class="list-group" th:if="${!summaries.empty}">

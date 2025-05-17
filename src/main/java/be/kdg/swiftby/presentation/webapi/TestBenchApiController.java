@@ -1,14 +1,11 @@
 package be.kdg.swiftby.presentation.webapi;
 
-import be.kdg.swiftby.domain.bike.Bike;
-import be.kdg.swiftby.domain.report.TestBenchData;
-import be.kdg.swiftby.domain.testEnv.BikeOwner;
+import be.kdg.swiftby.domain.bike.BikeInstance;
 import be.kdg.swiftby.presentation.webapi.dto.request.StartTestRequestDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.TestResponseDto;
 import be.kdg.swiftby.service.TestType;
 import be.kdg.swiftby.service.dto.api.dto.TestDto;
-import be.kdg.swiftby.service.intf.BikeOwnerService;
-import be.kdg.swiftby.service.intf.BikeService;
+import be.kdg.swiftby.service.intf.BikeInstanceService;
 import be.kdg.swiftby.service.intf.TestBenchApiService;
 import be.kdg.swiftby.service.intf.TestBenchService;
 import be.kdg.swiftby.websocket.TestWebSocketHandler;
@@ -16,30 +13,28 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/test")
 @RequiredArgsConstructor
 public class TestBenchApiController {
+
     private final TestBenchApiService testService;
     private final TestBenchService testBenchService;
-    private final BikeOwnerService bikeOwnerService;
-    private final BikeService bikeService;
+    private final BikeInstanceService bikeInstanceService;
     private final TestWebSocketHandler testWebSocketHandler;
 
     @PostMapping("/start")
     public ResponseEntity<TestResponseDto> startTest(@RequestBody StartTestRequestDto request) {
-        // save the bike owner
-        Bike bike = bikeService.getByIdWithOwner(request.getBikeId());
-        System.out.println("hohoho");
-        System.out.println(request);
-        int batteryCapacity = bike.getBatteryCapacity();
-        int maxSupport = bike.getMaxSupport();
-        int enginePowerMax = bike.getMotor().getMaxPower();
-        int enginePowerNominal = bike.getMotor().getNominalPower();
-        int engineTorque = bike.getMotor().getTorque();
+        BikeInstance bikeInstance = bikeInstanceService.getByIdWithModelAndMotor(request.getBikeId());
+
+        int batteryCapacity = bikeInstance.getModel().getBatteryCapacity();
+        int maxSupport = bikeInstance.getModel().getMaxSupport();
+        int enginePowerMax = bikeInstance.getModel().getMotor().getMaxPower();
+        int enginePowerNominal = bikeInstance.getModel().getMotor().getNominalPower();
+        int engineTorque = bikeInstance.getModel().getMotor().getTorque();
+
         TestDto testDto = testService.startTest(
                 TestType.valueOf(request.getTestType().name()),
                 batteryCapacity,
@@ -47,9 +42,10 @@ public class TestBenchApiController {
                 enginePowerMax,
                 enginePowerNominal,
                 engineTorque,
-                bike.getId()
+                bikeInstance.getId()
         );
-        testWebSocketHandler.trackTest(testDto.id(), bike.getId());
+
+        testWebSocketHandler.trackTest(testDto.id(), bikeInstance.getId());
         return ResponseEntity.ok(mapToResponseDto(testDto));
     }
 
@@ -78,8 +74,4 @@ public class TestBenchApiController {
                 test.engineTorque()
         );
     }
-
-
-
-
 }
