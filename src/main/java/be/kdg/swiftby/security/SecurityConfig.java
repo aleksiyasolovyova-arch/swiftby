@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
@@ -28,11 +29,13 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
     private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Bean
     SecurityFilterChain securityFilterChain(final HttpSecurity httpSecurity,
                                             GlobalAuthenticationConfigurerAdapter enableGlobalAuthenticationAutowiredConfigurer) throws Exception {
+        httpSecurity.addFilterBefore(new LoginPageRedirectFilter(), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET,
@@ -40,7 +43,7 @@ public class SecurityConfig {
                                 "/login",
                                 "/registration",
                                 "/workInProgress"
-                        ).permitAll()  // <-- Allow registration page
+                        ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/registration").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(antMatcher("/api/**")).permitAll()

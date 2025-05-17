@@ -11,7 +11,7 @@ public abstract class Employee extends User {
     @ManyToOne
     @JoinColumn(name = "facility_id")
     private Facility facility;
-    @Column(columnDefinition = "bit default 0")
+    @Column(columnDefinition = "bit default 1")
     private boolean isApproved;
 
     public Employee(String email, String firstName, String lastName, String phoneNumber) {
