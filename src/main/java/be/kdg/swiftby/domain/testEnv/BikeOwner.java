@@ -32,5 +32,8 @@ public class BikeOwner extends User {
         this.setPhoneNumber(phoneNumber);
     }
 
-
+    @Override
+    public boolean isLoginAllowed() {
+        return true;
+    }
 }

@@ -28,6 +28,8 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+
     @Bean
     SecurityFilterChain securityFilterChain(final HttpSecurity httpSecurity,
                                             GlobalAuthenticationConfigurerAdapter enableGlobalAuthenticationAutowiredConfigurer) throws Exception {
@@ -77,7 +79,9 @@ public class SecurityConfig {
                             }
                         }))
                 .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(login -> login.loginPage("/login").permitAll())
+                .formLogin(login -> login.loginPage("/login")
+                        .failureHandler(customAuthenticationFailureHandler)
+                        .permitAll())
                 .build();
     };
 

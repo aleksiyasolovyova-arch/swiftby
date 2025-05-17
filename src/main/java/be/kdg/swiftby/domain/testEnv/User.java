@@ -19,6 +19,13 @@ public abstract class User {
     @NonNull private String lastName;
     @NonNull private String phoneNumber;
 
+    public boolean isLoginAllowed(){
+        if (this instanceof Employee employee) {
+            return employee.isApproved();
+        }
+        return true;
+    };
+
     public User( String email, String firstName,  String lastName,  String phoneNumber) {
         this.email = email;
         this.firstName = firstName;
