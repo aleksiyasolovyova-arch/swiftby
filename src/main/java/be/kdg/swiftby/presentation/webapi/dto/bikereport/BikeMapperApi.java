@@ -19,6 +19,7 @@ public interface BikeMapperApi {
 
 
     List<BikeApiResponseDto> toBikeInstanceDtoList(List<BikeInstance> bikeInstances);
+    BikeApiResponseDto toBikeDto(BikeInstance instance);
 
     @Mapping(source = "model.brand", target = "brand")
     @Mapping(source = "model.type", target = "type")
