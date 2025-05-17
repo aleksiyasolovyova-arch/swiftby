@@ -16,13 +16,13 @@ import java.util.List;
 @Controller
 @RequestMapping("/bikeowner")
 public class BikeOwnerController {
-
     private final BikeOwnerService bikeOwnerService;
     private final BikeInstanceService bikeInstanceService;
 
     @GetMapping("/bikes")
     public String showAllBikeOwnerBikes(Principal principal, Model model) {
         String email = principal.getName();
+
         Long bikeOwnerId = bikeOwnerService.getByEmail(email).getId();
 
         List<BikeInstance> bikeInstances = bikeInstanceService.getByBikeOwnerId(bikeOwnerId);
@@ -30,6 +30,7 @@ public class BikeOwnerController {
         model.addAttribute("bikeOwnerId", bikeOwnerId);
         model.addAttribute("bikeInstances", bikeInstances);
 
-        return "all-bikes-customer";
+        return "all-bikes";
+
     }
 }
