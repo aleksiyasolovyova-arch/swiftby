@@ -6,6 +6,7 @@ import be.kdg.swiftby.repository.testEnvironment.FacilityRepository;
 import be.kdg.swiftby.service.dto.FacilityDto;
 import be.kdg.swiftby.service.dto.mapper.FacilityMapper;
 import be.kdg.swiftby.service.intf.FacilityService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class FacilityServiceImpl implements FacilityService {
         return facilityRepository.findAll();
     }
 
+    
     @Override
     public Facility getById(Long id) {
         return facilityRepository.findById(id).orElseThrow(() -> NotFoundException.forFacility(id));

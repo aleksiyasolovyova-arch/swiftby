@@ -42,7 +42,6 @@ public class RegistrationController {
         return "registration";
     }
 
-    //Idk if I should be handling errors here-refactor
     @PostMapping("/registration")
     public ModelAndView registerUserAccount(@ModelAttribute("user") @Valid ProfileDto userDto,
                                             BindingResult result,

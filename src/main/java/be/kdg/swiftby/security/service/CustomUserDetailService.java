@@ -1,21 +1,15 @@
 package be.kdg.swiftby.security.service;
 
-import be.kdg.swiftby.domain.exception.AlreadyExistsException;
 import be.kdg.swiftby.domain.exception.NotFoundException;
-import be.kdg.swiftby.domain.testEnv.Administrator;
-import be.kdg.swiftby.domain.testEnv.SuperAdmin;
-import be.kdg.swiftby.domain.testEnv.Technician;
 import be.kdg.swiftby.domain.testEnv.User;
 import be.kdg.swiftby.repository.testEnvironment.AdministratorRepository;
 import be.kdg.swiftby.repository.testEnvironment.BikeOwnerRepository;
 import be.kdg.swiftby.repository.testEnvironment.SuperAdminRepository;
 import be.kdg.swiftby.repository.testEnvironment.TechnicianRepository;
 import be.kdg.swiftby.security.CustomUserDetails;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -49,15 +43,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
     private UserDetails buildUserDetails(User user, String role) {
         return new
-                CustomUserDetails(
-                user.getEmail(),
-                user.getPassword(),
-                true,
-                true,
-                true,
-                true,
-                AuthorityUtils.createAuthorityList("ROLE_"+role)
-        );
+                CustomUserDetails(user, role);
     }
 
 }
