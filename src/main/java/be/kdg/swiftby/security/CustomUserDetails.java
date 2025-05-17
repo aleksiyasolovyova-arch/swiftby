@@ -1,18 +1,57 @@
 package be.kdg.swiftby.security;
 
+import be.kdg.swiftby.domain.testEnv.User;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
-public class CustomUserDetails extends User {
-    public CustomUserDetails(String username,
-                             String password,
-                             boolean enabled,
-                             boolean accountNonExpired,
-                             boolean credentialsNonExpired,
-                             boolean accountNonLocked,
-                             Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, enabled, accountNonExpired,credentialsNonExpired,accountNonLocked, authorities);
+public class CustomUserDetails implements UserDetails {
+    private final User user;
+    private final String role;
+
+    public CustomUserDetails(User user, String role) {
+        this.user = user;
+        this.role = role;
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role));
+    }
+
+    @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return user.getEmail();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return user.isLoginAllowed();
+    }
+
+
 }
+
