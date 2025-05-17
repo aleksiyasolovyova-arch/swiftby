@@ -80,7 +80,9 @@ public class SecurityConfig {
                             } else {
                                 response.sendRedirect("/login");
                             }
-                        }))
+                        })
+                                .accessDeniedPage("/forbidden")
+                )
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(login -> login.loginPage("/login")
                         .failureHandler(customAuthenticationFailureHandler)

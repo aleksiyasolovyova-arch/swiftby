@@ -17,7 +17,7 @@ public class FacilityController {
             return "facility-overview";
         }
         if (userDetails.getFacilityId() == null || !id.equals(userDetails.getFacilityId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not your facility.");
+            return "forbidden";
         }
 
         return "facility-overview";
