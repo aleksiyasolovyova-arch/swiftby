@@ -17,11 +17,8 @@ public class BikeOwnership {
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "bike_id")
-    private Bike bike;
+    private BikeInstance bike;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "bike_owner_id")
     private BikeOwner owner;
-
 }

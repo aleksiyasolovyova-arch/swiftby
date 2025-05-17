@@ -1,31 +1,31 @@
 // BIKES
 
-### get all bikes - 200
-GET http://localhost:8080/api/bikes
+### get all bikeModels - 200
+GET http://localhost:8080/api/bikeModels
 Accept: application/json
 
 
-### get one existing bike - 200
-GET http://localhost:8080/api/bikes/1
+### get one existing bikeModel - 200
+GET http://localhost:8080/api/bikeModels/1
 Accept: application/json
 
 ###
-GET http://localhost:8080/api/bikes/owner/1
+GET http://localhost:8080/api/bikeModels/owner/1
 Accept: application/json
 
 
-### get one non-existing bike - 404
-GET http://localhost:8080/api/bikes/0
+### get one non-existing bikeModel - 404
+GET http://localhost:8080/api/bikeModels/0
 Accept: application/json
 
 
-### get bikes by motor engine type - 200
-GET http://localhost:8080/api/bikes/motor-engine-type/Bosch%20CX
+### get bikeModels by motor engine type - 200
+GET http://localhost:8080/api/bikeModels/motor-engine-type/Bosch%20CX
 Accept: application/json
 
 
-### save a bike - 200
-POST http://localhost:8080/api/bikes
+### save a bikeModel - 200
+POST http://localhost:8080/api/bikeModels
 Content-Type: application/json
 
 {
@@ -46,17 +46,17 @@ Content-Type: application/json
 }
 
 
-### delete existing bike - 204
-DELETE http://localhost:8080/api/bikes/1
+### delete existing bikeModel - 204
+DELETE http://localhost:8080/api/bikeModels/1
 Accept: application/json
 
 
-### delete non-existing bike - 404
-DELETE http://localhost:8080/api/bikes/0
+### delete non-existing bikeModel - 404
+DELETE http://localhost:8080/api/bikeModels/0
 Accept: application/json
 
 ###
-POST http://localhost:8080/api/bikes
+POST http://localhost:8080/api/bikeModels
 Content-Type: application/json
 
 {

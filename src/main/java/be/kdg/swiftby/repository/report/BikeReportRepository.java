@@ -10,12 +10,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BikeReportRepository extends JpaRepository<BikeReport,Long> {
+public interface BikeReportRepository extends JpaRepository<BikeReport, Long> {
     @Query("""
-            SELECT br FROM BikeReport br
-            LEFT JOIN FETCH br.bike
+                SELECT br FROM BikeReport br
+                LEFT JOIN FETCH br.bike b
+                LEFT JOIN FETCH b.model
             """)
     List<BikeReport> getAllWithBikes();
+
 
     @Query("""
                 SELECT new be.kdg.swiftby.service.dto.BikeReportAggregationDto(

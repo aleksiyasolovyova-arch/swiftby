@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("statusPlug").textContent = data.statusPlug ? "Plugged In" : "Not Plugged In";
             document.getElementById("speed").textContent = `${(data.speed ?? 0).toFixed(2)} km/h`;
             document.getElementById("power").textContent = `${(data.power ?? 0).toFixed(2)} W`;
-            document.getElementById("technicianComment").textContent = data.technicianComment || "No comments";
 
             if (data.functionalityCheckId) {
                 fetch(`/api/functional-checks/${data.functionalityCheckId}`)
@@ -294,14 +293,6 @@ document.addEventListener("DOMContentLoaded", function () {
             rol: report.testBenchData?.rol,
             loadPower: report.testBenchData?.loadPower,
             statusPlug: report.testBenchData?.statusPlug,
-            testBenchId: report.testBenchData?.testBenchId,
-            brand: report.bike?.brand,
-            type: report.bike?.type,
-            chassisNumber: report.bike?.chassisNumber,
-            powertrain: report.bike?.powertrain,
-            bikeSize: report.bike?.bikeSize,
-            maxSupport: report.bike?.maxSupport,
-            batteryCapacity: report.bike?.batteryCapacity
         };
     }
 

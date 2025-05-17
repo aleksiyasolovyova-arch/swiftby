@@ -1,10 +1,10 @@
 package be.kdg.swiftby.domain.report;
 
-import be.kdg.swiftby.domain.bike.Bike;
+import be.kdg.swiftby.domain.bike.BikeInstance;
+import be.kdg.swiftby.domain.bike.BikeModel;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -37,7 +37,7 @@ public class BikeReport {
     private TestBenchData testBenchData;
     @ManyToOne
     @JoinColumn(name = "bike_id")
-    private Bike bike;
+    private BikeInstance bike;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "summary_id")
     private BikeReportSummary summary;
