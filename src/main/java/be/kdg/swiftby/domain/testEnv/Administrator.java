@@ -24,5 +24,9 @@ public class Administrator extends Employee {
         this.setPhoneNumber(phoneNumber);
     }
 
+    @Override
+    public boolean isLoginAllowed() {
+        return this.isApproved;
+    }
 
-}
+    }
