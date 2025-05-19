@@ -5,6 +5,7 @@ import be.kdg.swiftby.domain.bike.BikeModel;
 import be.kdg.swiftby.presentation.webapi.dto.request.BikeRequestDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeApiResponseDto;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -15,7 +16,16 @@ public interface BikeMapperApi {
     BikeApiResponseDto toBikeDto(BikeModel bikeModel);
     BikeModel toBike(BikeRequestDto bikeRequestDto);
     List<BikeApiResponseDto> toBikeDtoList(List<BikeModel> bikeModels);
+
+
     List<BikeApiResponseDto> toBikeInstanceDtoList(List<BikeInstance> bikeInstances);
+
+    @Mapping(source = "model.brand", target = "brand")
+    @Mapping(source = "model.type", target = "type")
+    @Mapping(source = "model.powertrain", target = "powertrain")
+    @Mapping(source = "model.bikeSize", target = "bikeSize")
+    @Mapping(source = "model.maxSupport", target = "maxSupport")
+    @Mapping(source = "model.batteryCapacity", target = "batteryCapacity")
     BikeApiResponseDto toBikeDto(BikeInstance instance);
 
 }

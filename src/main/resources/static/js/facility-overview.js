@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchTechnicians(facilityId);
 });
 
-async function fetchFacility(id) {
-    const res = await fetch(`/api/facilities/${id}`);
+async function fetchFacility(facilityId) {
+    const res = await fetch(`/api/facilities/${facilityId}`);
     if (!res.ok) return;
 
     const facility = await res.json();
@@ -15,8 +15,8 @@ async function fetchFacility(id) {
     document.getElementById('facilityAddress').textContent = `${facility.street} ${facility.streetNumber}, ${facility.zipCode}`;
 }
 
-async function fetchBikes(id) {
-    const res = await fetch(`/api/facilities/${id}/bikes`);
+async function fetchBikes(facilityId) {
+    const res = await fetch(`/api/facilities/${facilityId}/bikes`);
     const list = document.getElementById('bikeList');
     if (!res.ok) return;
 
@@ -37,8 +37,8 @@ async function fetchBikes(id) {
     });
 }
 
-async function fetchTestBenches(id) {
-    const res = await fetch(`/api/facilities/${id}/testbenches`);
+async function fetchTestBenches(facilityId) {
+    const res = await fetch(`/api/facilities/${facilityId}/testbenches`);
     const list = document.getElementById('testBenchList');
     if (!res.ok) return;
 
@@ -56,8 +56,8 @@ async function fetchTestBenches(id) {
     });
 }
 
-async function fetchTechnicians(id) {
-    const res = await fetch(`/api/facilities/${id}/technicians`);
+async function fetchTechnicians(facilityId) {
+    const res = await fetch(`/api/facilities/${facilityId}/technicians`);
     const list = document.getElementById('technicianList');
     if (!res.ok) return;
 
