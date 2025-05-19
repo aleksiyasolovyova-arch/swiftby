@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Your Bike Reports</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/all-bikes.css}">
+</head>
+<body>
+<main class="glassmorphism">
+    <h2 class="facility-header">Your Bike Report Summaries</h2>
+    <div id="bikeList">
+        <div class="card" th:each="report : ${bikeReportSummaries}">
+            <h4 th:text="'Report Date: ' + ${#dates.format(report.reportTime, 'yyyy-MM-dd')}"></h4>
+            <p>
+                <strong>Bike Instance:</strong>
+                <span th:text="${report.bikeInstance != null} ? ${report.bikeInstance.identifier} : 'N/A'"></span>
+            </p>
+            <p>
+                <strong>Technician Comment:</strong>
+                <span th:text="${report.technicianComment != null} ? ${report.technicianComment} : 'No comment'"></span>
+            </p>
+        </div>
+    </div>
+</main>
+</body>
+</html>
