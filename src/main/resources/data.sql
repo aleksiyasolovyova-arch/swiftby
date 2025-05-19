@@ -34,7 +34,7 @@ INSERT INTO administrator (is_approved,facility_id, email, first_name, last_name
                                                                                                   (true,1, 'aleksiya.solovyova@student.kdg.be', 'Aleksiya', 'Solovyova', '$2a$12$in.yf3xeexORUO4uDeAPZeG9J7lKYBzAWDSY1T7.XlrfJD5VAYk4m', '+359 246 44 88'),
                                                                                                   (true,2, 'storm.vanloon@student.kdg.be', 'Storm', 'van Loon', '$2a$12$fEjdz49TVnoTiiXgSoG/PurTH7rUxLZ8vMofz9hkPD7CAM03.MXme', '0492454545'),
                                                                                                   (true,2, 'bob.thehelper@stroempeltown.be', 'Bob', 'The Helper', '$2a$12$b1kRFuVAHPSEEKUI9UpmwO0tIgYXhlGn9W54e3.WmaHYviJo91Iv.', '0476010203'),
-                                                                                                  (true,1, 'admin@admin.com', 'Admin', 'Jr', '$2a$12$8DZYsusMRABF6Mi07CIx6u.4eTiDfqt8KhYLajndmd6OeGtZlWxKO', '0889861088');
+                                                                                                  (true, 1, 'admin@admin.com', 'Admin', 'Jr', '$2a$12$8DZYsusMRABF6Mi07CIx6u.4eTiDfqt8KhYLajndmd6OeGtZlWxKO', '0889861088');
 
 -- BIKE MODELS
 INSERT INTO motor (engine_type, gear_type, max_power, nominal_power, torque) VALUES

@@ -22,7 +22,6 @@ public class Technician extends Employee {
     public Technician(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber) {
         super(facility, email, password, firstName, lastName, phoneNumber);
     }
-
     @Override
     public boolean isLoginAllowed() {
         return this.isApproved;

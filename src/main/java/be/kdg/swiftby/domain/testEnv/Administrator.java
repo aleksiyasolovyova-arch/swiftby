@@ -23,10 +23,8 @@ public class Administrator extends Employee {
         this.setLastName(lastName);
         this.setPhoneNumber(phoneNumber);
     }
-
     @Override
     public boolean isLoginAllowed() {
         return this.isApproved;
     }
-
-    }
+}

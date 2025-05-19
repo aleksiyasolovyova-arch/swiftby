@@ -6,6 +6,7 @@ import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.repository.bike.BikeInstanceRepository;
 import be.kdg.swiftby.repository.bike.BikeOwnershipRepository;
 import be.kdg.swiftby.service.intf.BikeInstanceService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import be.kdg.swiftby.domain.bike.BikeOwnership;
 import   be.kdg.swiftby.repository.bike.BikeModelRepository;
@@ -28,6 +29,7 @@ public class BikeInstanceServiceImpl implements BikeInstanceService {
         return bikeInstanceRepository.findAll();
     }
 
+
     @Override
     public BikeInstance getById(Long id) {
         return bikeInstanceRepository.findById(id)
@@ -40,6 +42,7 @@ public class BikeInstanceServiceImpl implements BikeInstanceService {
                 .orElseThrow(() -> new RuntimeException("BikeInstance not found"));
     }
 
+
     @Override
     public List<BikeInstance> getByBikeOwnerId(Long ownerId) {
         return bikeOwnershipRepository.findByOwnerId(ownerId).stream()
@@ -47,10 +50,12 @@ public class BikeInstanceServiceImpl implements BikeInstanceService {
                 .toList();
     }
 
+
     @Override
     public List<BikeInstance> getAllByFacilityId(Long facilityId) {
         return bikeInstanceRepository.findAllByFacilityId(facilityId);
     }
+
 
     @Override
     public BikeInstance createInstance(String chassisNumber, Long modelId) {
@@ -67,6 +72,7 @@ public class BikeInstanceServiceImpl implements BikeInstanceService {
 
         return bikeInstanceRepository.save(instance);
     }
+
 
     @Override
     public void remove(Long id) {
