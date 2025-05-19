@@ -8,6 +8,7 @@ import be.kdg.swiftby.service.dto.BikeModelDto;
 import be.kdg.swiftby.service.dto.mapper.BikeModelMappper;
 import be.kdg.swiftby.service.dto.mapper.MotorMapper;
 import be.kdg.swiftby.service.intf.BikeModelService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import be.kdg.swiftby.repository.bike.BikeModelRepository;
 import java.util.List;

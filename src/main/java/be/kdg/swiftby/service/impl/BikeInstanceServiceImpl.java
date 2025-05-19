@@ -24,11 +24,11 @@ public class BikeInstanceServiceImpl implements BikeInstanceService {
         this.bikeModelRepository = bikeModelRepository;
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')")
     @Override
     public List<BikeInstance> getAll() {
         return bikeInstanceRepository.findAll();
     }
+
 
     @Override
     public BikeInstance getById(Long id) {
@@ -42,6 +42,7 @@ public class BikeInstanceServiceImpl implements BikeInstanceService {
                 .orElseThrow(() -> new RuntimeException("BikeInstance not found"));
     }
 
+
     @Override
     public List<BikeInstance> getByBikeOwnerId(Long ownerId) {
         return bikeOwnershipRepository.findByOwnerId(ownerId).stream()
@@ -49,10 +50,12 @@ public class BikeInstanceServiceImpl implements BikeInstanceService {
                 .toList();
     }
 
+
     @Override
     public List<BikeInstance> getAllByFacilityId(Long facilityId) {
         return bikeInstanceRepository.findAllByFacilityId(facilityId);
     }
+
 
     @Override
     public BikeInstance createInstance(String chassisNumber, Long modelId) {
@@ -69,6 +72,7 @@ public class BikeInstanceServiceImpl implements BikeInstanceService {
 
         return bikeInstanceRepository.save(instance);
     }
+
 
     @Override
     public void remove(Long id) {
