@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class FacilityController {
 
-    @GetMapping("/facility/{id}/overview")
-    public String facilityOverview(@PathVariable Long id, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    @GetMapping("/facility/{facilityId}/overview")
+    public String facilityOverview(@PathVariable Long facilityId, @AuthenticationPrincipal CustomUserDetails userDetails) {
         if ("SUPERADMIN".equalsIgnoreCase(userDetails.getRole())) {
             return "facility-overview";
         }
-        if (userDetails.getFacilityId() == null || !id.equals(userDetails.getFacilityId())) {
+        if (userDetails.getFacilityId() == null || !facilityId.equals(userDetails.getFacilityId())) {
             return "forbidden";
         }
 

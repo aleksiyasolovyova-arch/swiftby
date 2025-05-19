@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface BikeInstanceRepository extends JpaRepository<BikeInstance, Long> {
     Optional<BikeInstance> findByChassisNumber(String chassisNumber);
 
+
     @Query("""
         SELECT DISTINCT b FROM BikeInstance b
         LEFT JOIN FETCH b.ownerships bo
@@ -25,6 +26,7 @@ public interface BikeInstanceRepository extends JpaRepository<BikeInstance, Long
         SELECT b FROM BikeInstance b
         JOIN b.ownerships bo
         JOIN bo.owner ow
+        JOIN b.model
         WHERE ow.facility.id = :facilityId
     """)
     List<BikeInstance> findAllByFacilityId(@Param("facilityId") Long facilityId);
