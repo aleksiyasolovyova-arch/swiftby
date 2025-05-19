@@ -5,8 +5,9 @@ import be.kdg.swiftby.domain.testEnv.Administrator;
 import be.kdg.swiftby.domain.testEnv.BikeOwner;
 import be.kdg.swiftby.domain.testEnv.Facility;
 import be.kdg.swiftby.domain.testEnv.Technician;
+import be.kdg.swiftby.repository.bike.BikeInstanceRepository;
+import be.kdg.swiftby.repository.bike.BikeModelRepository;
 import be.kdg.swiftby.repository.bike.BikeOwnershipRepository;
-import be.kdg.swiftby.repository.bike.BikeRepository;
 import be.kdg.swiftby.repository.bike.MotorRepository;
 import be.kdg.swiftby.repository.testEnvironment.AdministratorRepository;
 import be.kdg.swiftby.repository.testEnvironment.BikeOwnerRepository;
@@ -31,20 +32,23 @@ public class TestUtils {
     @Autowired
     private BikeOwnerRepository bikeOwnerRepository;
     @Autowired
-    private BikeRepository bikeRepository;
+    private BikeModelRepository bikeModelRepository;
     @Autowired
     private MotorRepository motorRepository;
     @Autowired
     private BikeOwnershipRepository bikeOwnershipRepository;
+    @Autowired
+    private BikeInstanceRepository bikeInstanceRepository;
 
 
     public void cleanUp() {
         bikeOwnershipRepository.deleteAll();
+        bikeInstanceRepository.deleteAll();
         technicianRepository.deleteAll();
         administratorRepository.deleteAll();
         bikeOwnerRepository.deleteAll();
         facilityRepository.deleteAll();
-        bikeRepository.deleteAll();
+        bikeModelRepository.deleteAll();
     }
 
     public Facility createDummyFacility() {
@@ -97,8 +101,8 @@ public class TestUtils {
     }
 
     @Transactional
-    public BikeOwner createBikeOwner(String firstName, String lastName, Long bikeId) {
-        Bike bike = bikeRepository.findById(bikeId).orElseThrow();
+    public BikeOwner createBikeOwner(String firstName, String lastName, Long bikeInstanceId) {
+        BikeInstance bikeInstance = bikeInstanceRepository.findById(bikeInstanceId).orElseThrow();
 
         BikeOwner bikeOwner = addBikeOwner();
         bikeOwner.setFirstName(firstName);
@@ -106,7 +110,7 @@ public class TestUtils {
 
         bikeOwner = bikeOwnerRepository.save(bikeOwner);
 
-        addBikeOwnershipLink(bike, bikeOwner);
+        addBikeOwnershipLink(bikeInstance, bikeOwner);
         return bikeOwnerRepository.findByEmail(bikeOwner.getEmail()).orElseThrow();
     }
 
@@ -115,22 +119,27 @@ public class TestUtils {
         return bikeOwnerRepository.save(bikeOwner);
     }
 
-    public Bike createBike() {
+    public BikeModel createBikeModel() {
         Random random = new Random();
         Motor motor = createMotor();
 
-        Bike bike = new Bike("Brand-" + UUID.randomUUID(),
+        BikeModel bikeModel = new BikeModel("Brand-" + UUID.randomUUID(),
                 "Electric Mountain Bike",
-                "TREK-" + UUID.randomUUID(),
                 POWERTRAIN.BELT,
                 BIKE_SIZE.L,
                 random.nextInt(5, 20),
                 random.nextInt(150, 700),
-                motor,
-                new HashSet<>()
+                motor
         );
 
-        return bikeRepository.save(bike);
+        return bikeModelRepository.save(bikeModel);
+    }
+
+    public BikeInstance createBikeInstance(String chassisNumber, Long bikeModelId) {
+        BikeModel bikeModel = bikeModelRepository.findById(bikeModelId).orElseThrow();
+        BikeInstance bikeInstance = new BikeInstance(chassisNumber, bikeModel);
+
+        return bikeInstanceRepository.save(bikeInstance);
     }
 
     public Motor createMotor() {
@@ -143,11 +152,11 @@ public class TestUtils {
         return motorRepository.save(motor);
     }
 
-    public BikeOwnership addBikeOwnershipLink(Bike bike, BikeOwner bikeOwner) {
-        BikeOwnership bikeOwnership = bikeOwnershipRepository.save(new BikeOwnership(bike, bikeOwner));
-        bike.getOwnerships().add(bikeOwnership);
+    public BikeOwnership addBikeOwnershipLink(BikeInstance bikeInstance, BikeOwner bikeOwner) {
+        BikeOwnership bikeOwnership = bikeOwnershipRepository.save(new BikeOwnership(bikeInstance, bikeOwner));
+        bikeInstance.getOwnerships().add(bikeOwnership);
         bikeOwner.getOwnerships().add(bikeOwnership);
-        bikeRepository.save(bike);
+        bikeInstanceRepository.save(bikeInstance);
         bikeOwnerRepository.save(bikeOwner);
         return bikeOwnership;
     }

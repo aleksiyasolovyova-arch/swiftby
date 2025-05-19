@@ -11,6 +11,15 @@ import java.util.Optional;
 
 @Repository
 public interface BikeInstanceRepository extends JpaRepository<BikeInstance, Long> {
+    @Query("""
+           SELECT DISTINCT b from BikeInstance b
+           LEFT JOIN FETCH b.ownerships bos
+           LEFT JOIN FETCH bos.owner bo
+           LEFT JOIN FETCH b.model
+           WHERE bo.id = :bikeOwnerId
+        """)
+    Optional<BikeInstance> findByBikeOwnerId(Long bikeOwnerId);
+
     Optional<BikeInstance> findByChassisNumber(String chassisNumber);
 
     @Query("""
