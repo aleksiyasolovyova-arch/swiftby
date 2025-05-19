@@ -1,6 +1,7 @@
 package be.kdg.swiftby.presentation.controller;
 
 import be.kdg.swiftby.domain.bike.BikeInstance;
+import be.kdg.swiftby.domain.bike.BikeModel;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.domain.testEnv.BikeOwner;
 import be.kdg.swiftby.domain.testEnv.Employee;
@@ -12,6 +13,7 @@ import be.kdg.swiftby.service.intf.TechnicianService;
 import be.kdg.swiftby.domain.testEnv.User;
 import be.kdg.swiftby.service.impl.UserUtilities;
 import be.kdg.swiftby.service.intf.*;
+import com.itextpdf.forms.xfdf.Mode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,8 @@ public class BikeController {
     private final BikeReportSummaryService bikeReportSummaryService;
     private final UserService userService;
     private final BikeOwnerService bikeOwnerService;
+    private final BikeModelService bikeModelService;
+
     // TODO: USE EMPLOYEE SERVICE FOR BETTER ABSTRACTION
     @GetMapping("/bikes")
     public String showAllBikes(Principal principal, Model model) {
@@ -57,6 +61,13 @@ public class BikeController {
         model.addAttribute("bike", bikeInstance);
         model.addAttribute("summaries", summaries);
         return "bike_details";
+    }
+
+    @GetMapping("/bikeModels")
+    public String showBikeModels(Model model){
+        List<BikeModel> models = bikeModelService.getAll();
+        model.addAttribute("models", models);
+        return "bike-models";
     }
 
 }

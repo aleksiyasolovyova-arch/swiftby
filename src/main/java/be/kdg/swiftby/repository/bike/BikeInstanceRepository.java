@@ -22,6 +22,7 @@ public interface BikeInstanceRepository extends JpaRepository<BikeInstance, Long
 
     Optional<BikeInstance> findByChassisNumber(String chassisNumber);
 
+
     @Query("""
         SELECT DISTINCT b FROM BikeInstance b
         LEFT JOIN FETCH b.ownerships bo
@@ -34,6 +35,7 @@ public interface BikeInstanceRepository extends JpaRepository<BikeInstance, Long
         SELECT b FROM BikeInstance b
         JOIN b.ownerships bo
         JOIN bo.owner ow
+        JOIN b.model
         WHERE ow.facility.id = :facilityId
     """)
     List<BikeInstance> findAllByFacilityId(@Param("facilityId") Long facilityId);
@@ -44,5 +46,13 @@ public interface BikeInstanceRepository extends JpaRepository<BikeInstance, Long
     WHERE b.id = :id
 """)
     Optional<BikeInstance> findByIdWithModelAndMotor(@Param("id") Long id);
+
+    @Query("""
+    SELECT b FROM BikeInstance b
+    JOIN FETCH b.ownerships bo
+    JOIN FETCH bo.owner ow
+    WHERE ow.email = :email
+""")
+    List<BikeInstance> findAllByOwnerEmail(@Param("email") String email);
 
 }

@@ -9,4 +9,7 @@ public class ErrorController {
     public String forbidden() {
         return "forbidden";
     }
+
+    @GetMapping("/error")
+    public String error() {return "error";}
 }
