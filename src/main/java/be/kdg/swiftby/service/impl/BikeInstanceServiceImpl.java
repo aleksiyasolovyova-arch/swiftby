@@ -24,7 +24,6 @@ public class BikeInstanceServiceImpl implements BikeInstanceService {
         this.bikeModelRepository = bikeModelRepository;
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')")
     @Override
     public List<BikeInstance> getAll() {
         return bikeInstanceRepository.findAll();
