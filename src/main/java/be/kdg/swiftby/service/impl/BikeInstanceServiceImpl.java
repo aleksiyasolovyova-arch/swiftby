@@ -6,6 +6,7 @@ import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.repository.bike.BikeInstanceRepository;
 import be.kdg.swiftby.repository.bike.BikeOwnershipRepository;
 import be.kdg.swiftby.service.intf.BikeInstanceService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import be.kdg.swiftby.domain.bike.BikeOwnership;
 import   be.kdg.swiftby.repository.bike.BikeModelRepository;
@@ -23,6 +24,7 @@ public class BikeInstanceServiceImpl implements BikeInstanceService {
         this.bikeModelRepository = bikeModelRepository;
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')")
     @Override
     public List<BikeInstance> getAll() {
         return bikeInstanceRepository.findAll();

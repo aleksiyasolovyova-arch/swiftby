@@ -3,7 +3,7 @@ package be.kdg.swiftby.domain.testEnv;
 import jakarta.persistence.*;
 import lombok.*;
 
-@MappedSuperclass
+//@MappedSuperclass
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
@@ -13,8 +13,8 @@ public abstract class Employee extends User {
     @JoinColumn(name = "facility_id")
     private Facility facility;
 
-    @Column(nullable = false)
-    private boolean isApproved = false;
+    @Column(name = "is_approved", nullable = false)
+    private boolean isApproved;
 
 
 
@@ -33,11 +33,6 @@ public abstract class Employee extends User {
 
     public Employee(String email, String password, String firstName, String lastName, String phoneNumber) {
         super(email, password, firstName, lastName, phoneNumber);
-    }
-
-    @Override
-    public boolean isLoginAllowed() {
-        return this.isApproved;
     }
 
     @Override
