@@ -58,6 +58,7 @@ public class UserServiceTest {
     void shouldReturnAdministrator() {
         //Arrange
         Facility facility = testUtils.createFacility("facility");
+        System.out.println("facilityId: " + facility.getId());
         Administrator admin = testUtils.createAdministrator(facility.getId(), "Ad", "Min");
 
         //Act
@@ -67,8 +68,7 @@ public class UserServiceTest {
         assertThat(user)
                 .usingRecursiveComparison()
                 .ignoringFields("facility")
-                .isEqualTo(admin)
-        ;
+                .isEqualTo(admin);
         assertEquals(admin.getFacility().getId(), user.getFacility().getId());
         assertEquals(Administrator.class, admin.getClass());
     }

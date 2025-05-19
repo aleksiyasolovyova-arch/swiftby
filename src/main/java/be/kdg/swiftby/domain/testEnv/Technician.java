@@ -20,7 +20,8 @@ public class Technician extends Employee {
     private boolean isApproved;
 
     public Technician(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber) {
-        super(facility, email, password, firstName, lastName, phoneNumber);
+        super(email, password, firstName, lastName, phoneNumber);
+        this.facility = facility;
     }
     @Override
     public boolean isLoginAllowed() {
