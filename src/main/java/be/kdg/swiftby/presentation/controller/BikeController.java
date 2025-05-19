@@ -67,7 +67,7 @@ public class BikeController {
     public String showBikeModels(Model model){
         List<BikeModel> models = bikeModelService.getAll();
         model.addAttribute("models", models);
-        return "bikeOwner/bike-models";
+        return "bike-models";
     }
 
 }

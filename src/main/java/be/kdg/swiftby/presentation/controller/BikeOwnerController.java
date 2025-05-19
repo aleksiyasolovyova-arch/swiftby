@@ -1,15 +1,20 @@
 package be.kdg.swiftby.presentation.controller;
 
 import be.kdg.swiftby.domain.bike.BikeInstance;
+import be.kdg.swiftby.security.CustomUserDetails;
 import be.kdg.swiftby.service.intf.BikeInstanceService;
 import be.kdg.swiftby.service.intf.BikeOwnerService;
+import be.kdg.swiftby.service.intf.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,6 +23,7 @@ import java.util.List;
 public class BikeOwnerController {
     private final BikeOwnerService bikeOwnerService;
     private final BikeInstanceService bikeInstanceService;
+    private final UserService userService;
 
     @GetMapping("/bikes")
     public String showAllBikeOwnerBikes(Principal principal, Model model) {
@@ -31,6 +37,20 @@ public class BikeOwnerController {
         model.addAttribute("bikeInstances", bikeInstances);
 
         return "all-bikes";
-
     }
+
+    @GetMapping("bikeModels")
+    public String showAllBikeInstances(Model model, @AuthenticationPrincipal CustomUserDetails userDetails){
+        List<BikeInstance> bikes;
+        switch (userDetails.getRole()){
+            case "TECHNICIAN" -> bikes = bikeInstanceService.getAllByFacilityId(userDetails.getFacilityId());
+            case "BIKEOWNER" -> bikes = bikeInstanceService.getByBikeOwnerEmail(userDetails.getUsername());
+            default -> bikes = bikeInstanceService.getAll();
+        }
+        model.addAttribute("bikeInstances", bikes);
+        return "bike-models";
+    }
+
+
+
 }

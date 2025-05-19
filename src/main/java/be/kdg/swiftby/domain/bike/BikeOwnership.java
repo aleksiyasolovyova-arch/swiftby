@@ -21,4 +21,5 @@ public class BikeOwnership {
 
     @ManyToOne(optional = false)
     private BikeOwner owner;
+
 }

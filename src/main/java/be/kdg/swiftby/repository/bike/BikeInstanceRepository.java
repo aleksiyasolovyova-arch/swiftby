@@ -38,4 +38,12 @@ public interface BikeInstanceRepository extends JpaRepository<BikeInstance, Long
 """)
     Optional<BikeInstance> findByIdWithModelAndMotor(@Param("id") Long id);
 
+    @Query("""
+    SELECT b FROM BikeInstance b
+    JOIN FETCH b.ownerships bo
+    JOIN FETCH bo.owner ow
+    WHERE ow.email = :email
+""")
+    List<BikeInstance> findAllByOwnerEmail(@Param("email") String email);
+
 }

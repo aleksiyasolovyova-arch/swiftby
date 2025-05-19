@@ -88,5 +88,10 @@ public class BikeInstanceServiceImpl implements BikeInstanceService {
         return bikeInstanceRepository.findByIdWithModelAndMotor(id).get();
     }
 
+    @Override
+    public List<BikeInstance> getByBikeOwnerEmail(String email) {
+        return bikeInstanceRepository.findAllByOwnerEmail(email);
+    }
+
 
 }
