@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Your Bike Report Summaries</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet" href="/css/all-bikeModels.css">
+    <title>Bike Report Summaries</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bike-details.css">
 </head>
+
 <body>
 
 <header th:insert="~{fragments/header :: header('Bike Reports')}" class="mb-4"></header>
 
-<main class="m-0 p-0">
-    <div class="container mb-4 mt-5 glassmorphism">
-        <h2 class="facility-header text-center mb-4">Your Bike Report Summaries</h2>
+<main class="container py-5">
+    <div class="glassmorphism p-4">
+        <h3 class="mb-3">Test Report Summaries</h3>
 
-        <div id="bikeList" class="row g-4 justify-content-center">
-            <div class="col-md-5" th:each="report : ${bikeReportSummaries}">
-                <div class="glassmorphism p-3 h-100">
-                    <h4 class="text-accent" th:text="${#dates.format(report.reportTime, 'yyyy-MM-dd')}">Report Date</h4>
-                    <p>
-                        <strong>Bike Instance:</strong>
-                        <span th:text="${report.bikeInstance != null ? report.bikeInstance.identifier : 'N/A'}">Bike Identifier</span>
-                    </p>
-                    <p>
-                        <strong>Technician Comment:</strong>
-                        <span th:text="${report.technicianComment != null ? report.technicianComment : 'No comment'}">Comment</span>
-                    </p>
-                </div>
-            </div>
+        <div th:if="${summaries.isEmpty()}">
+            <p class="text-muted">No report summaries available for you yet.</p>
         </div>
 
+        <div class="list-group" th:if="${!summaries.isEmpty()}">
+            <div th:each="summary : ${summaries}" class="list-group-item glassmorphism mb-3">
+                <div><strong>Date:</strong> <span th:text="${summary.reportTime}"></span></div>
+                <div><strong>Technician Comment:</strong>
+                    <span th:text="${summary.technicianComment} ?: 'No comment provided'"></span>
+                </div>
+                <a class="btn glowing-button mt-2"
+                   th:href="@{/report-summary(id=${summary.id})}">
+                    View Full Report
+                </a>
+            </div>
+        </div>
     </div>
 </main>
 

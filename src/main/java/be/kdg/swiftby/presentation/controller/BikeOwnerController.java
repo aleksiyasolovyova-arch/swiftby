@@ -63,7 +63,7 @@ public class BikeOwnerController {
         List<BikeReportSummary> bikeReportSummaries =
                 bikeReportSummaryService.getAllSummariesByBikeOwnerId(bikeOwnerId);
 
-        model.addAttribute("bikeReportSummaries", bikeReportSummaries);
+        model.addAttribute("summaries", bikeReportSummaries);
 
         return "bike-report-summaries-list";
     }
