@@ -23,7 +23,8 @@
                     <div class="card-header">Report Details</div>
                     <div class="card-body">
                         <p><strong>Report ID:</strong> <span id="summaryId"></span></p>
-                        <p th:if="${#authorization.expression('isAuthenticated()')}"><strong>Bike ID:</strong> <span id="bikeId"></span></p>
+                        <p th:if="${#authorization.expression('isAuthenticated()')}"><strong>Bike ID:</strong>
+                            <span id="bikeId" th:data-bike-id="${bikeId}" th:text="${bikeId}"></span></p>
                         <p><strong>Report Date:</strong> <span id="reportTime"></span></p>
                     </div>
                 </div>

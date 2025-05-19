@@ -15,7 +15,9 @@ public class BikeInstanceMapper {
                 bike.getChassisNumber(),
                 model.getId(),
                 model.getBrand(),
-                model.getType()
+                model.getType(),
+                model.getBatteryCapacity(),
+                model.getBikeSize()
         );
     }
 

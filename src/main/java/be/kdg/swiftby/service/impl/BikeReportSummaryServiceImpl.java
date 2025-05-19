@@ -1,5 +1,6 @@
 package be.kdg.swiftby.service.impl;
 
+import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.report.BikeReport;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.domain.report.FunctionalityCheck;
@@ -34,7 +35,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
     @Override
     public BikeReportSummary getSummaryById(Long id) {
         return bikeReportSummaryRepository.findByIdWithBike(id)
-                .orElseThrow(() -> new RuntimeException("Summary not found"));
+                .orElseThrow(() -> NotFoundException.forBikeReport(id));
     }
 
     @Override
