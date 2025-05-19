@@ -38,4 +38,5 @@ public interface BikeReportSummaryService {
     void attachFunctionalityCheck(Long summaryId, Long checkId);
     List<BikeReportSummary> getSummariesByBikeInstanceId(Long bikeInstanceId);
 
+    List<BikeReportSummary> getAllSummariesByBikeOwnerId(Long bikeOwnerId);
 }

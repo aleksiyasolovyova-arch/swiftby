@@ -82,4 +82,13 @@ public interface BikeReportSummaryRepository extends JpaRepository<BikeReportSum
 
     @Query("SELECT s FROM BikeReportSummary s LEFT JOIN FETCH s.functionalityCheck WHERE s.id = :id")
     Optional<BikeReportSummary> findByIdWithCheck(@Param("id") Long id);
+
+    @Query("""
+    SELECT brs FROM BikeReportSummary brs
+    LEFT JOIN FETCH brs.bikeInstance bi
+    LEFT JOIN FETCH bi.ownerships bos
+    LEFT JOIN FETCH bos.owner bo
+    WHERE bo.id = :bikeOwnerId
+    """)
+    List<BikeReportSummary> findAllBikeReportSummariesByBikeOwnerId(Long bikeOwnerId);
 }

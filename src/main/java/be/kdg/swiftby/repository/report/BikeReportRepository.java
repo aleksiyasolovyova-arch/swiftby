@@ -54,4 +54,13 @@ public interface BikeReportRepository extends JpaRepository<BikeReport, Long> {
     BikeReportAggregationDto aggregateReports(@Param("reportIds") List<Long> reportIds);
 
     List<BikeReport> findBySummaryId(Long summaryId);
+
+    @Query("""
+    SELECT br from BikeReport br
+    LEFT JOIN FETCH br.bike b
+    LEFT JOIN FETCH b.ownerships bos
+    LEFT JOIN FETCH bos.owner bo
+    WHERE bo.id = :bikeOwnerId
+    """)
+    List<BikeReport> findAllByBikeOwnerId(Long bikeOwnerId);
 }

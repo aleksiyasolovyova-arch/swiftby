@@ -31,8 +31,6 @@ public class UserServiceTest {
     @Autowired
     private TestUtils testUtils;
     @Autowired
-    private BikeOwnershipRepository bikeOwnershipRepository;
-    @Autowired
     private BikeInstanceRepository bikeInstanceRepository;
 
     @Test

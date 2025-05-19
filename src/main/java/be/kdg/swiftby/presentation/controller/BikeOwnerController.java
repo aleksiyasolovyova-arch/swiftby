@@ -1,8 +1,10 @@
 package be.kdg.swiftby.presentation.controller;
 
 import be.kdg.swiftby.domain.bike.BikeInstance;
+import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.service.intf.BikeInstanceService;
 import be.kdg.swiftby.service.intf.BikeOwnerService;
+import be.kdg.swiftby.service.intf.BikeReportSummaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ import java.util.List;
 public class BikeOwnerController {
     private final BikeOwnerService bikeOwnerService;
     private final BikeInstanceService bikeInstanceService;
+    private final BikeReportSummaryService bikeReportSummaryService;
 
     @GetMapping("/bikes")
     public String showAllBikeOwnerBikes(Principal principal, Model model) {
@@ -32,5 +35,19 @@ public class BikeOwnerController {
 
         return "all-bikes";
 
+    }
+
+    @GetMapping("/bike-reports")
+    public String showAllBikeReportSummaries(Principal principal, Model model) {
+        String email = principal.getName();
+
+        Long bikeOwnerId = bikeOwnerService.getByEmail(email).getId();
+
+        List<BikeReportSummary> bikeReportSummaries =
+                bikeReportSummaryService.getAllSummariesByBikeOwnerId(bikeOwnerId);
+
+        model.addAttribute("bikeReportSummaries", bikeReportSummaries);
+
+        return "bike-report-summaries-list";
     }
 }

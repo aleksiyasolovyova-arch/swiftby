@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 @Data
 @Entity
@@ -34,6 +35,7 @@ public class BikeInstance {
     public BikeInstance(String chassisNumber, BikeModel model) {
         this.chassisNumber = chassisNumber;
         this.model = model;
+        this.ownerships = new HashSet<>();
     }
 }
 

@@ -241,6 +241,11 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
         return bikeReportSummaryRepository.findByBikeInstanceIdOrderByReportTimeDesc(bikeInstanceId);
     }
 
+    @Override
+    public List<BikeReportSummary> getAllSummariesByBikeOwnerId(Long bikeOwnerId) {
+        return bikeReportSummaryRepository.findAllBikeReportSummariesByBikeOwnerId(bikeOwnerId);
+    }
+
 
 
 }
