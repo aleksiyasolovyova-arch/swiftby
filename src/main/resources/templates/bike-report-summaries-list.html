@@ -1,25 +1,40 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Your Bike Reports</title>
+    <title>Your Bike Report Summaries</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/all-bikes.css}">
+    <link rel="stylesheet" href="/css/all-bikeModels.css">
 </head>
 <body>
-<main class="glassmorphism">
-    <h2 class="facility-header">Your Bike Report Summaries</h2>
-    <div id="bikeList">
-        <div class="card" th:each="report : ${bikeReportSummaries}">
-            <h4 th:text="'Report Date: ' + ${#dates.format(report.reportTime, 'yyyy-MM-dd')}"></h4>
-            <p>
-                <strong>Bike Instance:</strong>
-                <span th:text="${report.bikeInstance != null} ? ${report.bikeInstance.identifier} : 'N/A'"></span>
-            </p>
-            <p>
-                <strong>Technician Comment:</strong>
-                <span th:text="${report.technicianComment != null} ? ${report.technicianComment} : 'No comment'"></span>
-            </p>
+
+<header th:insert="~{fragments/header :: header('Bike Reports')}" class="mb-4"></header>
+
+<main class="m-0 p-0">
+    <div class="container mb-4 mt-5 glassmorphism">
+        <h2 class="facility-header text-center mb-4">Your Bike Report Summaries</h2>
+
+        <div id="bikeList" class="row g-4 justify-content-center">
+            <div class="col-md-5" th:each="report : ${bikeReportSummaries}">
+                <div class="glassmorphism p-3 h-100">
+                    <h4 class="text-accent" th:text="${#dates.format(report.reportTime, 'yyyy-MM-dd')}">Report Date</h4>
+                    <p>
+                        <strong>Bike Instance:</strong>
+                        <span th:text="${report.bikeInstance != null ? report.bikeInstance.identifier : 'N/A'}">Bike Identifier</span>
+                    </p>
+                    <p>
+                        <strong>Technician Comment:</strong>
+                        <span th:text="${report.technicianComment != null ? report.technicianComment : 'No comment'}">Comment</span>
+                    </p>
+                </div>
+            </div>
         </div>
+
     </div>
 </main>
+
+<footer th:insert="~{fragments/footer :: footer}" class="p-0 mt-4 ">
+    <span>© 2025 eVALeBike</span>
+</footer>
+
 </body>
 </html>
