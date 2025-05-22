@@ -38,12 +38,12 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
 
     @Override
     public List<BikeReportSummary> getSummariesByBikeId(Long bikeId) {
-        return bikeReportSummaryRepository.findByBikeIdOrderByReportTimeDesc(bikeId);
+        return bikeReportSummaryRepository.findByBikeInstanceIdOrderByReportTimeDesc(bikeId);
     }
 
     @Override
     public BikeReportSummary getSummaryByBikeAndDate(Long bikeId, LocalDate reportDate) {
-        return bikeReportSummaryRepository.findByBikeIdOrderByReportTimeDesc(bikeId).stream()
+        return bikeReportSummaryRepository.findByBikeInstanceIdOrderByReportTimeDesc(bikeId).stream()
                 .filter(s -> s.getReportTime() != null && s.getReportTime().equals(reportDate))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Summary not found"));
@@ -75,7 +75,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
                     long time = entry.getKey() * intervalSeconds;
 
                     double voltage = group.stream().mapToDouble(r -> r.getBatteryData() != null ? r.getBatteryData().getVoltage() : 0).average().orElse(0);
-                    double current = group.stream().mapToDouble(r -> r.getBatteryData() != null ? r.getBatteryData().getCurrent() : 0).average().orElse(0);
+                    double current = group.stream().mapToDouble(r -> r.getBatteryData() != null ? r.getBatteryData().getBatteryCurrent() : 0).average().orElse(0);
                     double temperature = group.stream().mapToDouble(r -> r.getBatteryData() != null ? r.getBatteryData().getTemperature() : 0).average().orElse(0);
                     double enginePower = group.stream().mapToDouble(r -> r.getMotorData() != null ? r.getMotorData().getEnginePower() : 0).average().orElse(0);
                     double wheelPower = group.stream().mapToDouble(r -> r.getWheelData() != null ? r.getWheelData().getPower() : 0).average().orElse(0);
@@ -229,6 +229,12 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
         summary.setFunctionalityCheck(check);
         bikeReportSummaryRepository.save(summary);
     }
+
+    @Override
+    public List<BikeReportSummary> getSummariesByBikeInstanceId(Long bikeInstanceId) {
+        return bikeReportSummaryRepository.findAllByBikeInstanceId(bikeInstanceId);
+    }
+
 
 
     @Override

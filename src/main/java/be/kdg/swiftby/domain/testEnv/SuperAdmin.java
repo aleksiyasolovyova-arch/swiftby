@@ -14,4 +14,9 @@ public class SuperAdmin extends User {
    public SuperAdmin(String email, String password, String firstName, String lastName, String phoneNumber) {
         super();
     }
+
+    @Override
+    public boolean isLoginAllowed() {
+        return true;
+    }
 }

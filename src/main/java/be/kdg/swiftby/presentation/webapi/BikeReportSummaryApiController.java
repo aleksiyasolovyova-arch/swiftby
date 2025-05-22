@@ -67,7 +67,6 @@ public class BikeReportSummaryApiController {
 
         byte[] pdfBytes = bikeReportSummaryPdfService.generatePdf(summary);
 
-
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=BikeReport_" + bikeId + ".pdf")
                 .contentType(MediaType.APPLICATION_PDF)
@@ -84,13 +83,10 @@ public class BikeReportSummaryApiController {
 
         byte[] pdfBytes = bikeReportSummaryPdfService.generatePdf(summary);
 
-
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=BikeReport_" + id + ".pdf")
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdfBytes);
-
-
 
     }
 

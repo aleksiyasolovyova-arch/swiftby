@@ -37,9 +37,6 @@ public class BikeReportSummaryPdfServiceImpl implements BikeReportSummaryPdfServ
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
 
-
-
-
             // report details
             addStyledCard(document, "Report Details", labelFont, valueFont, "Report Date:", summary.getReportTime().format(DateTimeFormatter.ISO_DATE));
 
@@ -55,7 +52,7 @@ public class BikeReportSummaryPdfServiceImpl implements BikeReportSummaryPdfServ
             //battery & engine Data Section
             addStyledCard(document, "Battery & Engine Data", labelFont, valueFont,
                     "Charge Status:", summary.isChargeStatus() ? "Charging" : "Not Charging",
-                    "Battery Current:", String.format("%.2f A", summary.getCurrent()),
+                    "Battery Current:", String.format("%.2f A", summary.getBatteryCurrent()),
                     "Battery Voltage:", String.format("%.2f V", summary.getVoltage()),
                     "Battery Capacity:", String.format("%.2f Ah", summary.getCapacity()),
                     "Battery Temperature:", String.format("%.2f°C", summary.getTemperature()),
@@ -75,12 +72,8 @@ public class BikeReportSummaryPdfServiceImpl implements BikeReportSummaryPdfServ
                     "Rol:", String.format("%.2f", summary.getRol()),
                     "Status Plug:", summary.isStatusPlug() ? "Plugged In" : "Not Plugged");
 
-
             //technician Notes Section
             addStyledCard(document, "Technician Notes", labelFont, valueFont, "Technician Comment:", summary.getTechnicianComment() != null ? summary.getTechnicianComment() : "No comments");
-
-
-
 
             document.close();
             return out.toByteArray();

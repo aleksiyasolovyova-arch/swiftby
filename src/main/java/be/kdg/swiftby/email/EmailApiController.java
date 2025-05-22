@@ -13,8 +13,8 @@ import java.util.Map;
 
 //THIS IS FOR TESTING PURPOSES
 
-//@RestController
-//@RequestMapping("/api/email")
+@RestController
+@RequestMapping("/api/email")
 public class EmailApiController {
 
     private EmailService emailService;

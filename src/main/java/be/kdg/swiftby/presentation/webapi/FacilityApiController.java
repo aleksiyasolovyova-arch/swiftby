@@ -1,8 +1,8 @@
 package be.kdg.swiftby.presentation.webapi;
 
-import be.kdg.swiftby.domain.bike.Bike;
+import be.kdg.swiftby.domain.bike.BikeInstance;
+import be.kdg.swiftby.domain.bike.BikeModel;
 import be.kdg.swiftby.domain.exception.NotFoundException;
-import be.kdg.swiftby.domain.testEnv.Administrator;
 import be.kdg.swiftby.presentation.viewmodels.EmployeeCreateViewModel;
 import be.kdg.swiftby.presentation.viewmodels.EmployeeUpdateViewModel;
 import be.kdg.swiftby.presentation.webapi.dto.AdministratorApiMapper;
@@ -10,7 +10,6 @@ import be.kdg.swiftby.presentation.webapi.dto.FacilityApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.TechnicianApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.TestBenchApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.bikereport.BikeMapperApi;
-import be.kdg.swiftby.presentation.webapi.dto.request.EmployeeRequestDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.*;
 import be.kdg.swiftby.service.intf.*;
 import jakarta.validation.Valid;
@@ -35,8 +34,9 @@ public class FacilityApiController {
    private final FacilityApiMapper facilityApiMapper;
    private final TechnicianApiMapper technicianApiMapper;
    private final AdministratorApiMapper administratorApiMapper;
-   private final BikeService bikeService;
-   private final Logger log = LoggerFactory.getLogger(FacilityApiController.class);
+    private final BikeInstanceService bikeInstanceService;
+
+    private final Logger log = LoggerFactory.getLogger(FacilityApiController.class);
    private final BikeMapperApi bikeApiMapper;
 
     //facilities
@@ -213,13 +213,13 @@ public class FacilityApiController {
     }
 
     @GetMapping("/{facilityId}/bikes")
-    public ResponseEntity<List<BikeApiResponseDto>> getAllBikesByFacilityId(@PathVariable Long facilityId) {
-        List<Bike> bikes = bikeService.getAllByFacilityId(facilityId);
-        if (bikes.isEmpty()) {
-            log.warn("No bikes found for facility ID {}", facilityId);
+    public ResponseEntity<List<BikeApiResponseDto>> getAllBikeInstancesByFacilityId(@PathVariable Long facilityId) {
+        List<BikeInstance> bikeInstances = bikeInstanceService.getAllByFacilityId(facilityId);
+        if (bikeInstances.isEmpty()) {
+            log.warn("No bike instances found for facility ID {}", facilityId);
             return ResponseEntity.noContent().build();
         }
-        List<BikeApiResponseDto> response = bikeApiMapper.toBikeDtoList(bikes);
+        List<BikeApiResponseDto> response = bikeApiMapper.toBikeInstanceDtoList(bikeInstances);
         return ResponseEntity.ok(response);
     }
 

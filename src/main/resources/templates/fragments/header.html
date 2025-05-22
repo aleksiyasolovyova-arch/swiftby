@@ -12,44 +12,65 @@
 </head>
 <body>
 <header th:fragment="header(currentPage)" class="navbar navbar-expand-lg py-3" style="background-color: #344a57;">
-    <div class="container d-flex justify-content-between align-items-center">
+    <div class="container-fluid">
         <a class="navbar-brand text-light fw-bold" th:href="@{/}">
             <i class="bi bi-house"></i>
             <span>eVALeBike</span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item mx-2">
-                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="!isAuthenticated()">My Bikes</a>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-light" th:href="@{/bikeowner/bikeModels}" sec:authorize="hasRole('ROLE_BIKEOWNER')">My Bikes</a>
                 </li>
-                <li class="nav-item mx-2">
-                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="!isAuthenticated()">My Bike Reports</a>
+                <li class="nav-item">
+                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="hasRole('ROLE_BIKEOWNER')">My Bike Reports</a>
                 </li>
-                <li class="nav-item mx-2">
-                    <a class="nav-link text-light" th:href="@{/technician/dashboard}" sec:authorize="isAuthenticated()">Dashboard</a>
+                <li class="nav-item">
+                    <a class="nav-link text-light" th:href="@{/technician/dashboard}" sec:authorize="hasAnyRole('ROLE_TECHNICIAN', 'ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')">Dashboard</a>
                 </li>
-                <li class="nav-item mx-2">
-                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="isAuthenticated()">Facility overview</a>
+                <li class="nav-item">
+                    <a th:if="${session.get('facilityId') != null}"
+                       th:href="@{/facility/{id}/overview(id=${session.get('facilityId')})}"
+                       class="nav-link text-light"
+                       sec:authorize="hasAnyRole('ROLE_ADMINISTRATOR')">
+                        Facility overview
+                    </a>
                 </li>
-                <li class="nav-item mx-2">
-                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="isAuthenticated()">Customers</a>
+                <li class="nav-item">
+                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" th:href="@{/bikeModels}" sec:authorize="hasAnyRole('ROLE_TECHNICIAN','ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')">All Bikes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" th:href="@{/admin/technicians}" sec:authorize="hasRole('ROLE_ADMINISTRATOR')">Technician Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" th:href="@{/sysadmin/unapproved-employees}" sec:authorize="hasRole('ROLE_SUPERADMIN')">Authorization Needed</a>
                 </li>
             </ul>
-            <div class="d-flex">
-                <span class="navbar-text text-light me-3" sec:authorize="isAuthenticated()">
-                    Welcome, <span sec:authentication="name"></span>!
-                </span>
-                <form class="d-inline" th:action="@{/logout}" th:method="POST" sec:authorize="isAuthenticated()">
-                    <button type="submit" class="btn btn-warning">Logout</button>
-                </form>
-                <a class="btn btn-light ms-2" th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
-            </div>
+
+            <ul class="navbar-nav d-flex">
+                <li class="nav-item d-flex align-items-center text-light me-3" sec:authorize="isAuthenticated()">
+                    Welcome, <span sec:authentication="name" class="ms-1"></span>!
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form class="d-inline" th:action="@{/logout}" th:method="POST">
+                        <button type="submit" class="btn btn-warning">Logout</button>
+                    </form>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="btn btn-light ms-2" th:href="@{/login}">Login</a>
+                </li>
+            </ul>
         </div>
     </div>
 </header>
+
 </body>
 </html>

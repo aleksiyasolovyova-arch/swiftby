@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Denied</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<div th:insert="~{fragments/header :: header(${currentPage})}"></div>
+
+<main class="container d-flex flex-column justify-content-center align-items-center flex-grow-1 text-center">
+    <i class="bi bi-shield-lock-fill display-1 text-danger"></i>
+    <h1 class="mt-3">403 - Access Denied</h1>
+    <p class="lead">You don't have permission to view this page or resource.</p>
+    <a class="btn btn-primary mt-3" href="/" role="button">Return to Home</a>
+</main>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

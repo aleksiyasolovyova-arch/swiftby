@@ -1,0 +1,102 @@
+body {
+    background: linear-gradient(135deg, #344a57, #5c7285, #aed2e3);
+    font-family: 'Roboto Mono', monospace;
+    color: #f5f7ff;
+    margin: 0;
+    padding: 0;
+}
+
+h2, h4 {
+    color: #f5f7ff;
+}
+
+p {
+    color: #aed2e3;
+}
+
+.card, .technician-list-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    color: #f5f7ff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover, .technician-list-item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    background: #fada7a;
+    color: #344a57;
+}
+
+#testBenchList, #bikeList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.technician-section {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.technician-list {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 0.5rem;
+}
+
+.technician-list-item {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.facility-header {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.facility-address {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.row {
+    margin-top: 2rem;
+}
+.glowing-button {
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    color: #f5f7ff;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+}
+
+.glowing-button:hover {
+    background: linear-gradient(45deg, #ffd700, #fada7a);
+    color: #344a57;
+    box-shadow: 0 10px 20px rgba(250, 218, 122, 0.8);
+    transform: scale(1.05);
+}
+#testBenchList .card,
+#bikeList .card {
+    min-width: 220px;
+    max-width: 280px;
+    flex: 1 1 220px;
+}

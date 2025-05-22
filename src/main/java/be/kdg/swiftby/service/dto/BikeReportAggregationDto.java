@@ -1,6 +1,7 @@
 package be.kdg.swiftby.service.dto;
 
-import be.kdg.swiftby.domain.bike.Bike;
+import be.kdg.swiftby.domain.bike.BikeInstance;
+import be.kdg.swiftby.domain.bike.BikeModel;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import lombok.Getter;
 import lombok.Setter;
@@ -70,21 +71,21 @@ public class BikeReportAggregationDto {
         this.chargeStatus = chargeStatus;
         this.statusPlug = statusPlug;
     }
-    public static BikeReportSummary toSummary(BikeReportAggregationDto aggregation, Bike bike) {
+    public static BikeReportSummary toSummary(BikeReportAggregationDto aggregation, BikeInstance bikeInstance) {
         BikeReportSummary summary = new BikeReportSummary();
-        summary.setBike(bike);
-        summary.setTorque(bike.getMotor().getTorque());
-        summary.setMaxPower(bike.getMotor().getMaxPower());
-        summary.setNominalPower(bike.getMotor().getNominalPower());
-        summary.setEngineType(bike.getMotor().getEngineType());
-        summary.setGearType(bike.getMotor().getGearType());
+        summary.setBikeInstance(bikeInstance);
+        summary.setTorque(bikeInstance.getModel().getMotor().getTorque());
+        summary.setMaxPower(bikeInstance.getModel().getMotor().getMaxPower());
+        summary.setNominalPower(bikeInstance.getModel().getMotor().getNominalPower());
+        summary.setEngineType(bikeInstance.getModel().getMotor().getEngineType());
+        summary.setGearType(bikeInstance.getModel().getMotor().getGearType());
 
         summary.setReportTime(aggregation.getReportTime().toLocalDate());
         summary.setAvgMileage(aggregation.getAvgMileage());
         summary.setAvgAssistanceLevel(aggregation.getAvgAssistanceLevel());
         summary.setHorizontalInclination(aggregation.getHorizontalInclination());
         summary.setVerticalInclination(aggregation.getVerticalInclination());
-        summary.setCurrent(aggregation.getBatteryCurrent());
+        summary.setBatteryCurrent(aggregation.getBatteryCurrent());
         summary.setVoltage(aggregation.getBatteryVoltage());
         summary.setCapacity(aggregation.getBatteryCapacity());
         summary.setTemperature(aggregation.getBatteryTemperature());

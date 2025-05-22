@@ -1,5 +1,12 @@
+# Build Stage
+FROM gradle:8.7-jdk21 AS build
+WORKDIR /biketrust
+COPY . .
+RUN gradle bootJar --no-daemon
+
+# Run Stage
 FROM eclipse-temurin:21-jre-alpine
-WORKDIR /app
-COPY build/libs/*.jar app.jar
+WORKDIR /biketrust
+COPY --from=build /biketrust/build/libs/*.jar biketrust.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "biketrust.jar", "--spring.profiles.active=prod"]

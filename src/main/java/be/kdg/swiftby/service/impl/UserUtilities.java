@@ -6,6 +6,7 @@ import be.kdg.swiftby.repository.testEnvironment.AdministratorRepository;
 import be.kdg.swiftby.repository.testEnvironment.BikeOwnerRepository;
 import be.kdg.swiftby.repository.testEnvironment.SuperAdminRepository;
 import be.kdg.swiftby.repository.testEnvironment.TechnicianRepository;
+import be.kdg.swiftby.service.intf.UserService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +31,6 @@ public class UserUtilities {
                 || administratorRepository.existsByEmail(email)
                 || technicianRepository.existsByEmail(email)
                 || bikeOwnerRepository.existsByEmail(email);
-
     }
 
 }

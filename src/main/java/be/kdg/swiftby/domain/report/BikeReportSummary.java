@@ -1,10 +1,10 @@
 package be.kdg.swiftby.domain.report;
 
-import be.kdg.swiftby.domain.bike.Bike;
+import be.kdg.swiftby.domain.bike.BikeInstance;
+import be.kdg.swiftby.domain.bike.BikeModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,10 +18,9 @@ public class BikeReportSummary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bike_id", nullable = false)
-    private Bike bike;
+    @JoinColumn(name = "bike_instance_id")
+    private BikeInstance bikeInstance;
 
     @Column(nullable = false)
     private LocalDate reportTime;
@@ -31,7 +30,7 @@ public class BikeReportSummary {
     private double horizontalInclination;
     private double verticalInclination;
     private boolean chargeStatus;
-    private double current;
+    private double batteryCurrent;
     private double voltage;
     private double capacity;
     private double temperature;

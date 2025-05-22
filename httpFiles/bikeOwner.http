@@ -1,8 +1,0 @@
-// BIKEOWNER
-### get all bikes - 200
-GET http://localhost:8080/api/bikeowners
-Accept: application/json
-
-### get one bike - 200
-GET http://localhost:8080/api/bikeowners/1
-Accept: application/json

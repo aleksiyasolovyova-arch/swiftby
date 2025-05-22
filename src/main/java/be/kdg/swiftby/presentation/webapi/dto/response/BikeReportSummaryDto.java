@@ -14,7 +14,7 @@ public record BikeReportSummaryDto(
         double horizontalInclination,
         double verticalInclination,
         boolean chargeStatus,
-        double current,
+        double batteryCurrent,
         double voltage,
         double capacity,
         double temperature,
