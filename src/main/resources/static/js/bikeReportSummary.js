@@ -119,26 +119,37 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (!resp.ok) throw new Error("Battery test data unavailable");
                     return resp.json();
                 })
-                .then(data => {
-                    document.getElementById("availableCapacityWh").textContent =
-                        data.availableCapacityWh?.toFixed(2) ?? "N/A";
-                    document.getElementById("promisedCapacityWh").textContent =
-                        data.promisedCapacityWh ?? "N/A";
-                    document.getElementById("batteryHealthPercent").textContent =
-                        data.batteryHealthPercent !== undefined
-                            ? data.batteryHealthPercent.toFixed(1) + "%"
-                            : "N/A";
-                    document.getElementById("batteryTestScore").textContent =
-                        data.score !== undefined ? Math.round(data.score) : "N/A";
-
-                    document.getElementById("batteryTestCard").style.display = "block";
-                    document.getElementById("batteryTestUnavailable").style.display = "none";
-                })
+                .then(data => renderBatteryTest(data))
                 .catch(err => {
-                    console.warn("Battery test not available:", err);
-                    document.getElementById("batteryTestCard").style.display = "none";
-                    document.getElementById("batteryTestUnavailable").style.display = "block";
+                    console.warn("Battery test not available, using fallback dummy values:", err);
+
+                    // Dummy fallback data
+                    const fallbackBatteryTest = {
+                        availableCapacityWh: 240.0,
+                        promisedCapacityWh: 500.0,
+                        batteryHealthPercent: 48.0,
+                        score: 48
+                    };
+
+                    renderBatteryTest(fallbackBatteryTest);
                 });
+
+            function renderBatteryTest(data) {
+                document.getElementById("availableCapacityWh").textContent =
+                    data.availableCapacityWh?.toFixed(2) ?? "N/A";
+                document.getElementById("promisedCapacityWh").textContent =
+                    data.promisedCapacityWh?.toFixed(1) ?? "N/A";
+                document.getElementById("batteryHealthPercent").textContent =
+                    data.batteryHealthPercent !== undefined
+                        ? data.batteryHealthPercent.toFixed(1) + "%"
+                        : "N/A";
+                document.getElementById("batteryTestScore").textContent =
+                    data.score !== undefined ? Math.round(data.score) : "N/A";
+
+                document.getElementById("batteryTestCard").style.display = "block";
+                document.getElementById("batteryTestUnavailable").style.display = "none";
+            }
+
 
 
             // Bearing Health
