@@ -1,82 +1,78 @@
 stages:
-  - build
+  - create_vm
   - test
   - deploy
   - destroy
 
 variables:
-  VM_IP: "51.124.189.117"
-  VM_USER: "mj"
-  SSH_PORT: 22
+  AZURE_REGION: "westeurope"
+  VM_ZONE: "2"
+  TF_VAR_region: "westeurope"
+  PROJECT_REPO: "https://oauth2:${SWIFT_BY_TOKEN}@gitlab.com/kdg-ti/integration-4/2024-2025/team-8/biketrust.git"
+  INFRA_REPO: "https://oauth2:${INFRA_REPO_TOKEN}@gitlab.com/kdg-ti/integration-4/2024-2025/team-8/infrastructureautomation.git"
 
-build-job:
-  stage: build
-  image: gradle:jdk21
+create-vm:
+  stage: create_vm
+  image: hashicorp/terraform:light
+  before_script:
+    - apk add bash curl jq openssh git
+    - echo "$AZURE_CREDENTIALS_B64" | base64 -d > creds.json
+    - export ARM_CLIENT_ID=$(jq -r .clientId creds.json)
+    - export ARM_CLIENT_SECRET=$(jq -r .clientSecret creds.json)
+    - export ARM_SUBSCRIPTION_ID=$(jq -r .subscriptionId creds.json)
+    - export ARM_TENANT_ID=$(jq -r .tenantId creds.json)
   script:
-    - ./gradlew build
-  tags:
-    - docker
-    - gradle
-    - java
+    - git clone "$INFRA_REPO"
+    - cd infrastructureautomation/IntegrationInfraSetup/terraform/test-vm
+    - tofu init
+    - tofu apply -auto-approve
+    - echo "VM_IP=$(tofu output -raw vm_public_ip)" >> ../../../deployment.env
+    - echo "VM_USERNAME=$(tofu output -raw vm_username)" >> ../../../deployment.env
+  artifacts:
+    reports:
+      dotenv: deployment.env
   only:
-    - development
-    - main
+     - development
 
-unit-test-job:
+test:
   stage: test
   image: gradle:jdk21
+  dependencies:
+    - create-vm
   script:
-    - ./gradlew test
-  tags:
-    - docker
-    - gradle
-    - java
+    - source deployment.env
+    - echo "$SSH_PRIVATE_KEY" > id_rsa && chmod 600 id_rsa
+    - ssh-keyscan $VM_IP >> ~/.ssh/known_hosts
+    - |
+      ssh -i id_rsa $VM_USERNAME@$VM_IP <<EOF
+        git clone $PROJECT_REPO &&
+        cd biketrust &&
+        ./gradlew test
+EOF
   artifacts:
-    when: always
     reports:
-      junit: builds/test-results/test/*.xml
-  when: manual
+      junit: build/test-results/test/TEST-*.xml
+  allow_failure: false
   only:
     - development
-    - main
+  
 
-deploy-job:
-  stage: deploy
-  image: almalinux:latest
-  before_script:
-    - dnf install -y openssh openssh-clients
-    - mkdir -p ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa
-    - eval $(ssh-agent -s)
-    - ssh-add ~/.ssh/id_rsa
-    - ssh-keyscan -p $SSH_PORT $VM_IP >> ~/.ssh/known_hosts
-  script:
-    - ssh -p $SSH_PORT $VM_USER@$VM_IP "
-        cd ~/biketrust &&
-        git reset --hard &&
-        git checkout development &&
-        git pull origin development &&
-        bash scripts/deploy.sh"
-  only:
-    - development
-    - main
-
-destroy-job:
+destroy:
   stage: destroy
-  image: almalinux:latest
+  image: hashicorp/terraform:light
+  dependencies:
+    - create-vm
   before_script:
-    - dnf install -y openssh openssh-clients
-    - mkdir -p ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa
-    - eval $(ssh-agent -s)
-    - ssh-add ~/.ssh/id_rsa
-    - ssh-keyscan -p $SSH_PORT $VM_IP >> ~/.ssh/known_hosts
+    - apk add bash curl jq openssh git
+    - echo "$AZURE_CREDENTIALS_B64" > creds.json
+    - export ARM_CLIENT_ID=$(jq -r .clientId creds.json)
+    - export ARM_CLIENT_SECRET=$(jq -r .clientSecret creds.json)
+    - export ARM_SUBSCRIPTION_ID=$(jq -r .subscriptionId creds.json)
+    - export ARM_TENANT_ID=$(jq -r .tenantId creds.json)
   script:
-    - ssh -p $SSH_PORT $VM_USER@$VM_IP "
-        cd ~/biketrust &&
-        bash scripts/destroy.sh"
+    - git clone "$INFRA_REPO"
+    - cd infrastructureautomation/IntegrationInfraSetup/terraform/test-vm
+    - tofu destroy -auto-approve || echo "already destroyed"
   only:
     - development
-    - main
+  when: always
