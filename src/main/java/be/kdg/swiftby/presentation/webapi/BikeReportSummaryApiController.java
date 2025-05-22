@@ -6,6 +6,8 @@ import be.kdg.swiftby.presentation.webapi.dto.BikeReportSummaryApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportApiResponseDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportSummaryDto;
 import be.kdg.swiftby.service.dto.BikeReportChartDto;
+import be.kdg.swiftby.service.dto.ReportChartSeriesDto;
+import be.kdg.swiftby.service.dto.SummaryIdDateDto;
 import be.kdg.swiftby.service.dto.data.BatteryTestDto;
 import be.kdg.swiftby.service.dto.data.NominalLoadTestDto;
 import be.kdg.swiftby.service.dto.data.TestProcedureOverviewDto;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/report-summaries")
@@ -47,15 +50,7 @@ public class BikeReportSummaryApiController {
                 .map(bikeReportSummaryApiMapper::toBikeReportSummaryDto)
                 .toList());
     }
-//
-//    @PostMapping("/api/report-summaries/{summaryId}/attach-functional-check/{checkId}")
-//    public ResponseEntity<Void> attachCheck(
-//            @PathVariable Long summaryId,
-//            @PathVariable Long checkId
-//    ) {
-//        bikeReportService.attachFunctionalityCheck(summaryId, checkId);
-//        return ResponseEntity.ok().build();
-//    }
+
 
 
     @GetMapping("/{bikeId}/generate-pdf")
@@ -99,10 +94,8 @@ public class BikeReportSummaryApiController {
 
     }
 
-//    @GetMapping("/{summaryId}/chart-data")
-//    public ResponseEntity<List<BikeReportChartDto>> getChartData(@PathVariable Long summaryId) {
-//        return ResponseEntity.ok(bikeReportSummaryService.getChartDataForSummary(summaryId));
-//    }
+
+
 
     @GetMapping("/{summaryId}/nominal-load")
     public ResponseEntity<NominalLoadTestDto> getNominalLoad(@PathVariable Long summaryId) {
@@ -141,12 +134,37 @@ public class BikeReportSummaryApiController {
         return bikeReportSummaryService.getChartDataWithInterval(summaryId, mode, intervalSeconds);
     }
 
+    @GetMapping("/compare-field-over-time")
+    public ResponseEntity<List<ReportChartSeriesDto>> compareFieldOverTime(
+            @RequestParam Long summary1Id,
+            @RequestParam Long summary2Id,
+            @RequestParam String field,
+            @RequestParam(defaultValue = "1") int intervalSeconds
+    ) {
+        var result = bikeReportSummaryService.getFieldOverTimeForTwoReports(summary1Id, summary2Id, field, intervalSeconds);
+        return ResponseEntity.ok(result);
+    }
 
 
 
 
+    @GetMapping("/compare-summary-values")
+    public ResponseEntity<List<ReportChartSeriesDto>> compareSummaryValues(
+            @RequestParam Long summary1,
+            @RequestParam Long summary2
+    ) {
+        return ResponseEntity.ok(bikeReportSummaryService.compareSummaryFields(summary1, summary2));
+    }
 
-
+    @GetMapping("/bike/{bikeId}")
+    public List<SummaryIdDateDto> getSummariesForBike(@PathVariable Long bikeId) {
+        return bikeReportSummaryService.getSummariesByBikeId(bikeId).stream()
+                .map(s -> new SummaryIdDateDto(
+                        s.getId(),
+                        s.getReportTime() != null ? s.getReportTime().toString() : "Unknown"
+                ))
+                .toList();
+    }
 
 
 
@@ -156,3 +174,16 @@ public class BikeReportSummaryApiController {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

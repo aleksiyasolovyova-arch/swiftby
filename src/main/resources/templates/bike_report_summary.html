@@ -152,10 +152,10 @@
 
 
         <!-- Chart + Controls -->
-        <div class="glass-card mt-5">
+        <div class="glass-card mt-5" style="max-width: 1200px; margin: auto;">
             <div class="card-header">Test Bench Data Visualization</div>
             <div class="card-body">
-                <div id="testChart" style="height: 400px;"></div>
+                <div id="testChart" style="height: 400px; width: 100%;"></div>
 
                 <div id="controlsContainer" class="mt-4">
                     <h5>Select Fields to Display</h5>
@@ -209,10 +209,77 @@
             </div>
         </div>
 
+
+        <!-- New Section: Line Chart Over Time for Summary Fields -->
+        <div class="glass-card mt-5" style="max-width: 1200px; margin: auto;">
+            <div class="card-header">Compare Summary Fields Over Time</div>
+            <div class="card-body">
+                <div class="row g-3 align-items-end">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="reportASelect" class="form-label">Select Report 1</label>
+                            <select id="reportASelect" class="form-select">
+                                <option disabled selected value="">-- Choose Report 1 --</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="reportBSelect" class="form-label">Select Report 2</label>
+                            <select id="reportBSelect" class="form-select">
+                                <option disabled selected value="">-- Choose Report 2 --</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="row g-3 mt-3 align-items-end">
+                        <div class="col-md-4">
+                            <label for="fieldNames" class="form-label">Select Field</label>
+                            <select id="fieldNames" class="form-select">
+                                <option value="cadence">Cadence</option>
+                                <option value="capacity">Battery Capacity</option>
+                                <option value="current">Battery Current</option>
+                                <option value="engine_power">Engine Power</option>
+                                <option value="load_cell">Load Cell</option>
+                                <option value="load_power">Load Power</option>
+                                <option value="max_power">Max Power</option>
+                                <option value="power">Wheel Power</option>
+                                <option value="temperature">Temperature</option>
+                                <option value="torque">Torque</option>
+                                <option value="voltage">Voltage</option>
+                                <option value="speed">Speed</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="samplingRateCompareFields" class="form-label">Sampling Interval</label>
+                            <select id="samplingRateCompareFields" class="form-select">
+                                <option value="1">Every 1 Second</option>
+                                <option value="10">Every 10 Seconds</option>
+                                <option value="60">Every 1 Minute</option>
+                                <option value="300">Every 5 Minutes</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mt-2">
+                            <small class="text-muted d-block mb-1">After selecting the field and interval, press below:</small>
+                            <button id="compareFieldOverTimeBtn" class="btn btn-warning text-dark fw-bold w-100">
+                                🔍 Load Line Chart
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="summaryTimeCompareError" class="text-danger mt-3"></div>
+                <div id="summaryFieldTimeChart" class="mt-4" style="height: 400px; width: 100%;"></div>
+            </div>
+        </div>
+
+
+
         <!-- Back Button -->
         <div class="text-center mt-4">
             <button class="btn glowing-button" onclick="window.history.back()">⬅ Go Back</button>
         </div>
+    </div>
     </div>
 </div>
 <footer th:insert="~{fragments/footer :: footer}" class="mt-4"></footer>
@@ -223,12 +290,83 @@
         const summaryId = document.getElementById("summaryContainer")?.dataset.summaryId;
         if (!summaryId) return;
 
+        fetch(`/api/report-summaries/${summaryId}`)
+            .then(res => res.json())
+            .then(currentSummary => {
+                if (!currentSummary.bikeId) return;
+
+                return fetch(`/api/report-summaries/bike/${currentSummary.bikeId}`)
+                    .then(res => res.json())
+                    .then(list => {
+                        const select = document.getElementById("summaryFieldIdsSelect");
+                        if (!select) return;
+
+                        list.forEach(({ id, date }) => {
+                            const opt = document.createElement("option");
+                            opt.value = id;
+                            opt.textContent = `ID ${id} (${date})`;
+                            select.appendChild(opt);
+                        });
+
+                    });
+            })
+            .catch(err => console.error("Failed to load comparison reports:", err));
+
+
+
         const intervalMap = {
             "1s": 1,
             "10s": 10,
             "1m": 60,
             "5m": 300
         };
+
+        let allAvailableReports = [];
+
+        fetch(`/api/report-summaries/${summaryId}`)
+            .then(res => res.json())
+            .then(currentSummary => {
+                if (!currentSummary.bikeId) return;
+
+                populateReportDropdowns(currentSummary.bikeId);
+            })
+            .catch(err => console.error("Failed to load main summary:", err));
+
+        function populateReportDropdowns(bikeId) {
+            fetch(`/api/report-summaries/bike/${bikeId}`)
+                .then(res => res.json())
+                .then(reports => {
+                    allAvailableReports = reports;
+
+                    const reportA = document.getElementById("reportASelect");
+                    const reportB = document.getElementById("reportBSelect");
+                    if (!reportA || !reportB) return;
+
+                    reports.forEach(({ id, date }) => {
+                        const optA = document.createElement("option");
+                        optA.value = id;
+                        optA.textContent = `ID ${id} (${date})`;
+
+                        const optB = optA.cloneNode(true);
+                        reportA.appendChild(optA);
+                        reportB.appendChild(optB);
+                    });
+
+                    reportA.addEventListener("change", () => {
+                        const selectedA = reportA.value;
+                        reportB.innerHTML = `<option disabled selected value="">-- Choose Report 2 --</option>`;
+                        reports.forEach(({ id, date }) => {
+                            if (id !== selectedA) {
+                                const option = document.createElement("option");
+                                option.value = id;
+                                option.textContent = `ID ${id} (${date})`;
+                                reportB.appendChild(option);
+                            }
+                        });
+                    });
+                })
+                .catch(err => console.error("Failed to populate dropdowns:", err));
+        }
 
         const chart = new ApexCharts(document.querySelector("#testChart"), {
             series: [],
@@ -374,8 +512,81 @@
 
         fetchAndUpdateChart();
     });
+
+
+
+
+    document.getElementById("compareFieldOverTimeBtn").addEventListener("click", async () => {
+        const reportA = document.getElementById("reportASelect")?.value;
+        const reportB = document.getElementById("reportBSelect")?.value;
+        const field = document.getElementById("fieldNames").value;
+        const interval = document.getElementById("samplingRateCompareFields")?.value || 1;
+
+
+        if (!field || !reportA || !reportB || reportA === reportB) {
+            document.getElementById("summaryTimeCompareError").textContent = "Select two different reports and a field.";
+            return;
+        }
+
+        const ids = [reportA, reportB];
+
+        try {
+            const response = await fetch(`/api/report-summaries/compare-field-over-time?summary1Id=${reportA}&summary2Id=${reportB}&field=${field}&intervalSeconds=${interval}`);
+            const seriesList = await response.json();
+
+            if (!Array.isArray(seriesList) || seriesList.length === 0 || !seriesList[0].values?.length) {
+                document.getElementById("summaryTimeCompareError").textContent = "No chart data available.";
+                return;
+            }
+
+            const categories = seriesList[0].timeLabels || [];
+            const apexSeries = seriesList.map(s => ({
+                name: s.label ?? "Unnamed",
+                data: s.values ?? []
+            }));
+
+            document.getElementById("summaryFieldTimeChart").innerHTML = "";
+
+            const chart = new ApexCharts(document.querySelector("#summaryFieldTimeChart"), {
+                chart: {
+                    type: 'line',
+                    height: 400,
+                    toolbar: { show: true },
+                    zoom: { enabled: true }
+                },
+                stroke: { curve: 'smooth' },
+                dataLabels: { enabled: false },
+                xaxis: { categories, title: { text: "Time" } },
+                yaxis: {
+                    title: { text: field },
+                    labels: {
+                        formatter: val => val.toFixed(2)
+                    }
+                },
+
+                series: apexSeries,
+                legend: { position: 'bottom' },
+                tooltip: {
+                    shared: false,
+                    intersect: true,
+                    x: { show: true },
+                    y: { formatter: val => val?.toFixed?.(2) ?? val}
+                }
+            });
+
+            chart.render();
+            document.getElementById("summaryTimeCompareError").textContent = "";
+
+        } catch (err) {
+            console.error("Chart load error:", err);
+            document.getElementById("summaryTimeCompareError").textContent = "Error: " + err.message;
+        }
+    });
+
+
 </script>
 
 
 </body>
 </html>
+
