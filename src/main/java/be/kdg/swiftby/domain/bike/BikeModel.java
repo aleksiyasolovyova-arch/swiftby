@@ -5,7 +5,6 @@ import be.kdg.swiftby.domain.report.BikeReportSummary;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity

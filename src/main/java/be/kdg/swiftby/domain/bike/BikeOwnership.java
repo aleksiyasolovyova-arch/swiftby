@@ -20,7 +20,6 @@ public class BikeOwnership {
     private BikeInstance bike;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "bike_owner_id")
     private BikeOwner owner;
 
     public BikeOwnership(BikeInstance bike, BikeOwner owner) {
