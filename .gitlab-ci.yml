@@ -48,7 +48,7 @@ test:
         git clone $PROJECT_REPO &&
         cd biketrust &&
         ./gradlew test
-EOF
+       EOF
   artifacts:
     reports:
       junit: build/test-results/test/TEST-*.xml
