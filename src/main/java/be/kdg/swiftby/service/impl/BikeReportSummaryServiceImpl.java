@@ -289,7 +289,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
                     } else {
                         value = group.stream().mapToDouble(report -> switch (field) {
                             case "cadence" -> report.getPedalData() != null ? report.getPedalData().getCadence() : 0;
-                            case "current" -> report.getBatteryData() != null ? report.getBatteryData().getCurrent() : 0;
+                            case "current" -> report.getBatteryData() != null ? report.getBatteryData().getBatteryCurrent() : 0;
                             case "voltage" -> report.getBatteryData() != null ? report.getBatteryData().getVoltage() : 0;
                             case "temperature" -> report.getBatteryData() != null ? report.getBatteryData().getTemperature() : 0;
                             case "capacity" -> report.getBatteryData() != null ? report.getBatteryData().getCapacity() : 0;
@@ -344,7 +344,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
         for (BikeReport report : reports) {
             double value = useSummaryField ? summaryValue : switch (field) {
                 case "cadence" -> report.getPedalData() != null ? report.getPedalData().getCadence() : 0;
-                case "current" -> report.getBatteryData() != null ? report.getBatteryData().getCurrent() : 0;
+                case "current" -> report.getBatteryData() != null ? report.getBatteryData().getBatteryCurrent() : 0;
                 case "voltage" -> report.getBatteryData() != null ? report.getBatteryData().getVoltage() : 0;
                 case "temperature" -> report.getBatteryData() != null ? report.getBatteryData().getTemperature() : 0;
                 case "capacity" -> report.getBatteryData() != null ? report.getBatteryData().getCapacity() : 0;
@@ -378,7 +378,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
 
         results.add(makeFieldComparison("cadence", s1.getCadence(), s2.getCadence(), s1, s2));
         results.add(makeFieldComparison("capacity", s1.getCapacity(), s2.getCapacity(), s1, s2));
-        results.add(makeFieldComparison("current", s1.getCurrent(), s2.getCurrent(), s1, s2));
+        results.add(makeFieldComparison("current", s1.getBatteryCurrent(), s2.getBatteryCurrent(), s1, s2));
         results.add(makeFieldComparison("engine_power", s1.getEnginePower(), s2.getEnginePower(), s1, s2));
         results.add(makeFieldComparison("load_cell", s1.getLoadCell(), s2.getLoadCell(), s1, s2));
         results.add(makeFieldComparison("load_power", (double) s1.getLoadPower(), (double) s2.getLoadPower(), s1, s2));
@@ -406,7 +406,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
     @Override
     public List<Map<String, Object>> getAvailableComparisons(Long summaryId) {
         BikeReportSummary current = getSummaryById(summaryId);
-        Long bikeId = current.getBike().getId();
+        Long bikeId = current.getBikeInstance().getId();
 
         return getSummariesByBikeId(bikeId).stream()
                 .filter(s -> !s.getId().equals(summaryId))

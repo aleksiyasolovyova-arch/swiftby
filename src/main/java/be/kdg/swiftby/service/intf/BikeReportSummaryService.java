@@ -38,6 +38,7 @@ public interface BikeReportSummaryService {
     void attachFunctionalityCheck(Long summaryId, Long checkId);
 
 
+    List<BikeReportSummary> getSummariesByBikeInstanceId(Long bikeInstanceId);
 
     List<ReportChartSeriesDto> getFieldOverTimeForTwoReports(Long summary1Id, Long summary2Id, String field, int intervalSeconds);
 
@@ -49,4 +50,5 @@ public interface BikeReportSummaryService {
     List<ReportChartSeriesDto> compareSummaryFields(Long summary1Id, Long summary2Id);
 
     List<Map<String, Object>> getAvailableComparisons(Long summaryId);
+
 }
