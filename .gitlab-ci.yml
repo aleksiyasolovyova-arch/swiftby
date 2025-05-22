@@ -13,9 +13,11 @@ variables:
 
 create-vm:
   stage: create_vm
-  image: hashicorp/terraform:light
+  image: alpine:3.18
   before_script:
-    - apk add bash curl jq openssh git
+    - apk add --no-cache bash curl jq git openssh
+    - curl -fsSL https://get.opentofu.org/install.sh | bash
+    - ln -s $HOME/.opentofu/bin/tofu /usr/local/bin/tofu
     - echo "$AZURE_CREDENTIALS_B64" | base64 -d > creds.json
     - export ARM_CLIENT_ID=$(jq -r .clientId creds.json)
     - export ARM_CLIENT_SECRET=$(jq -r .clientSecret creds.json)
@@ -26,13 +28,12 @@ create-vm:
     - cd infrastructureautomation/IntegrationInfraSetup/terraform/test-vm
     - tofu init
     - tofu apply -auto-approve
-    - echo "VM_IP=$(tofu output -raw vm_public_ip)" >> ../../../deployment.env
-    - echo "VM_USERNAME=$(tofu output -raw vm_username)" >> ../../../deployment.env
+    - echo "VM_IP=$(tofu output -raw vm_public_ip)" >> $CI_PROJECT_DIR/deployment.env
+    - echo "VM_USERNAME=$(tofu output -raw vm_username)" >> $CI_PROJECT_DIR/deployment.env
   artifacts:
     reports:
       dotenv: deployment.env
-  only:
-     - development
+
 
 test:
   stage: test
