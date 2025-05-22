@@ -52,6 +52,7 @@ public interface BikeReportSummaryRepository extends JpaRepository<BikeReportSum
     WHERE br.summary.id = :summaryId
     GROUP BY m.maxPower, m.torque, m.nominalPower, b.maxSupport
 """)
+
     Optional<TestProcedureOverviewDto> getTestProcedureOverview(@Param("summaryId") Long summaryId);
 
     @Query("""

@@ -6,6 +6,7 @@ import be.kdg.swiftby.domain.report.FunctionalityCheck;
 import be.kdg.swiftby.repository.report.BikeReportSummaryRepository;
 import be.kdg.swiftby.repository.report.FunctionalityCheckRepository;
 import be.kdg.swiftby.service.dto.BikeReportChartDto;
+import be.kdg.swiftby.service.dto.ReportChartSeriesDto;
 import be.kdg.swiftby.service.dto.data.BatteryTestDto;
 import be.kdg.swiftby.service.dto.data.NominalLoadTestDto;
 import be.kdg.swiftby.service.dto.data.TestProcedureOverviewDto;
@@ -15,9 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,9 +48,6 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Summary not found"));
     }
-
-
-
 
 
     @Override
@@ -134,7 +130,6 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
         return bikeReportSummaryRepository.getTestProcedureOverview(summaryId)
                 .orElseThrow(() -> new RuntimeException("Overview not found"));
     }
-
 
 
     public BikeReportSummary getSummaryWithCheck(Long id) {
@@ -223,7 +218,6 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
     }
 
 
-
     @Override
     public void attachFunctionalityCheck(Long summaryId, Long checkId) {
         BikeReportSummary summary = bikeReportSummaryRepository.findById(summaryId)
@@ -240,6 +234,197 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
     public List<BikeReportSummary> getSummariesByBikeInstanceId(Long bikeInstanceId) {
         return bikeReportSummaryRepository.findAllByBikeInstanceId(bikeInstanceId);
     }
+
+
+
+    @Override
+    public List<ReportChartSeriesDto> getFieldOverTimeForTwoReports(Long summary1Id, Long summary2Id, String field, int intervalSeconds) {
+        BikeReportSummary s1 = bikeReportSummaryRepository.findByIdWithReports(summary1Id)
+                .orElseThrow(() -> new RuntimeException("Summary 1 not found"));
+        BikeReportSummary s2 = bikeReportSummaryRepository.findByIdWithReports(summary2Id)
+                .orElseThrow(() -> new RuntimeException("Summary 2 not found"));
+
+        return List.of(
+                buildFieldSeriesFromReportsWithInterval(s1, field, intervalSeconds),
+                buildFieldSeriesFromReportsWithInterval(s2, field, intervalSeconds)
+        );
+    }
+
+    @Override
+    public ReportChartSeriesDto buildFieldSeriesFromReportsWithInterval(BikeReportSummary summary, String field, int intervalSeconds) {
+        List<BikeReport> reports = summary.getReports().stream()
+                .sorted(Comparator.comparing(BikeReport::getReportTime))
+                .toList();
+
+        if (reports.isEmpty()) {
+            return new ReportChartSeriesDto("Report " + summary.getId(), List.of(), List.of());
+        }
+
+        long startTime = reports.get(0).getReportTime().toEpochSecond(ZoneOffset.UTC);
+
+        Map<Long, List<BikeReport>> grouped = reports.stream()
+                .collect(Collectors.groupingBy(report ->
+                        (report.getReportTime().toEpochSecond(ZoneOffset.UTC) - startTime) / intervalSeconds
+                ));
+
+        List<Double> values = new ArrayList<>();
+        List<String> timeLabels = new ArrayList<>();
+
+        boolean useSummaryField = field.equals("max_power") || field.equals("rol");
+        double summaryValue = switch (field) {
+            case "max_power" -> summary.getMaxPower() != null ? summary.getMaxPower() : 0;
+            case "rol" -> summary.getRol();
+            default -> -1;
+        };
+
+        grouped.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .forEach(entry -> {
+                    long time = entry.getKey() * intervalSeconds;
+                    List<BikeReport> group = entry.getValue();
+
+                    double value;
+                    if (useSummaryField) {
+                        value = summaryValue;
+                    } else {
+                        value = group.stream().mapToDouble(report -> switch (field) {
+                            case "cadence" -> report.getPedalData() != null ? report.getPedalData().getCadence() : 0;
+                            case "current" -> report.getBatteryData() != null ? report.getBatteryData().getCurrent() : 0;
+                            case "voltage" -> report.getBatteryData() != null ? report.getBatteryData().getVoltage() : 0;
+                            case "temperature" -> report.getBatteryData() != null ? report.getBatteryData().getTemperature() : 0;
+                            case "capacity" -> report.getBatteryData() != null ? report.getBatteryData().getCapacity() : 0;
+                            case "engine_power" -> report.getMotorData() != null ? report.getMotorData().getEnginePower() : 0;
+                            case "power", "load_power" -> report.getWheelData() != null ? report.getWheelData().getPower() : 0;
+                            case "speed" -> report.getWheelData() != null ? report.getWheelData().getSpeed() : 0;
+                            case "torque" -> report.getPedalData() != null ? report.getPedalData().getTorqueCrank() : 0;
+                            case "load_cell" -> report.getTestBenchData() != null ? report.getTestBenchData().getLoadCell() : 0;
+                            default -> 0;
+                        }).average().orElse(0);
+                    }
+
+                    values.add(value);
+                    timeLabels.add(formatSecondsToTimeLabel(time));
+                });
+
+        return new ReportChartSeriesDto("Report " + summary.getId(), values, timeLabels);
+    }
+
+    private String formatSecondsToTimeLabel(long seconds) {
+        long hours = seconds / 3600;
+        long minutes = (seconds % 3600) / 60;
+        long secs = seconds % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, secs);
+    }
+
+
+
+
+
+    @Override
+    public ReportChartSeriesDto buildFieldSeriesFromReports(BikeReportSummary summary, String field) {
+        List<BikeReport> reports = summary.getReports().stream()
+                .sorted(Comparator.comparing(BikeReport::getReportTime))
+                .toList();
+
+        if (reports.isEmpty()) {
+            return new ReportChartSeriesDto("Report " + summary.getId(), List.of(), List.of());
+        }
+
+        List<Double> values = new ArrayList<>();
+        List<String> timeLabels = new ArrayList<>();
+
+        boolean useSummaryField = field.equals("max_power") || field.equals("rol");
+
+        double summaryValue = switch (field) {
+            case "max_power" -> summary.getMaxPower() != null ? summary.getMaxPower() : 0;
+            case "rol" -> summary.getRol();
+            default -> -1;
+        };
+
+        for (BikeReport report : reports) {
+            double value = useSummaryField ? summaryValue : switch (field) {
+                case "cadence" -> report.getPedalData() != null ? report.getPedalData().getCadence() : 0;
+                case "current" -> report.getBatteryData() != null ? report.getBatteryData().getCurrent() : 0;
+                case "voltage" -> report.getBatteryData() != null ? report.getBatteryData().getVoltage() : 0;
+                case "temperature" -> report.getBatteryData() != null ? report.getBatteryData().getTemperature() : 0;
+                case "capacity" -> report.getBatteryData() != null ? report.getBatteryData().getCapacity() : 0;
+                case "engine_power" -> report.getMotorData() != null ? report.getMotorData().getEnginePower() : 0;
+                case "power", "load_power" -> report.getWheelData() != null ? report.getWheelData().getPower() : 0;
+                case "speed" -> report.getWheelData() != null ? report.getWheelData().getSpeed() : 0;
+                case "torque" -> report.getPedalData() != null ? report.getPedalData().getTorqueCrank() : 0;
+                case "load_cell" -> report.getTestBenchData() != null ? report.getTestBenchData().getLoadCell() : 0;
+                default -> 0;
+            };
+
+            values.add(value);
+            timeLabels.add(report.getReportTime().toLocalTime().toString());
+        }
+
+        return new ReportChartSeriesDto("Report " + summary.getId(), values, timeLabels);
+    }
+
+
+
+
+
+
+
+    @Override
+    public List<ReportChartSeriesDto> compareSummaryFields(Long summary1Id, Long summary2Id) {
+        BikeReportSummary s1 = getSummaryById(summary1Id);
+        BikeReportSummary s2 = getSummaryById(summary2Id);
+
+        List<ReportChartSeriesDto> results = new ArrayList<>();
+
+        results.add(makeFieldComparison("cadence", s1.getCadence(), s2.getCadence(), s1, s2));
+        results.add(makeFieldComparison("capacity", s1.getCapacity(), s2.getCapacity(), s1, s2));
+        results.add(makeFieldComparison("current", s1.getCurrent(), s2.getCurrent(), s1, s2));
+        results.add(makeFieldComparison("engine_power", s1.getEnginePower(), s2.getEnginePower(), s1, s2));
+        results.add(makeFieldComparison("load_cell", s1.getLoadCell(), s2.getLoadCell(), s1, s2));
+        results.add(makeFieldComparison("load_power", (double) s1.getLoadPower(), (double) s2.getLoadPower(), s1, s2));
+        results.add(makeFieldComparison("max_power", s1.getMaxPower().doubleValue(), s2.getMaxPower().doubleValue(), s1, s2));
+        results.add(makeFieldComparison("power", s1.getPower(), s2.getPower(), s1, s2));
+        results.add(makeFieldComparison("temperature", s1.getTemperature(), s2.getTemperature(), s1, s2));
+        results.add(makeFieldComparison("torque", s1.getTorque().doubleValue(), s2.getTorque().doubleValue(), s1, s2));
+        results.add(makeFieldComparison("voltage", s1.getVoltage(), s2.getVoltage(), s1, s2));
+        results.add(makeFieldComparison("speed", s1.getSpeed(), s2.getSpeed(), s1, s2));
+
+        return results;
+    }
+
+    private ReportChartSeriesDto makeFieldComparison(String fieldName, Double v1, Double v2, BikeReportSummary s1, BikeReportSummary s2) {
+        return new ReportChartSeriesDto(
+                fieldName,
+                List.of(v1, v2),
+                List.of("Report " + s1.getId(), "Report " + s2.getId())
+
+        );
+    }
+
+
+
+    @Override
+    public List<Map<String, Object>> getAvailableComparisons(Long summaryId) {
+        BikeReportSummary current = getSummaryById(summaryId);
+        Long bikeId = current.getBike().getId();
+
+        return getSummariesByBikeId(bikeId).stream()
+                .filter(s -> !s.getId().equals(summaryId))
+                .map(s -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("id", s.getId());
+                    map.put("date", s.getReportTime() != null ? s.getReportTime().toString() : "Unknown");
+                    return map;
+                })
+                .toList();
+    }
+
+
+
+
+
+
+
 
 
 
