@@ -189,29 +189,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-            // Fill Visual Inspection table
-            if (data.visualInspection) {
-                const tableBody = document.getElementById("visualInspectionTableBody");
-                tableBody.innerHTML = "";
-
-                data.visualInspection.forEach(item => {
-                    const row = document.createElement("tr");
-
-                    const partCell = document.createElement("td");
-                    partCell.textContent = item.part || "Unknown";
-                    row.appendChild(partCell);
-
-                    const ratings = ["--", "-", "", "+", "++", "nvt"];
-                    ratings.forEach(code => {
-                        const td = document.createElement("td");
-                        td.innerHTML = item.condition === code ? "✔️" : "";
-                        row.appendChild(td);
-                    });
-
-                    tableBody.appendChild(row);
-                });
-            }
-
 
 
             // Fill Functional Performance table
