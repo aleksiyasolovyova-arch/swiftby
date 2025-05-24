@@ -1,0 +1,136 @@
+.glass-card {
+    margin-top: 2rem;
+    padding: 2rem;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px rgba(0,0,0,0.1);
+}
+
+.btn.glowing-button {
+    background: #ffd900;
+    font-weight: bold;
+    color: #000;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+}
+
+
+/* ---------- Global ---------- */
+body {
+    background: linear-gradient(to right, #3a506b, #5bc0be);
+    font-family: 'Segoe UI', sans-serif;
+    color: #212529;
+}
+
+.title-glow {
+    font-weight: 700;
+    font-size: 2.5rem;
+    text-align: center;
+    color: #ffd900;
+    text-shadow: 0 0 8px rgba(255, 217, 0, 0.6);
+}
+
+/* ---------- Glass Card ---------- */
+.glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 0 auto;
+    max-width: 1200px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ---------- Card Header ---------- */
+.card-header {
+    font-weight: 600;
+    font-size: 1.4rem;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 1rem;
+    color: #fff9c4;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ---------- Chart Areas ---------- */
+.chart {
+    height: 500px;
+    width: 100%;
+}
+
+.chart-large {
+    height: 650px;
+    width: 100%;
+}
+
+/* ---------- Yellow Buttons ---------- */
+.btn-yellow-black {
+    background: #ffd900;
+    color: #000;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-yellow-black:hover,
+.btn-yellow-black:focus {
+    background: #e6c200;
+    color: #000;
+}
+
+/* ---------- Forms ---------- */
+label {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.form-check-label {
+    color: #fff;
+}
+
+.form-check-input:checked {
+    background-color: #ffd900;
+    border-color: #ffd900;
+}
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+    justify-content: center;
+    margin: 1.5rem auto;
+    max-width: 1000px;
+    padding: 0 1rem;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+    min-height: 40px;
+}
+
+
+select.form-select {
+    background-color: #fdfdfd;
+    color: #000;
+}
+
+option {
+    color: #000;
+}
+
+/* ---------- Misc ---------- */
+#summaryTimeCompareError {
+    font-weight: 600;
+}

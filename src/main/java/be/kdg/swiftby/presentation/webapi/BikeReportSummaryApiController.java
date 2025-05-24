@@ -1,13 +1,14 @@
 package be.kdg.swiftby.presentation.webapi;
 
-import be.kdg.swiftby.domain.report.BikeReport;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
+import be.kdg.swiftby.presentation.webapi.dto.BearingHealthResultDto;
 import be.kdg.swiftby.presentation.webapi.dto.BikeReportSummaryApiMapper;
-import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportApiResponseDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportSummaryDto;
+import be.kdg.swiftby.repository.report.BikeReportSummaryRepository;
+import be.kdg.swiftby.service.dto.BearingHealthEvaluation;
 import be.kdg.swiftby.service.dto.BikeReportChartDto;
 import be.kdg.swiftby.service.dto.ReportChartSeriesDto;
-import be.kdg.swiftby.service.dto.SummaryIdDateDto;
+import be.kdg.swiftby.presentation.webapi.dto.SummaryIdDateDto;
 import be.kdg.swiftby.service.dto.data.BatteryTestDto;
 import be.kdg.swiftby.service.dto.data.NominalLoadTestDto;
 import be.kdg.swiftby.service.dto.data.TestProcedureOverviewDto;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/report-summaries")
@@ -33,11 +33,14 @@ public class BikeReportSummaryApiController {
     private final BikeReportSummaryApiMapper bikeReportSummaryApiMapper;
     private final BikeReportSummaryPdfService bikeReportSummaryPdfService;
     private final BikeReportService bikeReportService;
+    private final BikeReportSummaryRepository bikeReportSummaryRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<BikeReportSummaryDto> getSummaryById(@PathVariable Long id) {
         return ResponseEntity.ok(bikeReportSummaryApiMapper.toBikeReportSummaryDto(bikeReportSummaryService.getSummaryById(id)));
     }
+
+
     @PatchMapping("/{summaryId}/attach-check/{checkId}")
     public ResponseEntity<Void> attachCheck(@PathVariable Long summaryId, @PathVariable Long checkId) {
         bikeReportService.attachFunctionalityCheck(summaryId, checkId);
@@ -101,19 +104,38 @@ public class BikeReportSummaryApiController {
 
     @GetMapping("/{summaryId}/battery-test")
     public ResponseEntity<BatteryTestDto> getBatteryTest(@PathVariable Long summaryId) {
-        return ResponseEntity.ok(bikeReportSummaryService.getBatteryTest(summaryId));
+        return bikeReportSummaryRepository.getBatteryTestData(summaryId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 
     @GetMapping("/{summaryId}/bearing-health")
-    public ResponseEntity<String> evaluateBearingHealth(
-            @PathVariable Long summaryId,
-            @RequestParam double horizontalThreshold,
-            @RequestParam double verticalThreshold
+    public ResponseEntity<BearingHealthResultDto> evaluateBearingHealth(
+            @PathVariable Long summaryId
     ) {
-        String result = bikeReportSummaryService.evaluateAndStoreBearingHealth(summaryId, horizontalThreshold, verticalThreshold);
-        return ResponseEntity.ok(result);
+        BearingHealthEvaluation evaluation = bikeReportSummaryService.evaluateBearingHealth(summaryId);
+
+        BikeReportSummary summary = bikeReportSummaryRepository.findById(summaryId)
+                .orElseThrow(() -> new RuntimeException("Summary not found"));
+
+        BearingHealthResultDto dto = new BearingHealthResultDto(
+                evaluation.horizontalRange(),
+                evaluation.verticalRange(),
+                summary.getHorizontalInclination(),
+                summary.getVerticalInclination(),
+                evaluation.isBad() ? "Bad" : "Good"
+        );
+
+        return ResponseEntity.ok(dto);
     }
+
+
+
+
+
+
+
 
     @GetMapping("/{summaryId}/test-procedure-overview")
     public ResponseEntity<TestProcedureOverviewDto> getTestProcedureOverview(@PathVariable Long summaryId) {
@@ -162,6 +184,19 @@ public class BikeReportSummaryApiController {
                 .toList();
     }
 
+    @GetMapping("/reports-available")
+    public ResponseEntity<List<SummaryIdDateDto>> getReportsAvailable(@RequestParam Long summaryId) {
+       var availableReports = bikeReportSummaryService.getAvailableComparisons(summaryId).stream()
+               .map(s -> new SummaryIdDateDto  (
+                       s.id(),
+                       s.date()
+
+               )).toList();
+       if(availableReports.isEmpty()) {
+           return ResponseEntity.noContent().build();
+       }
+        return ResponseEntity.ok( availableReports);
+    }
 
 
 

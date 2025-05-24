@@ -5,8 +5,10 @@ import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.domain.report.FunctionalityCheck;
 import be.kdg.swiftby.repository.report.BikeReportSummaryRepository;
 import be.kdg.swiftby.repository.report.FunctionalityCheckRepository;
+import be.kdg.swiftby.service.dto.BearingHealthEvaluation;
 import be.kdg.swiftby.service.dto.BikeReportChartDto;
 import be.kdg.swiftby.service.dto.ReportChartSeriesDto;
+import be.kdg.swiftby.service.dto.ServiceSummaryIdDateDto;
 import be.kdg.swiftby.service.dto.data.BatteryTestDto;
 import be.kdg.swiftby.service.dto.data.NominalLoadTestDto;
 import be.kdg.swiftby.service.dto.data.TestProcedureOverviewDto;
@@ -181,41 +183,47 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
     }
 
 
-    private String calculateBearingHealth(List<BikeReport> reports, double horizontalThreshold, double verticalThreshold) {
+
+    @Override
+    public BearingHealthEvaluation evaluateBearingHealth(Long summaryId) {
+        BikeReportSummary summary = bikeReportSummaryRepository.findByIdWithReports(summaryId)
+                .orElseThrow(() -> new RuntimeException("Summary not found"));
+
+        double horizontalThreshold = summary.getHorizontalInclination();
+        double verticalThreshold = summary.getVerticalInclination();
+
+        List<BikeReport> reports = summary.getReports();
+
         double minHorizontal = reports.stream()
                 .mapToDouble(r -> r.getAxialSensorData().getHorizontalInclination())
                 .min().orElse(0);
-
         double maxHorizontal = reports.stream()
                 .mapToDouble(r -> r.getAxialSensorData().getHorizontalInclination())
                 .max().orElse(0);
-
         double minVertical = reports.stream()
                 .mapToDouble(r -> r.getAxialSensorData().getVerticalInclination())
                 .min().orElse(0);
-
         double maxVertical = reports.stream()
                 .mapToDouble(r -> r.getAxialSensorData().getVerticalInclination())
                 .max().orElse(0);
 
-        boolean isGood = (maxHorizontal - minHorizontal) <= horizontalThreshold
-                && (maxVertical - minVertical) <= verticalThreshold;
+        double horizontalRange = maxHorizontal - minHorizontal;
+        double verticalRange = maxVertical - minVertical;
 
-        return isGood ? "good" : "bad";
-    }
+        boolean isBad = horizontalRange > horizontalThreshold || verticalRange > verticalThreshold;
+        String result = isBad ? "bad" : "good";
 
-
-    @Override
-    public String evaluateAndStoreBearingHealth(Long summaryId, double horizontalThreshold, double verticalThreshold) {
-        BikeReportSummary summary = bikeReportSummaryRepository.findByIdWithReports(summaryId)
-                .orElseThrow(() -> new RuntimeException("Summary not found"));
-
-        String result = calculateBearingHealth(summary.getReports(), horizontalThreshold, verticalThreshold);
         summary.setBearingHealth(result);
         bikeReportSummaryRepository.save(summary);
 
-        return result;
+        return new BearingHealthEvaluation(horizontalRange, verticalRange, isBad);
     }
+
+
+
+
+
+
 
 
     @Override
@@ -289,7 +297,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
                     } else {
                         value = group.stream().mapToDouble(report -> switch (field) {
                             case "cadence" -> report.getPedalData() != null ? report.getPedalData().getCadence() : 0;
-                            case "current" -> report.getBatteryData() != null ? report.getBatteryData().getCurrent() : 0;
+                            case "current" -> report.getBatteryData() != null ? report.getBatteryData().getBatteryCurrent() : 0;
                             case "voltage" -> report.getBatteryData() != null ? report.getBatteryData().getVoltage() : 0;
                             case "temperature" -> report.getBatteryData() != null ? report.getBatteryData().getTemperature() : 0;
                             case "capacity" -> report.getBatteryData() != null ? report.getBatteryData().getCapacity() : 0;
@@ -344,7 +352,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
         for (BikeReport report : reports) {
             double value = useSummaryField ? summaryValue : switch (field) {
                 case "cadence" -> report.getPedalData() != null ? report.getPedalData().getCadence() : 0;
-                case "current" -> report.getBatteryData() != null ? report.getBatteryData().getCurrent() : 0;
+                case "current" -> report.getBatteryData() != null ? report.getBatteryData().getBatteryCurrent() : 0;
                 case "voltage" -> report.getBatteryData() != null ? report.getBatteryData().getVoltage() : 0;
                 case "temperature" -> report.getBatteryData() != null ? report.getBatteryData().getTemperature() : 0;
                 case "capacity" -> report.getBatteryData() != null ? report.getBatteryData().getCapacity() : 0;
@@ -378,7 +386,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
 
         results.add(makeFieldComparison("cadence", s1.getCadence(), s2.getCadence(), s1, s2));
         results.add(makeFieldComparison("capacity", s1.getCapacity(), s2.getCapacity(), s1, s2));
-        results.add(makeFieldComparison("current", s1.getCurrent(), s2.getCurrent(), s1, s2));
+        results.add(makeFieldComparison("current", s1.getBatteryCurrent(), s2.getBatteryCurrent(), s1, s2));
         results.add(makeFieldComparison("engine_power", s1.getEnginePower(), s2.getEnginePower(), s1, s2));
         results.add(makeFieldComparison("load_cell", s1.getLoadCell(), s2.getLoadCell(), s1, s2));
         results.add(makeFieldComparison("load_power", (double) s1.getLoadPower(), (double) s2.getLoadPower(), s1, s2));
@@ -404,18 +412,13 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
 
 
     @Override
-    public List<Map<String, Object>> getAvailableComparisons(Long summaryId) {
+    public List<ServiceSummaryIdDateDto> getAvailableComparisons(Long summaryId) {
         BikeReportSummary current = getSummaryById(summaryId);
-        Long bikeId = current.getBike().getId();
+        Long bikeId = current.getBikeInstance().getId();
 
         return getSummariesByBikeId(bikeId).stream()
                 .filter(s -> !s.getId().equals(summaryId))
-                .map(s -> {
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("id", s.getId());
-                    map.put("date", s.getReportTime() != null ? s.getReportTime().toString() : "Unknown");
-                    return map;
-                })
+                .map(s -> new ServiceSummaryIdDateDto(s.getId(),s.getReportTime() != null ? s.getReportTime().toString() : "Unknown"))
                 .toList();
     }
 

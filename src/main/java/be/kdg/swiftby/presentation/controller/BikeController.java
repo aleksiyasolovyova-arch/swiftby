@@ -56,7 +56,7 @@ public class BikeController {
     @GetMapping("/bike-details")
     public String showBikeDetails(@RequestParam Long id, Model model) {
         BikeInstance bikeInstance = bikeInstanceService.getById(id);
-        List<BikeReportSummary> summaries = bikeReportSummaryService.getSummariesByBikeInstanceId(id);
+        List<BikeReportSummary> summaries = bikeReportSummaryService.getSummariesByBikeId(id);
 
         model.addAttribute("bike", bikeInstance);
         model.addAttribute("summaries", summaries);

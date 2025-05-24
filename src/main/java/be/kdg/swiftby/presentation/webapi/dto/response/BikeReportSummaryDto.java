@@ -7,7 +7,7 @@ import java.util.List;
 
 public record BikeReportSummaryDto(
         Long id,
-        Long bikeId,
+        Long bikeInstanceId,
         LocalDate reportTime,
         double avgMileage,
         double avgAssistanceLevel,
