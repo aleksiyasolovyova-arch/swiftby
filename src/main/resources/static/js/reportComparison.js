@@ -97,6 +97,7 @@ function fillReportB(data, procedureData) {
         horizontalInclinationB: formatNum(data.horizontalInclination),
         verticalInclinationB: formatNum(data.verticalInclination),
 
+        // Test Procedure
         maxEnginePowerMeasuredB: formatNum(procedureData?.maxEnginePowerMeasured),
         maxEnginePowerPromisedB: formatNum(procedureData?.maxEnginePowerPromised),
         enginePowerDeviationB: formatNum(procedureData?.enginePowerDeviation),
@@ -161,6 +162,7 @@ function generateQRCode(summaryId) {
 
     if (!qrContainer || !downloadBtn || !wrapper) return;
 
+    // Make QR section visible
     wrapper.classList.remove("d-none");
     qrContainer.innerHTML = "";
 

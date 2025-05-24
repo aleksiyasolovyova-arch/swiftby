@@ -26,7 +26,10 @@ public class BikeReportSummaryController {
     }
 
     @GetMapping("/report-summary")
-    public String showSummaryPage(@RequestParam Long id ,Model model) {
+    public String showSummaryPage(@RequestParam Long id,
+                                  @RequestParam(required = false) Long compareTo,
+                                  Model model) {
+
         BikeReportSummary summary = bikeReportSummaryService.getSummaryById(id);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -52,7 +55,9 @@ public class BikeReportSummaryController {
         }
 
         model.addAttribute("summaryId", id);
-        model.addAttribute("bikeId", bikeInstanceId);
+        if (compareTo != null) {
+            model.addAttribute("compareToId", compareTo);
+        }
         return "bike_report_summary";
     }
 
