@@ -3,11 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let summaryId = params.get("id");
     let compareToId = params.get("compareTo");
 
-    // Save the IDs if present in the URL
     if (summaryId) localStorage.setItem("lastSummaryId", summaryId);
     if (compareToId) localStorage.setItem("lastCompareToId", compareToId);
 
-    // Fallback to stored values if not present in URL
     summaryId = summaryId || localStorage.getItem("lastSummaryId");
     compareToId = compareToId || localStorage.getItem("lastCompareToId");
 
@@ -191,7 +189,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-            // Fill Functional Performance table
             if (data.functionalPerformance) {
                 const tableBody = document.getElementById("functionalPerformanceTableBody");
                 tableBody.innerHTML = "";
@@ -207,7 +204,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
 
-            // Fill Bearing Health table
             if (data.bearingHealth) {
                 const tableBody = document.getElementById("bearingHealthTableBody");
                 tableBody.innerHTML = "";
@@ -225,7 +221,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             fetchBikeReports(summaryId);
-            // generateQRCode(summaryId);
             const pdfBtn = document.getElementById("downloadPDF");
             if (pdfBtn) {
                 pdfBtn.addEventListener("click", () => {
