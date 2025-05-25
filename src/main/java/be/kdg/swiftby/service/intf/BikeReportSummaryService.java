@@ -53,6 +53,6 @@ public interface BikeReportSummaryService {
 
     List<ReportChartSeriesDto> compareSummaryFields(Long summary1Id, Long summary2Id);
 
-    List<ServiceSummaryIdDateDto> getAvailableComparisons(Long summaryId);
+    List<Map<String, Object>> getAvailableComparisons(Long summaryId);
 
 }

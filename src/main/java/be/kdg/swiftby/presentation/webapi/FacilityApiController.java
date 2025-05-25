@@ -1,8 +1,9 @@
 package be.kdg.swiftby.presentation.webapi;
 
 import be.kdg.swiftby.domain.bike.BikeInstance;
-import be.kdg.swiftby.domain.bike.BikeModel;
+import be.kdg.swiftby.domain.bike.BikeOwnership;
 import be.kdg.swiftby.domain.exception.NotFoundException;
+import be.kdg.swiftby.domain.testEnv.BikeOwner;
 import be.kdg.swiftby.presentation.viewmodels.EmployeeCreateViewModel;
 import be.kdg.swiftby.presentation.viewmodels.EmployeeUpdateViewModel;
 import be.kdg.swiftby.presentation.webapi.dto.AdministratorApiMapper;
@@ -21,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -67,7 +69,7 @@ public class FacilityApiController {
     }
 
 
-    //testbenches
+    //test benches
     @GetMapping("{facilityId}/testbenches")
     public ResponseEntity<List<TestBenchApiResponseDto>> getAllTestBenchesByFacilityId(@PathVariable Long facilityId) {
         try {
@@ -222,6 +224,29 @@ public class FacilityApiController {
         List<BikeApiResponseDto> response = bikeApiMapper.toBikeInstanceDtoList(bikeInstances);
         return ResponseEntity.ok(response);
     }
+
+
+    @GetMapping("/{facilityId}/bikeowners")
+    public ResponseEntity<List<BikeOwner>> getAllBikeOwnersByFacilityId(@PathVariable Long facilityId) {
+        List<BikeInstance> bikeInstances = bikeInstanceService.getAllByFacilityId(facilityId);
+        if (bikeInstances.isEmpty()) {
+            log.warn("No bikes found for facility ID {}", facilityId);
+            return ResponseEntity.noContent().build();
+        }
+
+        List<BikeOwner> owners = bikeInstances.stream()
+                .map(bikeInstance -> bikeInstance.getOwnerships()
+                        .stream()
+                        .findFirst()
+                        .map(BikeOwnership::getOwner)
+                        .orElse(null))
+                .filter(Objects::nonNull)
+                .toList();
+
+        return ResponseEntity.ok(owners);
+    }
+
+
 
 
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HomeController {
     public HomeController() {
     }
+
     @GetMapping
     public String home() {
         return "index";
@@ -24,6 +25,10 @@ public class HomeController {
     }
 
 
+    @GetMapping("/customers")
+    public String customers() {
+        return "customers";
+    }
 
 
 }

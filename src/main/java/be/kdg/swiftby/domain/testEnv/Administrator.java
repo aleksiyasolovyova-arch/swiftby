@@ -17,11 +17,8 @@ public class Administrator extends Employee {
     @Column()
     private boolean isApproved;
     public Administrator(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber) {
-        this.setEmail(email);
-        this.setPassword(password);
-        this.setFirstName(firstName);
-        this.setLastName(lastName);
-        this.setPhoneNumber(phoneNumber);
+        super(email, password, firstName, lastName, phoneNumber);
+        this.facility = facility;
     }
     @Override
     public boolean isLoginAllowed() {

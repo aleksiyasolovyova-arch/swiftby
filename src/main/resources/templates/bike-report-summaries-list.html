@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bike Report Summaries</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bike-details.css">
+</head>
+
+<body>
+
+<header th:insert="~{fragments/header :: header('Bike Reports')}" class="mb-4"></header>
+
+<main class="container py-5">
+    <div class="glassmorphism p-4">
+        <h3 class="mb-3">Test Report Summaries</h3>
+
+        <div th:if="${summaries.isEmpty()}">
+            <p class="text-muted">No report summaries available for you yet.</p>
+        </div>
+
+        <div class="list-group" th:if="${!summaries.isEmpty()}">
+            <div th:each="summary : ${summaries}" class="list-group-item glassmorphism mb-3">
+                <div><strong>Date:</strong> <span th:text="${summary.reportTime}"></span></div>
+                <div><strong>Technician Comment:</strong>
+                    <span th:text="${summary.technicianComment} ?: 'No comment provided'"></span>
+                </div>
+                <a class="btn glowing-button mt-2"
+                   th:href="@{/report-summary(id=${summary.id})}">
+                    View Full Report
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:insert="~{fragments/footer :: footer}" class="p-0 mt-4 ">
+    <span>© 2025 eVALeBike</span>
+</footer>
+
+</body>
+</html>

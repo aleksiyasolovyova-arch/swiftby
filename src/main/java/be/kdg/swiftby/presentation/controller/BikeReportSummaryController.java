@@ -1,5 +1,6 @@
 package be.kdg.swiftby.presentation.controller;
 
+import be.kdg.swiftby.domain.bike.BikeInstance;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.email.EmailService;
 import be.kdg.swiftby.service.intf.BikeReportSummaryPdfService;
@@ -31,6 +32,7 @@ public class BikeReportSummaryController {
                                   Model model) {
 
         BikeReportSummary summary = bikeReportSummaryService.getSummaryById(id);
+        Long bikeInstanceId = summary.getBikeInstance().getId();
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = null;
@@ -55,9 +57,7 @@ public class BikeReportSummaryController {
         }
 
         model.addAttribute("summaryId", id);
-        if (compareTo != null) {
-            model.addAttribute("compareToId", compareTo);
-        }
+        model.addAttribute("bikeId", bikeInstanceId);
         return "bike_report_summary";
     }
 
