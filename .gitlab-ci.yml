@@ -53,7 +53,7 @@ deploy-job:
   only:
     - development
     - main
-
+ 
 destroy-job:
   stage: destroy
   image: almalinux:latest
