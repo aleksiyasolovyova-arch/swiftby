@@ -25,7 +25,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link text-light" th:href="@{/bikeowner/bikeModels}" sec:authorize="hasRole('ROLE_BIKEOWNER')">My Bikes</a>
+                    <a class="nav-link text-light" th:href="@{/bikes}" sec:authorize="hasRole('ROLE_BIKEOWNER')">My Bikes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="hasRole('ROLE_BIKEOWNER')">My Bike Reports</a>
@@ -42,10 +42,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')">Customers</a>
+                    <a class="nav-link text-light" th:href="@{/customers}" sec:authorize="hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')">Customers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" th:href="@{/bikeModels}" sec:authorize="hasAnyRole('ROLE_TECHNICIAN','ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')">All Bikes</a>
+                    <a class="nav-link text-light" th:href="@{/bikes}" sec:authorize="hasAnyRole('ROLE_TECHNICIAN','ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')">All Bikes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-light" th:href="@{/admin/technicians}" sec:authorize="hasRole('ROLE_ADMINISTRATOR')">Technician Management</a>
