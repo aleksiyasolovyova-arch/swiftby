@@ -10,14 +10,16 @@ variables:
   TF_VAR_region: "westeurope"
   PROJECT_REPO: "https://oauth2:${SWIFT_BY_TOKEN}@gitlab.com/kdg-ti/integration-4/2024-2025/team-8/biketrust.git"
   INFRA_REPO: "https://oauth2:${INFRA_REPO_TOKEN}@gitlab.com/kdg-ti/integration-4/2024-2025/team-8/infrastructureautomation.git"
- 
+  
 create-vm:
   stage: create_vm
   image: alpine:3.18
   before_script:
     - apk add --no-cache bash curl jq git openssh
-    - curl -fsSL https://get.opentofu.org/install.sh | bash
-    - ln -s $HOME/.opentofu/bin/tofu /usr/local/bin/tofu
+    - TOFU_URL="https://github.com/opentofu/opentofu/releases/download/v1.6.0/tofu_1.6.0_linux_amd64.zip"
+    - curl -sL "$TOFU_URL" -o tofu.tar.gz
+    - unzip tofu.tar.gz -d tofu-bin && mv tofu-bin/tofu /usr/local/bin/
+    - chmod +x /usr/local/bin/tofu
     - echo "$AZURE_CREDENTIALS_B64" | base64 -d > creds.json
     - export ARM_CLIENT_ID=$(jq -r .clientId creds.json)
     - export ARM_CLIENT_SECRET=$(jq -r .clientSecret creds.json)
