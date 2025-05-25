@@ -54,20 +54,23 @@ public interface BikeReportSummaryRepository extends JpaRepository<BikeReportSum
     Optional<TestProcedureOverviewDto> getTestProcedureOverview(@Param("summaryId") Long summaryId);
 
     @Query("""
-        SELECT new be.kdg.swiftby.service.dto.data.BatteryTestDto(
-            COALESCE(SUM(br.wheelData.power) / 3600.0, 0),
-            bm.batteryCapacity,
-            CASE WHEN bm.batteryCapacity > 0 THEN (SUM(br.wheelData.power) / 3600.0) * 100.0 / bm.batteryCapacity ELSE 0 END,
-            CASE WHEN bm.batteryCapacity > 0 THEN (SUM(br.wheelData.power) / 3600.0) * 100.0 / bm.batteryCapacity ELSE 0 END
-        )
-        FROM BikeReport br
-        JOIN br.bike.model bm
-        JOIN br.summary s
-        WHERE s.id = :summaryId
-          AND s.chargeStatus = true
-          AND br.wheelData IS NOT NULL
-        GROUP BY bm.batteryCapacity
-    """)
+    SELECT new be.kdg.swiftby.service.dto.data.BatteryTestDto(
+        COALESCE(SUM(br.wheelData.power) / 3600.0, 0),
+        bm.batteryCapacity,
+        CASE WHEN bm.batteryCapacity > 0 THEN 
+            (SUM(br.wheelData.power) / 3600.0) * 100.0 / bm.batteryCapacity 
+        ELSE 0 END,
+        CASE WHEN bm.batteryCapacity > 0 THEN 
+            ROUND((SUM(br.wheelData.power) / 3600.0) * 100.0 / bm.batteryCapacity) 
+        ELSE 0 END
+    )
+    FROM BikeReport br
+    JOIN br.bike.model bm
+    JOIN br.summary s
+    WHERE s.id = :summaryId
+      AND br.wheelData IS NOT NULL
+    GROUP BY bm.batteryCapacity
+""")
     Optional<BatteryTestDto> getBatteryTestData(@Param("summaryId") Long summaryId);
 
     List<BikeReportSummary> findAllByOrderByReportTimeDesc();

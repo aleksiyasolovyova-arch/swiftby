@@ -9,15 +9,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link href="/css/bike-report-summary.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script type="module" src="/js/reportComparison.js"></script>
 </head>
 <body>
 <header th:insert="~{fragments/header :: header(${currentPage})}"></header>
+<input type="hidden" id="compareId" value=""/>
 <div class="container py-5">
-    <div class="summary-container">
+    <div id ="hiddenContent" class="d-none">
+
+        <div id="reportList" class="list-group">
+
+        </div>
+
+    </div>
+
+    <div id ="mainContent" class="summary-container">
         <div class="row justify-content-center align-items-start g-4">
             <h1 class="title-glow">️ Bike Report Summary</h1>
             <div class="col-lg-8 d-flex flex-column">
-                <div id="summaryContainer" th:data-summary-id="${summaryId}"></div>
+                <div id="summaryContainer"></div>
+
+                <div class="d-flex justify-content-center align-items-center gap-3 mt-3 mb-4">
+                    <button id="hideButton" class="btn btn-outline-light">🔄 Choose Report for Comparison</button>
+
+                    <button id="viewGraphBtn" class="btn btn-outline-light">📈 View Graph Visualizations</button>
+
+                </div>
+
 
                 <div class="glass-card">
                     <div class="card-header">Report Details</div>
@@ -29,57 +47,114 @@
                     </div>
                 </div>
 
+
+
+
                 <div class="glass-card">
                     <div class="card-header">Performance Data</div>
-                    <div class="card-body">
-                        <p><strong>Average Mileage:</strong> <span id="avgMileage"></span> km</p>
-                        <p><strong>Average Assistance Level:</strong> <span id="avgAssistanceLevel"></span>%</p>
-                        <p><strong>Speed:</strong> <span id="speed"></span> km/h</p>
-                        <p><strong>Power:</strong> <span id="power"></span> W</p>
-                        <p><strong>Horizontal Inclination:</strong> <span id="horizontalInclination"></span>°</p>
-                        <p><strong>Vertical Inclination:</strong> <span id="verticalInclination"></span>°</p>
+                    <div class="card-body row">
+                        <div class="col-md-6">
+                            <h6>Report A</h6>
+                            <p><strong>Average Mileage:</strong> <span id="avgMileage"></span> km</p>
+                            <p><strong>Average Assistance Level:</strong> <span id="avgAssistanceLevel"></span>%</p>
+                            <p><strong>Speed:</strong> <span id="speed"></span> km/h</p>
+                            <p><strong>Power:</strong> <span id="power"></span> W</p>
+                            <p><strong>Horizontal Inclination:</strong> <span id="horizontalInclination"></span>°</p>
+                            <p><strong>Vertical Inclination:</strong> <span id="verticalInclination"></span>°</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Report B</h6>
+                            <p><strong>Average Mileage:</strong> <span id="avgMileageB"></span> km</p>
+                            <p><strong>Average Assistance Level:</strong> <span id="avgAssistanceLevelB"></span>%</p>
+                            <p><strong>Speed:</strong> <span id="speedB"></span> km/h</p>
+                            <p><strong>Power:</strong> <span id="powerB"></span> W</p>
+                            <p><strong>Horizontal Inclination:</strong> <span id="horizontalInclinationB"></span>°</p>
+                            <p><strong>Vertical Inclination:</strong> <span id="verticalInclinationB"></span>°</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="glass-card mt-4">
+                <div class="card-header">Overview of Test Procedures</div>
+                <div class="card-body row">
+                    <div class="col-md-6">
+                        <h6>Report A</h6>
+                        <p><strong>Max Engine Power:</strong> <span id="maxEnginePowerMeasured"></span> W</p>
+                        <p><strong>Promised Engine Power:</strong> <span id="maxEnginePowerPromised"></span> W</p>
+                        <p><strong>Deviation:</strong> <span id="enginePowerDeviation"></span>%</p>
+
+                        <p><strong>Max Roller Torque:</strong> <span id="maxRollerTorqueMeasured"></span> Nm</p>
+                        <p><strong>Promised Torque:</strong> <span id="promisedTorque"></span> Nm</p>
+                        <p><strong>Deviation:</strong> <span id="rollerTorqueDeviation"></span>%</p>
+
+                        <p><strong>Max Wheel Power:</strong> <span id="maxWheelPowerMeasured"></span> W</p>
+                        <p><strong>Promised Wheel Power:</strong> <span id="promisedWheelPower"></span> W</p>
+                        <p><strong>Deviation:</strong> <span id="wheelPowerDeviation"></span>%</p>
+
+                        <p><strong>Max Support:</strong> <span id="maxSupport"></span>%</p>
+                        <p><strong>Support Deviation:</strong> <span id="maxSupportDeviation"></span>%</p>
+
+                        <p><strong>Overall Score:</strong> <span id="overallScore"></span>/100</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Report B</h6>
+                        <p><strong>Max Engine Power:</strong> <span id="maxEnginePowerMeasuredB"></span> W</p>
+                        <p><strong>Promised Engine Power:</strong> <span id="maxEnginePowerPromisedB"></span> W</p>
+                        <p><strong>Deviation:</strong> <span id="enginePowerDeviationB"></span>%</p>
+
+                        <p><strong>Max Roller Torque:</strong> <span id="maxRollerTorqueMeasuredB"></span> Nm</p>
+                        <p><strong>Promised Torque:</strong> <span id="promisedTorqueB"></span> Nm</p>
+                        <p><strong>Deviation:</strong> <span id="rollerTorqueDeviationB"></span>%</p>
+
+                        <p><strong>Max Wheel Power:</strong> <span id="maxWheelPowerMeasuredB"></span> W</p>
+                        <p><strong>Promised Wheel Power:</strong> <span id="promisedWheelPowerB"></span> W</p>
+                        <p><strong>Deviation:</strong> <span id="wheelPowerDeviationB"></span>%</p>
+
+                        <p><strong>Max Support:</strong> <span id="maxSupportB"></span>%</p>
+                        <p><strong>Support Deviation:</strong> <span id="maxSupportDeviationB"></span>%</p>
+
+                        <p><strong>Overall Score:</strong> <span id="overallScoreB"></span>/100</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="glass-card mt-4">
+                <div class="card-header">Nominal Load Test</div>
+                <div class="card-body row">
+                    <div class="col-md-6">
+                        <h6>Report A</h6>
+                        <p><strong>Continuous Load (Avg Engine Power):</strong> <span id="averageEnginePower"></span> W</p>
+                        <p><strong>Temperature Increase:</strong> <span id="temperatureIncrease"></span> °C</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Report B</h6>
+                        <p><strong>Continuous Load (Avg Engine Power):</strong> <span id="averageEnginePowerB"></span> W</p>
+                        <p><strong>Temperature Increase:</strong> <span id="temperatureIncreaseB"></span> °C</p>
                     </div>
                 </div>
             </div>
 
             <div class="glass-card mt-4">
-                <div class="card-header">Overview of Test Procedures</div>
-                <div class="card-body" id="testProcedureOverview">
-                    <p><strong>Max Engine Power:</strong> <span id="maxEnginePowerMeasured"></span> W</p>
-                    <p><strong>Promised Engine Power:</strong> <span id="maxEnginePowerPromised"></span> W</p>
-                    <p><strong>Deviation:</strong> <span id="enginePowerDeviation"></span>%</p>
-
-                    <p><strong>Max Roller Torque:</strong> <span id="maxRollerTorqueMeasured"></span> Nm</p>
-                    <p><strong>Promised Torque:</strong> <span id="promisedTorque"></span> Nm</p>
-                    <p><strong>Deviation:</strong> <span id="rollerTorqueDeviation"></span>%</p>
-
-                    <p><strong>Max Wheel Power:</strong> <span id="maxWheelPowerMeasured"></span> W</p>
-                    <p><strong>Promised Wheel Power:</strong> <span id="promisedWheelPower"></span> W</p>
-                    <p><strong>Deviation:</strong> <span id="wheelPowerDeviation"></span>%</p>
-
-                    <p><strong>Max Support:</strong> <span id="maxSupport"></span>%</p>
-                    <p><strong>Support Deviation:</strong> <span id="maxSupportDeviation"></span>%</p>
-
-                    <p><strong>Overall Score:</strong> <span id="overallScore"></span>/100</p>
-                </div>
-            </div>
-
-
-            <div class="glass-card mt-4" id="nominalLoadTestCard">
-                <div class="card-header">Nominal Load Test</div>
-                <div class="card-body">
-                    <p><strong>Continuous Load (Avg Engine Power):</strong> <span id="averageEnginePower"></span> W</p>
-                    <p><strong>Temperature Increase:</strong> <span id="temperatureIncrease"></span> °C</p>
-                </div>
-            </div>
-
-            <div class="glass-card mt-4" id="batteryTestCard" style="display: none;">
                 <div class="card-header">Battery Test</div>
-                <div class="card-body">
-                    <p><strong>Available Capacity:</strong> <span id="availableCapacityWh"></span> Wh</p>
-                    <p><strong>Promised Capacity:</strong> <span id="promisedCapacityWh"></span> Wh</p>
-                    <p><strong>Battery Health:</strong> <span id="batteryHealthPercent"></span></p>
-                    <p><strong>Score:</strong> <span id="batteryTestScore"></span>/100</p>
+                <div class="card-body row">
+                    <div class="col-md-6">
+                        <h6>Report A</h6>
+                        <p><strong>Available Capacity:</strong> <span id="availableCapacityWh"></span> Wh</p>
+                        <p><strong>Promised Capacity:</strong> <span id="promisedCapacityWh"></span> Wh</p>
+                        <p><strong>Battery Health:</strong> <span id="batteryHealthPercent"></span></p>
+                        <p><strong>Score:</strong> <span id="batteryTestScore"></span>/100</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Report B</h6>
+                        <p><strong>Available Capacity:</strong> <span id="availableCapacityWhB"></span> Wh</p>
+                        <p><strong>Promised Capacity:</strong> <span id="promisedCapacityWhB"></span> Wh</p>
+                        <p><strong>Battery Health:</strong> <span id="batteryHealthPercentB"></span></p>
+                        <p><strong>Score:</strong> <span id="batteryTestScoreB"></span>/100</p>
+                    </div>
                 </div>
             </div>
 
@@ -91,11 +166,17 @@
 
             <div class="glass-card mt-4" id="bearingHealthCard">
                 <div class="card-header">Bearing Health Evaluation</div>
-                <div class="card-body">
-                    <p><strong>Evaluation Result:</strong> <span id="bearingHealthResult"></span></p>
+                <div class="card-body row">
+                    <div class="col-md-6">
+                        <h6>Report A</h6>
+                        <p><strong>Evaluation Result:</strong> <span id="bearingHealthResult"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Report B</h6>
+                        <p><strong>Evaluation Result:</strong> <span id="bearingHealthResultB"></span></p>
+                    </div>
                 </div>
             </div>
-
 
             <div class="col-lg-4 text-center">
                 <div class="qr-wrapper">
@@ -106,50 +187,82 @@
                     </button>
                     <button id="downloadPDF" class="btn mt-3 btn-outline-light">Download PDF Report</button>
                 </div>
+                <button id="downloadPDF" class="btn mt-3 btn-outline-light">Download PDF Report</button>
             </div>
 
-            <div class="row w-100 g-4 mt-4 justify-content-center">
-                <div class="col-md-6">
-                    <div class="glass-card full-width h-100">
-                        <div class="card-header">Battery & Engine Data</div>
-                        <div class="card-body">
-                            <p><strong>Charge Status:</strong> <span id="chargeStatus"></span></p>
-                            <p><strong>Battery Current:</strong> <span id="current"></span></p>
-                            <p><strong>Battery Voltage:</strong> <span id="voltage"></span></p>
-                            <p><strong>Battery Capacity:</strong> <span id="capacity"></span></p>
-                            <p><strong>Battery Temperature:</strong> <span id="temperature"></span></p>
-                            <p><strong>Engine Type:</strong> <span id="engineType"></span></p>
-                            <p><strong>Gear Type:</strong> <span id="gearType"></span></p>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-md-6">
-                    <div class="glass-card full-width h-100">
-                        <div class="card-header">Motor & Load Data</div>
-                        <div class="card-body">
-                            <p><strong>Max Power:</strong> <span id="maxPower"></span></p>
-                            <p><strong>Nominal Power:</strong> <span id="nominalPower"></span></p>
-                            <p><strong>Torque:</strong> <span id="torque"></span></p>
-                            <p><strong>Torque Crank:</strong> <span id="torqueCrank"></span></p>
-                            <p><strong>Cadence:</strong> <span id="cadence"></span></p>
-                            <p><strong>Roller Torque:</strong> <span id="rollerTorque"></span></p>
-                            <p><strong>Load Cell:</strong> <span id="loadCell"></span></p>
-                            <p><strong>Load Power:</strong> <span id="loadPower"></span></p>
-                            <p><strong>Rol:</strong> <span id="rol"></span></p>
-                            <p><strong>Status Plug:</strong> <span id="statusPlug"></span></p>
-                        </div>
+            <div class="glass-card mt-4">
+                <div class="card-header">Battery & Engine Data</div>
+                <div class="card-body row">
+                    <div class="col-md-6">
+                        <h6>Report A</h6>
+                        <p><strong>Charge Status:</strong> <span id="chargeStatus"></span></p>
+                        <p><strong>Battery Current:</strong> <span id="current"></span></p>
+                        <p><strong>Battery Voltage:</strong> <span id="voltage"></span></p>
+                        <p><strong>Battery Capacity:</strong> <span id="capacity"></span></p>
+                        <p><strong>Battery Temperature:</strong> <span id="temperature"></span></p>
+                        <p><strong>Engine Type:</strong> <span id="engineType"></span></p>
+                        <p><strong>Gear Type:</strong> <span id="gearType"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Report B</h6>
+                        <p><strong>Charge Status:</strong> <span id="chargeStatusB"></span></p>
+                        <p><strong>Battery Current:</strong> <span id="currentB"></span></p>
+                        <p><strong>Battery Voltage:</strong> <span id="voltageB"></span></p>
+                        <p><strong>Battery Capacity:</strong> <span id="capacityB"></span></p>
+                        <p><strong>Battery Temperature:</strong> <span id="temperatureB"></span></p>
+                        <p><strong>Engine Type:</strong> <span id="engineTypeB"></span></p>
+                        <p><strong>Gear Type:</strong> <span id="gearTypeB"></span></p>
                     </div>
                 </div>
             </div>
 
-            <div class="glass-card">
+            <div class="glass-card mt-4">
+                <div class="card-header">Motor & Load Data</div>
+                <div class="card-body row">
+                    <div class="col-md-6">
+                        <h6>Report A</h6>
+                        <p><strong>Max Power:</strong> <span id="maxPower"></span></p>
+                        <p><strong>Nominal Power:</strong> <span id="nominalPower"></span></p>
+                        <p><strong>Torque:</strong> <span id="torque"></span></p>
+                        <p><strong>Torque Crank:</strong> <span id="torqueCrank"></span></p>
+                        <p><strong>Cadence:</strong> <span id="cadence"></span></p>
+                        <p><strong>Roller Torque:</strong> <span id="rollerTorque"></span></p>
+                        <p><strong>Load Cell:</strong> <span id="loadCell"></span></p>
+                        <p><strong>Load Power:</strong> <span id="loadPower"></span></p>
+                        <p><strong>Rol:</strong> <span id="rol"></span></p>
+                        <p><strong>Status Plug:</strong> <span id="statusPlug"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Report B</h6>
+                        <p><strong>Max Power:</strong> <span id="maxPowerB"></span></p>
+                        <p><strong>Nominal Power:</strong> <span id="nominalPowerB"></span></p>
+                        <p><strong>Torque:</strong> <span id="torqueB"></span></p>
+                        <p><strong>Torque Crank:</strong> <span id="torqueCrankB"></span></p>
+                        <p><strong>Cadence:</strong> <span id="cadenceB"></span></p>
+                        <p><strong>Roller Torque:</strong> <span id="rollerTorqueB"></span></p>
+                        <p><strong>Load Cell:</strong> <span id="loadCellB"></span></p>
+                        <p><strong>Load Power:</strong> <span id="loadPowerB"></span></p>
+                        <p><strong>Rol:</strong> <span id="rolB"></span></p>
+                        <p><strong>Status Plug:</strong> <span id="statusPlugB"></span></p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="glass-card mt-4">
                 <div class="card-header">Technician Notes</div>
-                <div class="card-body">
-                    <p><strong>Technician Comment:</strong> <span id="technicianComment"></span></p>
+                <div class="card-body row">
+                    <div class="col-md-6">
+                        <h6>Report A</h6>
+                        <p><strong>Technician Comment:</strong> <span id="technicianComment"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Report B</h6>
+                        <p><strong>Technician Comment:</strong> <span id="technicianCommentB"></span></p>
+                    </div>
                 </div>
             </div>
-        </div>
 
         <div id="functionalCheckContainer" class="mt-4"></div>
 
@@ -210,11 +323,7 @@
                     </select>
 
 
-                    <button id="applySettingsBtn" class="btn btn-primary mt-3">Apply and Update Chart</button>
-                </div>
 
-            </div>
-        </div>
 
         <!-- Full Report Table.. -->
         <div class="row mt-5 justify-content-center">
@@ -238,45 +347,8 @@
         </div>
 
 
-        <!-- New Section: Line Chart Over Time for Summary Fields -->
-        <div class="glass-card mt-5" style="max-width: 1200px; margin: auto;">
-            <div class="card-header">Compare Summary Fields Over Time</div>
-            <div class="card-body">
-                <div class="row g-3 align-items-end">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="reportASelect" class="form-label">Select Report 1</label>
-                            <select id="reportASelect" class="form-select">
-                                <option disabled selected value="">-- Choose Report 1 --</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="reportBSelect" class="form-label">Select Report 2</label>
-                            <select id="reportBSelect" class="form-select">
-                                <option disabled selected value="">-- Choose Report 2 --</option>
-                            </select>
-                        </div>
-                    </div>
 
 
-                    <div class="row g-3 mt-3 align-items-end">
-                        <div class="col-md-4">
-                            <label for="fieldNames" class="form-label">Select Field</label>
-                            <select id="fieldNames" class="form-select">
-                                <option value="cadence">Cadence</option>
-                                <option value="capacity">Battery Capacity</option>
-                                <option value="current">Battery Current</option>
-                                <option value="engine_power">Engine Power</option>
-                                <option value="load_cell">Load Cell</option>
-                                <option value="load_power">Load Power</option>
-                                <option value="max_power">Max Power</option>
-                                <option value="power">Wheel Power</option>
-                                <option value="temperature">Temperature</option>
-                                <option value="torque">Torque</option>
-                                <option value="voltage">Voltage</option>
-                                <option value="speed">Speed</option>
-                            </select>
-                        </div>
 
                         <div class="col-md-4">
                             <label for="samplingRateCompareFields" class="form-label">Sampling Interval</label>

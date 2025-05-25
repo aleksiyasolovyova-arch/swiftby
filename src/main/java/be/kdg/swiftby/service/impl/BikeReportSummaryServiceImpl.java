@@ -6,8 +6,10 @@ import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.domain.report.FunctionalityCheck;
 import be.kdg.swiftby.repository.report.BikeReportSummaryRepository;
 import be.kdg.swiftby.repository.report.FunctionalityCheckRepository;
+import be.kdg.swiftby.service.dto.BearingHealthEvaluation;
 import be.kdg.swiftby.service.dto.BikeReportChartDto;
 import be.kdg.swiftby.service.dto.ReportChartSeriesDto;
+import be.kdg.swiftby.service.dto.ServiceSummaryIdDateDto;
 import be.kdg.swiftby.service.dto.data.BatteryTestDto;
 import be.kdg.swiftby.service.dto.data.NominalLoadTestDto;
 import be.kdg.swiftby.service.dto.data.TestProcedureOverviewDto;
@@ -182,41 +184,47 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
     }
 
 
-    private String calculateBearingHealth(List<BikeReport> reports, double horizontalThreshold, double verticalThreshold) {
+
+    @Override
+    public BearingHealthEvaluation evaluateBearingHealth(Long summaryId) {
+        BikeReportSummary summary = bikeReportSummaryRepository.findByIdWithReports(summaryId)
+                .orElseThrow(() -> new RuntimeException("Summary not found"));
+
+        double horizontalThreshold = summary.getHorizontalInclination();
+        double verticalThreshold = summary.getVerticalInclination();
+
+        List<BikeReport> reports = summary.getReports();
+
         double minHorizontal = reports.stream()
                 .mapToDouble(r -> r.getAxialSensorData().getHorizontalInclination())
                 .min().orElse(0);
-
         double maxHorizontal = reports.stream()
                 .mapToDouble(r -> r.getAxialSensorData().getHorizontalInclination())
                 .max().orElse(0);
-
         double minVertical = reports.stream()
                 .mapToDouble(r -> r.getAxialSensorData().getVerticalInclination())
                 .min().orElse(0);
-
         double maxVertical = reports.stream()
                 .mapToDouble(r -> r.getAxialSensorData().getVerticalInclination())
                 .max().orElse(0);
 
-        boolean isGood = (maxHorizontal - minHorizontal) <= horizontalThreshold
-                && (maxVertical - minVertical) <= verticalThreshold;
+        double horizontalRange = maxHorizontal - minHorizontal;
+        double verticalRange = maxVertical - minVertical;
 
-        return isGood ? "good" : "bad";
-    }
+        boolean isBad = horizontalRange > horizontalThreshold || verticalRange > verticalThreshold;
+        String result = isBad ? "bad" : "good";
 
-
-    @Override
-    public String evaluateAndStoreBearingHealth(Long summaryId, double horizontalThreshold, double verticalThreshold) {
-        BikeReportSummary summary = bikeReportSummaryRepository.findByIdWithReports(summaryId)
-                .orElseThrow(() -> new RuntimeException("Summary not found"));
-
-        String result = calculateBearingHealth(summary.getReports(), horizontalThreshold, verticalThreshold);
         summary.setBearingHealth(result);
         bikeReportSummaryRepository.save(summary);
 
-        return result;
+        return new BearingHealthEvaluation(horizontalRange, verticalRange, isBad);
     }
+
+
+
+
+
+
 
 
     @Override
@@ -410,18 +418,13 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
 
 
     @Override
-    public List<Map<String, Object>> getAvailableComparisons(Long summaryId) {
+    public List<ServiceSummaryIdDateDto> getAvailableComparisons(Long summaryId) {
         BikeReportSummary current = getSummaryById(summaryId);
         Long bikeId = current.getBikeInstance().getId();
 
         return getSummariesByBikeId(bikeId).stream()
                 .filter(s -> !s.getId().equals(summaryId))
-                .map(s -> {
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("id", s.getId());
-                    map.put("date", s.getReportTime() != null ? s.getReportTime().toString() : "Unknown");
-                    return map;
-                })
+                .map(s -> new ServiceSummaryIdDateDto(s.getId(),s.getReportTime() != null ? s.getReportTime().toString() : "Unknown"))
                 .toList();
     }
 

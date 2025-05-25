@@ -2,8 +2,10 @@ package be.kdg.swiftby.service.intf;
 
 import be.kdg.swiftby.domain.report.BikeReport;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
+import be.kdg.swiftby.service.dto.BearingHealthEvaluation;
 import be.kdg.swiftby.service.dto.BikeReportChartDto;
 import be.kdg.swiftby.service.dto.ReportChartSeriesDto;
+import be.kdg.swiftby.service.dto.ServiceSummaryIdDateDto;
 import be.kdg.swiftby.service.dto.data.BatteryTestDto;
 import be.kdg.swiftby.service.dto.data.NominalLoadTestDto;
 import be.kdg.swiftby.service.dto.data.TestProcedureOverviewDto;
@@ -33,7 +35,9 @@ public interface BikeReportSummaryService {
 
     BatteryTestDto getBatteryTest(Long summaryId);
 
-    String evaluateAndStoreBearingHealth(Long summaryId, double horizontalThreshold, double verticalThreshold);
+
+
+    BearingHealthEvaluation evaluateBearingHealth(Long summaryId);
 
     void attachFunctionalityCheck(Long summaryId, Long checkId);
 
