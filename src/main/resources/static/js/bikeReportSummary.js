@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const summaryContainer = document.getElementById("summaryContainer");
     const summaryId = summaryContainer.dataset.summaryId;
+    const bikeContainer = document.getElementById("bikeId");
+    const bikeId = bikeContainer ? bikeContainer.dataset.bikeId : null;
 
     if (!summaryId) {
         alert("No report ID provided!");
@@ -11,8 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             document.getElementById("summaryId").textContent = data.id;
-            const bikeIdEl = document.getElementById("bikeId");
-            if (bikeIdEl) bikeIdEl.textContent = data.bikeId || "N/A";
+            if (bikeContainer && (bikeId != data.bikeId)) {
+                bikeContainer.innerText="N/A"
+            }
 
             document.getElementById("reportTime").textContent = data.reportTime || "N/A";
 

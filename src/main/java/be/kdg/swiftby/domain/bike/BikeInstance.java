@@ -4,10 +4,14 @@ import be.kdg.swiftby.domain.report.BikeReport;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 @Data
 @Entity
+@NoArgsConstructor
 public class BikeInstance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +32,10 @@ public class BikeInstance {
     @OneToMany(mappedBy = "bikeInstance",fetch = FetchType.LAZY)
     private Set<BikeReportSummary> summaries;
 
-
+    public BikeInstance(String chassisNumber, BikeModel model) {
+        this.chassisNumber = chassisNumber;
+        this.model = model;
+        this.ownerships = new HashSet<>();
+    }
 }
 

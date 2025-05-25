@@ -157,5 +157,10 @@ public class BikeReportServiceImpl implements BikeReportService {
         return savedSummary;
     }
 
+    @Override
+    public List<BikeReport> findAllByBikeOwnerId(Long bikeOwnerId) {
+        return bikeReportRepository.findAllByBikeOwnerId(bikeOwnerId);
+    }
+
 
 }
