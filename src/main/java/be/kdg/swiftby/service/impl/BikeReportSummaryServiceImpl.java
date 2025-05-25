@@ -427,14 +427,4 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
                 .map(s -> new ServiceSummaryIdDateDto(s.getId(),s.getReportTime() != null ? s.getReportTime().toString() : "Unknown"))
                 .toList();
     }
-
-
-
-
-
-
-
-
-
-
 }
