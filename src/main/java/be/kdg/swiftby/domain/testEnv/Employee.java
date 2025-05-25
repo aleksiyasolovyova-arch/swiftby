@@ -36,6 +36,11 @@ public abstract class Employee extends User {
     }
 
     @Override
+    public boolean isLoginAllowed() {
+        return this.isApproved;
+    }
+
+    @Override
     public String toString() {
         return super.toString();
     }
