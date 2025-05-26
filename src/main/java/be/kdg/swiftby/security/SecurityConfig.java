@@ -40,14 +40,15 @@ public class SecurityConfig {
                                 "/",
                                 "/login",
                                 "/registration",
-                                "/workInProgress"
+                                "/workInProgress",
+                                "/visual_check"
                         ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/registration").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(antMatcher("/api/**")).permitAll()
                         .requestMatchers(antMatcher("/ws/**")).permitAll()
                         // anyone with a token should be able to set up their password
-                        .requestMatchers(antMatcher("/set-password/**")).permitAll()
+                        .requestMatchers(antMatcher("/  set-password/**")).permitAll()
                         .requestMatchers(antMatcher("/bikes"),
                                 antMatcher("/bike-details")).permitAll()
                         //role permissions

@@ -280,3 +280,11 @@ body {
 .glowing-button:hover {
     background: #e6c200;
 }
+
+.sticky-thead th {
+    position: sticky;
+    top: 0;
+    background-color: rgba(80, 80, 80, 0.95); /* same as .table thead */
+    z-index: 10;
+    backdrop-filter: blur(6px);
+}
