@@ -416,7 +416,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
     }
 
 
-//meow
+//meoww
     @Override
     public List<ServiceSummaryIdDateDto> getAvailableComparisons(Long summaryId) {
         BikeReportSummary current = getSummaryById(summaryId);
