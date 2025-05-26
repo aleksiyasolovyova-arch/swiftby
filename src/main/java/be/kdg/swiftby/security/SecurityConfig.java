@@ -87,7 +87,7 @@ public class SecurityConfig {
                         .failureHandler(customAuthenticationFailureHandler)
                         .permitAll())
                 .build();
-    };
+    }
 
 
     @Bean

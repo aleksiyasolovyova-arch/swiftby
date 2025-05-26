@@ -4,7 +4,6 @@ import be.kdg.swiftby.domain.report.VisualInspection;
 import be.kdg.swiftby.repository.report.VisualInspectionRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class VisualInspectionService {

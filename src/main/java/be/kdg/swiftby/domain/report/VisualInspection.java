@@ -3,7 +3,6 @@ package be.kdg.swiftby.domain.report;
 import be.kdg.swiftby.domain.bike.Condition;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 

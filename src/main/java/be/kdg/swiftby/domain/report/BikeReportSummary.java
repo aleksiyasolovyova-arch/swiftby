@@ -62,6 +62,10 @@ public class BikeReportSummary {
     @JoinColumn(name = "functionality_check_id")
     private FunctionalityCheck functionalityCheck;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "visual_inspection_id")
+    private VisualInspection visualInspection;
+
     @Column(name = "bearing_health")
     private String bearingHealth;
 

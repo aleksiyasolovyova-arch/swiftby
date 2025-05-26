@@ -5,17 +5,19 @@ import be.kdg.swiftby.domain.report.VisualInspection;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class VisualInspectionController {
 
     @GetMapping("/visual-inspection")
-    public String showVisualInspectionForm(Model model) {
-        Field[] fields = VisualInspection.class.getDeclaredFields(); // <-- FIXED
+    public String showVisualInspectionForm(@RequestParam Long summaryid, Model model) {
+        Field[] fields = VisualInspection.class.getDeclaredFields();
 
         List<String> components = Arrays.stream(fields)
                 .filter(field -> !field.getName().equals("id"))
@@ -26,6 +28,8 @@ public class VisualInspectionController {
 
         model.addAttribute("components", components);
         model.addAttribute("conditions", conditions);
+        model.addAttribute("summaryId", summaryid);
+
         return "visual-inspection";
     }
 

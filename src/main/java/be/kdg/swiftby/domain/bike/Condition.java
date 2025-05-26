@@ -1,5 +1,8 @@
 package be.kdg.swiftby.domain.bike;
 
+import lombok.Getter;
+
+@Getter
 public enum Condition {
     VERY_BAD("--"),
     BAD("-"),
@@ -14,7 +17,4 @@ public enum Condition {
         this.label = label;
     }
 
-    public String getLabel() {
-        return label;
-    }
 }

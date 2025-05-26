@@ -47,6 +47,12 @@ public class BikeReportSummaryApiController {
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping("/{summaryId}/attach-visual-inspection/{inspectionId}")
+    public ResponseEntity<Void> attachVisualInspection(@PathVariable Long summaryId, @PathVariable Long inspectionId) {
+        bikeReportService.attachFunctionalityCheck(summaryId, inspectionId);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping
     public ResponseEntity<List<BikeReportSummaryDto>> getAll(){
         return ResponseEntity.ok(bikeReportSummaryService.getAllSummaries().stream()
@@ -93,9 +99,6 @@ public class BikeReportSummaryApiController {
 
     }
 
-
-
-
     @GetMapping("/{summaryId}/nominal-load")
     public ResponseEntity<NominalLoadTestDto> getNominalLoad(@PathVariable Long summaryId) {
         return ResponseEntity.ok(bikeReportSummaryService.getNominalLoadTest(summaryId));
@@ -130,13 +133,6 @@ public class BikeReportSummaryApiController {
         return ResponseEntity.ok(dto);
     }
 
-
-
-
-
-
-
-
     @GetMapping("/{summaryId}/test-procedure-overview")
     public ResponseEntity<TestProcedureOverviewDto> getTestProcedureOverview(@PathVariable Long summaryId) {
         return ResponseEntity.ok(bikeReportSummaryService.getTestProcedureOverview(summaryId));
@@ -162,9 +158,6 @@ public class BikeReportSummaryApiController {
         var result = bikeReportSummaryService.getFieldOverTimeForTwoReports(summary1Id, summary2Id, field, intervalSeconds);
         return ResponseEntity.ok(result);
     }
-
-
-
 
     @GetMapping("/compare-summary-values")
     public ResponseEntity<List<ReportChartSeriesDto>> compareSummaryValues(

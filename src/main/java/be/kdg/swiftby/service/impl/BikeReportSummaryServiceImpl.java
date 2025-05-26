@@ -4,8 +4,10 @@ import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.report.BikeReport;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.domain.report.FunctionalityCheck;
+import be.kdg.swiftby.domain.report.VisualInspection;
 import be.kdg.swiftby.repository.report.BikeReportSummaryRepository;
 import be.kdg.swiftby.repository.report.FunctionalityCheckRepository;
+import be.kdg.swiftby.repository.report.VisualInspectionRepository;
 import be.kdg.swiftby.service.dto.BearingHealthEvaluation;
 import be.kdg.swiftby.service.dto.BikeReportChartDto;
 import be.kdg.swiftby.service.dto.ReportChartSeriesDto;
@@ -27,6 +29,7 @@ import java.util.stream.Collectors;
 public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
     private final BikeReportSummaryRepository bikeReportSummaryRepository;
     private final FunctionalityCheckRepository functionalityCheckRepository;
+    private final VisualInspectionRepository visualInspectionRepository;
 
     @Override
     public List<BikeReportSummary> getAllSummaries() {
@@ -183,8 +186,6 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
                 .orElseThrow(() -> new RuntimeException("Battery test data not found or battery not fully charged"));
     }
 
-
-
     @Override
     public BearingHealthEvaluation evaluateBearingHealth(Long summaryId) {
         BikeReportSummary summary = bikeReportSummaryRepository.findByIdWithReports(summaryId)
@@ -220,13 +221,6 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
         return new BearingHealthEvaluation(horizontalRange, verticalRange, isBad);
     }
 
-
-
-
-
-
-
-
     @Override
     public void attachFunctionalityCheck(Long summaryId, Long checkId) {
         BikeReportSummary summary = bikeReportSummaryRepository.findById(summaryId)
@@ -236,6 +230,18 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
                 .orElseThrow(() -> new RuntimeException("Functional check not found"));
 
         summary.setFunctionalityCheck(check);
+        bikeReportSummaryRepository.save(summary);
+    }
+
+    @Override
+    public void attachVisualInspection(Long summaryId, Long inspectionId) {
+        BikeReportSummary summary = bikeReportSummaryRepository.findById(summaryId)
+                .orElseThrow(() -> new RuntimeException("Summary not found"));
+
+        VisualInspection inspection = visualInspectionRepository.findById(inspectionId)
+                .orElseThrow(() -> new RuntimeException("Visual inspection not found"));
+
+        summary.setVisualInspection(inspection);
         bikeReportSummaryRepository.save(summary);
     }
 

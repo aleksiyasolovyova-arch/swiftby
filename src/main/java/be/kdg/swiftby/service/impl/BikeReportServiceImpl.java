@@ -40,6 +40,7 @@ public class BikeReportServiceImpl implements BikeReportService {
     private final TestBenchDataMapper testBenchDataMapper;
     private final WheelDataMapper wheelDataMapper;
     private final BikeModelRepository bikeModelRepository;
+    private final VisualInspectionRepository visualInspectionRepository;
     FunctionalityCheckRepository functionalityCheckRepository;
 
     @Override
@@ -137,6 +138,17 @@ public class BikeReportServiceImpl implements BikeReportService {
 
         summary.setFunctionalityCheck(check);
         bikeReportSummaryRepository.save(summary);
+    }
+
+    @Override
+    public void attachVisualInspection(Long summaryId, Long inspectionId) {
+        BikeReportSummary summary = bikeReportSummaryRepository.findById(summaryId).get();
+
+        VisualInspection inspection = visualInspectionRepository.findById(inspectionId).get();
+
+        summary.setVisualInspection(inspection);
+        bikeReportSummaryRepository.save(summary);
+
     }
 
     @Override
