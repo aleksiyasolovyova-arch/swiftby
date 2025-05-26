@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Technicians</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="/css/facility-overview.css">
+    <script src="/js/admin/admin-technicians.js" defer></script>
+</head>
+<body>
+
+<header th:insert="~{fragments/header :: header('Technicians')}" class="mb-4"></header>
+
+<input type="hidden" id="facilityId" th:value="${facilityId}"/>
+
+<main class="container mt-5 glassmorphism">
+    <h2 class="text-center mb-4">Technicians</h2>
+    <div id="technicianList" class="d-flex flex-wrap justify-content-center gap-4"></div>
+</main>
+
+<footer th:insert="~{fragments/footer :: footer}" class="mt-4"></footer>
+
+</body>
+</html>

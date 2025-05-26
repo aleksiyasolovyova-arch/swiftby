@@ -17,4 +17,6 @@ public interface BikeOwnerService {
     List<BikeOwner> searchOwnersByEmail(String email);
 
     boolean existsByEmail(String email);
+    List<BikeOwner> getAllByFacilityId(Long facilityId);
+    BikeOwner getByFacilityIdAndBikeOwnerId(Long facilityId, Long bikeOwnerId);
 }

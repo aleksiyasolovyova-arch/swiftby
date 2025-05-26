@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Test Benches</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="/css/all-testbenches.css">
+    <script src="/js/admin/admin-testbenches.js" defer></script>
+</head>
+<body>
+
+<header th:insert="~{fragments/header :: header('Test Benches')}" class="mb-4"></header>
+
+<input type="hidden" id="facilityId" th:value="${facilityId}" />
+
+<main class="m-0 p-0">
+    <div class="container mb-4 mt-5 glassmorphism">
+        <h2 class="facility-header text-center mb-4">Test Benches in Facility</h2>
+        <div id="testBenchList" class="d-flex flex-wrap justify-content-center gap-4"></div>
+    </div>
+</main>
+
+<footer th:insert="~{fragments/footer :: footer}" class="p-0 mt-4 ">
+    <span>© 2025 eVALeBike</span>
+</footer>
+
+</body>
+</html>

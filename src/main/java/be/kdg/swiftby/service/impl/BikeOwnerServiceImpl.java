@@ -5,6 +5,7 @@ import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.testEnv.BikeOwner;
 import be.kdg.swiftby.domain.testEnv.PasswordResetToken;
 import be.kdg.swiftby.repository.testEnvironment.BikeOwnerRepository;
+import be.kdg.swiftby.repository.testEnvironment.FacilityRepository;
 import be.kdg.swiftby.repository.testEnvironment.PasswordResetTokenRepository;
 import be.kdg.swiftby.service.intf.BikeOwnerService;
 import jakarta.transaction.Transactional;
@@ -21,8 +22,10 @@ public class BikeOwnerServiceImpl implements BikeOwnerService {
     BikeOwnerRepository bikeOwnerRepository;
     UserUtilities userUtilities;
     PasswordResetTokenRepository passwordResetTokenRepository;
+    FacilityRepository facilityRepository;
 
     Logger log = LoggerFactory.getLogger(BikeOwnerServiceImpl.class);
+
 
     public BikeOwnerServiceImpl(BikeOwnerRepository bikeOwnerRepository,
                                 UserUtilities userUtilities,
@@ -91,5 +94,23 @@ public class BikeOwnerServiceImpl implements BikeOwnerService {
     @Override
     public boolean existsByEmail(String email) {
         return bikeOwnerRepository.existsByEmail(email);
+    }
+    @Override
+    public List<BikeOwner> getAllByFacilityId(Long facilityId) {
+        if (!facilityRepository.existsById(facilityId)) {
+            throw NotFoundException.forFacility(facilityId);
+        }
+        return bikeOwnerRepository.findAllByFacilityId(facilityId);
+    }
+
+    @Override
+    public BikeOwner getByFacilityIdAndBikeOwnerId(Long facilityId, Long bikeOwnerId) {
+        if (!facilityRepository.existsById(facilityId)) {
+            throw NotFoundException.forFacility(facilityId);
+        }
+        BikeOwner bikeOwner = bikeOwnerRepository.findByFacilityIdAndId(facilityId, bikeOwnerId)
+                .orElseThrow(() -> NotFoundException.forBikeOwner(bikeOwnerId));
+        log.debug("Retrieved BikeOwner with id {} from facility with id {}", bikeOwnerId, facilityId);
+        return bikeOwner;
     }
 }

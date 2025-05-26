@@ -5,10 +5,7 @@ import be.kdg.swiftby.domain.bike.BikeModel;
 import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.presentation.viewmodels.EmployeeCreateViewModel;
 import be.kdg.swiftby.presentation.viewmodels.EmployeeUpdateViewModel;
-import be.kdg.swiftby.presentation.webapi.dto.AdministratorApiMapper;
-import be.kdg.swiftby.presentation.webapi.dto.FacilityApiMapper;
-import be.kdg.swiftby.presentation.webapi.dto.TechnicianApiMapper;
-import be.kdg.swiftby.presentation.webapi.dto.TestBenchApiMapper;
+import be.kdg.swiftby.presentation.webapi.dto.*;
 import be.kdg.swiftby.presentation.webapi.dto.bikereport.BikeMapperApi;
 import be.kdg.swiftby.presentation.webapi.dto.response.*;
 import be.kdg.swiftby.service.intf.*;
@@ -38,6 +35,8 @@ public class FacilityApiController {
 
     private final Logger log = LoggerFactory.getLogger(FacilityApiController.class);
    private final BikeMapperApi bikeApiMapper;
+    private final BikeOwnerApiMapper bikeOwnerApiMapper;
+    private final BikeOwnerService bikeOwnerService;
 
     //facilities
     @GetMapping("")
@@ -223,6 +222,30 @@ public class FacilityApiController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{facilityId}/bikeowners")
+    public ResponseEntity<List<BikeOwnerApiResponseDto>> getAllBikeOwnersByFacilityId(@PathVariable Long facilityId) {
+        try{
+            List<BikeOwnerApiResponseDto> owners = bikeOwnerApiMapper.toBikeOwnerDtoList(
+              bikeOwnerService.getAllByFacilityId(facilityId)
+            );
+            return ResponseEntity.ok(owners);
+        }catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
+    @GetMapping("/{facilityId}/bikeowners/{ownerId}")
+    public ResponseEntity<BikeOwnerApiResponseDto> getBikeOwner(@PathVariable Long ownerId, @PathVariable Long facilityId) {
+        try{
+            BikeOwnerApiResponseDto owner = bikeOwnerApiMapper.toBikeOwnerDto(
+                    bikeOwnerService.getByFacilityIdAndBikeOwnerId(facilityId, ownerId)
+            );
+            return ResponseEntity.ok(owner);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 }

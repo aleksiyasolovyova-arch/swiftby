@@ -13,5 +13,7 @@ public interface BikeOwnerRepository extends JpaRepository<BikeOwner, Long> {
 
     Optional<BikeOwner> findByEmail(String email);
     List<BikeOwner> findByEmailContainingIgnoreCase(String email);
+    List<BikeOwner> findAllByFacilityId(Long facilityId);
+    Optional<BikeOwner> findByFacilityIdAndId(Long facilityId, Long id);
 
 }
