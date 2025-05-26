@@ -15,13 +15,13 @@
 <main class="container mt-5 glassmorphism">
     <h2 class="text-center mb-4">Facility Overview</h2>
 
-    <div id="facilityDetails" class="mb-4"></div>
+    <div id="facilityDetails" class="mb-4 glass-box"></div>
 
     <div class="d-flex justify-content-around flex-wrap gap-3">
-        <a class="btn btn-primary" th:href="@{./all-bikes}">View Bikes</a>
-        <a class="btn btn-success" th:href="@{admin-technicians}">View Technicians</a>
-        <a class="btn btn-warning" th:href="@{admin-testbenches}">View Test Benches</a>
-        <a class="btn btn-info" th:href="@{admin-bikeowners}">View Bike Owners</a>
+        <a class="dashboard-button" th:href="@{/bikes}">View Bikes</a>
+        <a class="dashboard-button" th:href="@{/admin/technicians}">View Technicians</a>
+        <a class="dashboard-button" th:href="@{admin-testbenches}">View Test Benches</a>
+        <a class="dashboard-button" th:href="@{admin-bikeowners}">View Bike Owners</a>
     </div>
 </main>
 

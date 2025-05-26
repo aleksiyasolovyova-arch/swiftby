@@ -33,17 +33,6 @@ public class FacilityController {
         return "administrator/admin-bikeowners";
     }
 
-    @GetMapping("/facility/{facilityId}/admin-technicians")
-    public String techniciansForAdmin(@PathVariable Long facilityId,
-                                      @AuthenticationPrincipal CustomUserDetails userDetails,
-                                      Model model) {
-        if (!isAuthorized(userDetails, facilityId)) {
-            return "forbidden";
-        }
-        model.addAttribute("facilityId", facilityId);
-        return "administrator/admin-technicians";
-    }
-
     @GetMapping("/facility/{facilityId}/admin-testbenches")
     public String testBenchesForAdmin(@PathVariable Long facilityId,
                                       @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -55,16 +44,6 @@ public class FacilityController {
         return "administrator/admin-testbenches";
     }
 
-    @GetMapping("/bikes")
-    public String bikesForAdmin(@PathVariable Long facilityId,
-                                @AuthenticationPrincipal CustomUserDetails userDetails,
-                                Model model) {
-        if (!isAuthorized(userDetails, facilityId)) {
-            return "forbidden";
-        }
-        model.addAttribute("facilityId", facilityId);
-        return "all-bikes";
-    }
 
     private boolean isAuthorized(CustomUserDetails userDetails, Long facilityId) {
         return "SUPERADMIN".equalsIgnoreCase(userDetails.getRole()) ||

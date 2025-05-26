@@ -3,6 +3,7 @@ package be.kdg.swiftby.service.impl;
 import be.kdg.swiftby.domain.exception.AlreadyExistsException;
 import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.testEnv.BikeOwner;
+import be.kdg.swiftby.domain.testEnv.Facility;
 import be.kdg.swiftby.domain.testEnv.PasswordResetToken;
 import be.kdg.swiftby.repository.testEnvironment.BikeOwnerRepository;
 import be.kdg.swiftby.repository.testEnvironment.FacilityRepository;
@@ -29,10 +30,12 @@ public class BikeOwnerServiceImpl implements BikeOwnerService {
 
     public BikeOwnerServiceImpl(BikeOwnerRepository bikeOwnerRepository,
                                 UserUtilities userUtilities,
-                                PasswordResetTokenRepository passwordResetTokenRepository) {
+                                PasswordResetTokenRepository passwordResetTokenRepository,
+                                FacilityRepository facilityRepository) {
         this.bikeOwnerRepository = bikeOwnerRepository;
         this.userUtilities = userUtilities;
         this.passwordResetTokenRepository = passwordResetTokenRepository;
+        this.facilityRepository = facilityRepository;
     }
 
     @Override
@@ -112,5 +115,37 @@ public class BikeOwnerServiceImpl implements BikeOwnerService {
                 .orElseThrow(() -> NotFoundException.forBikeOwner(bikeOwnerId));
         log.debug("Retrieved BikeOwner with id {} from facility with id {}", bikeOwnerId, facilityId);
         return bikeOwner;
+    }
+
+    @Override
+    public BikeOwner update(Long id, Long oldFacilityId, String email,
+                            String password, String firstName, String lastName,
+                            String phoneNumber, Long newFacilityId) {
+
+        Facility oldFacility = facilityRepository.findById(oldFacilityId)
+                .orElseThrow(() -> NotFoundException.forFacility(oldFacilityId));
+
+        BikeOwner owner = bikeOwnerRepository.findByFacilityAndId(oldFacility, id)
+                .orElseThrow(() -> NotFoundException.forBikeOwner(id));
+
+        if (email != null && userUtilities.isExistingUser(email) && !owner.getEmail().equals(email)) {
+            throw AlreadyExistsException.forUserWithEmail(email);
+        }
+
+        Facility newFacility = null;
+
+        if (newFacilityId != null) {
+            newFacility = facilityRepository.findById(newFacilityId)
+                    .orElseThrow(() -> NotFoundException.forFacility(newFacilityId));
+        }
+
+        owner.setEmail(email != null ? email : owner.getEmail());
+        owner.setPassword(password != null ? password : owner.getPassword());
+        owner.setFirstName(firstName != null ? firstName : owner.getFirstName());
+        owner.setLastName(lastName != null ? lastName : owner.getLastName());
+        owner.setPhoneNumber(phoneNumber != null ? phoneNumber : owner.getPhoneNumber());
+        owner.setFacility(newFacilityId != null ? newFacility : owner.getFacility());
+
+        return owner;
     }
 }

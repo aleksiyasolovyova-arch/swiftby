@@ -31,7 +31,7 @@
                     <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="hasRole('ROLE_BIKEOWNER')">My Bike Reports</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" th:href="@{/technician/dashboard}" sec:authorize="hasAnyRole('ROLE_TECHNICIAN', 'ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')">Dashboard</a>
+                    <a class="nav-link text-light" th:href="@{/technician/dashboard}" sec:authorize="hasAnyRole('ROLE_TECHNICIAN')">Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a th:if="${session.get('facilityId') != null}"
@@ -41,15 +41,15 @@
                         Facility overview
                     </a>
                 </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')">Customers</a>-->
+<!--                </li>-->
                 <li class="nav-item">
-                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')">Customers</a>
+                    <a class="nav-link text-light" th:href="@{/bikeModels}" sec:authorize="hasAnyRole('ROLE_TECHNICIAN', 'ROLE_SUPERADMIN')">All Bikes</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" th:href="@{/bikeModels}" sec:authorize="hasAnyRole('ROLE_TECHNICIAN','ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')">All Bikes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" th:href="@{/admin/technicians}" sec:authorize="hasRole('ROLE_ADMINISTRATOR')">Technician Management</a>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link text-light" th:href="@{/admin/technicians}" sec:authorize="hasRole('ROLE_ADMINISTRATOR')">Technician Management</a>-->
+<!--                </li>-->
                 <li class="nav-item">
                     <a class="nav-link text-light" th:href="@{/sysadmin/unapproved-employees}" sec:authorize="hasRole('ROLE_SUPERADMIN')">Authorization Needed</a>
                 </li>

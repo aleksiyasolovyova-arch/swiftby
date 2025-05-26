@@ -248,4 +248,19 @@ public class FacilityApiController {
         }
     }
 
+    //TODO:Fix up the update method so it's not a direct copy past from admin and add delete
+    @PatchMapping("/{facilityId}/bikeowners/{ownerId}")
+    public ResponseEntity<BikeOwnerApiResponseDto> updateBikeOwner(@PathVariable Long facilityId,
+                                                                           @PathVariable Long ownerId,
+                                                                           @Valid @RequestBody EmployeeUpdateViewModel employeeUpdateViewModel) {
+        BikeOwnerApiResponseDto owner = bikeOwnerApiMapper.toBikeOwnerDto(
+                bikeOwnerService.update(facilityId, ownerId, employeeUpdateViewModel.getEmail(),
+                        employeeUpdateViewModel.getPassword(), employeeUpdateViewModel.getFirstName(), employeeUpdateViewModel.getLastName(),
+                        employeeUpdateViewModel.getPhoneNumber(), employeeUpdateViewModel.getFacilityId()
+                ));
+        log.debug("Updated bike owner with id {} in facility with id {}",
+                ownerId, facilityId);
+        return ResponseEntity.ok(owner);
+    }
+
 }

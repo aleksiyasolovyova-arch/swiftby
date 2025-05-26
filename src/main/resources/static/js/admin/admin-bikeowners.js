@@ -1,23 +1,83 @@
 const ownerList = document.getElementById('ownerList');
+const searchInput = document.getElementById('searchInput');
 const facilityId = document.getElementById('facilityId').value;
+
+const editForm = document.getElementById('editOwnerForm');
+const editOwnerModal = new bootstrap.Modal(document.getElementById('editOwnerModal'));
+
+let owners = [];
 
 async function fetchOwners() {
     const response = await fetch(`/api/facilities/${facilityId}/bikeowners`);
-    const owners = await response.json();
-    ownerList.innerHTML = '';
+    owners = await response.json();
+    displayOwners(owners);
+}
 
-    for (const owner of owners) {
+function displayOwners(data) {
+    ownerList.innerHTML = '';
+    data.forEach(owner => {
+        const col = document.createElement('div');
+        col.className = 'col d-flex';
+
         const card = document.createElement('div');
-        card.className = 'col-md-5';
+        card.className = 'tech-card w-100 d-flex flex-column justify-content-between';
+
         card.innerHTML = `
-            <div class="glassmorphism p-3 h-100">
-                <h4>${owner.firstName} ${owner.lastName}</h4>
-                <p><strong>Email:</strong> ${owner.email}</p>
-                <p><strong>Phone:</strong> ${owner.phoneNumber}</p>
+            <div>
+                <h5 class="mb-2">${owner.firstName} ${owner.lastName}</h5>
+                <p><strong>Email:</strong><br>${owner.email}</p>
+            </div>
+            <div class="mt-3 d-flex justify-content-between">
+                <button class="btn btn-glow-yellow btn-sm" onclick="editOwner(${owner.id})">Edit</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteOwner(${owner.id})">Delete</button>
             </div>
         `;
-        ownerList.appendChild(card);
+
+        col.appendChild(card);
+        ownerList.appendChild(col);
+    });
+}
+
+searchInput.addEventListener('input', () => {
+    const term = searchInput.value.toLowerCase();
+    const filtered = owners.filter(o => o.email.toLowerCase().includes(term));
+    displayOwners(filtered);
+});
+
+function editOwner(id) {
+    const owner = owners.find(o => o.id === id);
+    if (!owner) return;
+    document.getElementById('editOwnerId').value = owner.id;
+    document.getElementById('editEmail').value = owner.email;
+    document.getElementById('editFirstName').value = owner.firstName;
+    document.getElementById('editLastName').value = owner.lastName;
+    editOwnerModal.show();
+}
+
+editForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('editOwnerId').value;
+    const payload = {
+        email: document.getElementById('editEmail').value,
+        firstName: document.getElementById('editFirstName').value,
+        lastName: document.getElementById('editLastName').value,
+        facilityId: facilityId
+    };
+    const response = await fetch(`/api/facilities/${facilityId}/bikeowners/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+    if (response.ok) {
+        await fetchOwners();
+        editOwnerModal.hide();
     }
+});
+
+async function deleteOwner(id) {
+    if (!confirm('Are you sure you want to delete this bike owner?')) return;
+    const response = await fetch(`/api/facilities/bikeowners/${id}`, { method: 'DELETE' });
+    if (response.ok) fetchOwners();
 }
 
 fetchOwners();

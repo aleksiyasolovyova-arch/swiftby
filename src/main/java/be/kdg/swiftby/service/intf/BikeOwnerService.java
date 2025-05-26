@@ -19,4 +19,7 @@ public interface BikeOwnerService {
     boolean existsByEmail(String email);
     List<BikeOwner> getAllByFacilityId(Long facilityId);
     BikeOwner getByFacilityIdAndBikeOwnerId(Long facilityId, Long bikeOwnerId);
+    BikeOwner update(Long id, Long oldFacilityId, String email,
+                     String password, String firstName, String lastName,
+                     String phoneNumber, Long newFacilityId);
 }
