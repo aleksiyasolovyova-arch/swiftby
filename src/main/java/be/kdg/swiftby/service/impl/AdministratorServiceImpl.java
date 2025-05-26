@@ -150,4 +150,9 @@ public class AdministratorServiceImpl implements AdministratorService {
         return admin;
     }
 
+    @Override
+    public boolean existsByEmail(String email) {
+        return administratorRepository.existsByEmail(email);
+    }
+
 }

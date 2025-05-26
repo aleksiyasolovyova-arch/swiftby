@@ -12,23 +12,23 @@
 <div class="container py-5">
 
     <div class="glassmorphism p-4 mb-4">
-        <h2 class="text-accent" th:text="${bike.brand} + ' - ' + ${bike.type}"></h2>
+        <h2 class="text-accent" th:text="${bike.model.brand} + ' - ' + ${bike.model.type}"></h2>
         <p><strong>Chassis Number:</strong> <span th:text="${bike.chassisNumber}"></span></p>
-        <p><strong>Battery Capacity:</strong> <span th:text="${bike.batteryCapacity} + ' mAh'"></span></p>
-        <p><strong>Max Support:</strong> <span th:text="${bike.maxSupport} + ' W'"></span></p>
+        <p><strong>Battery Capacity:</strong> <span th:text="${bike.model.batteryCapacity} + ' mAh'"></span></p>
+        <p><strong>Max Support:</strong> <span th:text="${bike.model.maxSupport} + ' W'"></span></p>
         <p><strong>Powertrain:</strong>
-            <span th:text="${bike.powertrain} == 0 ? 'Hub' : 'Mid-drive'"></span>
+            <span th:text="${bike.model.powertrain} == 0 ? 'Hub' : 'Mid-drive'"></span>
         </p>
     </div>
 
     <div class="glassmorphism p-4">
         <h3 class="mb-3">Test Report Summaries</h3>
 
-        <div th:if="${summaries.empty}">
-            <p class="text-muted">No report summaries available for this bike yet.</p>
+        <div th:if="${summaries.isEmpty()}">
+            <p class="text-muted">No report summaries available for this bikeModel yet.</p>
         </div>
 
-        <div class="list-group" th:if="${!summaries.empty}">
+        <div class="list-group" th:if="${!summaries.isEmpty()}">
             <div th:each="summary : ${summaries}" class="list-group-item glassmorphism mb-3">
                 <div><strong>Date:</strong> <span th:text="${summary.reportTime}"></span></div>
                 <div><strong>Technician Comment:</strong>

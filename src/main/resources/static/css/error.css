@@ -1,0 +1,93 @@
+/* errors.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap');
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Mono', monospace;
+    background: linear-gradient(135deg, #344a57, #5c7285, #aed2e3);
+    color: #f5f7ff;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+.content {
+    flex: 1
+}
+
+.error-wrapper {
+    height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.error-box {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.error-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #fada7a;
+}
+
+.error-message {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+
+.error-image {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+    animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    to {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+.glowing-button {
+    border-radius: 10px;
+    padding: 12px;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-in-out;
+    background: linear-gradient(45deg, #fada7a, #ffd700);
+    border: none;
+    color: #344a57;
+    box-shadow: 0 5px 15px rgba(250, 218, 122, 0.6);
+    text-decoration: none;
+}
+
+.glowing-button:hover {
+    background: linear-gradient(45deg, #ffd700, #fada7a);
+    box-shadow: 0 10px 20px rgba(250, 218, 122, 0.8);
+}

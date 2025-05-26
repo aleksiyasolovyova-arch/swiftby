@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     let selectedBikeId = null;
 
     async function loadBikeSizes() {
-        const response = await fetch("/api/bikes/sizes");
+        const response = await fetch("/api/bike-models/sizes");
         const sizes = await response.json();
 
         bikeSizeSelect.innerHTML = "";
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function loadPowertrains() {
         console.log("Fetching available powertrains...");
-        const response = await fetch("/api/bikes/powertrains");
+        const response = await fetch("/api/bike-models/powertrains");
         const powertrains = await response.json();
 
         powertrainSelect.innerHTML = "";
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     async function loadBikes() {
-        const response = await fetch(`/api/bikes/owner/${userId}`);
+        const response = await fetch(`/api/bike-instances/owner/${userId}`);
         const bikes = await response.json();
 
         if (bikes.length > 0) {
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 torque: parseInt(document.getElementById("torque").value, 10) || 75
             },
             // torqueCrank: document.getElementById("torqueCrank").value.trim()
-
+            ownerId:userId
         };
 
         if (!bikeData.brand || !bikeData.type || !bikeData.chassisNumber) {
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             return;
         }
 
-        const response = await fetch("/api/bikes", {
+        const response = await fetch("/api/bike-models", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(bikeData),
