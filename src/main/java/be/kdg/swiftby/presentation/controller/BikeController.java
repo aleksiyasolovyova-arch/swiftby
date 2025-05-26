@@ -42,12 +42,6 @@ public class BikeController {
         String email = principal.getName();
 
         User user = userService.getUserByEmail(email);
-     //   User user =  principal.getName();
-
-        Facility facility = null;
-        try {
-            facility = administratorService.getByEmail(email).getFacility();
-        } catch (Exception ignored) {}
 
         if (administratorService.existsByEmail(email) || technicianService.existsByEmail(email)) {
             Employee employee = (Employee) user;

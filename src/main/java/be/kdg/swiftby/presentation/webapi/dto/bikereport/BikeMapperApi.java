@@ -28,12 +28,4 @@ public interface BikeMapperApi {
     @Mapping(source = "model.batteryCapacity", target = "batteryCapacity")
     BikeApiResponseDto toBikeDto(BikeInstance instance);
 
-    @Mapping(source = "model.brand", target = "brand")
-    @Mapping(source = "model.type", target = "type")
-    @Mapping(source = "model.powertrain", target = "powertrain")
-    @Mapping(source = "model.bikeSize", target = "bikeSize")
-    @Mapping(source = "model.maxSupport", target = "maxSupport")
-    @Mapping(source = "model.batteryCapacity", target = "batteryCapacity")
-    BikeApiResponseDto toBikeDto(BikeInstance instance);
-
 }

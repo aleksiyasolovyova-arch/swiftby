@@ -422,13 +422,8 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
                 .toList();
     }
 
-
-
-
-
-
-
-
-
-
+    @Override
+    public List<BikeReportSummary> getAllSummariesByBikeOwnerId(Long bikeOwnerId) {
+        return bikeReportSummaryRepository.findAllBikeReportSummariesByBikeOwnerId(bikeOwnerId);
+    }
 }

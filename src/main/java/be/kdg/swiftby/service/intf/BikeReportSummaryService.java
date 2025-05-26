@@ -55,4 +55,5 @@ public interface BikeReportSummaryService {
 
     List<ServiceSummaryIdDateDto> getAvailableComparisons(Long summaryId);
 
+    List<BikeReportSummary> getAllSummariesByBikeOwnerId(Long bikeOwnerId);
 }

@@ -18,9 +18,9 @@ INSERT INTO axial_sensor_data (horizontal_inclination, vertical_inclination) VAL
 
 INSERT INTO battery_data (capacity, charge_status, battery_current, temperature, voltage)
 VALUES
-    (5000, 1, 12.5, 25.4, 48.2),
-    (6000, 0, 10.8, 30.0, 50.1),
-    (7000, 1, 11.2, 28.5, 49.5);
+    (5000, true, 12.5, 25.4, 48.2),
+    (6000, false, 10.8, 30.0, 50.1),
+    (7000, true, 11.2, 28.5, 49.5);
 
 INSERT INTO facility (address_extra, city, country, email, name, street, street_number, zip_code) VALUES
                                                                                                       ('Unit 5', 'Springfield', 'USA', 'facility@example.com', 'Test Facility', 'Main St', '123', '98765'),
@@ -68,14 +68,9 @@ INSERT INTO bike_instance (model_id, chassis_number) VALUES
                                                              ( 1, 'CHSN-GAZ-004'),
                                                              ( 2, 'CHSN-VAN-005');
 
-INSERT INTO bike (battery_capacity, bike_size, max_support, powertrain, motor_id, brand, chassis_number, type)
-VALUES
-    (5000, 2, 250, 1, 1, 'Trek', 'CHSN12345', 'Mountain'),
-    (6000, 3, 300, 0, 2, 'Giant', 'CHSN67890', 'Road'),
-    (6000, 3, 300, 0, 2, 'Giant', 'CHSN67891', 'Road');
 
 
-INSERT INTO bike_ownerships (bike_id, bike_owner_id) VALUES (1, 1),
+INSERT INTO bike_ownerships (bike_id, owner_id) VALUES (1, 1),
                                                             (2, 2),
                                                             (3, 1);
 
@@ -88,15 +83,15 @@ INSERT INTO pedal_data (cadence, torque_crank) VALUES
                                                    (85, 30.0);
 
 INSERT INTO test_bench (is_active, facility_id) VALUES
-                                                    (1, 1),
-                                                    (0, 1),
-                                                    (1, 2),
-                                                    (0, 2),
-                                                    (0, 2)
+                                                    (true, 1),
+                                                    (false, 1),
+                                                    (true, 2),
+                                                    (false, 2),
+                                                    (false, 2)
 ;
 INSERT INTO test_bench_data (load_cell, load_power, rol, roller_torque, status_plug, test_bench_id) VALUES
-                                                                                                        (10.5, 150, 0.3, 20.4, 1, 1),
-                                                                                                        (12.0, 200, 0.4, 25.7, 0, 2);
+                                                                                                        (10.5, 150, 0.3, 20.4, true, 1),
+                                                                                                        (12.0, 200, 0.4, 25.7, false, 2);
 
 INSERT INTO wheel_data (power, speed) VALUES
                                           (200.5, 30.2),
@@ -107,7 +102,6 @@ INSERT INTO bike_report (assistance_level, mileage, report_time, axial_sensor_da
                                                                                                                                                                                                        (2, 800, '2025-02-15', 2, 2, 2, 2, 2, 2, 2, 'Motor efficiency could be improved');
 
 INSERT INTO bike_report_summary (
-    bike_id,
     report_time,
     avg_mileage,
     avg_assistance_level,
@@ -134,7 +128,7 @@ INSERT INTO bike_report_summary (
     power,
     technician_comment
 ) VALUES
-      (1, '2025-02-01', 1100, 2.5, 14.0, 29.0, 1, 12.3, 48.5, 5200, 26.5, 'Brushless', 'Automatic', 500, 250, 90, 33.2, 88, 18.5, 9.8, 0.32, 155, 1, 29.5, 198.0, 'Battery efficiency is good'),
-      (2, '2025-02-15', 900, 2.8, 10.5, 24.0, 0, 11.0, 50.2, 6000, 28.0, 'Brushed', 'Manual', 600, 300, 120, 31.5, 82, 22.1, 11.2, 0.28, 165, 0, 27.8, 180.5, 'Motor is overheating, check cooling'),
-      (1, '2025-02-10', 950, 3.0, 12.0, 26.5, 1, 12.0, 49.0, 5500, 27.0, 'Brushless', 'Automatic', 500, 250, 100, 34.0, 90, 20.5, 10.5, 0.30, 160, 1, 30.2, 200.5, 'Overall performance is stable'),
-      (2, '2025-02-18', 1050, 3.2, 13.5, 27.5, 1, 13.0, 48.8, 5300, 26.8, 'Brushed', 'Manual', 600, 320, 110, 35.0, 85, 19.7, 9.5, 0.35, 170, 0, 28.5, 195.3, 'Power output fluctuates under load');
+      ('2025-02-01', 1100, 2.5, 14.0, 29.0, true, 12.3, 48.5, 5200, 26.5, 'Brushless', 'Automatic', 500, 250, 90, 33.2, 88, 18.5, 9.8, 0.32, 155, true, 29.5, 198.0, 'Battery efficiency is good'),
+      ('2025-02-15', 900, 2.8, 10.5, 24.0, false, 11.0, 50.2, 6000, 28.0, 'Brushed', 'Manual', 600, 300, 120, 31.5, 82, 22.1, 11.2, 0.28, 165, false, 27.8, 180.5, 'Motor is overheating, check cooling'),
+      ( '2025-02-10', 950, 3.0, 12.0, 26.5, true, 12.0, 49.0, 5500, 27.0, 'Brushless', 'Automatic', 500, 250, 100, 34.0, 90, 20.5, 10.5, 0.30, 160, true, 30.2, 200.5, 'Overall performance is stable'),
+      ( '2025-02-18', 1050, 3.2, 13.5, 27.5, true, 13.0, 48.8, 5300, 26.8, 'Brushed', 'Manual', 600, 320, 110, 35.0, 85, 19.7, 9.5, 0.35, 170, false, 28.5, 195.3, 'Power output fluctuates under load');
