@@ -71,6 +71,44 @@ document.addEventListener("DOMContentLoaded", function () {
                     .catch(err => console.error("Failed to load functionality check:", err));
             }
 
+            if (data.visualInspectionId) {
+                fetch(`/api/visual-inspections/${data.visualInspectionId}`)
+                    .then(resp => resp.json())
+                    .then(inspection => {
+                        const container = document.getElementById("visualInspectionContainer");
+                        container.innerHTML = `
+                <div class="glass-card">
+                    <div class="card-header">Visual Inspection</div>
+                    <div class="card-body">
+                        <p><strong>Tires:</strong> ${inspection.tires}</p>
+                        <p><strong>Cranks:</strong> ${inspection.cranks}</p>
+                        <p><strong>Electrical Wiring:</strong> ${inspection.electricalWiring}</p>
+                        <p><strong>Frame/Fork:</strong> ${inspection.frameFork}</p>
+                        <p><strong>Grips:</strong> ${inspection.grips}</p>
+                        <p><strong>Chain/Belt:</strong> ${inspection.chainBelt}</p>
+                        <p><strong>Pedals:</strong> ${inspection.pedals}</p>
+                        <p><strong>Reflectors:</strong> ${inspection.reflectors}</p>
+                        <p><strong>Brake Pads:</strong> ${inspection.brakePads}</p>
+                        <p><strong>Brake Levers:</strong> ${inspection.brakeLevers}</p>
+                        <p><strong>Brake Cables:</strong> ${inspection.brakeCables}</p>
+                        <p><strong>Brake Discs:</strong> ${inspection.brakeDiscs}</p>
+                        <p><strong>Gear Cables:</strong> ${inspection.gearCables}</p>
+                        <p><strong>Mudguards:</strong> ${inspection.mudguards}</p>
+                        <p><strong>Handlebar Stem:</strong> ${inspection.handlebarStem}</p>
+                        <p><strong>Rear Sprocket:</strong> ${inspection.rearSprocket}</p>
+                        <p><strong>Front Sprocket:</strong> ${inspection.frontSprocket}</p>
+                        <p><strong>Rim Spokes:</strong> ${inspection.rimSpokes}</p>
+                        <p><strong>Rear Suspension:</strong> ${inspection.rearSuspension}</p>
+                        <p><strong>Front Suspension:</strong> ${inspection.frontSuspension}</p>
+                        <p><strong>Saddle:</strong> ${inspection.saddle}</p>
+                    </div>
+                </div>
+            `;
+                    })
+                    .catch(err => console.error("Failed to load visual inspection:", err));
+            }
+
+
 
             fetch(`/api/report-summaries/${summaryId}/test-procedure-overview`)
                 .then(resp => {

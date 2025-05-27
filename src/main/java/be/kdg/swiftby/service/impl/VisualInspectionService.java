@@ -1,22 +1,13 @@
 package be.kdg.swiftby.service.impl;
 
 import be.kdg.swiftby.domain.report.VisualInspection;
-import be.kdg.swiftby.repository.report.VisualInspectionRepository;
-import org.springframework.stereotype.Service;
 
+public interface VisualInspectionService {
 
-@Service
-public class VisualInspectionService {
+    VisualInspection saveInspection(VisualInspection visualInspection);
 
-    VisualInspectionRepository visualInspectionRepository;
+    void saveAndLinkReport(Long testId, VisualInspection inspection);
 
-    public VisualInspectionService(VisualInspectionRepository visualInspectionRepository) {
-        this.visualInspectionRepository = visualInspectionRepository;
-    }
-
-    public VisualInspection saveInspection(VisualInspection visualInspection) {
-        return visualInspectionRepository.save(visualInspection);
-    }
-
+    VisualInspection findById(Long id);
 
 }

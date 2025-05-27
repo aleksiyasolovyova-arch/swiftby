@@ -49,7 +49,7 @@ public class BikeReportSummaryApiController {
 
     @PatchMapping("/{summaryId}/attach-visual-inspection/{inspectionId}")
     public ResponseEntity<Void> attachVisualInspection(@PathVariable Long summaryId, @PathVariable Long inspectionId) {
-        bikeReportService.attachFunctionalityCheck(summaryId, inspectionId);
+        bikeReportService.attachVisualInspection(summaryId, inspectionId);
         return ResponseEntity.noContent().build();
     }
 
