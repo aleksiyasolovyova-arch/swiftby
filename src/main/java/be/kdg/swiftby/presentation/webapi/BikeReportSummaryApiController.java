@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/report-summaries")
@@ -45,6 +46,16 @@ public class BikeReportSummaryApiController {
     public ResponseEntity<Void> attachCheck(@PathVariable Long summaryId, @PathVariable Long checkId) {
         bikeReportService.attachFunctionalityCheck(summaryId, checkId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{summaryId}/attach-visual-check/{inspectionId}")
+    public ResponseEntity<Void> attachVisualCheck(
+            @PathVariable Long summaryId,
+            @PathVariable Long inspectionId) {
+
+        bikeReportSummaryService.attachVisualInspection(summaryId, inspectionId);
+
+        return ResponseEntity.ok().build();  // Just confirm success, no content needed
     }
 
     @GetMapping
@@ -93,9 +104,6 @@ public class BikeReportSummaryApiController {
 
     }
 
-
-
-
     @GetMapping("/{summaryId}/nominal-load")
     public ResponseEntity<NominalLoadTestDto> getNominalLoad(@PathVariable Long summaryId) {
         return ResponseEntity.ok(bikeReportSummaryService.getNominalLoadTest(summaryId));
@@ -130,13 +138,6 @@ public class BikeReportSummaryApiController {
         return ResponseEntity.ok(dto);
     }
 
-
-
-
-
-
-
-
     @GetMapping("/{summaryId}/test-procedure-overview")
     public ResponseEntity<TestProcedureOverviewDto> getTestProcedureOverview(@PathVariable Long summaryId) {
         return ResponseEntity.ok(bikeReportSummaryService.getTestProcedureOverview(summaryId));
@@ -162,9 +163,6 @@ public class BikeReportSummaryApiController {
         var result = bikeReportSummaryService.getFieldOverTimeForTwoReports(summary1Id, summary2Id, field, intervalSeconds);
         return ResponseEntity.ok(result);
     }
-
-
-
 
     @GetMapping("/compare-summary-values")
     public ResponseEntity<List<ReportChartSeriesDto>> compareSummaryValues(

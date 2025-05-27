@@ -40,21 +40,22 @@ public class SecurityConfig {
                                 "/",
                                 "/login",
                                 "/registration",
-                                "/workInProgress"
+                                "/workInProgress",
+                                "/visual_check"
                         ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/registration").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(antMatcher("/api/**")).permitAll()
                         .requestMatchers(antMatcher("/ws/**")).permitAll()
                         // anyone with a token should be able to set up their password
-                        .requestMatchers(antMatcher("/set-password/**")).permitAll()
+                        .requestMatchers(antMatcher("/  set-password/**")).permitAll()
                         .requestMatchers(antMatcher("/bikes"),
                                 antMatcher("/bike-details")).permitAll()
                         //role permissions
                         .requestMatchers(antMatcher("/technician/**")).hasAnyRole("TECHNICIAN", "ADMINISTRATOR", "SUPERADMIN")
                         .requestMatchers(antMatcher("/sysadmin/unapproved-employees")).hasRole("SUPERADMIN")
                         .requestMatchers(HttpMethod.POST, "/sysadmin/**").hasRole("SUPERADMIN")
-                        .requestMatchers(antMatcher("/startTest/**"), antMatcher("/functional-check/")).hasRole("TECHNICIAN")
+                        .requestMatchers(antMatcher("/startTest/**"), antMatcher("/functional-check/"), antMatcher("/visual-inspection")).hasRole("TECHNICIAN")
                         .requestMatchers(antMatcher("/admin/technicians/*"), antMatcher("/facility/*/overview")).hasAnyRole("ADMINISTRATOR", "SUPERADMIN")
                         .requestMatchers(
                                 antMatcher("/js/**"),
@@ -86,7 +87,7 @@ public class SecurityConfig {
                         .failureHandler(customAuthenticationFailureHandler)
                         .permitAll())
                 .build();
-    };
+    }
 
 
     @Bean

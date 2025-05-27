@@ -35,7 +35,8 @@ public record BikeReportSummaryDto(
         String technicianComment,
         List<Long> reportIds,
         Long functionalityCheckId,
-        String bearingHealth
+        String bearingHealth,
+        Long visualInspectionId
 
 
 ) {}

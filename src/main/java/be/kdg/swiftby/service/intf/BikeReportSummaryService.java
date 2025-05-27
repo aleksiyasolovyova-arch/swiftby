@@ -40,6 +40,7 @@ public interface BikeReportSummaryService {
     BearingHealthEvaluation evaluateBearingHealth(Long summaryId);
 
     void attachFunctionalityCheck(Long summaryId, Long checkId);
+    void attachVisualInspection(Long summaryId, Long inspectionId);
 
 
     List<BikeReportSummary> getSummariesByBikeInstanceId(Long bikeInstanceId);

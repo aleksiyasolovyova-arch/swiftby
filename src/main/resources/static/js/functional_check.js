@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!attachResponse.ok) throw new Error("Attaching functional check failed");
-
+            window.location.href = `/visual-inspection?summaryId=${summaryId}`;
             statusDiv.innerHTML = `<p class="text-success">Functional Check saved and linked successfully!</p>`;
 
             const reportButton = document.createElement("a");
