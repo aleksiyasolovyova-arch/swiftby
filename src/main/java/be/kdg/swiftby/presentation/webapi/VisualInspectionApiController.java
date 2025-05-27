@@ -51,7 +51,6 @@ public class VisualInspectionApiController {
         VisualInspection inspection = visualInspectionService.findById(id);
 
         VisualInspectionDto dto = new VisualInspectionDto(
-//                inspection.getId(),
                 inspection.getTires(),
                 inspection.getCranks(),
                 inspection.getElectricalWiring(),

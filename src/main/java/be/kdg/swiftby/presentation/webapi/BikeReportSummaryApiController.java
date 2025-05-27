@@ -41,7 +41,6 @@ public class BikeReportSummaryApiController {
         return ResponseEntity.ok(bikeReportSummaryApiMapper.toBikeReportSummaryDto(bikeReportSummaryService.getSummaryById(id)));
     }
 
-
     @PatchMapping("/{summaryId}/attach-check/{checkId}")
     public ResponseEntity<Void> attachCheck(@PathVariable Long summaryId, @PathVariable Long checkId) {
         bikeReportService.attachFunctionalityCheck(summaryId, checkId);
@@ -49,13 +48,9 @@ public class BikeReportSummaryApiController {
     }
 
     @PatchMapping("/{summaryId}/attach-visual-check/{inspectionId}")
-    public ResponseEntity<Void> attachVisualCheck(
-            @PathVariable Long summaryId,
-            @PathVariable Long inspectionId) {
-
+    public ResponseEntity<Void> attachVisualCheck(@PathVariable Long summaryId, @PathVariable Long inspectionId) {
         bikeReportSummaryService.attachVisualInspection(summaryId, inspectionId);
-
-        return ResponseEntity.ok().build();  // Just confirm success, no content needed
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
@@ -64,8 +59,6 @@ public class BikeReportSummaryApiController {
                 .map(bikeReportSummaryApiMapper::toBikeReportSummaryDto)
                 .toList());
     }
-
-
 
     @GetMapping("/{bikeId}/generate-pdf")
     public ResponseEntity<byte[]> generateReportPdfByBikeAndDate(@PathVariable Long bikeId,

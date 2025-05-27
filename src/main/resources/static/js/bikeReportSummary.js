@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     summaryId = summaryId || localStorage.getItem("lastSummaryId");
     compareToId = compareToId || localStorage.getItem("lastCompareToId");
-
+    generateQRCode()
 
 
     if (!summaryId) {
@@ -124,8 +124,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     .catch(err => console.error("Failed to load visual inspection:", err));
             }
 
-
-
             fetch(`/api/report-summaries/${summaryId}/test-procedure-overview`)
                 .then(resp => {
                     if (!resp.ok) throw new Error("Failed to load overview");
@@ -201,8 +199,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-
-
             // Bearing Health
             fetch(`/api/report-summaries/${summaryId}/bearing-health`)
                 .then(resp => {
@@ -219,12 +215,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.warn("No bearing health result found:", err);
                     document.getElementById("bearingHealthCard").style.display = "none";
                 });
-
-
-
-
-
-
 
 
             if (data.functionalPerformance) {
@@ -274,7 +264,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-
         })
         .catch(error => {
             alert("Failed to load report summary. Please try again later.");
@@ -317,7 +306,6 @@ document.addEventListener("DOMContentLoaded", function () {
             tbody.appendChild(tr);
         });
     }
-
 
 
     function fetchBikeReports(summaryId) {
@@ -398,7 +386,33 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "/report-visualization";
     });
 
+    function generateQRCode(summaryId) {
+        const qrContainer = document.getElementById("qrcode");
+        const downloadBtn = document.getElementById("downloadQR");
+        const wrapper = document.getElementById("qrWrapper");
 
+        if (!qrContainer || !downloadBtn || !wrapper) return;
+
+        wrapper.classList.remove("d-none");
+        qrContainer.innerHTML = "";
+
+        const reportUrl = `${window.location.origin}/report-summary?id=${summaryId}`;
+        new QRCode(qrContainer, {
+            text: reportUrl,
+            width: 150,
+            height: 150
+        });
+
+        downloadBtn.onclick = () => {
+            const qrCanvas = qrContainer.querySelector("canvas");
+            if (!qrCanvas) return;
+
+            const a = document.createElement("a");
+            a.href = qrCanvas.toDataURL("image/png");
+            a.download = `QR_Code_${summaryId}.png`;
+            a.click();
+        };
+    }
 
 
 });
