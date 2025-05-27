@@ -45,16 +45,16 @@ public interface BikeReportSummaryService {
 
     List<BikeReportSummary> getSummariesByBikeInstanceId(Long bikeInstanceId);
 
-    List<BikeReportSummary> getAllSummariesByBikeOwnerId(Long bikeOwnerId);
-
     List<ReportChartSeriesDto> getFieldOverTimeForTwoReports(Long summary1Id, Long summary2Id, String field, int intervalSeconds);
 
     ReportChartSeriesDto buildFieldSeriesFromReportsWithInterval(BikeReportSummary summary, String field, int intervalSeconds);
 
     ReportChartSeriesDto buildFieldSeriesFromReports(BikeReportSummary summary, String field);
 
+
     List<ReportChartSeriesDto> compareSummaryFields(Long summary1Id, Long summary2Id);
 
     List<ServiceSummaryIdDateDto> getAvailableComparisons(Long summaryId);
 
+    List<BikeReportSummary> getAllSummariesByBikeOwnerId(Long bikeOwnerId);
 }

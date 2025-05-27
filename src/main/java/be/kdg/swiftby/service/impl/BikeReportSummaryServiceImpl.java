@@ -1,6 +1,5 @@
 package be.kdg.swiftby.service.impl;
 
-import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.report.BikeReport;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.domain.report.FunctionalityCheck;
@@ -39,7 +38,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
     @Override
     public BikeReportSummary getSummaryById(Long id) {
         return bikeReportSummaryRepository.findByIdWithBike(id)
-                .orElseThrow(() -> NotFoundException.forBikeReport(id));
+                .orElseThrow(() -> new RuntimeException("Summary not found"));
     }
 
     @Override
@@ -250,11 +249,6 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
         return bikeReportSummaryRepository.findAllByBikeInstanceId(bikeInstanceId);
     }
 
-    @Override
-    public List<BikeReportSummary> getAllSummariesByBikeOwnerId(Long bikeOwnerId) {
-        return bikeReportSummaryRepository.findAllBikeReportSummariesByBikeOwnerId(bikeOwnerId);
-    }
-
 
 
     @Override
@@ -419,7 +413,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
     }
 
 
-
+//meow
     @Override
     public List<ServiceSummaryIdDateDto> getAvailableComparisons(Long summaryId) {
         BikeReportSummary current = getSummaryById(summaryId);
@@ -429,5 +423,10 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
                 .filter(s -> !s.getId().equals(summaryId))
                 .map(s -> new ServiceSummaryIdDateDto(s.getId(),s.getReportTime() != null ? s.getReportTime().toString() : "Unknown"))
                 .toList();
+    }
+
+    @Override
+    public List<BikeReportSummary> getAllSummariesByBikeOwnerId(Long bikeOwnerId) {
+        return bikeReportSummaryRepository.findAllBikeReportSummariesByBikeOwnerId(bikeOwnerId);
     }
 }

@@ -1,8 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const summaryContainer = document.getElementById("summaryContainer");
-    const summaryId = summaryContainer.dataset.summaryId;
-    const bikeContainer = document.getElementById("bikeId");
-    const bikeId = bikeContainer ? bikeContainer.dataset.bikeId : null;
+    const params = new URLSearchParams(window.location.search);
+    let summaryId = params.get("id");
+    let compareToId = params.get("compareTo");
+
+    if (summaryId) localStorage.setItem("lastSummaryId", summaryId);
+    if (compareToId) localStorage.setItem("lastCompareToId", compareToId);
+
+    summaryId = summaryId || localStorage.getItem("lastSummaryId");
+    compareToId = compareToId || localStorage.getItem("lastCompareToId");
+
+
 
     if (!summaryId) {
         alert("No report ID provided and nothing stored from last visit.");
@@ -17,9 +24,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         .then(data => {
             document.getElementById("summaryId").textContent = data.id;
-            if (bikeContainer && (bikeId != data.bikeId)) {
-                bikeContainer.innerText="N/A"
+            if (compareToId && compareToId !== data.id.toString()) {
+                fetch(`/api/report-summaries/${compareToId}`)
+                    .then(response => response.json())
+                    .then(compareData => {
+                        renderComparisonTable(data, compareData);
+                    })
+                    .catch(err => {
+                        console.warn("Failed to load comparison report:", err);
+                    });
             }
+            const bikeIdEl = document.getElementById("bikeId");
+            if (bikeIdEl) bikeIdEl.textContent = data.bikeInstanceId || "N/A";
 
             document.getElementById("reportTime").textContent = data.reportTime || "N/A";
 
