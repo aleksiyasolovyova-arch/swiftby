@@ -25,9 +25,10 @@ public class VisualInspectionController {
     }
 
     @GetMapping("/visual-inspection")
-    public String showVisualInspectionForm(@RequestParam UUID testId,
-                                           @RequestParam(required = false) Long summaryId,
-                                           Model model) {
+    public String showVisualInspectionForm(
+                                           @RequestParam Long summaryId,
+                                           Model model
+    ) {
         Field[] fields = VisualInspection.class.getDeclaredFields();
 
         List<String> components = Arrays.stream(fields)
@@ -39,7 +40,6 @@ public class VisualInspectionController {
 
         model.addAttribute("components", components);
         model.addAttribute("conditions", conditions);
-        model.addAttribute("testId", testId);
         model.addAttribute("summaryId", summaryId);
 
         return "visual-inspection";

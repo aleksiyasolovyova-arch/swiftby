@@ -3,20 +3,32 @@ package be.kdg.swiftby.presentation.webapi;
 import be.kdg.swiftby.domain.report.VisualInspection;
 import be.kdg.swiftby.presentation.webapi.dto.VisualInspectionDto;
 import be.kdg.swiftby.presentation.webapi.dto.VisualInspectionMapper;
+import be.kdg.swiftby.service.impl.VisualInspectionService;
 import be.kdg.swiftby.service.impl.VisualInspectionServiceImpl;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
+
 @RequestMapping("/api/visual-inspections")
 public class VisualInspectionApiController {
 
-    @Autowired
-    private VisualInspectionServiceImpl visualInspectionService;
 
-    @Autowired
-    private VisualInspectionMapper mapper;
+
+    private final VisualInspectionService visualInspectionService;
+
+    private final VisualInspectionMapper mapper;
+
+    public VisualInspectionApiController(VisualInspectionService visualInspectionService, @Qualifier("visualInspectionMapperImpl") VisualInspectionMapper mapper) {
+        this.visualInspectionService = visualInspectionService;
+        this.mapper = mapper;    }
+
 
     @PostMapping
     public ResponseEntity<Long> createVisualInspection(@RequestBody VisualInspectionDto dto) {
@@ -39,6 +51,7 @@ public class VisualInspectionApiController {
         VisualInspection inspection = visualInspectionService.findById(id);
 
         VisualInspectionDto dto = new VisualInspectionDto(
+//                inspection.getId(),
                 inspection.getTires(),
                 inspection.getCranks(),
                 inspection.getElectricalWiring(),

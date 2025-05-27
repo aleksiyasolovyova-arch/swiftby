@@ -3,6 +3,7 @@ package be.kdg.swiftby.presentation.webapi.dto;
 import be.kdg.swiftby.domain.bike.Condition;
 
 public record VisualInspectionDto(
+//        Long summaryId,
         Condition tires,
         Condition cranks,
         Condition electricalWiring,

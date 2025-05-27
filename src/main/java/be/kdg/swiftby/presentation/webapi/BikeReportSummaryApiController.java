@@ -48,7 +48,7 @@ public class BikeReportSummaryApiController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{testId}/attach-visual-check/{inspectionId}")
+    @PatchMapping("/{summaryId}/attach-visual-check/{inspectionId}")
     public ResponseEntity<Void> attachVisualCheck(
             @PathVariable Long summaryId,
             @PathVariable Long inspectionId) {

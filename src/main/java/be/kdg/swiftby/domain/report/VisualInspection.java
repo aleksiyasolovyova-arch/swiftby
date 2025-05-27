@@ -78,4 +78,6 @@ public class VisualInspection {
     @Enumerated(EnumType.STRING)
     private Condition saddle;
 
+
+
 }

@@ -387,8 +387,6 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
 
 
 
-
-
     @Override
     public List<ReportChartSeriesDto> compareSummaryFields(Long summary1Id, Long summary2Id) {
         BikeReportSummary s1 = getSummaryById(summary1Id);
@@ -411,7 +409,6 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
 
         return results;
     }
-
     private ReportChartSeriesDto makeFieldComparison(String fieldName, Double v1, Double v2, BikeReportSummary s1, BikeReportSummary s2) {
         return new ReportChartSeriesDto(
                 fieldName,

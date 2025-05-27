@@ -22,13 +22,13 @@ form.addEventListener('submit', async (e) => {
 
         const inspectionId = await response.json();
 
-        const attachResponse = await fetch(`/api/report-summaries/${dto.testId}/attach-visual-check/${inspectionId}`, {
+        const attachResponse = await fetch(`/api/report-summaries/${inspectionId}/attach-visual-check/${inspectionId}`, {
             method: 'PATCH'
         });
 
         if (!attachResponse.ok) throw new Error("Attaching visual inspection failed");
 
-        window.location.href = `/report-summary?testId=${dto.testId}`;
+        window.location.href = `/report-summary?id=${dto.summaryId}`;
     } catch (err) {
         console.error(err);
         statusDiv.innerHTML = `<p class="text-danger">Error occurred: ${err.message}</p>`;
