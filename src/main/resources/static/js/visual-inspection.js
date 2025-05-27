@@ -25,7 +25,7 @@ form.addEventListener('submit', async (e) => {
 
         const inspectionId = await response.json();
 
-        const attachResponse = await fetch(`/api/report-summaries/${inspectionId}/attach-visual-check/${inspectionId}`, {
+        const attachResponse = await fetch(`/api/report-summaries/${summaryId}/attach-visual-check/${inspectionId}`, {
             method: 'PATCH'
         });
 
