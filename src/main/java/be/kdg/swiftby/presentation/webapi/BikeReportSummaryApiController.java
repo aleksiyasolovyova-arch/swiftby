@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/report-summaries")
@@ -47,10 +48,14 @@ public class BikeReportSummaryApiController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{summaryId}/attach-visual-inspection/{inspectionId}")
-    public ResponseEntity<Void> attachVisualInspection(@PathVariable Long summaryId, @PathVariable Long inspectionId) {
-        bikeReportService.attachVisualInspection(summaryId, inspectionId);
-        return ResponseEntity.noContent().build();
+    @PatchMapping("/{testId}/attach-visual-check/{inspectionId}")
+    public ResponseEntity<Void> attachVisualCheck(
+            @PathVariable Long summaryId,
+            @PathVariable Long inspectionId) {
+
+        bikeReportSummaryService.attachVisualInspection(summaryId, inspectionId);
+
+        return ResponseEntity.ok().build();  // Just confirm success, no content needed
     }
 
     @GetMapping

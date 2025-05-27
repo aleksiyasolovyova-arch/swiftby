@@ -1,3 +1,7 @@
+const form = document.querySelector('#visualInspectionForm');
+const statusDiv = document.createElement('div');
+form.appendChild(statusDiv); // optional if you want to show error messages in-page
+
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -6,8 +10,6 @@ form.addEventListener('submit', async (e) => {
     formData.forEach((value, key) => {
         dto[key] = value;
     });
-
-    // dto now includes all conditions AND testId
 
     try {
         const response = await fetch('/api/visual-inspections', {
@@ -20,7 +22,6 @@ form.addEventListener('submit', async (e) => {
 
         const inspectionId = await response.json();
 
-        // Use testId from dto to PATCH link
         const attachResponse = await fetch(`/api/report-summaries/${dto.testId}/attach-visual-check/${inspectionId}`, {
             method: 'PATCH'
         });

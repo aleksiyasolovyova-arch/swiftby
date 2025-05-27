@@ -78,6 +78,4 @@ public class VisualInspection {
     @Enumerated(EnumType.STRING)
     private Condition saddle;
 
-    @OneToOne(mappedBy = "visual_inspection_id")
-    private BikeReportSummary bikeReportSummary;
 }
