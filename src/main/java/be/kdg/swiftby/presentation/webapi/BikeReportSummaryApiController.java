@@ -1,5 +1,6 @@
 package be.kdg.swiftby.presentation.webapi;
 
+import be.kdg.swiftby.domain.report.BearingThresholds;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.presentation.webapi.dto.BearingHealthResultDto;
 import be.kdg.swiftby.presentation.webapi.dto.BikeReportSummaryApiMapper;
@@ -112,23 +113,44 @@ public class BikeReportSummaryApiController {
 
 
     @GetMapping("/{summaryId}/bearing-health")
-    public ResponseEntity<BearingHealthResultDto> evaluateBearingHealth(
-            @PathVariable Long summaryId
-    ) {
+    public ResponseEntity<BearingHealthResultDto> evaluateBearingHealth(@PathVariable Long summaryId) {
         BearingHealthEvaluation evaluation = bikeReportSummaryService.evaluateBearingHealth(summaryId);
+        BearingThresholds thresholds = bikeReportSummaryService.getLatestBearingThresholds();
 
-        BikeReportSummary summary = bikeReportSummaryRepository.findById(summaryId)
-                .orElseThrow(() -> new RuntimeException("Summary not found"));
+        String result;
+
+        if (thresholds == null
+                || (thresholds.getHorizontalThreshold() == 0 && thresholds.getVerticalThreshold() == 0)) {
+            result = "Unknown";
+        } else {
+            result = evaluation.isBad() ? "Bad" : "Good";
+        }
 
         BearingHealthResultDto dto = new BearingHealthResultDto(
                 evaluation.horizontalRange(),
                 evaluation.verticalRange(),
-                summary.getHorizontalInclination(),
-                summary.getVerticalInclination(),
-                evaluation.isBad() ? "Bad" : "Good"
+                thresholds != null ? thresholds.getHorizontalThreshold() : 0,
+                thresholds != null ? thresholds.getVerticalThreshold() : 0,
+                result
         );
 
         return ResponseEntity.ok(dto);
+    }
+
+
+    @PostMapping("/bearing-thresholds")
+    public ResponseEntity<Void> saveThresholds(@RequestBody BearingThresholds thresholds) {
+        bikeReportSummaryService.saveBearingThresholds(
+                thresholds.getHorizontalThreshold(),
+                thresholds.getVerticalThreshold()
+        );
+        return ResponseEntity.ok().build();
+    }
+
+    // Get latest thresholds via service
+    @GetMapping("/bearing-thresholds")
+    public ResponseEntity<BearingThresholds> getLatestThresholds() {
+        return ResponseEntity.ok(bikeReportSummaryService.getLatestBearingThresholds());
     }
 
     @GetMapping("/{summaryId}/test-procedure-overview")

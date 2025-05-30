@@ -1,5 +1,6 @@
 package be.kdg.swiftby.service.intf;
 
+import be.kdg.swiftby.domain.report.BearingThresholds;
 import be.kdg.swiftby.domain.report.BikeReport;
 import be.kdg.swiftby.domain.report.BikeReportSummary;
 import be.kdg.swiftby.service.dto.BearingHealthEvaluation;
@@ -38,6 +39,10 @@ public interface BikeReportSummaryService {
 
 
     BearingHealthEvaluation evaluateBearingHealth(Long summaryId);
+
+    void saveBearingThresholds(double horizontal, double vertical);
+
+    BearingThresholds getLatestBearingThresholds();
 
     void attachFunctionalityCheck(Long summaryId, Long checkId);
     void attachVisualInspection(Long summaryId, Long inspectionId);

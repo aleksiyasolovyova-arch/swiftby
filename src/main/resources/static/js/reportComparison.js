@@ -48,16 +48,40 @@ async function fetchBearingHealthB(id) {
         if (!res.ok) throw new Error("Failed to fetch bearing health for Report B");
 
         const result = await res.json();
+        const resultEl = document.getElementById("bearingHealthResultB");
 
-        document.getElementById("bearingHealthResultB").textContent = result.result;
-        document.getElementById("bearingHorizontalRangeB").textContent = result.horizontalRange?.toFixed(2) ?? "N/A";
-        document.getElementById("bearingVerticalRangeB").textContent = result.verticalRange?.toFixed(2) ?? "N/A";
-        document.getElementById("bearingThresholdsB").textContent = `(H: ${result.horizontalThreshold?.toFixed(2) ?? "?"}, V: ${result.verticalThreshold?.toFixed(2) ?? "?"})`;
+        if (resultEl) {
+            const val = result.result?.toLowerCase() || "unknown";
+
+            let label = "Unknown";
+            let className = "text-muted fw-bold";
+
+            if (val === "good") {
+                label = "Good";
+                className = "text-success fw-bold";
+            } else if (val === "bad") {
+                label = "Bad";
+                className = "text-warning fw-bold";
+            }
+
+            resultEl.textContent = label;
+            resultEl.className = className;
+        }
+
+        document.getElementById("bearingHealthCardB")?.classList.remove("d-none");
+
     } catch (err) {
         console.warn("Bearing health fetch failed:", err);
-        document.getElementById("bearingHealthCardB")?.classList.add("d-none");
+        const resultEl = document.getElementById("bearingHealthResultB");
+        if (resultEl) {
+            resultEl.textContent = "Unknown";
+            resultEl.className = "text-muted fw-bold";
+        }
+        document.getElementById("bearingHealthCardB")?.classList.remove("d-none");
     }
 }
+
+
 
 async function fetchTestProcedureDataB(id) {
     const res = await fetch(`/api/report-summaries/${id}/test-procedure-overview`);

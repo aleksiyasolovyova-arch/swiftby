@@ -1,9 +1,7 @@
 package be.kdg.swiftby.service.impl;
 
-import be.kdg.swiftby.domain.report.BikeReport;
-import be.kdg.swiftby.domain.report.BikeReportSummary;
-import be.kdg.swiftby.domain.report.FunctionalityCheck;
-import be.kdg.swiftby.domain.report.VisualInspection;
+import be.kdg.swiftby.domain.report.*;
+import be.kdg.swiftby.repository.report.BearingThresholdsRepository;
 import be.kdg.swiftby.repository.report.BikeReportSummaryRepository;
 import be.kdg.swiftby.repository.report.FunctionalityCheckRepository;
 import be.kdg.swiftby.repository.report.VisualInspectionRepository;
@@ -29,6 +27,7 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
     private final BikeReportSummaryRepository bikeReportSummaryRepository;
     private final FunctionalityCheckRepository functionalityCheckRepository;
     private final VisualInspectionRepository visualInspectionRepository;
+    private final BearingThresholdsRepository bearingThresholdsRepository;
 
     @Override
     public List<BikeReportSummary> getAllSummaries() {
@@ -190,9 +189,6 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
         BikeReportSummary summary = bikeReportSummaryRepository.findByIdWithReports(summaryId)
                 .orElseThrow(() -> new RuntimeException("Summary not found"));
 
-        double horizontalThreshold = summary.getHorizontalInclination();
-        double verticalThreshold = summary.getVerticalInclination();
-
         List<BikeReport> reports = summary.getReports();
 
         double minHorizontal = reports.stream()
@@ -211,14 +207,47 @@ public class BikeReportSummaryServiceImpl implements BikeReportSummaryService {
         double horizontalRange = maxHorizontal - minHorizontal;
         double verticalRange = maxVertical - minVertical;
 
-        boolean isBad = horizontalRange > horizontalThreshold || verticalRange > verticalThreshold;
-        String result = isBad ? "bad" : "good";
+        try {
+            BearingThresholds thresholds = bearingThresholdsRepository.findTopByOrderByIdDesc()
+                    .orElseThrow();
 
-        summary.setBearingHealth(result);
-        bikeReportSummaryRepository.save(summary);
+            String result;
+            if (horizontalRange == 0 && verticalRange == 0) {
+                result = "good";
+            } else {
+                boolean isGood = horizontalRange <= thresholds.getHorizontalThreshold()
+                        && verticalRange <= thresholds.getVerticalThreshold();
+                result = isGood ? "good" : "bad";
+            }
 
-        return new BearingHealthEvaluation(horizontalRange, verticalRange, isBad);
+            summary.setBearingHealth(result);
+            bikeReportSummaryRepository.save(summary);
+            return new BearingHealthEvaluation(horizontalRange, verticalRange, "bad".equals(result));
+
+        } catch (NoSuchElementException e) {
+            summary.setBearingHealth("unknown");
+            bikeReportSummaryRepository.save(summary);
+            return new BearingHealthEvaluation(horizontalRange, verticalRange, false);
+        }
     }
+
+
+
+    @Override
+    public void saveBearingThresholds(double horizontal, double vertical) {
+        BearingThresholds thresholds = new BearingThresholds();
+        thresholds.setHorizontalThreshold(horizontal);
+        thresholds.setVerticalThreshold(vertical);
+        bearingThresholdsRepository.save(thresholds);
+    }
+
+    @Override
+    public BearingThresholds getLatestBearingThresholds() {
+        return bearingThresholdsRepository.findTopByOrderByIdDesc()
+                .orElse(new BearingThresholds());
+    }
+
+
 
     @Override
     public void attachFunctionalityCheck(Long summaryId, Long checkId) {

@@ -67,4 +67,9 @@ public class BikeReportSummaryController {
         return "report-visualization";
     }
 
+    @GetMapping("/bearing-thresholds-form")
+    public String bearingThresholdForm() {
+        return "bearing-thresholds-form";
+    }
+
 }
