@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         .then(data => {
             document.getElementById("summaryId").textContent = data.id;
+            document.getElementById("technicianComment").textContent = data.technicianComment || "-";
             if (compareToId && compareToId !== data.id.toString()) {
                 fetch(`/api/report-summaries/${compareToId}`)
                     .then(response => response.json())
@@ -204,21 +205,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             // Bearing Health
-            fetch(`/api/report-summaries/${summaryId}/bearing-health`)
-                .then(resp => {
-                    if (!resp.ok) throw new Error("Failed to evaluate bearing health");
-                    return resp.json();
-                })
-                .then(result => {
-                    document.getElementById("bearingHealthResult").textContent = result.result;
-                    document.getElementById("bearingHorizontalRange").textContent = result.horizontalRange?.toFixed(2) ?? "N/A";
-                    document.getElementById("bearingVerticalRange").textContent = result.verticalRange?.toFixed(2) ?? "N/A";
+            const forceRefresh = params.get("refreshBearingHealth") === "true";
+            if (forceRefresh) {
+                fetch(`/api/report-summaries/${summaryId}/bearing-health`)
+                    .then(resp => {
+                        if (!resp.ok) throw new Error("Failed to evaluate bearing health");
+                        return resp.json();
+                    })
+                    .then(result => {
+                        const resultEl = document.getElementById("bearingHealthResult");
+                        const val = result.result?.toLowerCase() || "unknown";
 
-                })
-                .catch(err => {
-                    console.warn("No bearing health result found:", err);
-                    document.getElementById("bearingHealthCard").style.display = "none";
-                });
+                        let label = "Unknown";
+                        let className = "text-muted fw-bold";
+
+                        if (val === "good") {
+                            label = "Good";
+                            className = "text-success fw-bold";
+                        } else if (val === "bad") {
+                            label = "Bad";
+                            className = "text-warning fw-bold";
+                        }
+
+                        resultEl.textContent = label;
+                        resultEl.className = className;
+                    })
+                    .catch(err => {
+                        console.warn("No bearing health result found:", err);
+                        const resultEl = document.getElementById("bearingHealthResult");
+                        resultEl.textContent = "Unknown";
+                        resultEl.className = "text-muted fw-bold";
+                    });
+            }
+
+
+
+
 
 
 

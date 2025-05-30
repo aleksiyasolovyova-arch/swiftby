@@ -5,7 +5,7 @@ public record BearingHealthResultDto(
         double verticalRange,
         double horizontalThreshold,
         double verticalThreshold,
-        String result // "Good" or "Bad"
+        String result
 ) {}
 
 

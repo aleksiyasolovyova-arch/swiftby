@@ -34,7 +34,12 @@
 
                     <button id="viewGraphBtn" class="btn btn-outline-light">📈 View Graph Visualizations</button>
 
+                    <a th:href="@{'/bearing-thresholds-form'(id=${summaryId})}" class="btn btn-outline-light">⚙️ Set Bearing Thresholds</a>
+
+
                 </div>
+
+
 
 
                 <div class="glass-card">
@@ -185,6 +190,7 @@
                     </div>
                 </div>
             </div>
+
 
             <div class="col-lg-4 text-center">
                 <div id="qrWrapper" class="qr-wrapper d-none" th:if="${#authorization.expression('isAuthenticated()')}">
