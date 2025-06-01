@@ -5,6 +5,7 @@ import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.testEnv.BikeOwner;
 import be.kdg.swiftby.domain.testEnv.Facility;
 import be.kdg.swiftby.domain.testEnv.PasswordResetToken;
+import be.kdg.swiftby.repository.bike.BikeOwnershipRepository;
 import be.kdg.swiftby.repository.testEnvironment.BikeOwnerRepository;
 import be.kdg.swiftby.repository.testEnvironment.FacilityRepository;
 import be.kdg.swiftby.repository.testEnvironment.PasswordResetTokenRepository;
@@ -24,6 +25,7 @@ public class BikeOwnerServiceImpl implements BikeOwnerService {
     UserUtilities userUtilities;
     PasswordResetTokenRepository passwordResetTokenRepository;
     FacilityRepository facilityRepository;
+    BikeOwnershipRepository bikeOwnershipRepository;
 
     Logger log = LoggerFactory.getLogger(BikeOwnerServiceImpl.class);
 
@@ -31,11 +33,13 @@ public class BikeOwnerServiceImpl implements BikeOwnerService {
     public BikeOwnerServiceImpl(BikeOwnerRepository bikeOwnerRepository,
                                 UserUtilities userUtilities,
                                 PasswordResetTokenRepository passwordResetTokenRepository,
-                                FacilityRepository facilityRepository) {
+                                FacilityRepository facilityRepository,
+                                BikeOwnershipRepository bikeOwnershipRepository) {
         this.bikeOwnerRepository = bikeOwnerRepository;
         this.userUtilities = userUtilities;
         this.passwordResetTokenRepository = passwordResetTokenRepository;
         this.facilityRepository = facilityRepository;
+        this.bikeOwnershipRepository = bikeOwnershipRepository;
     }
 
     @Override
@@ -80,12 +84,15 @@ public class BikeOwnerServiceImpl implements BikeOwnerService {
         passwordResetTokenRepository.save(resetToken);
         return newUser;
     }
+
+    @Transactional
     @Override
     public void remove(Long id) {
         if (!bikeOwnerRepository.existsById(id)) {
             throw NotFoundException.forBikeOwner(id);
         }
 
+        bikeOwnershipRepository.deleteByOwnerId(id);
         bikeOwnerRepository.deleteById(id);
         log.debug("Removed BikeOwner with id {}", id);
     }
@@ -117,6 +124,7 @@ public class BikeOwnerServiceImpl implements BikeOwnerService {
         return bikeOwner;
     }
 
+    @Transactional
     @Override
     public BikeOwner update(Long id, Long oldFacilityId, String email,
                             String password, String firstName, String lastName,

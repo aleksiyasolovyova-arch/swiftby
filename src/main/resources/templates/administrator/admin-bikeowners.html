@@ -19,7 +19,7 @@
     <div class="row w-100 justify-content-center g-5">
         <div class="container-fluid px-4">
             <h2 class="text-accent text-center m-4">Find Bike Owner</h2>
-            <input id="searchInput" type="text" class="form-control fancy-input mb-4 mx-auto" placeholder="Search by email..." style="max-width: 400px;">
+            <input id="searchInput" type="text" class="form-control search-input mb-4 mx-auto" placeholder="Search by email..." style="max-width: 400px;">
         </div>
         <div class="container-fluid px-4">
             <div class="glassmorphism p-4">
@@ -30,29 +30,34 @@
 
         <div class="modal fade" id="editOwnerModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content glassmorphism">
+                <div class="modal-content glass-card">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editModalLabel">Edit Bike Owner</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+
                     <form id="editOwnerForm">
                         <div class="modal-body">
                             <input type="hidden" id="editOwnerId">
                             <div class="mb-3">
                                 <label for="editEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control fancy-input" id="editEmail" required>
+                                <input type="email" class="form-control search-input" id="editEmail" required>
                             </div>
                             <div class="mb-3">
                                 <label for="editFirstName" class="form-label">First Name</label>
-                                <input type="text" class="form-control fancy-input" id="editFirstName" required>
+                                <input type="text" class="form-control search-input" id="editFirstName" required>
                             </div>
                             <div class="mb-3">
                                 <label for="editLastName" class="form-label">Last Name</label>
-                                <input type="text" class="form-control fancy-input" id="editLastName" required>
+                                <input type="text" class="form-control search-input" id="editLastName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editPhoneNumber" class="form-label">Phone</label>
+                                <input type="text" class="form-control search-input" id="editPhoneNumber" required>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn glowing-button w-100">Save Changes</button>
+                            <button type="submit" class="btn btn-outline-light w-100">Save Changes</button>
                         </div>
                     </form>
                 </div>

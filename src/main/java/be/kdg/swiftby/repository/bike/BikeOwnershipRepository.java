@@ -12,4 +12,5 @@ public interface BikeOwnershipRepository extends JpaRepository<BikeOwnership, Lo
     List<BikeOwnership> findByBikeId(Long bikeId);
 
     boolean existsByOwnerIdAndBikeId(Long ownerId, Long bikeId);
+    void deleteByOwnerId(Long ownerId);
 }

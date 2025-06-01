@@ -9,6 +9,8 @@ async function fetchBikes() {
         response = await fetch(`/api/facilities/${facilityId}/bikes`);
     } else if (bikeOwnerId) {
         response = await fetch(`/api/bikeowners/${bikeOwnerId}/bikes`);
+    }else {
+        response = await fetch(`/api/bike-instances`);
     }
 
     const bikes = await response.json();

@@ -17,7 +17,7 @@ async function fetchTestBenches() {
                 <div class="glassmorphism p-3 h-100">
                     <h4 class="text-accent">Test Bench #${bench.id}</h4>
                     <p><strong>Status:</strong> ${bench.isActive ? '🟢 Active' : '🔴 Inactive'}</p>
-                    <button class="btn glowing-button mt-3 w-100" onclick="viewTestBench(${bench.id})">View Details</button>
+<!--                    <button class="btn glowing-button mt-3 w-100" onclick="viewTestBench(${bench.id})">View Details</button>-->
                 </div>
             `;
             testBenchList.appendChild(card);
@@ -29,9 +29,9 @@ async function fetchTestBenches() {
     }
 }
 
-function viewTestBench(testBenchId) {
-    window.location.href = `/testbench-details?id=${testBenchId}`;
-}
+// function viewTestBench(testBenchId) {
+//     window.location.href = `/testbench-details?id=${testBenchId}`;
+// }
 
 fetchTestBenches();
 
