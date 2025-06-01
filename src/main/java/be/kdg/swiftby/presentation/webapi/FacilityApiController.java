@@ -222,6 +222,17 @@ public class FacilityApiController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/bikes")
+    public ResponseEntity<List<BikeApiResponseDto>> getAllBikeInstances() {
+        List<BikeInstance> bikeInstances = bikeInstanceService.getAll();
+        if (bikeInstances.isEmpty()) {
+            log.warn("No bike instances found");
+            return ResponseEntity.noContent().build();
+        }
+        List<BikeApiResponseDto> response = bikeApiMapper.toBikeInstanceDtoList(bikeInstances);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/{facilityId}/bikeowners")
     public ResponseEntity<List<BikeOwnerApiResponseDto>> getAllBikeOwnersByFacilityId(@PathVariable Long facilityId) {
         try{

@@ -12,7 +12,10 @@ INSERT INTO super_admin (email, first_name, last_name, password, phone_number) V
 INSERT INTO facility (address_extra, city, country, email, name, street, street_number, zip_code) VALUES
                                                                                                       ('Unit 5', 'Springfield', 'USA', 'facility@example.com', 'Test Facility', 'Main St', '123', '98765'),
                                                                                                       ('Enter through garage', 'Stroempeltown', 'Belgica', 'storm.vanloon@student.kdg.be', 'StroempelRepairs', 'Stroempelstreet', '86', '2005');
-INSERT INTO test_bench (facility_id) values (1);
+INSERT INTO test_bench (is_active, facility_id) values (false,1),
+                                                       (false, 2),
+                                                       (true, 1),
+                                                       (true, 2);
 -- Bike Owners
 INSERT INTO bike_owner (email, first_name, last_name, password, phone_number, facility_id) VALUES
                                                                                                ('alice@example.com', 'Alice', 'Doe', '$2a$12$GK/Xh4.LP7OSc/P.85CahOmR8XlzbCGghhNvFXhajvbV8dgcdGpHW', '555-1234', 1),
