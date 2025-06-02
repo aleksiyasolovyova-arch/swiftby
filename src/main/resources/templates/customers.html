@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Customers - BikeTrust</title>
-  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
-  <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}"/>
-  <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
-  <script defer src="/js/customers.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers - BikeTrust</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
+    <script defer src="/js/customers.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="/images/bicycle.svg">
+
 </head>
 <body>
 <header th:insert="~{fragments/header :: header(${currentPage})}"></header>
 
 <main class="container mt-4" id="customer-container" data-facility-id="[[${facilityId}]]">
-  <h2 class="mb-3">Customers in Your Facility</h2>
+    <h2 class="mb-3">Customers in Your Facility</h2>
 
-  <div class="table-responsive">
-    <table class="table table-striped" id="customers-table">
-      <thead>
-      <tr>
-        <th>Email</th>
-        <th>Name</th>
-        <th>Phone</th>
-      </tr>
-      </thead>
-      <tbody id="customer-rows">
-      <!-- populated by JS -->
-      </tbody>
-    </table>
-  </div>
+    <div class="table-responsive">
+        <table class="table table-striped" id="customers-table">
+            <thead>
+            <tr>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Phone</th>
+            </tr>
+            </thead>
+            <tbody id="customer-rows">
+            <!-- populated by JS -->
+            </tbody>
+        </table>
+    </div>
 </main>
 
 <footer th:insert="~{fragments/footer :: footer}"></footer>

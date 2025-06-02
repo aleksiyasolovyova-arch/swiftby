@@ -8,42 +8,43 @@
     <script defer src="/js/technician/reports.js"></script>
     <meta charset="UTF-8">
     <title>reports</title>
+    <link rel="icon" href="/images/bicycle.svg">
 
 </head>
 <body>
 <header th:insert="~{fragments/header :: header(${currentPage})}"></header>
 
-    <div class="container py-5">
-        <div class="search-container">
-            <div class="search-wrapper">
-                <div class="search-header">
-                    <div class="search-input-group">
-                        <input type="text" class="search-input "
-                               placeholder="Search Reports on Vendor, Type, Number...">
-                        <i class="bi bi-search-heart"></i>
-                    </div>
+<div class="container py-5">
+    <div class="search-container">
+        <div class="search-wrapper">
+            <div class="search-header">
+                <div class="search-input-group">
+                    <input type="text" class="search-input "
+                           placeholder="Search Reports on Vendor, Type, Number...">
+                    <i class="bi bi-search-heart"></i>
                 </div>
-                <div class="category-filters">
-                    <div class="filter-chip active">
-                        <i class="bi bi-globe"></i> All
-                    </div>
-                    <div class="filter-chip">
-                        <i class="bi bi-shop-window"></i> Vendors
-                    </div>
-                    <div class="filter-chip">
-                        <i class="bi bi-lightning-charge"></i> Types
-                    </div>
-                    <div class="filter-chip">
-                        <i class="bi bi-hash"></i> Chassis Number
-                    </div>
-                </div>
-<!--                <div class="text-center mb-4">-->
-<!--                    <h2 class="text-light text-uppercase fw-bold" style="text-shadow: 0 0 10px #fada7a;">Latest Bike Reports</h2>-->
-<!--                </div>-->
-
             </div>
+            <div class="category-filters">
+                <div class="filter-chip active">
+                    <i class="bi bi-globe"></i> All
+                </div>
+                <div class="filter-chip">
+                    <i class="bi bi-shop-window"></i> Vendors
+                </div>
+                <div class="filter-chip">
+                    <i class="bi bi-lightning-charge"></i> Types
+                </div>
+                <div class="filter-chip">
+                    <i class="bi bi-hash"></i> Chassis Number
+                </div>
+            </div>
+            <!--                <div class="text-center mb-4">-->
+            <!--                    <h2 class="text-light text-uppercase fw-bold" style="text-shadow: 0 0 10px #fada7a;">Latest Bike Reports</h2>-->
+            <!--                </div>-->
+
         </div>
     </div>
+</div>
 
 <div class="container mt-4">
     <div class="row" id="bikeModel-cards-container">

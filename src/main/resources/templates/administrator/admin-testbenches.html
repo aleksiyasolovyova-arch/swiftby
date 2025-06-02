@@ -2,15 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>All Test Benches</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
     <link rel="stylesheet" href="/css/facility-overview.css">
+    <link rel="icon" href="/images/bicycle.svg">
+
     <script src="/js/admin/admin-testbenches.js" defer></script>
 </head>
 <body>
 
 <header th:insert="~{fragments/header :: header('Test Benches')}" class="mb-4"></header>
 
-<input type="hidden" id="facilityId" th:value="${facilityId}" />
+<input type="hidden" id="facilityId" th:value="${facilityId}"/>
 
 <main class="container mt-5 glass-box">
     <h2 class="text-center mb-4">Test Benches in Facility</h2>

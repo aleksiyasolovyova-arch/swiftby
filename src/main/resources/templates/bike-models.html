@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Available Bike Models</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet" href="/css/all-bikes.css">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}"/>
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
+    <link rel="stylesheet" href="/css/all-bikes.css">
+    <link rel="icon" href="/images/bicycle.svg">
+
 </head>
 <body>
 <header th:insert="~{fragments/header :: header('Bikes')}" class="mb-4"></header>
 <main class="m-0 p-0">
-    <div class="container mb-4 mt-5" >
+    <div class="container mb-4 mt-5">
         <div id="bikeList" class="d-flex flex-wrap justify-content-center gap-4">
             <div class="card glassmorphism" th:each="bike : ${bikeInstances}">
                 <h4 class="text-primary"

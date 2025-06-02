@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - BikeTrust</title>
+    <link rel="icon" href="/images/bicycle.svg">
+
 
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}"/>
@@ -27,7 +29,8 @@
         <form th:action="@{/registration}" th:object="${user}" method="post">
             <div class="mb-3">
                 <label for="firstName" class="form-label">First Name</label>
-                <input type="text" id="firstName" name="firstName" class="form-control" required th:field="*{firstName}">
+                <input type="text" id="firstName" name="firstName" class="form-control" required
+                       th:field="*{firstName}">
                 <span id="firstNameError" class="text-danger" th:errors="*{firstName}"></span>
             </div>
 
@@ -45,20 +48,24 @@
 
             <div class="mb-3">
                 <label for="password" class="form-label" th:utext="#{label.user.password}">Password</label>
-                <input type="password" id="password" name="password" class="form-control" required th:field="*{password}">
+                <input type="password" id="password" name="password" class="form-control" required
+                       th:field="*{password}">
                 <span id="passwordError" class="text-danger" th:errors="*{password}"></span>
             </div>
 
             <div class="mb-3">
-                <label for="matchingPassword" class="form-label" th:utext="#{label.user.confirmPass}">Confirm Password</label>
-                <input type="password" id="matchingPassword" name="matchingPassword" class="form-control" required th:field="*{matchingPassword}">
+                <label for="matchingPassword" class="form-label" th:utext="#{label.user.confirmPass}">Confirm
+                    Password</label>
+                <input type="password" id="matchingPassword" name="matchingPassword" class="form-control" required
+                       th:field="*{matchingPassword}">
                 <span id="matchingPasswordError" class="text-danger" th:errors="*{matchingPassword}"></span>
                 <span id="globalError" class="alert alert-danger col-sm-4" style="display:none"></span>
             </div>
 
             <div class="mb-3">
                 <label for="phoneNumber" class="form-label">Phone Number</label>
-                <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" required th:field="*{phoneNumber}">
+                <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" required
+                       th:field="*{phoneNumber}">
                 <span id="phoneNumberError" class="text-danger" th:errors="*{phoneNumber}"></span>
             </div>
 
@@ -73,7 +80,8 @@
 
             <div class="mb-3">
                 <label for="facilityName" class="form-label">Facility Name</label>
-                <input type="text" id="facilityName" name="facilityName" class="form-control" th:field="*{facilityName}">
+                <input type="text" id="facilityName" name="facilityName" class="form-control"
+                       th:field="*{facilityName}">
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
@@ -84,20 +92,20 @@
 
 
 <script>
-    $(document).ready(function() {
-        $("#registerForm").submit(function(event) {
+    $(document).ready(function () {
+        $("#registerForm").submit(function (event) {
             event.preventDefault(); // Prevent default form submission
 
             let formData = $(this).serialize();
 
-            $.post("/user/registration", formData, function(response) {
+            $.post("/user/registration", formData, function (response) {
                 if (response.message === "success") {
                     window.location.href = "/successRegister.html";
                 }
-            }).fail(function(xhr) {
+            }).fail(function (xhr) {
                 $("#globalError").hide().html(""); // Clear previous errors
                 let errorData = xhr.responseJSON;
-                    $("#globalError").show().html(errorData.message);
+                $("#globalError").show().html(errorData.message);
             });
         });
     });
