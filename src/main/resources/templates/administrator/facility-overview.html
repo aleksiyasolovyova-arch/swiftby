@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Facility Overview</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="/css/facility-overview.css">
+    <script src="/js/admin/facility-overview.js" defer></script>
+</head>
+<body>
+
+<header th:insert="~{fragments/header :: header('Facility Overview')}" class="mb-4"></header>
+
+<input type="hidden" id="facilityId" th:value="${facilityId}" />
+
+<main class="container mt-5 glassmorphism">
+    <h2 class="text-center mb-4">Facility Overview</h2>
+
+    <div id="facilityDetails" class="mb-4 glass-box"></div>
+
+    <div class="d-flex justify-content-around flex-wrap gap-3">
+        <a class="dashboard-button" th:href="@{/bikes}">View Bikes</a>
+        <a class="dashboard-button" th:href="@{/admin/technicians}">View Technicians</a>
+        <a class="dashboard-button" th:href="@{admin-testbenches}">View Test Benches</a>
+        <a class="dashboard-button" th:href="@{admin-bikeowners}">View Bike Owners</a>
+    </div>
+</main>
+
+<footer th:insert="~{fragments/footer :: footer}" class="mt-4"></footer>
+
+</body>
+</html>

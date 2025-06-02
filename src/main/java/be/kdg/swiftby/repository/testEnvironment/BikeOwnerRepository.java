@@ -1,6 +1,7 @@
 package be.kdg.swiftby.repository.testEnvironment;
 
 import be.kdg.swiftby.domain.testEnv.BikeOwner;
+import be.kdg.swiftby.domain.testEnv.Facility;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +14,8 @@ public interface BikeOwnerRepository extends JpaRepository<BikeOwner, Long> {
 
     Optional<BikeOwner> findByEmail(String email);
     List<BikeOwner> findByEmailContainingIgnoreCase(String email);
+    List<BikeOwner> findAllByFacilityId(Long facilityId);
+    Optional<BikeOwner> findByFacilityIdAndId(Long facilityId, Long id);
+    Optional<BikeOwner> findByFacilityAndId(Facility facility, Long id);
 
 }

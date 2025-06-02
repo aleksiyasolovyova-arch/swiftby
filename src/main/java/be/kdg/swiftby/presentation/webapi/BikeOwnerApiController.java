@@ -75,4 +75,11 @@ public class BikeOwnerApiController {
         );
     }
 
+    @DeleteMapping("/{bikeOwnerId}")
+    public ResponseEntity<Void> removeBikeOwner(@PathVariable Long bikeOwnerId) {
+
+        bikeOwnerService.remove(bikeOwnerId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

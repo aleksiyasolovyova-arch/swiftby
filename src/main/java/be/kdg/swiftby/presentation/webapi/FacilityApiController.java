@@ -6,10 +6,7 @@ import be.kdg.swiftby.domain.exception.NotFoundException;
 import be.kdg.swiftby.domain.testEnv.BikeOwner;
 import be.kdg.swiftby.presentation.viewmodels.EmployeeCreateViewModel;
 import be.kdg.swiftby.presentation.viewmodels.EmployeeUpdateViewModel;
-import be.kdg.swiftby.presentation.webapi.dto.AdministratorApiMapper;
-import be.kdg.swiftby.presentation.webapi.dto.FacilityApiMapper;
-import be.kdg.swiftby.presentation.webapi.dto.TechnicianApiMapper;
-import be.kdg.swiftby.presentation.webapi.dto.TestBenchApiMapper;
+import be.kdg.swiftby.presentation.webapi.dto.*;
 import be.kdg.swiftby.presentation.webapi.dto.bikereport.BikeMapperApi;
 import be.kdg.swiftby.presentation.webapi.dto.response.*;
 import be.kdg.swiftby.service.intf.*;
@@ -39,7 +36,9 @@ public class FacilityApiController {
     private final BikeInstanceService bikeInstanceService;
 
     private final Logger log = LoggerFactory.getLogger(FacilityApiController.class);
-    private final BikeMapperApi bikeApiMapper;
+   private final BikeMapperApi bikeApiMapper;
+    private final BikeOwnerApiMapper bikeOwnerApiMapper;
+    private final BikeOwnerService bikeOwnerService;
 
     //facilities
     @GetMapping("")
@@ -69,7 +68,7 @@ public class FacilityApiController {
     }
 
 
-    //test benches
+    //testbenches
     @GetMapping("{facilityId}/testbenches")
     public ResponseEntity<List<TestBenchApiResponseDto>> getAllTestBenchesByFacilityId(@PathVariable Long facilityId) {
         try {
@@ -139,8 +138,8 @@ public class FacilityApiController {
 
     @PatchMapping("{facilityId}/technicians/{technicianId}")
     public ResponseEntity<TechnicianApiResponseDto> updateTechnician(@PathVariable Long facilityId,
-                                                                     @PathVariable Long technicianId,
-                                                                     @Valid @RequestBody EmployeeUpdateViewModel employeeUpdateViewModel) {
+                                                                    @PathVariable Long technicianId,
+                                                                    @Valid @RequestBody EmployeeUpdateViewModel employeeUpdateViewModel) {
         TechnicianApiResponseDto technician = technicianApiMapper.toTechnicianApiRequestDto(
                 technicianService.update(facilityId, technicianId, employeeUpdateViewModel.getEmail(),
                         employeeUpdateViewModel.getPassword(), employeeUpdateViewModel.getFirstName(), employeeUpdateViewModel.getLastName(),
@@ -225,26 +224,56 @@ public class FacilityApiController {
         return ResponseEntity.ok(response);
     }
 
-
-    @GetMapping("/{facilityId}/bikeowners")
-    public ResponseEntity<List<BikeOwner>> getAllBikeOwnersByFacilityId(@PathVariable Long facilityId) {
-        List<BikeInstance> bikeInstances = bikeInstanceService.getAllByFacilityId(facilityId);
+    @GetMapping("/bikes")
+    public ResponseEntity<List<BikeApiResponseDto>> getAllBikeInstances() {
+        List<BikeInstance> bikeInstances = bikeInstanceService.getAll();
         if (bikeInstances.isEmpty()) {
-            log.warn("No bikes found for facility ID {}", facilityId);
+            log.warn("No bike instances found");
             return ResponseEntity.noContent().build();
         }
-
-        List<BikeOwner> owners = bikeInstances.stream()
-                .map(bikeInstance -> bikeInstance.getOwnerships()
-                        .stream()
-                        .findFirst()
-                        .map(BikeOwnership::getOwner)
-                        .orElse(null))
-                .filter(Objects::nonNull)
-                .toList();
-
-        return ResponseEntity.ok(owners);
+        List<BikeApiResponseDto> response = bikeApiMapper.toBikeInstanceDtoList(bikeInstances);
+        return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{facilityId}/bikeowners")
+    public ResponseEntity<List<BikeOwnerApiResponseDto>> getAllBikeOwnersByFacilityId(@PathVariable Long facilityId) {
+        try{
+            List<BikeOwnerApiResponseDto> owners = bikeOwnerApiMapper.toBikeOwnerDtoList(
+              bikeOwnerService.getAllByFacilityId(facilityId)
+            );
+            return ResponseEntity.ok(owners);
+        }catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{facilityId}/bikeowners/{ownerId}")
+    public ResponseEntity<BikeOwnerApiResponseDto> getBikeOwner(@PathVariable Long ownerId, @PathVariable Long facilityId) {
+        try{
+            BikeOwnerApiResponseDto owner = bikeOwnerApiMapper.toBikeOwnerDto(
+                    bikeOwnerService.getByFacilityIdAndBikeOwnerId(facilityId, ownerId)
+            );
+            return ResponseEntity.ok(owner);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    //TODO:Fix up the update method so it's not a direct copy past from admin and add delete
+    @PatchMapping("/{facilityId}/bikeowners/{ownerId}")
+    public ResponseEntity<BikeOwnerApiResponseDto> updateBikeOwner(@PathVariable Long facilityId,
+                                                                           @PathVariable Long ownerId,
+                                                                           @Valid @RequestBody EmployeeUpdateViewModel employeeUpdateViewModel) {
+        BikeOwnerApiResponseDto owner = bikeOwnerApiMapper.toBikeOwnerDto(
+                bikeOwnerService.update(facilityId, ownerId, employeeUpdateViewModel.getEmail(),
+                        employeeUpdateViewModel.getPassword(), employeeUpdateViewModel.getFirstName(), employeeUpdateViewModel.getLastName(),
+                        employeeUpdateViewModel.getPhoneNumber(), employeeUpdateViewModel.getFacilityId()
+                ));
+        log.debug("Updated bike owner with id {} in facility with id {}",
+                ownerId, facilityId);
+        return ResponseEntity.ok(owner);
+    }
 
 }

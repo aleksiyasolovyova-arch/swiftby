@@ -3,54 +3,55 @@
 <head>
     <title>Unapproved Employees</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bikeModel-report-summary.css" rel="stylesheet"> <!-- your existing style -->
+    <link rel="stylesheet" href="/css/unapproved.css">
 </head>
 <body>
 <header th:insert="~{fragments/header :: header('Unapproved Employees')}"></header>
 
-<div class="container py-5">
-    <h1 class="text-center title-glow mb-5">Unapproved Employees</h1>
+<main class="main-content">
+    <div class="container content-wrapper">
+        <h1 class="text-center title-glow mb-5">Unapproved Employees</h1>
 
-    <div class="row justify-content-center g-4">
-        <div class="col-lg-6">
-            <div class="glass-card p-4">
-                <h2 class="text-center mb-4">Administrators</h2>
-                <div th:if="${unapprovedAdmins.isEmpty()}">
-                    <p class="text-center text-muted">No unapproved administrators.</p>
+        <div class="row justify-content-center g-4">
+            <div class="col-lg-6">
+                <div class="glass-card p-4">
+                    <h2 class="text-center mb-4">Administrators</h2>
+                    <div th:if="${unapprovedAdmins.isEmpty()}">
+                        <p class="text-center text-muted">No unapproved administrators.</p>
+                    </div>
+                    <div th:each="admin : ${unapprovedAdmins}" class="entry-box text-dark">
+                        <p><strong>Name:</strong> <span th:text="${admin.firstName} + ' ' + ${admin.lastName}"></span></p>
+                        <p><strong>Email:</strong> <span th:text="${admin.email}"></span></p>
+                        <form th:action="@{'/sysadmin/approve-admin/' + ${admin.id}}" method="post" class="text-center">
+                            <button type="submit" class="btn glowing-button">Approve</button>
+                        </form>
+                    </div>
                 </div>
-                <div th:each="admin : ${unapprovedAdmins}" class="mb-3 p-3 border rounded bg-light text-dark">
-                    <p><strong>Name:</strong> <span th:text="${admin.firstName} + ' ' + ${admin.lastName}"></span></p>
-                    <p><strong>Email:</strong> <span th:text="${admin.email}"></span></p>
-                    <form th:action="@{'/sysadmin/approve-admin/' + ${admin.id}}" method="post" class="text-center">
-                        <button type="submit" class="btn glowing-button">Approve</button>
-                    </form>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="glass-card p-4">
+                    <h2 class="text-center mb-4">Technicians</h2>
+                    <div th:if="${unapprovedTechnicians.isEmpty()}">
+                        <p class="text-center text-muted">No unapproved technicians.</p>
+                    </div>
+                    <div th:each="technician : ${unapprovedTechnicians}" class="entry-box text-dark">
+                        <p><strong>Name:</strong> <span th:text="${technician.firstName} + ' ' + ${technician.lastName}"></span></p>
+                        <p><strong>Email:</strong> <span th:text="${technician.email}"></span></p>
+                        <form th:action="@{'/sysadmin/approve-technician/' + ${technician.id}}" method="post" class="text-center">
+                            <button type="submit" class="btn glowing-button">Approve</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-6">
-            <div class="glass-card p-4">
-                <h2 class="text-center mb-4">Technicians</h2>
-                <div th:if="${unapprovedTechnicians.isEmpty()}">
-                    <p class="text-center text-muted">No unapproved technicians.</p>
-                </div>
-                <div th:each="technician : ${unapprovedTechnicians}" class="mb-3 p-3 border rounded bg-light text-dark">
-                    <p><strong>Name:</strong> <span th:text="${technician.firstName} + ' ' + ${technician.lastName}"></span></p>
-                    <p><strong>Email:</strong> <span th:text="${technician.email}"></span></p>
-                    <form th:action="@{'/sysadmin/approve-technician/' + ${technician.id}}" method="post" class="text-center">
-                        <button type="submit" class="btn glowing-button">Approve</button>
-                    </form>
-                </div>
-            </div>
+        <div class="text-center mt-5">
+            <a href="/" class="btn glowing-button">⬅ Back to Dashboard</a>
         </div>
     </div>
+</main>
 
-    <div class="text-center mt-5">
-        <a href="/" class="btn glowing-button">⬅ Back to Dashboard</a>
-    </div>
-
-</div>
-
-<footer th:insert="~{fragments/footer :: footer}" class="mt-4"></footer>
+<footer th:insert="~{fragments/footer :: footer}" class="footer"></footer>
 </body>
 </html>

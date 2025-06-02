@@ -1,0 +1,109 @@
+/* === GENERAL RESET & BASE === */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #344a57, #5c7285, #aed2e3);
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* === MAIN CONTENT LAYOUT === */
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.content-wrapper {
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* === FOOTER STYLES === */
+.footer {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 0;
+    text-align: center;
+}
+
+/* === TITLE STYLING === */
+.title-glow {
+    color: #fff;
+    text-shadow: 0 0 8px #fada7a, 0 0 16px #fada7a;
+    font-weight: 700;
+    font-size: 2.5rem;
+}
+
+/* === CARD CONTAINERS (Glassmorphism) === */
+.glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 25px;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+    color: #fff;
+}
+
+.glass-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* === INDIVIDUAL ENTRY BOXES === */
+.entry-box {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 1rem;
+}
+
+/* === TEXT MUTED OVERRIDE ON DARK === */
+.text-muted {
+    color: #ccc !important;
+}
+
+/* === GLOWING BUTTONS === */
+.glowing-button {
+    background-color: #fada7a;
+    border: none;
+    color: #344a57;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 12px;
+    font-weight: bold;
+    transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out, background-color 0.3s ease-in-out;
+    box-shadow: 0 0 10px #fada7a, 0 0 20px #fada7a;
+}
+
+.glowing-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px #fada7a, 0 0 30px #fada7a;
+    background-color: #ffe9a3;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 767px) {
+    .glass-card {
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    .title-glow {
+        font-size: 2rem;
+    }
+}
