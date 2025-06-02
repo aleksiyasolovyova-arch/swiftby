@@ -64,3 +64,8 @@ p {
     box-shadow: 0 10px 20px rgba(250, 218, 122, 0.8);
     transform: scale(1.05);
 }
+
+footer {
+    margin-top: auto;
+}
+
