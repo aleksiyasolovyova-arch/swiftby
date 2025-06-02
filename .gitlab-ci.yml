@@ -3,7 +3,7 @@ stages:
   - test
   - deploy
   - destroy
-   
+    
    
 variables:
   TF_DIR: "infrastructureautomation/terraform/host"
