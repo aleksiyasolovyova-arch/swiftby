@@ -69,11 +69,15 @@ public class BikeOwnerServiceImpl implements BikeOwnerService {
 //    }
 
     @Override
-    public BikeOwner save(String email, String firstName, String lastName, String phoneNumber) {
+    public BikeOwner save(Long facilityId, String email, String firstName, String lastName, String phoneNumber) {
         if (userUtilities.isExistingUser(email)) {
         throw AlreadyExistsException.forUserWithEmail(email);
     }
-        BikeOwner newUser = bikeOwnerRepository.save(new BikeOwner(email, firstName, lastName, phoneNumber));
+
+        Facility facility = facilityRepository.findById(facilityId)
+                .orElseThrow(() -> NotFoundException.forFacility(facilityId));
+
+        BikeOwner newUser = bikeOwnerRepository.save(new BikeOwner(facility, email, firstName, lastName, phoneNumber));
         String token = UUID.randomUUID().toString();
         PasswordResetToken resetToken = new PasswordResetToken(
                 token,

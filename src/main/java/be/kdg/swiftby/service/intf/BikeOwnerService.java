@@ -12,7 +12,9 @@ public interface BikeOwnerService {
     BikeOwner getByEmail(String email);
 
 //    BikeOwner save(String email, String password, String firstName, String lastName, String phoneNumber);
-    BikeOwner save(String email, String firstName, String lastName, String phoneNumber);
+
+    BikeOwner save(Long facilityId, String email, String firstName, String lastName, String phoneNumber);
+
     void remove(Long id);
     List<BikeOwner> searchOwnersByEmail(String email);
 
