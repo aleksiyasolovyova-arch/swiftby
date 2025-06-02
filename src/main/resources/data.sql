@@ -121,7 +121,31 @@ INSERT INTO visual_inspection (
 ('NEUTRAL', 'BAD', 'NEUTRAL', 'BAD', 'BAD',
  'NEUTRAL', 'BAD', 'NEUTRAL', 'BAD', 'NEUTRAL',
  'BAD', 'BAD', 'NEUTRAL', 'BAD', 'NEUTRAL',
- 'BAD', 'NEUTRAL', 'BAD', 'NEUTRAL', 'BAD', 'NEUTRAL');
+ 'BAD', 'NEUTRAL', 'BAD', 'NEUTRAL', 'BAD', 'NEUTRAL'),
+
+-- ID 5
+('GOOD', 'GOOD', 'GOOD', 'GOOD', 'GOOD',
+ 'GOOD', 'GOOD', 'GOOD', 'GOOD', 'GOOD',
+ 'GOOD', 'GOOD', 'GOOD', 'GOOD', 'GOOD',
+ 'GOOD', 'GOOD', 'GOOD', 'GOOD', 'GOOD', 'GOOD'),
+
+-- ID 6
+('NEUTRAL', 'NEUTRAL', 'NEUTRAL', 'NEUTRAL', 'NEUTRAL',
+ 'NEUTRAL', 'NEUTRAL', 'NEUTRAL', 'NEUTRAL', 'NEUTRAL',
+ 'NEUTRAL', 'NEUTRAL', 'NEUTRAL', 'NEUTRAL', 'NEUTRAL',
+ 'NEUTRAL', 'NEUTRAL', 'NEUTRAL', 'NEUTRAL', 'NEUTRAL', 'NEUTRAL'),
+
+-- ID 7
+('VERY_GOOD', 'VERY_GOOD', 'VERY_GOOD', 'VERY_GOOD', 'VERY_GOOD',
+ 'VERY_GOOD', 'VERY_GOOD', 'VERY_GOOD', 'VERY_GOOD', 'VERY_GOOD',
+ 'VERY_GOOD', 'VERY_GOOD', 'VERY_GOOD', 'VERY_GOOD', 'VERY_GOOD',
+ 'VERY_GOOD', 'VERY_GOOD', 'VERY_GOOD', 'VERY_GOOD', 'VERY_GOOD', 'VERY_GOOD'),
+
+-- ID 8
+('BAD', 'BAD', 'BAD', 'BAD', 'BAD',
+ 'BAD', 'BAD', 'BAD', 'BAD', 'BAD',
+ 'BAD', 'BAD', 'BAD', 'BAD', 'BAD',
+ 'BAD', 'BAD', 'BAD', 'BAD', 'BAD', 'BAD');
 
 INSERT INTO functionality_check (
     id, battery_status, brakes_status, display_status, horn_status, lights_status, motor_status
@@ -136,7 +160,19 @@ INSERT INTO functionality_check (
 (3, '+', '+', '+', '+', '+', '+'),
 
 -- ID 4
-(4, '-', 'n.v.t', 'n.v.t', '+', '-', '+');
+(4, '-', 'n.v.t', 'n.v.t', '+', '-', '+'),
+
+-- ID 5
+(5, '+', '+', '+', '+', '+', '+'),
+
+-- ID 6
+(6, '-', '-', '+', '-', 'n.v.t', '-'),
+
+-- ID 7
+(7, '+', '+', '+', '+', '+', '+'),
+
+-- ID 8
+(8, '-', 'n.v.t', 'n.v.t', '+', '-', '+');
 
 
 INSERT INTO bike_ownerships (bike_id, owner_id)
@@ -209,3 +245,47 @@ VALUES ('2025-02-01', 1100, 2.5, 14.0, 29.0, true, 12.3, 48.5, 5200, 26.5, 'Brus
        ('2025-02-18', 1050, 3.2, 13.5, 27.5, true, 13.0, 48.8, 5300, 26.8, 'Brushed', 'Manual', 600, 320, 110, 35.0, 85,
         19.7, 9.5, 0.35, 170, false, 28.5, 195.3, 'Power output fluctuates under load', 4, 4, 4);
 
+INSERT INTO bike_report_summary (report_time,
+                                 avg_mileage,
+                                 avg_assistance_level,
+                                 horizontal_inclination,
+                                 vertical_inclination,
+                                 charge_status,
+                                 battery_current,
+                                 voltage,
+                                 capacity,
+                                 temperature,
+                                 engine_type,
+                                 gear_type,
+                                 max_power,
+                                 nominal_power,
+                                 torque,
+                                 torque_crank,
+                                 cadence,
+                                 roller_torque,
+                                 load_cell,
+                                 rol,
+                                 load_power,
+                                 status_plug,
+                                 speed,
+                                 power,
+                                 technician_comment,
+                                 bike_instance_id,
+                                 functionality_check_id,
+                                 visual_inspection_id)
+VALUES
+-- 2nd report for bike_instance_id = 1
+('2025-02-05', 1120, 2.6, 13.5, 28.5, true, 12.5, 48.6, 5150, 26.2, 'Brushless', 'Automatic', 510, 255, 92, 33.0, 89,
+ 18.3, 9.9, 0.33, 158, true, 29.8, 199.5, 'Minor torque loss observed', 1, 5, 5),
+
+-- 2nd report for bike_instance_id = 2
+('2025-02-20', 920, 2.7, 10.8, 24.3, false, 11.2, 50.0, 5980, 27.5, 'Brushed', 'Manual', 610, 310, 118, 31.0, 81,
+ 21.9, 11.0, 0.29, 162, false, 27.5, 182.0, 'Noise from motor detected', 2, 6, 6),
+
+-- 2nd report for bike_instance_id = 3
+('2025-02-12', 970, 3.1, 12.3, 26.2, true, 12.2, 49.1, 5450, 27.2, 'Brushless', 'Automatic', 505, 252, 102, 34.5, 91,
+ 20.3, 10.3, 0.31, 163, true, 30.0, 202.0, 'Slight increase in cadence', 3, 7, 7),
+
+-- 2nd report for bike_instance_id = 4
+('2025-02-22', 1070, 3.3, 13.8, 27.2, true, 13.1, 48.9, 5280, 26.9, 'Brushed', 'Manual', 605, 325, 112, 35.2, 86,
+ 19.9, 9.6, 0.36, 172, false, 28.2, 196.0, 'Improved stability observed', 4, 8, 8);
