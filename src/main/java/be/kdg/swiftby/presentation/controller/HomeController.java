@@ -23,12 +23,5 @@ public class HomeController {
     public String wip() {
         return "work-in-progress";
     }
-
-
-    @GetMapping("/customers")
-    public String customers() {
-        return "customers";
-    }
-
-
+    
 }
