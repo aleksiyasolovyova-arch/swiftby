@@ -17,5 +17,6 @@ public interface BikeInstanceService {
     BikeInstance createInstance(String chassisNumber, Long modelId);
     void remove(Long id);
     BikeInstance getByIdWithModelAndMotor(Long id);
+    List<BikeInstance> getByBikeOwnerEmail(String email);
 
 }

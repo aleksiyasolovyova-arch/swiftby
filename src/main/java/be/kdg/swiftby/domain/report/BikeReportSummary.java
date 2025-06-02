@@ -5,12 +5,14 @@ import be.kdg.swiftby.domain.bike.BikeModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Data
+@ToString(exclude = {"bikeInstance", "reports", "functionalityCheck"})   // lombok
 @Table(name = "bike_report_summary")
 @AllArgsConstructor
 public class BikeReportSummary {
@@ -59,6 +61,10 @@ public class BikeReportSummary {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "functionality_check_id")
     private FunctionalityCheck functionalityCheck;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "visual_inspection_id")
+    private VisualInspection visualInspection;
 
     @Column(name = "bearing_health")
     private String bearingHealth;

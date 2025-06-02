@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Visual Check</title>
+
+    <script src="/js/visual-inspection.js" type="module" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+    <link href="/css/bike-report-summary.css" rel="stylesheet"/>
+    <style>
+        .glass-card {
+            width: 70%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+<header th:insert="~{fragments/header :: header(${currentPage})}"></header>
+
+<div class="container py-5 d-flex justify-content-center">
+    <div class="glass-card">
+        <h1 class="title-glow text-center mb-4">Visual Inspection</h1>
+        <form id="visualInspectionForm" method="post" th:action="@{/visual-inspection}">
+            <input type="hidden" name="testId" th:value="${testId}"/>
+            <input type="hidden" name="summaryId" th:value="${summaryId}" />
+            <table class=" table-bordered align-middle text-center" style="width: 100%;">
+                <thead class="sticky-thead">
+                <tr>
+                    <th>Component</th>
+                    <th>--</th>
+                    <th>-</th>
+                    <th></th>
+                    <th>+</th>
+                    <th>++</th>
+                    <th>nvt</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="comp : ${components}">
+                    <td th:text="${comp}"></td>
+                    <td><input type="radio" class="form-check-input" th:name="${comp}" value="VERY_BAD"></td>
+                    <td><input type="radio" class="form-check-input" th:name="${comp}" value="BAD"></td>
+                    <td><input type="radio" class="form-check-input" th:name="${comp}" value="NEUTRAL"></td>
+                    <td><input type="radio" class="form-check-input" th:name="${comp}" value="GOOD"></td>
+                    <td><input type="radio" class="form-check-input" th:name="${comp}" value="VERY_GOOD"></td>
+                    <td><input type="radio" class="form-check-input" th:name="${comp}" value="NOT_APPLICABLE"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="mt-4">
+                <strong>Legend</strong>
+                <table class=" table-sm w-auto" style="width: 100%;">
+                    <tr>
+                        <td>--</td>
+                        <td>Terrible, Change immediately</td>
+                    </tr>
+                    <tr>
+                        <td>-</td>
+                        <td>Bad, Change soon</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Neutral</td>
+                    </tr>
+                    <tr>
+                        <td>+</td>
+                        <td>Good</td>
+                    </tr>
+                    <tr>
+                        <td>++</td>
+                        <td>Good as new</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="text-center mt-4 d-flex justify-content-center gap-3 flex-wrap">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-outline-light" onclick="window.history.back()">⬅ Go Back</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer th:insert="~{fragments/footer :: footer}" class="mt-4"></footer>
+</body>
+</html>

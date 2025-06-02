@@ -211,6 +211,11 @@ body {
     flex-direction: column;
     align-items: center;
 }
+
+
+
+
+
 #downloadPDF {
     margin-top: 12px;
     border-radius: 10px;
@@ -229,3 +234,57 @@ body {
     box-shadow: 0 0 15px rgba(250, 218, 122, 0.7);
 }
 
+.btn-yellow-black {
+    background: #ffd900;
+    color: black;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: background 0.2s ease;
+}
+
+.btn-yellow-black:hover {
+    background: #e6c200;
+    color: black;
+}
+
+.btn-outline-light {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+    text-decoration: none;
+    transition: background 0.2s ease, border 0.2s ease;
+}
+
+.btn-outline-light:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.4);
+    color: #fff;
+}
+
+.glowing-button {
+    background: #ffd900;
+    color: black;
+    font-weight: 600;
+    padding: 0.6rem 1.8rem;
+    border: none;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.glowing-button:hover {
+    background: #e6c200;
+}
+
+.sticky-thead th {
+    position: sticky;
+    top: 0;
+    background-color: rgba(80, 80, 80, 0.95); /* same as .table thead */
+    z-index: 10;
+    backdrop-filter: blur(6px);
+}

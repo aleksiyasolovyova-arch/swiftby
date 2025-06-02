@@ -31,4 +31,7 @@ public interface BikeReportService {
 //    BikeReportSummary saveReportSummary(Long bikeId, LocalDate reportDate);
     BikeReportSummary saveReportSummaryFromSavedReports(List<Long> savedReportIds);
     void attachFunctionalityCheck(Long summaryId, Long checkId);
+    void attachVisualInspection(Long summaryId, Long inspectionId);
+
+    List<BikeReport> findAllByBikeOwnerId(Long bikeOwnerId);
 }

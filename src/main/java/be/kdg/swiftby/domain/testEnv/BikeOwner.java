@@ -34,4 +34,10 @@ public class BikeOwner extends User {
     public boolean isLoginAllowed() {
         return true;
     }
+
+
+
+
+
+
 }

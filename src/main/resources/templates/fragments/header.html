@@ -28,7 +28,7 @@
                     <a class="nav-link text-light" th:href="@{/bikeowner/bikes}" sec:authorize="hasRole('ROLE_BIKEOWNER')">My Bikes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="hasRole('ROLE_BIKEOWNER')">My Bike Reports</a>
+                    <a class="nav-link text-light" th:href="@{/bikeowner/bike-reports}" sec:authorize="hasRole('ROLE_BIKEOWNER')">My Bike Reports</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-light" th:href="@{/technician/dashboard}" sec:authorize="hasAnyRole('ROLE_TECHNICIAN')">Dashboard</a>

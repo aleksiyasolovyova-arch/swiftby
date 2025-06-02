@@ -1,8 +1,9 @@
 package be.kdg.swiftby.presentation.webapi;
 
 import be.kdg.swiftby.domain.bike.BikeInstance;
-import be.kdg.swiftby.domain.bike.BikeModel;
+import be.kdg.swiftby.domain.bike.BikeOwnership;
 import be.kdg.swiftby.domain.exception.NotFoundException;
+import be.kdg.swiftby.domain.testEnv.BikeOwner;
 import be.kdg.swiftby.presentation.viewmodels.EmployeeCreateViewModel;
 import be.kdg.swiftby.presentation.viewmodels.EmployeeUpdateViewModel;
 import be.kdg.swiftby.presentation.webapi.dto.*;
@@ -18,19 +19,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/facilities")
 public class FacilityApiController {
-   private final FacilityService facilityService;
-   private final TestBenchService testBenchService;
-   private final TechnicianService technicianService;
-   private final AdministratorService administratorService;
-   private final TestBenchApiMapper testBenchApiMapper;
-   private final FacilityApiMapper facilityApiMapper;
-   private final TechnicianApiMapper technicianApiMapper;
-   private final AdministratorApiMapper administratorApiMapper;
+    private final FacilityService facilityService;
+    private final TestBenchService testBenchService;
+    private final TechnicianService technicianService;
+    private final AdministratorService administratorService;
+    private final TestBenchApiMapper testBenchApiMapper;
+    private final FacilityApiMapper facilityApiMapper;
+    private final TechnicianApiMapper technicianApiMapper;
+    private final AdministratorApiMapper administratorApiMapper;
     private final BikeInstanceService bikeInstanceService;
 
     private final Logger log = LoggerFactory.getLogger(FacilityApiController.class);
@@ -126,9 +128,9 @@ public class FacilityApiController {
     public ResponseEntity<TechnicianApiResponseDto> createTechnician(@PathVariable Long facilityId,
                                                                      @Valid @RequestBody EmployeeCreateViewModel employeeCreateViewModel) {
         TechnicianApiResponseDto technician = technicianApiMapper.toTechnicianApiRequestDto(
-        technicianService.create(facilityId, employeeCreateViewModel.getEmail(),
-                employeeCreateViewModel.getPassword(), employeeCreateViewModel.getFirstName(),
-                employeeCreateViewModel.getLastName(), employeeCreateViewModel.getPhoneNumber())
+                technicianService.create(facilityId, employeeCreateViewModel.getEmail(),
+                        employeeCreateViewModel.getPassword(), employeeCreateViewModel.getFirstName(),
+                        employeeCreateViewModel.getLastName(), employeeCreateViewModel.getPhoneNumber())
         );
 
         return new ResponseEntity<>(technician, HttpStatus.CREATED);
@@ -187,21 +189,21 @@ public class FacilityApiController {
                 ));
         log.debug("Updated administrator with id {} in facility with id {}",
                 admin.id(), facilityId);
-        return new ResponseEntity<>(admin ,HttpStatus.CREATED);
+        return new ResponseEntity<>(admin, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{facilityId}/administrators/{administratorId}")
     public ResponseEntity<AdministratorApiResponseDto> updateAdministrator(@PathVariable Long facilityId,
                                                                            @PathVariable Long administratorId,
                                                                            @Valid @RequestBody EmployeeUpdateViewModel employeeUpdateViewModel) {
-            AdministratorApiResponseDto admin = administratorApiMapper.toAdminDto(
-                    administratorService.update(facilityId, administratorId, employeeUpdateViewModel.getEmail(),
-                            employeeUpdateViewModel.getPassword(), employeeUpdateViewModel.getFirstName(), employeeUpdateViewModel.getLastName(),
-                            employeeUpdateViewModel.getPhoneNumber(), employeeUpdateViewModel.getFacilityId()
-                            ));
-            log.debug("Updated administrator with id {} in facility with id {}",
-                    administratorId, facilityId);
-            return ResponseEntity.ok(admin);
+        AdministratorApiResponseDto admin = administratorApiMapper.toAdminDto(
+                administratorService.update(facilityId, administratorId, employeeUpdateViewModel.getEmail(),
+                        employeeUpdateViewModel.getPassword(), employeeUpdateViewModel.getFirstName(), employeeUpdateViewModel.getLastName(),
+                        employeeUpdateViewModel.getPhoneNumber(), employeeUpdateViewModel.getFacilityId()
+                ));
+        log.debug("Updated administrator with id {} in facility with id {}",
+                administratorId, facilityId);
+        return ResponseEntity.ok(admin);
     }
 
     // TODO: MOVE TO A TECHNICIAN CONTROLLER SINCE IT'S NOT FACILITY SPECIFIC

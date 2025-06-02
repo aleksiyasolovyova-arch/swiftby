@@ -21,4 +21,9 @@ public class BikeOwnership {
 
     @ManyToOne(optional = false)
     private BikeOwner owner;
+
+    public BikeOwnership(BikeInstance bike, BikeOwner owner) {
+        this.bike = bike;
+        this.owner = owner;
+    }
 }

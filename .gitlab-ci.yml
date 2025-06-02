@@ -14,10 +14,6 @@ build-job:
   image: gradle:jdk21
   script:
     - ./gradlew build
-  tags:
-    - docker
-    - gradle
-    - java
   only:
     - development
     - main
@@ -27,10 +23,6 @@ unit-test-job:
   image: gradle:jdk21
   script:
     - ./gradlew test
-  tags:
-    - docker
-    - gradle
-    - java
   artifacts:
     when: always
     reports:

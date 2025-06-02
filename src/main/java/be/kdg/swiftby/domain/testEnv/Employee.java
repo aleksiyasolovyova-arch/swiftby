@@ -16,10 +16,8 @@ public abstract class Employee extends User {
     @Column(name = "is_approved", nullable = false)
     private boolean isApproved;
 
+    public Employee() {
 
-
-    public Employee(String email, String firstName, String lastName, String phoneNumber) {
-        super(email, firstName, lastName, phoneNumber);
     }
 
     public Employee(Facility facility, String email, String password, String firstName, String lastName, String phoneNumber) {
@@ -27,13 +25,10 @@ public abstract class Employee extends User {
         this.facility = facility;
     }
 
-    public Employee() {
-
-    }
-
     public Employee(String email, String password, String firstName, String lastName, String phoneNumber) {
         super(email, password, firstName, lastName, phoneNumber);
     }
+
 
     @Override
     public String toString() {
