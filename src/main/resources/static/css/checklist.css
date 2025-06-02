@@ -33,14 +33,7 @@ h2.text-accent {
     text-align: center;
 }
 
-ul.list-unstyled {
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-    padding: 25px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: inset 0 0 10px rgba(250, 218, 122, 0.1);
-    backdrop-filter: blur(6px);
-}
+
 
 .form-check-input {
     cursor: pointer;

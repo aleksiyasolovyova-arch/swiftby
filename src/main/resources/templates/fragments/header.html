@@ -1,4 +1,3 @@
-
 <!--TODO:Fix up the whole header file lmao-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -9,6 +8,8 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}"/>
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.js}"></script>
     <title>header</title>
+    <link rel="icon" href="/images/bicycle.svg">
+
 </head>
 <body>
 <header th:fragment="header(currentPage)" class="navbar navbar-expand-lg py-3" style="background-color: #344a57;">
@@ -25,13 +26,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link text-light" th:href="@{/bikeowner/bikes}" sec:authorize="hasRole('ROLE_BIKEOWNER')">My Bikes</a>
+                    <a class="nav-link text-light" th:href="@{/bikeowner/bikes}"
+                       sec:authorize="hasRole('ROLE_BIKEOWNER')">My Bikes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" th:href="@{/bikeowner/bike-reports}" sec:authorize="hasRole('ROLE_BIKEOWNER')">My Bike Reports</a>
+                    <a class="nav-link text-light" th:href="@{/bikeowner/bike-reports}"
+                       sec:authorize="hasRole('ROLE_BIKEOWNER')">My Bike Reports</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" th:href="@{/technician/dashboard}" sec:authorize="hasAnyRole('ROLE_TECHNICIAN')">Dashboard</a>
+                    <a class="nav-link text-light" th:href="@{/technician/dashboard}"
+                       sec:authorize="hasAnyRole('ROLE_TECHNICIAN')">Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a th:if="${session.get('facilityId') != null}"
@@ -41,17 +45,19 @@
                         Facility overview
                     </a>
                 </li>
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')">Customers</a>-->
-<!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link text-light" th:href="@{/workInProgress}" sec:authorize="hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_SUPERADMIN')">Customers</a>-->
+                <!--                </li>-->
                 <li class="nav-item">
-                    <a class="nav-link text-light" th:href="@{/bikes}" sec:authorize="hasAnyRole('ROLE_TECHNICIAN', 'ROLE_SUPERADMIN')">All Bikes</a>
+                    <a class="nav-link text-light" th:href="@{/bikes}"
+                       sec:authorize="hasAnyRole('ROLE_TECHNICIAN', 'ROLE_SUPERADMIN')">All Bikes</a>
                 </li>
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link text-light" th:href="@{/admin/technicians}" sec:authorize="hasRole('ROLE_ADMINISTRATOR')">Technician Management</a>-->
-<!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link text-light" th:href="@{/admin/technicians}" sec:authorize="hasRole('ROLE_ADMINISTRATOR')">Technician Management</a>-->
+                <!--                </li>-->
                 <li class="nav-item">
-                    <a class="nav-link text-light" th:href="@{/sysadmin/unapproved-employees}" sec:authorize="hasRole('ROLE_SUPERADMIN')">Authorization Needed</a>
+                    <a class="nav-link text-light" th:href="@{/sysadmin/unapproved-employees}"
+                       sec:authorize="hasRole('ROLE_SUPERADMIN')">Authorization Needed</a>
                 </li>
             </ul>
 
