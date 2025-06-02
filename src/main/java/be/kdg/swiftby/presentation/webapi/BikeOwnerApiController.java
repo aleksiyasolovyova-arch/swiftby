@@ -2,38 +2,32 @@ package be.kdg.swiftby.presentation.webapi;
 
 import be.kdg.swiftby.domain.bike.BikeInstance;
 import be.kdg.swiftby.domain.testEnv.BikeOwner;
-import be.kdg.swiftby.domain.testEnv.PasswordResetToken;
+import be.kdg.swiftby.domain.testEnv.Technician;
 import be.kdg.swiftby.presentation.webapi.dto.BikeOwnerApiMapper;
 import be.kdg.swiftby.presentation.webapi.dto.bikereport.BikeMapperApi;
 import be.kdg.swiftby.presentation.webapi.dto.request.BikeOwnerRequestDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeApiResponseDto;
 import be.kdg.swiftby.presentation.webapi.dto.response.BikeOwnerApiResponseDto;
-import be.kdg.swiftby.presentation.webapi.dto.response.BikeReportApiResponseDto;
 import be.kdg.swiftby.service.impl.BikeInstanceServiceImpl;
-import be.kdg.swiftby.service.intf.BikeOwnerService;
-import be.kdg.swiftby.service.intf.BikeService;
-import jakarta.transaction.Transactional;
+import be.kdg.swiftby.service.intf.*;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/bikeowners")
+@AllArgsConstructor
 public class BikeOwnerApiController {
     private final BikeInstanceServiceImpl bikeInstanceServiceImpl;
     BikeOwnerService bikeOwnerService;
     BikeOwnerApiMapper bikeOwnerApiMapper;
-    BikeService bikeService;
+    BikeInstanceService bikeInstanceService;
+    FacilityService facilityService;
+    UserService userService;
     BikeMapperApi bikeMapperApi;
-
-    public BikeOwnerApiController(BikeOwnerService bikeOwnerService, BikeOwnerApiMapper bikeOwnerApiMapper, BikeMapperApi bikeMapperApi, BikeInstanceServiceImpl bikeInstanceServiceImpl) {
-        this.bikeOwnerService = bikeOwnerService;
-        this.bikeOwnerApiMapper = bikeOwnerApiMapper;
-        this.bikeService = bikeService;
-        this.bikeMapperApi = bikeMapperApi;
-        this.bikeInstanceServiceImpl = bikeInstanceServiceImpl;
-    }
 
     @GetMapping("")
     public ResponseEntity<List<BikeOwnerApiResponseDto>> getAll() {
@@ -57,8 +51,10 @@ public class BikeOwnerApiController {
     }
 
     @PostMapping
-    public ResponseEntity<BikeOwnerApiResponseDto> createBikeOwner(@RequestBody BikeOwnerRequestDto request) {
-        BikeOwner owner = bikeOwnerService.save(request.email(), request.firstName(), request.lastName(), request.phoneNumber());
+    public ResponseEntity<BikeOwnerApiResponseDto> createBikeOwner(@RequestBody BikeOwnerRequestDto request, Principal principal) {
+        Technician technician = (Technician) userService.getUserByEmail(principal.getName());
+
+        BikeOwner owner = bikeOwnerService.save(technician.getFacility().getId(), request.email(), request.firstName(), request.lastName(), request.phoneNumber());
         return ResponseEntity.ok(bikeOwnerApiMapper.toBikeOwnerDto(owner));
     }
 

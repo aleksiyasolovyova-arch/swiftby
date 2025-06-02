@@ -30,6 +30,14 @@ public class BikeOwner extends User {
         this.setPhoneNumber(phoneNumber);
     }
 
+    public BikeOwner(Facility facility, String email, String firstName, String lastName, String phoneNumber) {
+        this.setFacility(facility);
+        this.setEmail(email);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setPhoneNumber(phoneNumber);
+    }
+
     @Override
     public boolean isLoginAllowed() {
         return true;
