@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const testStatus = document.getElementById("testStatus");
     let socket;
     function connectWebSocket() {
-        socket = new WebSocket("ws://localhost:8080/ws/test-status");
+        const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+        socket = new WebSocket(`${protocol}://${window.location.host}/ws/test-status`);
 
         socket.onopen = function () {
             console.log("WebSocket connection established.");
