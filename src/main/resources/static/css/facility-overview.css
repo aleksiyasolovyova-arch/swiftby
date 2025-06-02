@@ -51,6 +51,22 @@ p {
     box-shadow: 0 10px 25px rgba(250, 218, 122, 0.5);
 }
 
+.btn-glow-yellow {
+    background: linear-gradient(45deg, #fada7a, #ffd700);
+    color: #344a57;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 14px;
+    box-shadow: 0 5px 10px rgba(250, 218, 122, 0.6);
+    transition: all 0.3s ease;
+}
+.btn-glow-yellow:hover {
+    background: linear-gradient(45deg, #ffd700, #fada7a);
+    box-shadow: 0 10px 20px rgba(250, 218, 122, 0.8);
+}
+
 .glass-box, .glassmorphism {
     background: rgba(255, 255, 255, 0.1);
     padding: 25px;
